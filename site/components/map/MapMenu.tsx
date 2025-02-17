@@ -125,7 +125,7 @@ const compositeModuleStructure: BaseModule[] = [
       name: 'Vista from a Grotto',
       artist: 'David Teniers the Younger',
       src: '/vista.jpg', // the background image
-      scene: 'https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode', // for the interactive worldly component
+      scene: 'https://prod.spline.design/TIqKPOlKQTOfGKBb/scene.splinecode', // for the interactive worldly component
       accents: {
         primary: 'bg-rose-950',
         secondary: 'bg-red-900/30',
@@ -165,7 +165,7 @@ const compositeModuleStructure: BaseModule[] = [
       name: 'The Ponte Salario',
       artist: 'Hubert Robert',
       src: '/ponte-salario.jpg', // the background image
-      scene: 'https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode', // for the interactive worldly component
+      scene: 'https://prod.spline.design/TIqKPOlKQTOfGKBb/scene.splinecode', // for the interactive worldly component
       accents: {
         primary: 'bg-sky-950',
         secondary: 'bg-sky-900/30',
@@ -240,7 +240,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
         <AnimatePresence>
           {fullscreen && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 1.5} }} exit={{ opacity: 0, transition: { delay: 0 } }}>
-              <Background shouldAnimate={fullscreen} />
+              <Background shouldAnimate={fullscreen} scene={baseModuleData.visuals.scene} />
               <motion.div className="fixed z-10 text-white">
                 <div className="fixed top-16 right-16">
                   <button onClick={() => setFullscreen(false)}>

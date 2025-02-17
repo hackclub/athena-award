@@ -15,9 +15,9 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body className={`phantom-sans`}>
-        {/* <SessionProvider> */}
+        <SessionProvider>
           {children}
-        {/* </SessionProvider> */}
+        </SessionProvider>
       </body>
     </html>
   )
