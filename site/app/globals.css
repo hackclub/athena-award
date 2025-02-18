@@ -46,8 +46,24 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
+h2 {
+  @apply text-hc-primary text-2xl py-2
+}
+
 .phantom-sans {
   font-family: 'Phantom Sans';
+}
+
+p {
+  @apply text-sm sm:text-base
+}
+
+code {
+  @apply bg-gray-200 p-1 select-all
+}
+
+a {
+  @apply underline underline-offset-4 text-hc-primary hover:decoration-wavy
 }
 
 * {

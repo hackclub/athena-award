@@ -24,7 +24,7 @@ export function Loading(){
     )
 }
 
-export function Unauthenticated({page}: {page: string}){
+export function Unauthenticated(){
     return (
         <div className = "bg-black w-screen h-screen flex flex-col items-center justify-center">
             <h1 className="text-white text-2xl">Not logged in!</h1>
