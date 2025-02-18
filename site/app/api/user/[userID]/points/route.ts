@@ -1,5 +1,5 @@
-// GET api/user/[userID]/hackathons
-// Returns a list of all the hackathon names a user is or was involved in
+// GET api/user/[userID]/points
+// Returns a numeric value of the points a user has
 
 import { NextResponse } from "next/server";
 import { auth } from '@/auth';
@@ -8,7 +8,7 @@ import { getValue } from "@/services/fetchData";
 export async function GET(request: Request){
     const session = await auth();
     try {
-        const response = (await getValue(session!.user.email!))["hackathons"]
+        const response = (await getValue(session!.user.email!))["points"]
         return NextResponse.json({ message: response }, { status: 200 })
 
     } catch {
