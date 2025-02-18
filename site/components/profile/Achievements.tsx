@@ -1,23 +1,21 @@
 import ACHIEVEMENTS_LIST from "@/app/Achievements";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
+import { fetcher } from "@/services/fetcher";
+import { Warning } from "../panels/add-ons/Callout";
 
-export function Achievements({profileIsOpen}: {profileIsOpen: boolean}){
-    const [ achievements, setAchievements ] = useState("")
-    const session = useSession();
-    async function fetchAchievements(){
-        const response = fetch(`/api/user/${session.data!.slack_id}/achievements`, {
-          method: 'GET'
-        }).then(r => r.json()).then(data => {setAchievements(  data["message"] ? data["message"]: "" )})
-        return response
-      }
-    
-        useEffect(() => {
-          if (session.status === "authenticated"){
-            fetchAchievements()
-          }
-        }, [profileIsOpen])
 
+export function Achievements(){
+  const session = useSession();
+  const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/achievements`, fetcher) 
+  if (error){
+    return (<Warning title = "Error">{error.info.message}</Warning>)
+  }
+  if (isLoading){
+    return (<div>Loading achievements...</div>)
+  }
+  const achievements = (data as any)["message"]
     return (
         <>
         <p className="text-2xl text-hc-primary py-2">You've completed { achievements ? achievements.split(",").length : 0} out of {ACHIEVEMENTS_LIST.length} achievements!</p>

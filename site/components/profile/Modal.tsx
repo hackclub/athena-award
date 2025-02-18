@@ -1,14 +1,16 @@
 import Icon from '@hackclub/icons'
 import { Dialog, Tab, Transition } from '@headlessui/react'
 import { Fragment, useState, useContext, FormEvent, useEffect } from 'react'
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Tooltip } from 'react-tooltip';
-import Image from 'next/image';
 import { ProfileIsOpenContext } from '../island/Modal';
 import { Session } from 'next-auth';
 import { Warning } from '@/components/panels/add-ons/Callout';
 import { Achievements } from './Achievements';
 import { Progress } from './Progress';
+import Waka from './Waka';
+
+// i'll migrate this to use useswr but rn it's weird and doesn't want to support more than one call
 
 export default function Profile(){
     const { profileIsOpen, setProfileIsOpen } = useContext(ProfileIsOpenContext)
@@ -35,14 +37,14 @@ export default function Profile(){
       return {"error": "Hey! Why are you trying to join a hackathon that doesn't exist? 🤔"}
     }
     async function fetchHackathons(){
-      const response = fetch(`/api/user/${session.data!.slack_id}/hackathons`, {
+      const response = await fetch(`/api/user/${session.data!.slack_id}/hackathons`, {
         method: 'GET'
       }).then(r => r.json()).then(data => {setHackathonName(data["message"])})
       return response
     }
 
     async function fetchStage(){
-      const response = fetch(`/api/user/${session.data!.slack_id}?query=current_stage`, {
+      const response = await fetch(`/api/user/${session.data!.slack_id}?query=current_stage`, {
         method: 'GET'
       }).then(r => r.json()).then(data => {setCurrentStageName(data["message"])})
       return response
@@ -176,11 +178,12 @@ export default function Profile(){
                     </Tab.Panel>
                     <Tab.Panel className = "w-full h-full p-10">
                       <h2 className="text-4xl text-hc-primary font-bold mb-3">Progress</h2>
-                      <Progress profileIsOpen={profileIsOpen}/>
+                      <Progress/>
+                      <Waka/>
                     </Tab.Panel>
                     <Tab.Panel className = "w-full h-full p-10">
                       <h2 className="text-4xl text-hc-primary font-bold mb-3">Achievements</h2>
-                      <Achievements profileIsOpen={profileIsOpen}/>
+                      <Achievements/>
                     </Tab.Panel>
                     </Tab.Panels>
                     </Tab.Group>

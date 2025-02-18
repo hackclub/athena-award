@@ -16,8 +16,8 @@ interface validData {
 
 export async function GET(request: NextRequest) {
     const query  = (request.nextUrl.searchParams).get("query")
-    if (!query || validData.includes(query)){ // this is stupid
-        return NextResponse.json({error: "Invalid query", status: 404})
+    if (!query || !validData.includes(query)){ // this is stupid
+        return NextResponse.json({error: "Invalid query"}, {status: 400})
     }
     const session = await auth();
     const emailAddress = session!.user.email!
@@ -26,6 +26,6 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({message: response}, {status: 200})
     } catch {
         return NextResponse.json({error: "Something went wrong."}, {status: 400})
-
     }
+
 }

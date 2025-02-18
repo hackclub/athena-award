@@ -28,7 +28,7 @@ async function validateHackathon(hackathonCode: string){
 async function linkUserToHackathon(emailAddress: string, hackathonCode: string, hackathonName: string, accessTokenEncrypted: string){
         const recordID = await airtable("Registered Users").select({
             filterByFormula: `{email} = "${emailAddress}"`,
-            maxRecords: 2,
+            maxRecords: 1,
             fields: ["record_id", "hashed_token"]
         }).all()
 
