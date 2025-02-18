@@ -8,6 +8,7 @@ import { ProfileIsOpenContext } from '../island/Modal';
 import { Session } from 'next-auth';
 import { Warning } from '@/components/panels/add-ons/Callout';
 import { Achievements } from './Achievements';
+import { Progress } from './Progress';
 
 export default function Profile(){
     const { profileIsOpen, setProfileIsOpen } = useContext(ProfileIsOpenContext)
@@ -41,7 +42,7 @@ export default function Profile(){
     }
 
     async function fetchStage(){
-      const response = fetch(`/api/user/${session.data!.slack_id}`, {
+      const response = fetch(`/api/user/${session.data!.slack_id}?query=current_stage`, {
         method: 'GET'
       }).then(r => r.json()).then(data => {setCurrentStageName(data["message"])})
       return response
@@ -91,10 +92,18 @@ export default function Profile(){
                             <Tab data-tooltip-id="Profile" data-tooltip-content="Profile">
                               <img src="https://icons.hackclub.com/api/icons/hackclub-red/person" className="size-[32px]" alt="" />
                             </Tab>
+
+                            <Tooltip id="Progress" place="right"  className="z-10"/>
+                            <Tab data-tooltip-id="Progress" data-tooltip-content="Progress">
+                              <img src="https://icons.hackclub.com/api/icons/hackclub-red/checkmark" className="size-[32px]" alt="" />
+                            </Tab>
+
                           <Tooltip id="Achievements" place="right"  className="z-10"/>
                             <Tab data-tooltip-id="Achievements" data-tooltip-content="Achievements">
                               <img src="https://icons.hackclub.com/api/icons/hackclub-red/flag" className="size-[32px]" alt="" />
                             </Tab>
+
+
                         </div>
                         <button className="p-2 bg-hc-primary/20 rounded-md w-full" onClick={() => clear()}>Close</button>
                       </Tab.List>
@@ -166,10 +175,13 @@ export default function Profile(){
                     </div>
                     </Tab.Panel>
                     <Tab.Panel className = "w-full h-full p-10">
-                    <h2 className="text-4xl text-hc-primary font-bold mb-3">Achievements</h2>
+                      <h2 className="text-4xl text-hc-primary font-bold mb-3">Progress</h2>
+                      <Progress profileIsOpen={profileIsOpen}/>
+                    </Tab.Panel>
+                    <Tab.Panel className = "w-full h-full p-10">
+                      <h2 className="text-4xl text-hc-primary font-bold mb-3">Achievements</h2>
                       <Achievements profileIsOpen={profileIsOpen}/>
-                      </Tab.Panel>
-
+                    </Tab.Panel>
                     </Tab.Panels>
                     </Tab.Group>
                   </div>
