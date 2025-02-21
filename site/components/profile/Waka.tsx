@@ -30,6 +30,7 @@ export function Waka(){
     }
     if (isLoading){
         return (<div>Loading WakaTime data...</div>)
+
     }
 
     const useableData = (data as any)["data"]

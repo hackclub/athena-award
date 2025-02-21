@@ -15,6 +15,7 @@ export function Progress(){
       }
       if (isLoading){
         return (<div>Loading progress data...</div>)
+
       }
       points = (data as any)["message"] // fix types
 
