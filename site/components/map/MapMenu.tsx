@@ -337,7 +337,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     </div> 
     : session.status === "loading" 
     ? <Loading/> 
-    : <Unauthenticated page="/"/> }
+    : <Unauthenticated/> }
     </div>
   )
 }

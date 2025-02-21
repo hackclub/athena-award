@@ -29,7 +29,8 @@ export function Waka(){
         return (<div>Something went wrong when loading your WakaTime data.</div>)
     }
     if (isLoading){
-        return (<div>Loading data...</div>)
+        return (<div>Loading WakaTime data...</div>)
+
     }
 
     const useableData = (data as any)["data"]

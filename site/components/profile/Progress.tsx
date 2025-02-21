@@ -14,7 +14,8 @@ export function Progress(){
         return (<div><Warning title = "Error">Wasn't able to fetch your points.</Warning></div>)
       }
       if (isLoading){
-        return (<div>Loading data...</div>)
+        return (<div>Loading progress data...</div>)
+
       }
       points = (data as any)["message"] // fix types
 
