@@ -21,7 +21,7 @@ const ACHIEVEMENTS_LIST = [
         description: "Ship a finished project in #ship",
         link: "https://app.slack.com/client/T0266FRGM/C0M8PUPU6",
         icon: "https://icons.hackclub.com/api/icons/hackclub-red/docs",
-        reward: "5 points"
+        reward: "5 artifacts"
     },
     {
         id: 3,
@@ -37,7 +37,7 @@ const ACHIEVEMENTS_LIST = [
         description: "Attend a Hack Club hackathon (includes Athena and satellite events)",
         link: "https://waka.hackclub.com/",
         icon: "https://icons.hackclub.com/api/icons/hackclub-red/photo",
-        reward: "10 points"
+        reward: "10 artifacts"
     },    
 ]
 

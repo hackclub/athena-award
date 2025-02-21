@@ -3,7 +3,7 @@ import CodeSnippet from "@/components/panels/add-ons/CodeSnippet";
 export default function Page() {
   return (
     <div className="max-w-[70vw]">
-<CodeSnippet snippet={`// Put your name and age in the code below and click "Run" to see what happens!
+<CodeSnippet status={true} snippet={`// Put your name and age in the code below and click "Run" to see what happens!
 const name: string = 'INPUT_TEXT:NAME:END';
 const age: number = 'INPUT_NUMBER:AGE:END';
 const isAnAwesomeHackClubber = 'INPUT_BOOLEAN:HACK_CLUBBER:END';

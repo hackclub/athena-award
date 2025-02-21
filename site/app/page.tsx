@@ -2,17 +2,18 @@ import Background from "@/components/landscape/Background"
 import Layers from "@/components/landscape/Layers"
 import WelcomeModal from "@/components/welcome/WelcomeModal"
 import { signIn } from "next-auth/react"
-import Header from "@/components/panels/Header"
+import { Header, AuthStateButton } from "@/components/panels/Header"
+import { useSession } from "next-auth/react";
 
 const steps = [
   {title: "Build three projects 💻",
     description: "Download the WakaTime extension for your code editor, and spend 80 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
   },
   {title: "Ship your projects ⛵",
-    description: "Share your projects with our community of teen makers. Sign in with the Hack Club Slack and ship them! Earn points for each project shipped."
+    description: "Share your projects with our community of teen makers. Sign in with the Hack Club Slack and ship them! Earn artifacts for each project shipped to the gallery."
   },
   {title: "Earn a fully-paid flight to New York City 🎁",
-    description: "Unlock awesome prizes as you earn points, including a chance to participate in a fully-funded hackathon in New York!"
+    description: "Unlock awesome prizes as you earn artifacts, including a chance to participate in a fully-funded hackathon in New York!"
   }
 ]
 
@@ -59,7 +60,7 @@ const FAQ = [
   },
   {
     question: "How do prizes work?",
-    answer: "As you earn points by completing the requirements of the Athena Award, you'll become automatically eligible for prizes along the way."
+    answer: "As you earn artifacts by completing the requirements of the Athena Award, you'll become automatically eligible for prizes along the way."
   },
   {
     question: "How does the trip to New York work?",
@@ -80,8 +81,8 @@ function Polaroid({image, caption, props}: {image: string, caption: string, prop
   )
 }
 
+
 export default async function Index() {
-  // const session = await auth()
 
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center">
@@ -94,6 +95,7 @@ export default async function Index() {
             <img className = "my-auto mx-auto" src = "/logo.svg"/>
             {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
             <p className="text-xl text-center">Venture forth into the unknown...</p>
+              <AuthStateButton/>
           </div>
           <div>
             <h2 className="text-hc-secondary">get started</h2><br/><br/>
