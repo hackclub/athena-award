@@ -88,7 +88,7 @@ export default function Profile(){
                 <Dialog.Panel className="w-full h-[80vh] max-w-5xl transform overflow-auto rounded-xl bg-white text-left align-middle shadow-xl transition-all">
                   <div className="flex min-h-full">
                     <Tab.Group vertical>
-                      <Tab.List className="h-[80vh] sticky top-0 hidden sm:flex flex-col p-6 justify-between items-center rounded-l-xl text-hc-primary bg-hc-secondary w-32"> {/* fix not being able to see achievements on mobile */}
+                      <Tab.List className="h-[80vh] sticky top-0 flex flex-col p-6 justify-between items-center rounded-l-xl text-hc-primary bg-hc-secondary w-20 sm:w-32"> {/* fix not being able to see achievements on mobile */}
                         <div className="flex flex-col justify-evenly items-center grow">
                           <Tooltip id="Profile" place="right"  className="z-10"/>
                             <Tab data-tooltip-id="Profile" data-tooltip-content="Profile">
@@ -107,7 +107,7 @@ export default function Profile(){
 
 
                         </div>
-                        <button className="p-2 bg-hc-primary/20 rounded-md w-full" onClick={() => clear()}>Close</button>
+                        <button className="p-2 bg-hc-primary/20 rounded-md w-full overflow-hidden sm:text-base" onClick={() => clear()}>Close</button>
                       </Tab.List>
                     <Tab.Panels className="w-full min-h-full">
                     <Tab.Panel className="w-full h-full p-10">
@@ -120,28 +120,29 @@ export default function Profile(){
                             <div className = "flex md:flex-row flex-col gap-8">
                                 <img className = "rounded-full w-4/12 mx-auto md:m-0" src = {`${session.data.user!.image}`}></img>
                                 <div>
-                                    <h1 className="text-2xl text-hc-primary">Personal Information</h1>
-                                <div>
+                                    <h1 className="text-lg sm:text-2xl text-hc-primary">Personal Information</h1>
+                                <p>
                                     <b>Name:</b>{' '}
                                     {session.data.user!.name}
-                                </div> 
-                                <div>
+                                </p> 
+                                <p>
                                     <b>Email:</b>{' '}
                                     {session.data.user!.email}
-                                </div> 
-                                <div>
+                                </p> 
+                                <p>
                                   <b>Hackathons:</b>{' '}
                                     { hackathonName ? hackathonName : "None" }
-                                </div>
-                                <div>
+                                </p>
+                                <p>
                                   <b>Current stage:</b> {' '}
                                     { currentStage ? currentStage : "None"}
-                                </div>
+                                </p>
                                 </div>
                                 </div>
                             </div>
                         <div>
-                        <h1 className="text-2xl text-hc-primary">Other</h1>
+                        <h1 className="text-lg sm:text-2xl text-hc-primary">Other</h1>
+                        <p>
                             Part of a{' '}
                             <Tooltip id="hackathon" place="top-start" className="z-10"/>
                             <span 
@@ -151,6 +152,7 @@ export default function Profile(){
                                 hackathon?{' '}
                             </span> 
                             Submit the unique code here:{' '}
+                            </p>
                             <form className = "flex flex-col sm:flex-row gap-5 my-4" onSubmit={ async (event) => { 
                                 {
                                   let hackathon = await submitCode(event)

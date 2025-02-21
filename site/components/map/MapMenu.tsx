@@ -373,7 +373,7 @@ function ProfileModal() {
       <button onClick={() => {
         console.log(profileIsOpen)
         setProfileIsOpen(true);
-      }} id="profile" className="mb-5 absolute right-6 top-6 w-full">
+      }} id="profile" className="mb-5 absolute right-6 top-6">
         {/* <img src="" width={48} height={48} alt="Profile details" /> */}
         <span className="ml-auto size-10 rounded-full bg-cover bg-no-repeat bg-center block" style={{
           backgroundImage: `url('${session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`

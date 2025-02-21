@@ -55,7 +55,7 @@ h2 {
 }
 
 p {
-  @apply text-sm sm:text-base
+  @apply text-base sm:text-lg
 }
 
 code {
@@ -72,7 +72,7 @@ a {
 
 * {
   scrollbar-width: auto;
-  scrollbar-color: #ec3750 #fdebed;
+  scrollbar-color: #ec3750 transparent;
 }
 
 *::-webkit-scrollbar {
@@ -80,7 +80,7 @@ a {
 }
 
 *::-webkit-scrollbar-track {
-  background: #fdebed;
+  background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {

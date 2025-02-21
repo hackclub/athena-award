@@ -5,7 +5,7 @@ import type { NextAuthConfig } from "next-auth"
 
 export const config = {
   theme: {
-    logo: "https://next-auth.js.org/img/logo/logo-sm.png",
+    logo: "/logo.svg",
   },
   debug: true,
   providers: [

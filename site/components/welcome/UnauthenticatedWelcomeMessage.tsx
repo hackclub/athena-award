@@ -66,6 +66,8 @@ export default function UnauthenticatedWelcomeMessage() {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
+
+        
         <button className="w-full bg-hc-primary font-bold text-white rounded-full mt-10 text-center py-3 text-4xl" onClick={() => signIn(undefined, {
           callbackUrl: '/'
         })}>Log in with Slack</button>
