@@ -24,8 +24,7 @@ export default function WelcomeModal() {
 
   return (
     <>
-      <button className="font-bold text-white bg-hc-primary px-8 py-4 text-3xl rounded-full" onClick={() => setIsOpen(true)}>Start Hacking</button>
-
+      <button className="m-5 p-5 bg-hc-primary-dull mx-auto rounded-xl text-center text-hc-secondary" onClick={() => setIsOpen(true)}><h1 className="text-2xl">start hacking</h1></button>
       <Transition
         show={isOpen}
         enter="transition duration-100 ease-out"
@@ -69,7 +68,7 @@ export default function WelcomeModal() {
                             <div className="text-5xl font-bold text-white">Hello <span className="text-hc-secondary">{session.data.user!.name}</span>!</div>
                             <div className="text-xl text-white">You've successfully logged in with Slack. Proceed with your journey...</div>
                           </div>
-                          <button className="w-full bg-hc-primary font-bold text-white rounded-full mt-10 text-center py-3 text-4xl" onClick={() => {router.push("/map"); registerUser() }}>Proceed</button>
+                          <button className="w-full bg-hc-primary font-bold text-white rounded-full mt-10 text-center py-3 text-4xl" onClick={() => {router.push("/onboarding"); registerUser() }}>Proceed</button>
                         </div>
                       ) : (
                         <div id="inspiration" className="text-white flex flex-col h-full py-12">
