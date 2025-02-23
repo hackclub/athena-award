@@ -183,7 +183,7 @@ export default async function Index() {
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center grow italic">
                   What will you build?
           </h1>
-          <WelcomeModal/>
+          <AuthStateButton/>
           </div>    
       </div>
   

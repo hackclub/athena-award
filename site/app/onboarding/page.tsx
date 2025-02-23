@@ -1,6 +1,8 @@
 // TO DO: add fancy shmancy transitions when text shows up
 "use client"
 import { Header } from "@/components/panels/Header"
+import { useSession } from "next-auth/react";
+import { Loading, Unauthenticated } from "@/components/screens/Modal";
 
 const steps = [
     {
@@ -22,7 +24,10 @@ const steps = [
 ]
 
 export default function Page(){
+    const session = useSession();
  return (
+    <>
+    {session.status === "authenticated" ? 
     <main className="w-screen h-full relative flex flex-col justify-center items-center">
         <div className="w-screen h-screen fixed top-0 left-0 z-[1] overflow-hidden bg-[url(/ponte-salario.jpg)] bg-cover blur-sm brightness-50 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light"/>
         <div className="relative z-10">
@@ -41,6 +46,11 @@ export default function Page(){
                 </div>
         </div>
     </main>
+    : session.status === "loading" 
+    ? <Loading/>
+    : <Unauthenticated/>
+                    }
+    </>
  )
 
 }

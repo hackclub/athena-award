@@ -1,3 +1,4 @@
+// possibly defunct?
 import CodeSnippet from "@/components/panels/add-ons/CodeSnippet";
 
 export default function Page() {

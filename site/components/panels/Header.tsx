@@ -4,16 +4,17 @@ import { Tooltip } from "react-tooltip";
 import { useRouter } from "next/navigation";
 import WelcomeModal from "../welcome/WelcomeModal";
 
+const shineEffect = 'm-5 p-5 bg-hc-primary-dull text-2xl text-hc-secondary border border-hc-primary-dull/80 rounded-xl text-center mx-auto focus:outline-none focus:ring focus:ring-slate-500/50 focus-visible:outline-none focus-visible:ring focus-visible:ring-slate-500/50 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms]'
 export function AuthStateButton(){
   const session = useSession();
   const router = useRouter();
   return (
     <div className = "flex items-center">
       { session.status === "authenticated" ? 
-         <button onClick={() => router.push("/map")} className="m-5 p-5 bg-hc-primary-dull rounded-xl text-center mx-auto">
-            <h1 className="text-2xl">enter the gallery</h1>
+         <button onClick={() => router.push("/map")} className={shineEffect}>
+            <h1>enter the gallery</h1>
         </button>
-       : <WelcomeModal/>
+       : <WelcomeModal props={shineEffect}/>
       }
       </div>
   )
