@@ -69,7 +69,7 @@ export default function UnauthenticatedWelcomeMessage() {
 
         
         <button className="w-full bg-hc-primary font-bold text-white rounded-full mt-10 text-center py-3 text-4xl" onClick={() => signIn(undefined, {
-          callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/onboarding`
+          callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/onboarding`, team: "T0266FRGM" 
         })}>Log in with Slack</button>
       </Transition>
     </div>

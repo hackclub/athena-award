@@ -4,6 +4,8 @@ import WelcomeModal from "@/components/welcome/WelcomeModal"
 import { signIn } from "next-auth/react"
 import { Header, AuthStateButton } from "@/components/panels/Header"
 import { useSession } from "next-auth/react";
+import Marquee from "react-fast-marquee";
+import Painting from "@/components/panels/Painting";
 
 const steps = [
   {title: "Build three projects 💻",
@@ -71,6 +73,30 @@ const FAQ = [
     answer: "Join the Hack Club Slack!"
   }
 ]
+
+const prizes = [
+  {
+    image: "https://cloud-c1gqq7ttf-hack-club-bot.vercel.app/0sticker_pile_2.png",
+   description: "Stickers"
+  },
+  {
+    image: "https://cloud-c1gqq7ttf-hack-club-bot.vercel.app/0sticker_pile_2.png",
+   description: "2 Stickers 2 Furious"
+  },
+  {
+    image: "https://cloud-c1gqq7ttf-hack-club-bot.vercel.app/0sticker_pile_2.png",
+   description: "The 3 Sticker Problem"
+  },
+  {
+    image: "https://cloud-c1gqq7ttf-hack-club-bot.vercel.app/0sticker_pile_2.png",
+   description: "Stickers 4 U"
+  },
+  {
+    image: "https://cloud-c1gqq7ttf-hack-club-bot.vercel.app/0sticker_pile_2.png",
+   description: "5ticker5"
+  },
+]
+
 
 function Polaroid({image, caption, props}: {image: string, caption: string, props?: string}){
   return (
@@ -142,10 +168,15 @@ export default async function Index() {
               </div>
         </div>
 
-        <div className="w-screen h-screen p-12 sm:p-16 bg-hc-primary-dull">
+        <div className="w-screen h-screen py-12 sm:py-16 bg-hc-primary-dull flex flex-col">
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center">
                   Prizes
           </h1>
+          <Marquee className = "my-8 grow" pauseOnHover={true}>
+            {prizes.map((prize, index) => 
+              <Painting key={index} image={prize.image} description={prize.description}/>
+            )}
+          </Marquee>
         </div>
 
         <div className="w-screen h-full p-12 sm:p-16">
