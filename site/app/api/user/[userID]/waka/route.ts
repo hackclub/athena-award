@@ -1,15 +1,26 @@
 // GET api/user/[userID]/waka
-// Returns Wakatime (Hackatime) from the last six months. TO DO: get an actual date range up.
+// Returns Wakatime (Hackatime) data.
 
-import { NextResponse } from "next/server";
-import { getWakaTimeData } from "@/services/fetchWakaData";
+import { NextResponse, NextRequest } from "next/server";
+import { getWakaTimeData, getWakaTimeProjects } from "@/services/fetchWakaData";
 
-export async function GET(request: Request, { params }: { params: Promise<{userID: string}>}){
+export async function GET(request: NextRequest, { params }: { params: Promise<{userID: string}>}){
+    const searchParams = request.nextUrl.searchParams.get("query")
     const userIDs = (await params).userID
     try {
-        const response = (await getWakaTimeData(userIDs))
-        if (response.status === 200){
-            return NextResponse.json(await response.json()) //argh
+        let response
+        switch (searchParams) {
+            case "time":
+                response = (await getWakaTimeData(userIDs))
+                break;
+            case "projects":
+                response = (await getWakaTimeProjects(userIDs))
+                break;
+            default:
+                return NextResponse.json({error: "Invalid query"}, { status: 404})
+        }
+        if (response!.status === 200){
+            return NextResponse.json((await response!.json())) //argh
         } else {
             return NextResponse.json({ error: "User is not authed." }, { status: 403 })
         }

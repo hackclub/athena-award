@@ -2,17 +2,11 @@
 import { shineEffect } from "./Header"
 export default function Painting({image, description}: {image: string, description: string}){
     return (
-        <div className={`h-72 flex flex-col items-center justify-center`}> {/* maybe add small random rotations? */}
-            <svg width="100%" height="100%" viewBox="0 0 341 235" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="20" width="85%" height="80%" fill="white"/>
-                <image x="30" y="20" width="85%" height="80%" preserveAspectRatio="none" xlinkHref={image}></image>
-                <path fillRule="evenodd" clipRule="evenodd" d="M25.1938 36.9067L12.2657 15.6968L37.6625 0.627096L95.7192 10.1556L273.356 15.0973L314.603 5.64044L335.639 32.0011L322.459 53.9923L322.105 194.194L340.415 214.898L322.346 231.956L294.724 220.198L46.7835 219.45L34.8987 234.253L9.8416 232.369L0.747362 215.15L17.7963 203.06L25.1938 36.9067ZM55.925 27.5461L41.6805 41.3812L39.9304 174.648L46.4993 191.51L293.864 198.002L304.999 182.34L307.604 44.7156L295.714 32.9659L55.925 27.5461Z" fill="url(#paint0_radial_296_193)"/>
-                <defs>
-                <radialGradient id="paint0_radial_296_193" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(174.435 122.319) rotate(105.184) scale(287.25 354.802)">
-                <stop offset="0.345" stopColor="#F4BF4F"/>
-                <stop offset="1" stopColor="#EC3750"/>
-                </radialGradient>
-                </defs>
+        <div className={`h-80 flex flex-col items-center justify-center`}> {/* maybe add small random rotations? */}
+            <svg width="100%" height="100%" viewBox="0 0 202 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="85%" height="85%" fill="white"/>
+            <image x="10" y="10" width="85%" height="85%" xlinkHref={image}></image>
+            <path fillRule="evenodd" clipRule="evenodd" d="M179.544 164.648L196.305 158.93L201.89 135.674L190.944 128.071L190.944 39.5193L195.847 24.7221L189.345 10.5846L173.664 7.05647L156.662 9.10768L39.0272 9.10768L23.9131 0.000131933L5.09624 7.05647L-1.30231e-06 27.0495L8.6244 39.5193L8.6244 128.071L-1.30231e-06 137.207L5.09624 158.93L24.6972 167L42.8363 158.93L165.624 158.93L179.544 164.648ZM16.8446 135.674L29.1683 147.973L165.624 147.973L177.948 135.674L177.948 31.2456L165.624 18.9467L29.1683 18.9467L16.8446 31.2456L16.8446 135.674Z" fill="#F4BF4F"/>
             </svg>
             <span className = {`hidden sm:inline mx-auto w-max max-w-full px-5 my-4 py-2 ${shineEffect("bg-[#F4BF4F] border-[#F4BF4F]/80 rounded-sm text-gray-600")}`}>
                 <span className="-pl-2 pr-2"> • </span>

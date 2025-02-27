@@ -9,7 +9,7 @@ import Painting from "@/components/panels/Painting";
 
 const steps = [
   {title: "Build three projects 💻",
-    description: "Download the WakaTime extension for your code editor, and spend 80 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
+    description: "Spend 80 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
   },
   {title: "Ship your projects ⛵",
     description: "Share your projects with our community of teen makers. Sign in with the Hack Club Slack and ship them! Earn artifacts for each project shipped to the gallery."
@@ -66,7 +66,7 @@ const FAQ = [
   },
   {
     question: "How does the trip to New York work?",
-    answer: "Those who complete the Athena Award will become eligible for a travel stipend (subject to availability) to cover their flights and accommodation to New York."
+    answer: "Those who complete the Athena Award will become eligible for a travel stipend (subject to availability) to cover their flights to the hackathon in New York."
   },
   {
     question: "How can I get help on my projects?",
