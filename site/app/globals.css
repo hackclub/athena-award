@@ -88,3 +88,7 @@ a {
   border-radius: 10px;
   border: 7px none #240f0f;
 }
+
+#content > * {
+  @apply pointer-events-auto
+}
