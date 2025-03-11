@@ -112,7 +112,7 @@ export default async function Index() {
 
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull">
-      <div className="pointer-events-auto w-screen h-screen fixed top-0 left-0 z-[1] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
+      <div className="pointer-events-none w-screen h-screen fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <Background shouldAnimate />
       </div>
       <div className="relative z-10 pointer-events-none">
@@ -123,7 +123,9 @@ export default async function Index() {
             <img className = "my-auto mx-auto" src = "/logo.svg"/>
             {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
             <p className="text-xl text-center">Venture forth into the unknown...</p>
+            <div className = "pointer-events-auto">
               <AuthStateButton/>
+            </div>
           </div>
           <div>
             <h2 className="text-hc-secondary">get started</h2><br/><br/>

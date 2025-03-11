@@ -8,7 +8,6 @@ import { ProfileIsOpenContext } from "../island/Modal";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
-import ProjectSubmissionModal from "./ProjectSubmissIonModal";
 
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
@@ -239,8 +238,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
   const session = useSession();
 
-  const [submitIsOpen, setSubmitIsOpen] = useState(false)
-
   return (
     <>
     <div>
@@ -315,8 +312,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                 </div>
                 </div>
               <div className = "my-5">
-                <button className={`flex gap-2 mt-3 p-3 transition duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ () => {setSubmitIsOpen(true)} }>
-                Submit Project
+                <button className={`flex gap-2 mt-3 p-3 transition duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
+                <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}`}>Submit Project</a>
                 </button>
               </div>
             </div>            
@@ -349,7 +346,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     ? <Loading/> 
     : <Unauthenticated/> }
     </div>
-    <ProjectSubmissionModal submitIsOpen={submitIsOpen} setSubmitIsOpen={setSubmitIsOpen}/>
     </>
   )
 }
