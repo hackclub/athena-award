@@ -34,7 +34,7 @@ export function Waka(){
     }
 
     const useableData = (data as any)["data"]
-    const hasAchievedTime = useableData["total_seconds"] / 2880 > 100
+    const hasAchievedTime = useableData["total_seconds"] / 1080 > 100
 
     return (
         <div>
@@ -43,13 +43,13 @@ export function Waka(){
                 <Tooltip id="waka_progress" place="left" className="z-10"/>
                 <div data-tooltip-id="waka_progress" data-tooltip-content={
                     useableData["human_readable_total"] + " or " + 
-                    Math.floor(useableData["total_seconds"] / 2880) + "%"
+                    Math.floor(useableData["total_seconds"] / 1080) + "%"
                     } className= "rounded-xl h-8 bg-hc-primary" style= {
                         {
-                            width: hasAchievedTime ? "100%" : Number(useableData["total_seconds"]) / 2880 + "%"
+                            width: hasAchievedTime ? "100%" : Number(useableData["total_seconds"]) / 1080 + "%"
                         }}/>
             </div>
-            That's about {Math.floor(useableData["total_seconds"] / 2880) + "%"} of the 80 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}
+            That's about {Math.floor(useableData["total_seconds"] / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}
         </div>
          )
 }

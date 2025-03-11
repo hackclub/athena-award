@@ -9,7 +9,7 @@ import Painting from "@/components/panels/Painting";
 
 const steps = [
   {title: "Build three projects 💻",
-    description: "Spend 80 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
+    description: "Spend 30 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
   },
   {title: "Ship your projects ⛵",
     description: "Share your projects with our community of teen makers. Sign in with the Hack Club Slack and ship them! Earn artifacts for each project shipped to the gallery."
@@ -213,7 +213,7 @@ export default async function Index() {
         </div>
         <div className="w-screen h-full sm:h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">
           <h1 className = "text-hc-secondary text-2xl sm:text-4xl text-center grow">
-            3 projects. 80 hours.
+            3 projects. 30 hours.
           </h1>
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center grow italic">
                   What will you build?

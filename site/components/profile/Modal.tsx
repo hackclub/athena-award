@@ -118,7 +118,7 @@ export default function Profile(){
                         <Fragment>
                         <div>
                             <div className = "flex md:flex-row flex-col gap-8">
-                                <img className = "rounded-full w-4/12 mx-auto md:m-0" src = {`${session.data.user!.image}`}></img>
+                                <img className = "rounded-full w-3/12 mx-auto md:m-0" src = {`${session.data.user!.image}`}></img>
                                 <div>
                                     <h1 className="text-lg sm:text-2xl text-hc-primary">Personal Information</h1>
                                 <p>
@@ -180,8 +180,10 @@ export default function Profile(){
                     </Tab.Panel>
                     <Tab.Panel className = "w-full h-full p-10">
                       <h2 className="text-4xl text-hc-primary font-bold mb-3">Progress</h2>
-                      <Progress/>
-                      <Waka/>
+                      <div className = "flex flex-col gap-4">
+                        <Progress/>
+                        <Waka/>
+                      </div>
                     </Tab.Panel>
                     <Tab.Panel className = "w-full h-full p-10">
                       <h2 className="text-4xl text-hc-primary font-bold mb-3">Achievements</h2>
