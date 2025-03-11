@@ -1,3 +1,4 @@
+// possibly defunct
 import React, { MouseEventHandler, TouchEventHandler, useState } from 'react';
 
 export default function DraggableMap() {

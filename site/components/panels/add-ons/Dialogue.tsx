@@ -5,7 +5,7 @@ export default function DialogueButton({user, children}: {user: string, children
     return (
         <div>
             <div className = "flow-root my-2">
-                <button className="float-right border border-2 border-hc-primary/80 p-2 rounded-xl bg-hc-primary/80 text-white" onClick={() => setRevealReply(true)}>
+                <button className="float-right border-2 border-hc-primary/80 p-2 rounded-xl bg-hc-primary/80 text-white" onClick={() => setRevealReply(true)}>
                         {user}
                 </button>
             </div>

@@ -32,11 +32,32 @@ The folder name indicates the route (/adventure is added by default) and index.m
 
 You can also create interactive components in the `components/panels/add-ons` directory. Import them on your MDX file the way you would any other React component and use however you'd like!
 
+## `.env` File Explanation
+
+In the `/site` folder, you'll see a file called `.env.example`. When you develop locally, you'll need to fill this out (in `.env`) as appropriate. Here's an explanation of what each environment variable represents.
+
+
+| Variable name | Description | 
+| ------------- | ----------- |
+| `AUTH_SECRET` | A randomly generated string that is used to encode user secrets 
+| `AUTH_URL`    | [will be updated] A URL where your site is accessible, with "/api/auth" appended |
+| `SLACK_CLIENT_ID` | Client ID of the Slack App used for OAuth aka the "Sign in with Slack" function | 
+| `SLACK_CLIENT_SECRET` | Client secret of the Slack App used for Oauth aka the "Sign in with Slack" function |  
+| `AIRTABLE_API_KEY` | Technically now a PAT (personal access token). The token has to have read and write access to the base corresponding to the `AIRTABLE_BASE_ID` |
+| `AIRTABLE_BASE_ID` | ID of the main 'Athena Awards' Airtable base[^1] |
+| `NEXT_PUBLIC_BASE_URL` | [will be updated] The base URL where your site is accessible |
+
+[^1]: what i would never develop using the production db idk what you're talking about
+
 ## Slack Contributions
 
-In order to test Slack OAuth, you will need a public-facing `https` URL to enter as the redirect URL. You can use any of the following two methods to obtain one for development, or another that works for you. 
+Note that while the following isn't strictly necessary to get the site up and running locally, a significant proportion of the site is gated behind various forms of authentication and will **not** work should you set this up incorrectly.
+
+In order to test Slack OAuth, you will need a public-facing `https` URL to enter as the redirect URL (Slack requires this!). You can use any of the following two methods to obtain one for development, or another that works for you. 
 
 ### 1. ngrok
+
+ngrok allows you to access your locally running development environment from the web.
 
 1. Create an [ngrok account](https://download.ngrok.com/) and follow the instructions to install it on your device. 
 2. Complete the onboarding stage and deploy your app on a static domain. The command you run should look something like this:
@@ -45,7 +66,7 @@ In order to test Slack OAuth, you will need a public-facing `https` URL to enter
 
 ### 2. zrok
 
-Zrok has more lenient traffic restrictions than ngrok.
+Zrok is similar to ngrok, but has more lenient traffic restrictions than ngrok.
 
 1. Create a [zrok account](https://docs.zrok.io/docs/getting-started/) on the public zrok instance.
 2. Download and install [zrok](https://docs.zrok.io/docs/getting-started/#installing-the-zrok-command) for your device.

@@ -3,12 +3,12 @@ import { Fragment, useContext, useState } from "react";
 import Background from "../landscape/Background";
 import { AnimatePresence, motion, Variant, Variants } from "motion/react"
 import Image from "next/image";
-import { Dialog, Tab, Transition } from "@headlessui/react";
 import { Tooltip } from "react-tooltip";
 import { ProfileIsOpenContext } from "../island/Modal";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
+import ProjectSubmissionModal from "./ProjectSubmissIonModal";
 
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
@@ -227,6 +227,7 @@ const slidingParentVariant: Variants = {
   }
 }
 
+
 export default function MapMenu({ module, progress = compositeUserModuleData, setModule }:{ module: string, progress?: UserModuleData[], setModule: (module: string) => void }) {
   const [fullscreen, setFullscreen] = useState(false);
 
@@ -238,10 +239,13 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
   const session = useSession();
 
+  const [submitIsOpen, setSubmitIsOpen] = useState(false)
+
   return (
+    <>
     <div>
     { session.status === "authenticated" ? 
-    <div className={`w-screen h-screen relative ${baseModuleData.visuals.accents.primary}`}>
+    <div className={`w-screen h-screen relative ${baseModuleData.visuals.accents.primary}`}>   
       <div className="fixed w-screen h-screen">
         <AnimatePresence>
           {fullscreen && (
@@ -300,16 +304,22 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   <StageChecklistItem key={i} title={stage.name} complete={stage.complete} delay={i} module={module} />
                 ))}
               </motion.div>
-
-              <h2 className="text-3xl">Completion Rewards</h2>
-              <div className={`flex gap-2 mt-3 p-3 transition duration-700 ${baseModuleData!.visuals.accents.secondary}`}>
-                <div className="size-20 rounded-md bg-red-800 shrink-0 flex items-center justify-center text-center">to be an image</div>
-                <div className="">
-                  <div className="text-xl">Lorem ipsum!</div>
-                  <div>This is a super cool and intellectually engaging description! Go out there and change the world!</div>
+              <div className = "my-5">
+                <h2 className="text-3xl">Completion Rewards</h2>
+                <div className={`flex gap-2 mt-3 p-3 transition duration-700 ${baseModuleData!.visuals.accents.secondary}`}>
+                  <div className="size-20 rounded-md bg-red-800 shrink-0 flex items-center justify-center text-center">to be an image</div>
+                  <div className="">
+                    <div className="text-xl">Lorem ipsum!</div>
+                    <div>This is a super cool and intellectually engaging description! Go out there and change the world!</div>
+                  </div>
                 </div>
+                </div>
+              <div className = "my-5">
+                <button className={`flex gap-2 mt-3 p-3 transition duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ () => {setSubmitIsOpen(true)} }>
+                Submit Project
+                </button>
               </div>
-            </div>
+            </div>            
             <div className="col-span-full lg:col-span-3">
               <h1 className="text-white font-bold text-5xl italic mb-3">{module}</h1>
               <motion.p variants={slidingUpVariant} transition={{ delay: 0.45 }} initial='hidden' animate='visible' className="text-white leading-normal text-lg italic font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sed consectetur nemo? Quod veniam ab illo quia architecto dignissimos, aliquam explicabo voluptatum mollitia beatae porro itaque possimus animi molestiae natus!</motion.p>
@@ -339,6 +349,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     ? <Loading/> 
     : <Unauthenticated/> }
     </div>
+    <ProjectSubmissionModal submitIsOpen={submitIsOpen} setSubmitIsOpen={setSubmitIsOpen}/>
+    </>
   )
 }
 

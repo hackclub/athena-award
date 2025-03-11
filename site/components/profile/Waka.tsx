@@ -6,7 +6,7 @@ import { Tooltip } from "react-tooltip";
 
 export function Waka(){
     const session = useSession();
-    const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/waka`, fetcher)  
+    const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/waka?query=time`, fetcher)  
     if (error){ 
         if (error.status === 403){ // handle user not having public data
             return (

@@ -5,7 +5,7 @@ import { signIn, useSession } from "next-auth/react";
 import UnauthenticatedWelcomeMessage from './UnauthenticatedWelcomeMessage';
 import { useRouter } from 'next/navigation';
 
-export default function WelcomeModal() {
+export default function WelcomeModal({props}: {props: string}){
   const session = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(session.status === 'authenticated');
@@ -24,7 +24,7 @@ export default function WelcomeModal() {
 
   return (
     <>
-      <button className="m-5 p-5 bg-hc-primary-dull mx-auto rounded-xl text-center text-hc-secondary" onClick={() => setIsOpen(true)}><h1 className="text-2xl">start hacking</h1></button>
+      <button className={props} onClick={() => setIsOpen(true)}><h1 className="text-2xl">start hacking</h1></button>
       <Transition
         show={isOpen}
         enter="transition duration-100 ease-out"

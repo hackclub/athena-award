@@ -13,6 +13,11 @@ export const config = {
       clientId: process.env.SLACK_CLIENT_ID!,
       clientSecret: process.env.SLACK_CLIENT_SECRET!,
       checks: ['nonce'],
+      authorization: {
+        params: {
+          team: "T0266FRGM"
+        }
+      }
     }),
   ],
   callbacks: {
