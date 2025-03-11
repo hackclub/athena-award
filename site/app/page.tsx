@@ -111,11 +111,13 @@ function Polaroid({image, caption, props}: {image: string, caption: string, prop
 export default async function Index() {
 
   return (
-    <main className="w-screen h-full relative flex flex-col justify-center items-center">
-      <div className="w-screen h-screen fixed top-0 left-0 z-[1] overflow-hidden bg-[url(/ponte-salario.jpg)] bg-cover blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light"/>
-      <div className="relative z-10">
-      <Header/>
-        <div className="flex flex-col w-screen h-screen justify-center items-center px-8 gap-6 text-hc-secondary italic">
+    <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull">
+      <div className="pointer-events-auto w-screen h-screen fixed top-0 left-0 z-[1] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
+        <Background shouldAnimate />
+      </div>
+      <div className="relative z-10 pointer-events-none">
+        <Header/>
+        <div className="pointer-events-none flex flex-col w-screen h-screen justify-center items-center px-8 gap-6 text-hc-secondary italic">
           <div className="grow"/> {/* i cbf finding a better solution */}
           <div className = "grow">
             <img className = "my-auto mx-auto" src = "/logo.svg"/>
