@@ -1,46 +1,30 @@
-import { glyphs } from "@hackclub/icons";
+// TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
-export type AdventureChapter = 'discovery' | 'code'
-
-interface BaseAction {
-  title: string,
-  /**
-   * Defaults to sparkles ("rep").
-   */
-  icon?: keyof typeof glyphs,
-  route: string,
-  x: number,
-  y: number
-}
-
-export interface SidePanelActionData extends BaseAction {
-  route: "side-panel",
-
-}
-
-export interface MapTransitionActionData extends BaseAction {
-  /**
-   * Corresponds to a real action on the site, routed as a page prefixed by /adventure
-   * 
-   * Ex. `/discovery/getting-started` would look like `http://localhost:3000/adventure/discovery/getting-started`
-   */
-  route: `/${AdventureChapter}/${string}`,
-}
-
-export type ActionData = SidePanelActionData | MapTransitionActionData;
-
-export type Page = {
-  title: string,
+export interface UserStageData {
+  name: string,
   id: string,
-  options?: {
-    "bgColor": string
-  },
-  layers: string[],
-  actions: ActionData[]
+  complete: boolean,
+};
+
+export interface UserModuleData {
+  moduleName: string
 }
 
-export type StageConfiguration = {
-  [name: string]: Page[],
-  discovery: Page[],
-  code: Page[]
+export interface BaseModule {
+  moduleName: string,
+  visuals: {
+    name: string,
+    artist: string,
+    src: string // the background image
+    scene: `https://prod.spline.design/${string}` // for the interactive worldly component
+    accents: {
+      primary: string,
+      secondary: string,
+    }
+  },
+  completionRewards: {
+    name: string,
+    id: string,
+    description: string,
+  }[]
 }

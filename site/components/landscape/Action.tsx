@@ -5,24 +5,13 @@ import { useRouter } from "next/navigation";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import SidePanel from "../panels/layout/SidePanel";
 import Icon, { glyphs } from "@hackclub/icons";
-import { AdventureChapter } from "@/types/Pathways";
 
-interface MapTransitionProps {
-  route: `/${AdventureChapter}/${string}`,
-  title: string;
-}
-
-interface SidePanelProps {
+interface ActionProps {
   route: 'side-panel';
   title: string
   children: ReactNode
-}
 
-type ActionProps = (MapTransitionProps | SidePanelProps) & {
-  
-  /**
-   * Enables following of a specific layer in mouse movement
-   */
+  // follows a specific layer
   follow: {
     src: number,
     basePosition: {
@@ -44,17 +33,9 @@ export default function Action(props: ActionProps) {
   const [win, setWindow] = useState<Window>(null!); // this + the useeffect is to silence "window is not defined" errors
 
   const handleClick = () => {
-    switch (route) {
-      case "side-panel": {
-        setTimeout(() => {
-          setOpenPanel(true);
-        }, 0);
-      }
-      break;
-      default: {
-        router.push(`/adventure/${props.route}`);
-      }
-    }
+    setTimeout(() => {
+      setOpenPanel(true);
+    }, 0);
   }
 
   useEffect(() => {
@@ -90,14 +71,12 @@ export default function Action(props: ActionProps) {
         <span className="text-white whitespace-nowrap text-lg uppercase">{props.title}</span>
       </Transition>
     </button>
-    { route === 'side-panel' && (
       <SidePanel
         openPanel={openPanel} setOpenPanel={setOpenPanel}
         title={props.title}
       >
         {props.children}
       </SidePanel>
-    )}
     </>
 
   )

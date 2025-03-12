@@ -59,7 +59,7 @@ export default function SidePanel({
                     </div>
 
                     <div className="mt-4">
-                      <ActionSegue />
+                      <button onClick={() => setOpenPanel(false)}>Close</button>
                     </div>
                   </div>
 

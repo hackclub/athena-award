@@ -1,5 +1,4 @@
 import Background from "@/components/landscape/Background"
-import Layers from "@/components/landscape/Layers"
 import WelcomeModal from "@/components/welcome/WelcomeModal"
 import { signIn } from "next-auth/react"
 import { Header, AuthStateButton } from "@/components/panels/Header"
@@ -123,7 +122,7 @@ export default async function Index() {
             <img className = "my-auto mx-auto" src = "/logo.svg"/>
             {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
             <p className="text-xl text-center">Venture forth into the unknown...</p>
-              <AuthStateButton/>
+              <div className="pointer-events-auto"><AuthStateButton/></div>
           </div>
           <div>
             <h2 className="text-hc-secondary">get started</h2><br/><br/>
@@ -214,9 +213,9 @@ export default async function Index() {
             3 projects. 80 hours.
           </h1>
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center grow italic">
-                  What will you build?
+            What will you build?
           </h1>
-          <AuthStateButton/>
+          <div className="pointer-events-auto"><AuthStateButton/></div>
           </div>    
       </div>
   

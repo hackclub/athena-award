@@ -34,16 +34,16 @@ export default function Page(){
         <Header/>
 
         <div className="flex flex-col w-screen h-full lg:h-screen items-center justify-center p-16 sm:p-24 gap-6 text-hc-secondary">
-                <h1 className="text-3xl sm:text-5xl text-center">Welcome to the <i>Athena Award</i></h1>
-                <div className="text-left pt-8 mx-auto flex flex-col gap-4">
-                    { steps.map((step, index) => 
-                    <div key={index} className="pb-2">
-                        <h1 className="text-2xl sm:text-4xl text-left">{step.step}</h1>
-                        <p className="text-left text-lg py-1 sm:text-xl">{step.description}</p>
-                    </div>) }
-                </div>
-                <a href = "/map" className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-2xl">ready? -{'>'}</h1></a>
-                </div>
+            <h1 className="text-3xl sm:text-5xl text-center">Welcome to the <i>Athena Award</i></h1>
+            <div className="text-left pt-8 mx-auto flex flex-col gap-4">
+                { steps.map((step, index) => 
+                <div key={index} className="pb-2">
+                    <h1 className="text-2xl sm:text-4xl text-left">{step.step}</h1>
+                    <p className="text-left text-lg py-1 sm:text-xl">{step.description}</p>
+                </div>) }
+            </div>
+            <a href = "/map" className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-2xl">ready? -{'>'}</h1></a>
+            </div>
         </div>
     </main>
     : session.status === "loading" 
