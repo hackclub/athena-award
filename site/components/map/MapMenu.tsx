@@ -116,7 +116,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
         {!fullscreen && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={` backdrop-blur-md h-screen w-screen p-24 ${baseModuleData.visuals.accents.tertiary} transition-all`}>
-              <div className="text-2xl playfair-display italic text-white font-bold">Athena Award</div>
+              <div className="text-2xl uppercase text-white font-bold mb-2">Athena Award</div>
               <h1 className="text-6xl uppercase italic text-white font-bold">The Gallery</h1>
               <motion.div className="grid grid-cols-5 gap-10 py-24 items-center">
                 <ProfileModal />
