@@ -8,7 +8,7 @@ import Painting from "@/components/panels/Painting";
 
 const steps = [
   {title: "Build three projects 💻",
-    description: "Spend 80 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
+    description: "Spend 30 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
   },
   {title: "Ship your projects ⛵",
     description: "Share your projects with our community of teen makers. Sign in with the Hack Club Slack and ship them! Earn artifacts for each project shipped to the gallery."
@@ -111,7 +111,7 @@ export default async function Index() {
 
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull">
-      <div className="pointer-events-auto w-screen h-screen fixed top-0 left-0 z-[1] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
+      <div className="pointer-events-none w-screen h-screen fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <Background shouldAnimate />
       </div>
       <div className="relative z-10 pointer-events-none">
@@ -122,7 +122,9 @@ export default async function Index() {
             <img className = "my-auto mx-auto" src = "/logo.svg"/>
             {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
             <p className="text-xl text-center">Venture forth into the unknown...</p>
-              <div className="pointer-events-auto"><AuthStateButton/></div>
+            <div className = "pointer-events-auto">
+              <AuthStateButton/>
+            </div>
           </div>
           <div>
             <h2 className="text-hc-secondary">get started</h2><br/><br/>
@@ -210,7 +212,7 @@ export default async function Index() {
         </div>
         <div className="w-screen h-full sm:h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">
           <h1 className = "text-hc-secondary text-2xl sm:text-4xl text-center grow">
-            3 projects. 80 hours.
+            3 projects. 30 hours.
           </h1>
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center grow italic">
             What will you build?
