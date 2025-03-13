@@ -31,7 +31,7 @@ export interface BaseModule {
 
 export const STAGES = [
   {
-    moduleName: 'Your first project',
+    moduleName: 'Start hacking',
     description: "This is the first project you will be working on. It is a great way to get started with the Athena Award.\nDon't know where to start? Explore the painting for resources!",
     visuals: {
       name: 'Vista from a Grotto',

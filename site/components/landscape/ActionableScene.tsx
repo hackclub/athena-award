@@ -6,7 +6,7 @@ import { Fragment, useState } from "react";
 import Action from "./Action";
 import { AnimatePresence, motion } from "motion/react";
 
-export default function ActionableScene({ shouldAnimate = false, sourceScene = 'https://prod.spline.design/0vuYDA6geatVNNiC/scene.splinecode', module = 'Your first project', setFullscreen }:{ shouldAnimate?: boolean, sourceScene?: string, module: typeof STAGES[number]['moduleName'], setFullscreen: (b: boolean) => void }) {
+export default function ActionableScene({ shouldAnimate = false, sourceScene = 'https://prod.spline.design/0vuYDA6geatVNNiC/scene.splinecode', module = 'Start hacking', setFullscreen }:{ shouldAnimate?: boolean, sourceScene?: string, module: typeof STAGES[number]['moduleName'], setFullscreen: (b: boolean) => void }) {
   const actions = STAGES.find(stage => stage.moduleName === module)!.actions;
   const [openPanel, setOpenPanel] = useState(false);
 
@@ -34,10 +34,10 @@ export default function ActionableScene({ shouldAnimate = false, sourceScene = '
             </Action>
           </motion.div>
         ))}
-      </AnimatePresence>
-      <button onClick={() => setFullscreen(false)} className="playfair-display italic font-bold absolute right-16 top-16 text-white text-2xl">
+      {<button onClick={() => setFullscreen(false)} className="playfair-display italic font-bold absolute right-16 top-16 text-white text-2xl">
         back to map -{'>'}
-      </button>
+      </button>}
+      </AnimatePresence>
     </div>
   )
 }
