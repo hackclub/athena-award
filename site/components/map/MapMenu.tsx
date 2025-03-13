@@ -8,6 +8,7 @@ import { ProfileIsOpenContext } from "../island/Modal";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
+import { STAGES } from "@/types/Pathways";
 
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
@@ -24,7 +25,7 @@ interface BaseStage {
 
 interface UserModuleData {
   moduleName: string,
-  stages: UserStageData[],
+  // stages: UserStageData[],
 }
 
 interface BaseModule {
@@ -44,7 +45,7 @@ interface BaseModule {
     id: string,
     description: string,
   }[]
-  stages: BaseStage[],
+  // stages: BaseStage[],
 }
 
 const exampleData: UserModuleData = {
@@ -66,44 +67,7 @@ const compositeUserModuleData: UserModuleData[] = [
 /**
  * This will always be hardcoded data; the user's progress is indicated by User{item}Data while to-be-hardcoded information is represented as Base{item}.
  */
-const compositeModuleStructure: BaseModule[] = [
-  {
-    moduleName: 'Your first project',
-    visuals: {
-      name: 'Vista from a Grotto',
-      artist: 'David Teniers the Younger',
-      src: '/vista.jpg', // the background image
-      scene: 'https://prod.spline.design/0vuYDA6geatVNNiC/scene.splinecode', // for the interactive worldly component
-      accents: {
-        primary: 'bg-rose-950',
-        secondary: 'bg-red-900/30',
-      }
-    },
-    completionRewards: [{
-      name: 'Lorem ipsum!',
-      id: 'lorem-ipsum',
-      description: 'This is a really cool reward! Go out there and change the world.',
-    }],
-  },
-  {
-    moduleName: 'Your second project',
-    visuals: {
-      name: 'The Ponte Salario',
-      artist: 'Hubert Robert',
-      src: '/ponte-salario.jpg', // the background image
-      scene: 'https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode', // for the interactive worldly component
-      accents: {
-        primary: 'bg-sky-950',
-        secondary: 'bg-sky-900/30',
-      }
-    },
-    completionRewards: [{
-      name: 'Lorem ipsum!',
-      id: 'lorem-ipsum',
-      description: 'This is a really cool reward! Go out there and change the world.',
-    }],
-  }
-]
+
 
 const slidingUpVariant: Variants = {
   hidden: {
@@ -132,7 +96,7 @@ const slidingParentVariant: Variants = {
 export default function MapMenu({ module, progress = compositeUserModuleData, setModule }:{ module: string, progress?: UserModuleData[], setModule: (module: string) => void }) {
   const [fullscreen, setFullscreen] = useState(false);
 
-  const baseModuleData = compositeModuleStructure.find(m => m.moduleName === module)!;
+  const baseModuleData = STAGES.find(m => m.moduleName === module)!;
   const userModuleData = progress.find(m => m.moduleName === module)!;
   const currModuleIdx = progress.findIndex(p => p.moduleName === module)
   const nextModule = progress[(currModuleIdx + 1) % progress.length].moduleName
@@ -149,7 +113,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
         <AnimatePresence>
           {fullscreen && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 1.5} }} exit={{ opacity: 0, transition: { delay: 0 } }}>
-              <Background shouldAnimate={fullscreen} />
+              <Background shouldAnimate={fullscreen} sourceScene={baseModuleData.visuals.scene} />
               <motion.div className="fixed z-10 text-white">
                 <div className="fixed top-16 right-16">
                   <button onClick={() => setFullscreen(false)}>
@@ -187,24 +151,14 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   <span className="opacity-0 group-hover:opacity-100">Click to go</span>
                 </div>
               </motion.div>
-              <motion.div key={`${module}-progress`} variants={slidingUpVariant} transition={{ delay: 0.2 }} initial='hidden' animate='visible'  className="mt-5 flex gap-2 w-full items-center">
-                <div className="w-full h-3 rounded-full bg-white/40">
-                  <div className="h-full bg-white rounded-full" style={{
-                    width: `${percentageProgressInThisModule}%`
-                  }}></div>
-                </div>
-                <div className="text-white text-base">{percentageProgressInThisModule}%</div>
-              </motion.div>
             </div>
             <div className="col-span-full lg:col-span-2 text-white">
-              <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl">Modules</motion.h2>
-              <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-[30vh] overflow-scroll my-5 space-y-3 pr-4">
-                {userModuleData.stages.map((stage, i) => (
-                  <StageChecklistItem key={i} title={stage.name} complete={stage.complete} delay={i} module={module} />
-                ))}
+              <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="overflow-scroll my-5 space-y-3 pr-4">
+                <h1 className="text-white font-bold text-5xl italic mb-3">{module}</h1>
+                <motion.p variants={slidingUpVariant} transition={{ delay: 0.45 }} initial='hidden' animate='visible' className="text-white leading-normal text-lg italic font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sed consectetur nemo? Quod veniam ab illo quia architecto dignissimos, aliquam explicabo voluptatum mollitia beatae porro itaque possimus animi molestiae natus!</motion.p>
               </motion.div>
               <div className = "my-5">
-                <h2 className="text-3xl">Completion Rewards</h2>
+                <h2 className="text-3xl text-white italic">Completion Rewards</h2>
                 <div className={`flex gap-2 mt-3 p-3 transition duration-700 ${baseModuleData!.visuals.accents.secondary}`}>
                   <div className="size-20 rounded-md bg-red-800 shrink-0 flex items-center justify-center text-center">to be an image</div>
                   <div className="">
@@ -220,8 +174,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
               </div>
             </div>            
             <div className="col-span-full lg:col-span-3">
-              <h1 className="text-white font-bold text-5xl italic mb-3">{module}</h1>
-              <motion.p variants={slidingUpVariant} transition={{ delay: 0.45 }} initial='hidden' animate='visible' className="text-white leading-normal text-lg italic font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae sed consectetur nemo? Quod veniam ab illo quia architecto dignissimos, aliquam explicabo voluptatum mollitia beatae porro itaque possimus animi molestiae natus!</motion.p>
             </div>
             <div className="col-span-full lg:col-span-2"> {/* TO DO: move this section on top of the image on smaller screens */}
               <div className="w-full h-full relative">
@@ -252,8 +204,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   )
 }
 
-export function StageChecklistItem({ title, link, complete, delay, module }:{ title: string, link?: string, complete: boolean, delay: number, module: typeof compositeModuleStructure[number]['moduleName'] }) {
-  const currModule = compositeModuleStructure.find(m => m.moduleName === module)!;
+export function StageChecklistItem({ title, link, complete, delay, module }:{ title: string, link?: string, complete: boolean, delay: number, module: typeof STAGES[number]['moduleName'] }) {
+  const currModule = STAGES.find(m => m.moduleName === module)!;
   return (
     <motion.div variants={slidingUpVariant} transition={{ delay: 0.5 + (0.09 * delay) }} initial='hidden' animate='visible'  className={`w-full bg-red-900 p-4 flex justify-between items-center ${currModule.visuals.accents.secondary}`}>
       <div className="flex gap-2 items-center">

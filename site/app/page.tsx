@@ -5,6 +5,7 @@ import { Header, AuthStateButton } from "@/components/panels/Header"
 import { useSession } from "next-auth/react";
 import Marquee from "react-fast-marquee";
 import Painting from "@/components/panels/Painting";
+import { STAGES } from "@/types/Pathways";
 
 const steps = [
   {title: "Build three projects 💻",
@@ -112,7 +113,7 @@ export default async function Index() {
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull">
       <div className="pointer-events-none w-screen h-screen fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
-        <Background shouldAnimate />
+        <Background shouldAnimate sourceScene={STAGES[1].visuals.scene} />
       </div>
       <div className="relative z-10 pointer-events-none">
         <Header/>

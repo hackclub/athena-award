@@ -4,8 +4,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Application } from '@splinetool/runtime';
 
-const ThreeJSScene = ({ shouldAnimate = false, sourceScene = 'https://prod.spline.design/0vuYDA6geatVNNiC/scene.splinecode' }) => {
+const ThreeJSScene = ({ shouldAnimate = false, sourceScene }:{ shouldAnimate: boolean, sourceScene: string }) => {
   const mountRef = useRef<HTMLDivElement>(null!);
+  console.log(sourceScene);
   const [app, setApp] = useState<Application | null>(null);
   
   useEffect(() => {
