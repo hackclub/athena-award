@@ -5,10 +5,11 @@ import { useState, useContext } from "react";
 import { ProfileIsOpenContext } from "@/components/island/Modal";
 import ProfileModal from "@/components/profile/Modal";
 import { SessionProvider } from "next-auth/react"
+import { STAGES } from "@/types/Pathways";
 
 export default function Map() {
   // api calls for progress go here
-  const [module, setModule] = useState("Your first project");
+  const [module, setModule] = useState("Your first project" as typeof STAGES[number]['moduleName']);
   const [ profileIsOpen, setProfileIsOpen ] = useState(false)
   return (
     <div className="w-screen h-screen">

@@ -128,8 +128,8 @@ export default async function Index() {
             </div>
           </div>
           <div>
-            <h2 className="text-hc-secondary">get started</h2><br/><br/>
-            <h1 className="text-hc-secondary rotate-90 text-3xl">-{'>'}</h1>
+            <div className="text-hc-secondary playfair-display">get started</div><br/><br/>
+            <div className="text-hc-secondary rotate-90 text-3xl playfair-display">-{'>'}</div>
           </div>  
 
         </div>

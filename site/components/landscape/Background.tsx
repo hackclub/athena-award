@@ -4,9 +4,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Application } from '@splinetool/runtime';
 
-const ThreeJSScene = ({ shouldAnimate = false, sourceScene }:{ shouldAnimate: boolean, sourceScene: string }) => {
+const Background = ({ shouldAnimate = false, sourceScene }:{ shouldAnimate: boolean, sourceScene: string }) => {
   const mountRef = useRef<HTMLDivElement>(null!);
-  console.log(sourceScene);
+  console.log(shouldAnimate);
   const [app, setApp] = useState<Application | null>(null);
   
   useEffect(() => {
@@ -16,7 +16,7 @@ const ThreeJSScene = ({ shouldAnimate = false, sourceScene }:{ shouldAnimate: bo
       const app = new Application(canvas);
       app.load(sourceScene).then(() => {
         if (!shouldAnimate) {
-          app.stop();
+          setTimeout(() => app.stop(), 1000)
         }
       });
 
@@ -26,11 +26,11 @@ const ThreeJSScene = ({ shouldAnimate = false, sourceScene }:{ shouldAnimate: bo
     return () => {
       app?.dispose();
     }
-  }, [shouldAnimate]);
+  }, [shouldAnimate, sourceScene]);
 
   return <div className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto">
     <canvas id="#canvas3d" className="!w-[112vw] !h-[112vh]"/>;
   </div>
 };
 
-export default ThreeJSScene;
+export default Background;

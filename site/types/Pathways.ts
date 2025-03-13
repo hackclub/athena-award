@@ -1,4 +1,4 @@
-// TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
+import { FaPlus } from "react-icons/fa6"
 
 export interface UserStageData {
   name: string,
@@ -32,16 +32,44 @@ export interface BaseModule {
 export const STAGES = [
   {
     moduleName: 'Your first project',
+    description: "This is the first project you will be working on. It is a great way to get started with the Athena Award.\nDon't know where to start? Explore the painting for resources!",
     visuals: {
       name: 'Vista from a Grotto',
       artist: 'David Teniers the Younger',
       src: '/vista.jpg', // the background image
-      scene: 'https://prod.spline.design/0vuYDA6geatVNNiC/scene.splinecode', // for the interactive worldly component
+      // 
+      scene: 'https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode', // for the interactive worldly component
       accents: {
         primary: 'bg-rose-950',
         secondary: 'bg-red-900/30',
+        tertiary: 'bg-red-900/40'
       }
     },
+    actions: [
+      {
+        id: 'stage1-resources',
+        name: 'Resources',
+        x: 30,
+        y: 35,
+        resources: [
+          { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for free stuff in return! There are a bunch of workshops', link: 'https://hackclub.com/ysws' },
+          { name: 'Hack Club Slack', link: 'https://hackclub.com/ysws' },
+        ],
+        icon: 'magnifying-glass',
+      },
+      {
+        id: 'stage1-generator',
+        name: 'Idea Generator',
+        x: 60,
+        y: 70,
+        // component: 'IdeaGenerator',
+        resources: [
+          { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for free stuff in return! There are a bunch of workshops', link: 'https://hackclub.com/ysws' },
+          { name: 'Hack Club Slack', link: 'https://hackclub.com/ysws' },
+        ],
+        icon: 'lightbulb',
+      },
+    ],
     completionRewards: [{
       name: 'Lorem ipsum!',
       id: 'lorem-ipsum',
@@ -50,16 +78,31 @@ export const STAGES = [
   },
   {
     moduleName: 'Your second project',
+    description: 'This is the second project you will be working on. Take things up a notch! Try something new, or become more advanced in something you made before.',
     visuals: {
       name: 'The Ponte Salario',
       artist: 'Hubert Robert',
       src: '/ponte-salario.jpg', // the background image
-      scene: 'https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode', // for the interactive worldly component
+      scene: 'https://prod.spline.design/0vuYDA6geatVNNiC/scene.splinecode', // for the interactive worldly component
       accents: {
         primary: 'bg-sky-950',
         secondary: 'bg-sky-900/30',
+        tertiary: 'bg-sky-950/40'
       }
     },
+    actions: [
+      {
+        id: 'stage2-resources',
+        name: 'Resources',
+        x: 80,
+        y: 60,
+        resources: [
+          { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for free stuff in return! There are a bunch of workshops', link: 'https://hackclub.com/ysws' },
+          { name: 'Hack Club Slack', link: 'https://hackclub.com/ysws' },
+        ],
+        icon: 'magnifying-glass'
+      },
+    ],
     completionRewards: [{
       name: 'Lorem ipsum!',
       id: 'lorem-ipsum',
