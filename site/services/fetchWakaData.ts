@@ -1,11 +1,10 @@
 // requires that public data is enabled
 
-export async function getWakaTimeData(userID: string){
-    const response = await fetch(`https://waka.hackclub.com/api/compat/wakatime/v1/users/${userID}/stats/last_6_months?category=coding`)
-    return (response) // UPDATE THIS TO USE /compat/wakatime/v1/users/{userid}/summaries ? would make life easier
-}
+// beta trial
+const start_date = "2025-03-24"
+const end_date = "2025-03-31"
 
-export async function getWakaTimeProjects(userID: string){
-    const response = await fetch(`https://waka.hackclub.com/api/compat/wakatime/v1/users/${userID}/projects`)
-    return response
+export async function getWakaTimeData(email: string){
+    const response = await fetch(`https://timedump.hackclub.com/api/v1/stats?start_date=${start_date}&user_email=${email}&end_date=${end_date}&api_key=${process.env.HACKATIME_API_KEY}`)
+    return (response) 
 }
