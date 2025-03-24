@@ -2,23 +2,20 @@
 // Returns Wakatime (Hackatime) data.
 
 import { NextResponse, NextRequest } from "next/server";
-import { getWakaTimeData, getWakaTimeProjects } from "@/services/fetchWakaData";
+import { getWakaTimeData } from "@/services/fetchWakaData";
+import { auth } from "@/auth";
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{userID: string}>}){
-    const searchParams = request.nextUrl.searchParams.get("query")
-    const userIDs = (await params).userID
+export async function GET(request: NextRequest, { params }: { params: Promise<{email: string}>}){
+    const session = await auth()
+    const email = request.nextUrl.searchParams.get("query")
+
+    if (!session || email != session!.user.email){
+        return NextResponse.json({error: "Unauthed"}, { status: 401})
+    }
+    
+    let response
     try {
-        let response
-        switch (searchParams) {
-            case "time":
-                response = (await getWakaTimeData(userIDs))
-                break;
-            case "projects":
-                response = (await getWakaTimeProjects(userIDs))
-                break;
-            default:
-                return NextResponse.json({error: "Invalid query"}, { status: 404})
-        }
+        response = (await getWakaTimeData(email!))
         if (response!.status === 200){
             return NextResponse.json((await response!.json())) //argh
         } else {
