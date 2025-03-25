@@ -4,52 +4,52 @@ import { fetcher } from "@/services/fetcher";
 import { Warning } from "../panels/add-ons/Callout";
 import { Tooltip } from "react-tooltip";
 
-export default function Waka(){
-  const session = useSession();
-  const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/waka?query=time`, fetcher)  
-  if (error) { 
-    if (error.status === 403) { // handle user not having public data
-      return (
-        <div>
-          <h2>Time spent coding</h2>
-          <Warning title = "Your WakaTime data isn't public!">
-            WakaTime lets us track how long you've spent on coding. 
-          </Warning>
-          To make your WakaTime data public, head to <a href = "https://waka.hackclub.com">Hack Club's WakaTime instance</a> and follow these steps. 
-            <ul className = "list-decimal list-inside py-2">
-              <li>Use either of the follwing credentials to log in</li>
-              <div className="indent-4"><b>Email/Slack ID: </b> <code>{session.data!.user.email}</code> or <code>{session.data!.slack_id}</code></div>
-              <li>Reset your password by pressing <b>Forgot Password?</b></li>
-              <li>Log in, go to <b>Settings {'>'} Permissions</b> and change <b>Time Range</b> to <code>-1</code>. Save your changes.</li>
-            </ul>
-          Happy hacking!
-        </div>
-      )
+export function Waka(){
+    const session = useSession();
+    const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/waka?query=${session.data!.user.email}`, fetcher)  
+    if (error){ 
+        if (error.status === 404){ // handle user not having a profile
+            return (
+                <div>
+                    <h2>Time spent coding</h2>
+                    <Warning title = "Your Hackatime data isn't public!">
+                        Hackatime lets us track how long you've spent on coding. 
+                    </Warning>
+                        <ul className = "list-decimal list-inside py-2">
+                            <li>To set up Hackatime, head to <a target="_blank"href = "https://hackatime.hackclub.com/">Hackatime</a> and follow these steps. </li>
+                            <li>Make sure you have the Wakatime extension installed in your code editor, then follow the instructions <a target="_blank" href = "https://hackatime.hackclub.com/my/wakatime_setup">here</a></li>
+                            <li>Type a bit in your code editor, then check Hackatime again to see your data appear.</li>
+                        </ul>
+                    Happy hacking!
+                </div>)
+
+        }
+        return (<div>Something went wrong when loading your WakaTime data.</div>)
+    }
+    if (isLoading){
+        return (<div>Loading WakaTime data...</div>)
+
     }
 
-    return (<div>Something went wrong when loading your WakaTime data.</div>)
-  }
+    const useableData = (data as any)
+    console.log(useableData)
+    const hasAchievedTime = useableData / 1080 > 100
 
-  if (isLoading){
-    return (<div>Loading WakaTime data...</div>)
-  }
-
-  const useableData = (data as any)["data"]
-  const hasAchievedTime = useableData["total_seconds"] / 1080 > 100
-
-  return (
-    <div>
-      <div className="text-white text-2xl playfair-display font-semibold"><span className="underline decoration-hc-primary underline-offset-4">{useableData["human_readable_total"]}</span> spent coding</div>
-      <div className="rounded-xl w-full h-8 bg-hc-secondary my-3">
-        <Tooltip id="waka_progress" place="left" className="z-10"/>
-        <div
-          data-tooltip-id="waka_progress"
-          data-tooltip-content={`${useableData["human_readable_total"]} or ${Math.floor(useableData["total_seconds"] / 1080)}%`} 
-          className= "rounded-xl h-8 bg-hc-primary"
-          style={{ width: `${Math.min(100, useableData['total_seconds'] / 1080)}%` }}
-        />
-      </div>
-      That's about {Math.floor(useableData["total_seconds"] / 1080)}% of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}
-    </div>
-  )
+    return (
+        <div>
+            <h2>{ (useableData / 3600).toFixed(2) } hours spent coding</h2>
+            <div className="rounded-xl w-full h-8 bg-gray-200 my-3">
+                <Tooltip id="waka_progress" place="left" className="z-10"/>
+                <div data-tooltip-id="waka_progress" data-tooltip-content={
+                    (useableData / 3600).toFixed(2) + " or " + 
+                    Math.floor((useableData / 3600) / 1080) + "%"
+                    } className= "rounded-xl h-8 bg-hc-primary" style= {
+                        {
+                            width: hasAchievedTime ? "100%" : Number(useableData) / 1080 + "%"
+                        }}/>
+            </div>
+            That's about {Math.floor(useableData / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}
+        </div>
+         )
 }
+export default Waka
