@@ -6,8 +6,6 @@ import { Application } from '@splinetool/runtime';
 import { AnimatePresence, motion } from 'motion/react';
 
 const Background = ({ shouldAnimate = false, sourceScene }:{ shouldAnimate: boolean, sourceScene: string }) => {
-  const mountRef = useRef<HTMLDivElement>(null!);
-  const canvasRef = useRef<HTMLCanvasElement>(null!);
   const appRef = useRef<Application | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(shouldAnimate);
   

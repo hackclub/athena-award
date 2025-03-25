@@ -1,6 +1,6 @@
 'use client';
 
-import { STAGES } from "@/types/Pathways";
+import { STAGES } from "@/app/STAGES";
 import Background from "./Background";
 import { Fragment, useState } from "react";
 import Action from "./Action";
@@ -21,12 +21,14 @@ export default function ActionableScene({ shouldAnimate = false, sourceScene = '
               percentX={action.x}
               percentY={action.y}
               icon={action.icon}
+              interactives={action.component || null}
             >
               <p>Need help coming up with a project idea? want to find resources?</p>
               <div className="flex flex-col gap-4">
                 {action.resources.map(resource => (
                   <div key={resource.name} className="p-4 bg-white rounded-lg shadow-lg">
                     <h2 className="text-xl font-bold">{resource.name}</h2>
+                    <div className="italic text-base">{resource.description}</div>
                     <a href={resource.link} className="text-blue-600 hover:underline">Learn more</a>
                   </div>
                 ))}

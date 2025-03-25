@@ -1,9 +1,9 @@
 {
   "private": true,
   "description": "An example project for NextAuth.js with Next.js",
-  "repository": "https://github.com/nextauthjs/next-auth-example.git",
+  "repository": "https://github.com/hackclub/dos-journey",
   "bugs": {
-    "url": "https://github.com/nextauthjs/next-auth/issues"
+    "url": "https://github.com/hackclub/dos-journey/issues"
   },
   "homepage": "https://next-auth-example.vercel.app",
   "scripts": {
@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@hackclub/icons": "^0.0.14",
-    "@headlessui/react": "^1.7.18",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@next/mdx": "^14.1.4",

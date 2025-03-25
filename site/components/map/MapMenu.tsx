@@ -4,13 +4,13 @@ import Background from "../landscape/Background";
 import { AnimatePresence, motion, Variant, Variants } from "motion/react"
 import Image from "next/image";
 import { Tooltip } from "react-tooltip";
-import { ProfileIsOpenContext } from "../island/Modal";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
-import { STAGES } from "@/types/Pathways";
+import { STAGES } from "@/app/STAGES";
 import ActionableScene from "../landscape/ActionableScene";
 import { FaPaintbrush } from "react-icons/fa6";
+import { UXEventContext } from "../context/UXStages";
 
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
@@ -110,7 +110,12 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     <div>
     { session.status === "authenticated" ? 
     <div className={`w-screen h-screen relative ${baseModuleData.visuals.accents.primary}`}>
-      <div className="sr-only bg-sky-950/40"></div>
+      <div id="tw-palette" className="hidden">
+        <div className="bg-sky-900/30"></div>
+        <div className="bg-sky-950/40"></div>
+        <div className="bg-red-900/30"></div>
+        <div className="bg-red-900/40"></div>
+      </div>
       <ActionableScene shouldAnimate={fullscreen} sourceScene={baseModuleData.visuals.scene} module={"Start hacking"} setFullscreen={setFullscreen}/>
       <AnimatePresence>
         {!fullscreen && (
@@ -122,7 +127,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                 <ProfileModal />
                 <div className="col-span-full lg:col-span-2">
                   <div className={`${baseModuleData.visuals.accents.tertiary} p-4 transition-all`}>
-                    <motion.div layout className='aspect-[3/2] bg-white group transition-all rounded-2xl' style={{
+                    <motion.div className='aspect-[3/2] bg-white group transition-all rounded-2xl' style={{
                       backgroundImage: `url('${baseModuleData!.visuals.src}')`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
@@ -216,21 +221,18 @@ export function StageChecklistItem({ title, link, complete, delay, module }:{ ti
 }
 
 function ProfileModal() {
-  const { profileIsOpen, setProfileIsOpen } = useContext(ProfileIsOpenContext)
+  const [_, setUXEvent] = useContext(UXEventContext)
   const session = useSession();
   return (
     <>
-    <ProfileIsOpenContext.Provider value = {{profileIsOpen: profileIsOpen, setProfileIsOpen: setProfileIsOpen }}>
       <button onClick={() => {
-        console.log(profileIsOpen)
-        setProfileIsOpen(true);
+        setUXEvent("profile");
       }} id="profile" className="mb-5 absolute right-16 top-16">
         {/* <img src="" width={48} height={48} alt="Profile details" /> */}
         <span className="ml-auto size-10 rounded-full bg-cover bg-no-repeat bg-center block" style={{
           backgroundImage: `url('${session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`
         }}></span>
       </button>
-    </ProfileIsOpenContext.Provider>
     </>
   )
 }

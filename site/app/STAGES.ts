@@ -1,4 +1,4 @@
-import { FaPlus } from "react-icons/fa6"
+import IdeaGenerator from "../components/panels/add-ons/IdeaGenerator"
 
 export interface UserStageData {
   name: string,
@@ -51,29 +51,30 @@ export const STAGES = [
         name: 'Resources',
         x: 30,
         y: 35,
+        component: null,
         resources: [
-          { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for free stuff in return! There are a bunch of workshops', link: 'https://hackclub.com/ysws' },
-          { name: 'Hack Club Slack', link: 'https://hackclub.com/ysws' },
+          { name: 'Hack Club Slack', description: 'Hack Club has a bustling online Slack community with tens of thousands of active teenagers coding, just like you!', link: 'https://hackclub.com/slack' },
+          { name: 'Boba Drops', description: 'Boba Drops is a Hack Club YSWS (You-Ship, We-Ship) where you build a website, and get free boba for your hard work! Click the link to learn more.', link: 'https://boba.hackclub.com' },
+          { name: 'Sprig', description: 'Sprig is another Hack Club YSWS where you build a game with Hack Club\'s open-source Sprig game engine, and get a free Sprig console you can play your game on!', link: 'https://sprig.hackclub.com' },
+          { name: 'OnBoard', description: 'If you\'re interested in hardware or looking to get started, design a circuit board and Hack Club will give you a $100 grant to build it!', link: 'https://hackclub.com/onboard' },
         ],
         icon: 'magnifying-glass',
       },
       {
         id: 'stage1-generator',
-        name: 'Idea Generator',
+        name: 'Idea Generating',
         x: 60,
         y: 70,
-        // component: 'IdeaGenerator',
-        resources: [
-          { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for free stuff in return! There are a bunch of workshops', link: 'https://hackclub.com/ysws' },
-          { name: 'Hack Club Slack', link: 'https://hackclub.com/ysws' },
-        ],
+        component: IdeaGenerator,
+        resources: [],
+
         icon: 'lightbulb',
       },
     ],
     completionRewards: [{
       name: 'Lorem ipsum!',
       id: 'lorem-ipsum',
-      description: 'This is a really cool reward! Go out there and change the world.',
+      description: 'This is a really cool pending reward! Go out there and change the world.',
     }],
   },
   {
@@ -96,9 +97,10 @@ export const STAGES = [
         name: 'Resources',
         x: 80,
         y: 60,
+        component: null,
         resources: [
           { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for free stuff in return! There are a bunch of workshops', link: 'https://hackclub.com/ysws' },
-          { name: 'Hack Club Slack', link: 'https://hackclub.com/ysws' },
+          { name: 'Hack Club Slack', description: '', link: 'https://hackclub.com/ysws' },
         ],
         icon: 'magnifying-glass'
       },

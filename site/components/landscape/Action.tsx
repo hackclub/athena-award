@@ -1,6 +1,5 @@
 // defunct
 'use client';
-import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import SidePanel from "../panels/layout/SidePanel";
@@ -15,6 +14,7 @@ interface ActionProps {
   percentX: number;
   percentY: number;
   icon?: 'lightbulb' | 'magnifying-glass';
+  interactives: (() => JSX.Element) | null;
 }
 
 export default function Action(props: ActionProps) {
@@ -53,7 +53,7 @@ export default function Action(props: ActionProps) {
         style={{
           top: `${(percentY * 1.15) - 7.5}vh`,
           left: `${(percentX * 1.15) - 7.5}vw`,
-          transform: `translate(${transformation.x * 0.05 * (1440 / win?.innerWidth)}px, ${transformation.y * 0.05 * (1024 / win?.innerHeight)}px)`
+          transform: `translate3d(${transformation.x * 0.05 * (1440 / (win?.innerWidth || 1440))}px, ${transformation.y * 0.05 * (1024 / (win?.innerHeight || 1024))}px, 0)`
         }}
       >
         {props.icon === 'magnifying-glass' && <FaMagnifyingGlass className="size-8 text-white" />}
@@ -65,6 +65,10 @@ export default function Action(props: ActionProps) {
         title={props.title}
       >
         {props.children}
+        {props.title.includes('gen') && 'generator'}
+        {props.interactives && (
+          props.interactives()
+        )}
       </SidePanel>
     </>
 

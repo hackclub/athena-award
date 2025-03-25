@@ -5,7 +5,7 @@ import { Header, AuthStateButton } from "@/components/panels/Header"
 import { useSession } from "next-auth/react";
 import Marquee from "react-fast-marquee";
 import Painting from "@/components/panels/Painting";
-import { STAGES } from "@/types/Pathways";
+import { STAGES } from "@/app/STAGES";
 
 const steps = [
   {title: "Build three projects 💻",

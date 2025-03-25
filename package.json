@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "description": "A Hack Club project gamifying the experience of learning to code through the [Days of Service Initiative](https://daysofservice.hackclub.com).",
     "scripts": {
-        "start": "npm run site",
-        "site": "cd site && npm run dev"
+        "dev": "cd site && npm run dev"
     },
     "keywords": [],
     "author": "",

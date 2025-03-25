@@ -1,30 +1,30 @@
-import Icon from '@hackclub/icons'
-import { Dialog, Tab, Transition } from '@headlessui/react'
-import { Fragment, useState, useContext, FormEvent, useEffect } from 'react'
+import { useState, useContext, FormEvent, useEffect, Fragment } from 'react'
 import { useSession } from "next-auth/react";
+import { UXEventContext } from '../context/UXStages';
+import { AnimatePresence, motion } from 'motion/react';
 import { Tooltip } from 'react-tooltip';
-import { ProfileIsOpenContext } from '../island/Modal';
-import { Session } from 'next-auth';
-import { Warning } from '@/components/panels/add-ons/Callout';
-import { Achievements } from './Achievements';
+import { Warning } from '../panels/add-ons/Callout';
 import { Progress } from './Progress';
 import Waka from './Waka';
+import { FaXmark } from 'react-icons/fa6';
 
 // i'll migrate this to use useswr but rn it's weird and doesn't want to support more than one call
 
-export default function Profile(){
-    const { profileIsOpen, setProfileIsOpen } = useContext(ProfileIsOpenContext)
+export default function Profile() {
+    const [uxEvent, setUXEvent] = useContext(UXEventContext)
+    
     const [ hackathonName, setHackathonName ] = useState("")
     const [ error, setError ] = useState("")
     const [ currentStage, setCurrentStageName ] = useState("")
 
     const session = useSession();
-    function clear(){
-      setProfileIsOpen(false)
-      setError("")
+
+    const clear = () => {
+      setUXEvent("map");
+      setError("");
     }
 
-    async function submitCode(event: FormEvent<HTMLFormElement>){
+    const submitCode = async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       const formData = new FormData(event.currentTarget)
       const fo = JSON.parse(JSON.stringify(Object.fromEntries(formData)))
@@ -36,30 +36,125 @@ export default function Profile(){
       }
       return {"error": "Hey! Why are you trying to join a hackathon that doesn't exist? 🤔"}
     }
-    async function fetchHackathons(){
+
+    const fetchHackathons = async () =>{
       const response = await fetch(`/api/user/${session.data!.slack_id}/hackathons`, {
         method: 'GET'
       }).then(r => r.json()).then(data => {setHackathonName(data["message"])})
       return response
     }
 
-    async function fetchStage(){
+    const fetchStage = async () =>{
       const response = await fetch(`/api/user/${session.data!.slack_id}?query=current_stage`, {
         method: 'GET'
       }).then(r => r.json()).then(data => {setCurrentStageName(data["message"])})
       return response
-      }
+    }
 
     useEffect(() => {
-      if (session.status === "authenticated"){
+      if (session.status === "authenticated" && uxEvent === "profile") {
         fetchHackathons()
         fetchStage()
       }
-    }, [profileIsOpen])
+    }, [uxEvent]);
+
+    const profileIsOpen = uxEvent === "profile"
 
     return (
         <>
-<ProfileIsOpenContext.Provider value={{profileIsOpen: profileIsOpen, setProfileIsOpen: setProfileIsOpen}}>
+          <AnimatePresence>
+            {profileIsOpen && (
+              <motion.div
+                className="fixed inset-0 z-40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                {/* Backdrop */}
+                <motion.div
+                  className="fixed inset-0 bg-black/35"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={clear}
+                />
+
+                {/* Modal Panel */}
+                <motion.div
+                  className="fixed inset-0 flex items-center justify-center p-4 text-center"
+                  initial={{ opacity: 0, scale: 0.95, y: "50vh" }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: "50vh" }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <div className="w-full h-[80vh] max-w-5xl transform overflow-auto bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 flex gap-4 text-white">
+                    <div className="">
+                      <div className="rounded-md bg-white/10 flex items-center gap-4 h-fit p-4 mb-4">
+                        <img
+                          className="rounded-full size-16 mx-auto md:m-0"
+                          src={session.data?.user!.image!}
+                        />
+                        <div>
+                          <div className="text-xl">
+                            Hi {session.data?.user!.name}!
+                          </div>
+                          <div className="text-sm">
+                            {session.data?.user!.email}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-white font-bold text-2xl uppercase">Hackathons</div>
+                        <div>
+                          Part of a{' '}
+                          <Tooltip id="hackathon" place="top-start" className="z-10"/>
+                          <span 
+                            data-tooltip-id="hackathon" 
+                            data-tooltip-content="Ask your Days of Service hackathon leads for the unique Athena Award code!" 
+                            className="font-bold">
+                            hackathon?{' '}
+                          </span> 
+                          Submit the unique code here:{' '}
+                        </div>
+                        <form className = "flex flex-row my-4 w-full" onSubmit={ async (event) => {
+                          let hackathon = await submitCode(event)
+                          fetchHackathons()
+                          setError(hackathon.error)
+                        }}>
+                          <input type="text" name="code" className="!outline-none !border-none !ring-0 rounded-l w-full"/>
+                          <button type="submit" className="rounded-r text-white p-2 bg-hc-primary">
+                            <img src="https://icons.hackclub.com/api/icons/white/send" className="size-[32px]" alt="Submit" />
+                          </button>
+                        </form>
+                        <div className = "text-sm">
+                          { (error) ? <Warning title = "Error">{error}</Warning> :
+                            (hackathonName) ? <span>Congratulations! You're registered as an attendee of <b>{hackathonName}</b></span> :
+                            null
+                          }
+                        </div>
+                    </div>
+                    <div className="w-[1px] h-full bg-hc-primary" />
+                    <div>
+                      <div className="flex gap-3">
+                        <div className="w-full h-fit bg-black/25 p-2 rounded flex gap-4">
+                          <img src="https://icons.hackclub.com/api/icons/hackclub-red/person" className="size-[32px]" alt="Profile" />
+                          <div className="text-3xl playfair-display font-bold italic">Profile</div>
+                        </div>
+                        <button className="shrink-0" onClick={() => setUXEvent('map')}>
+                          <FaXmark className="size-14 text-white" />
+                        </button>
+                      </div>
+                      <div className="text-3xl playfair-display font-bold italic">Progress</div>
+                      <div className = "flex flex-col gap-4">
+                        <Progress/>
+                        <Waka/>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+{/* <ProfileIsOpenContext.Provider value={{profileIsOpen: profileIsOpen, setProfileIsOpen: setProfileIsOpen}}>
     <Transition appear show={profileIsOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40" onClose={() => clear()}>
           <Transition.Child
@@ -88,7 +183,7 @@ export default function Profile(){
                 <Dialog.Panel className="w-full h-[80vh] max-w-5xl transform overflow-auto rounded-xl bg-white text-left align-middle shadow-xl transition-all">
                   <div className="flex min-h-full">
                     <Tab.Group vertical>
-                      <Tab.List className="h-[80vh] sticky top-0 flex flex-col p-6 justify-between items-center rounded-l-xl text-hc-primary bg-hc-secondary w-20 sm:w-32"> {/* fix not being able to see achievements on mobile */}
+                      <Tab.List className="h-[80vh] sticky top-0 flex flex-col p-6 justify-between items-center rounded-l-xl text-hc-primary bg-hc-secondary w-20 sm:w-32">
                         <div className="flex flex-col justify-evenly items-center grow">
                           <Tooltip id="Profile" place="right"  className="z-10"/>
                             <Tab data-tooltip-id="Profile" data-tooltip-content="Profile">
@@ -198,7 +293,7 @@ export default function Profile(){
           </div>
         </Dialog>
       </Transition>
-    </ProfileIsOpenContext.Provider>
+    </ProfileIsOpenContext.Provider> */}
     </>
     )
 }
