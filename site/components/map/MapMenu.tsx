@@ -116,7 +116,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
         <div className="bg-red-900/30"></div>
         <div className="bg-red-900/40"></div>
       </div>
-      <ActionableScene shouldAnimate={fullscreen} sourceScene={baseModuleData.visuals.scene} module={"Start hacking"} setFullscreen={setFullscreen}/>
+      <ActionableScene shouldAnimate={fullscreen} sourceScene={baseModuleData.visuals.scene} module={baseModuleData["moduleName"]} setFullscreen={setFullscreen}/>
       <AnimatePresence>
         {!fullscreen && (
           <>
@@ -149,7 +149,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   </div>
                 </div>
                 <div className="col-span-full lg:col-span-3 text-white">
-                  <motion.div transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="overflow-scroll my-5 space-y-3 pr-4">
+                  <motion.div transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="my-5 space-y-3 pr-4">
                     <h1 className="text-white font-bold text-4xl sm:text-5xl italic mb-3">{currModuleIdx+1}: {module}</h1>
                     
                     <motion.p transition={{ delay: 0.45 }} initial='hidden' animate='visible' className="text-white leading-normal text-md sm:text-lg italic font-light">{baseModuleData.description.split('\n').map((text, i) => (

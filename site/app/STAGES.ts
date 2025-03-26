@@ -99,8 +99,8 @@ export const STAGES = [
         y: 60,
         component: null,
         resources: [
-          { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for free stuff in return! There are a bunch of workshops', link: 'https://hackclub.com/ysws' },
-          { name: 'Hack Club Slack', description: '', link: 'https://hackclub.com/ysws' },
+          { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for completely free stuff in return!', link: 'https://ysws.hackclub.com', image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/fb7308e47eb968083aa5902af086bcadc5fdd8cc_image.png" },
+          { name: 'Jams', description: "Want to build something cool? Don't know how to do it? Check out Jams, a series of workshops that show you how to build new things.", link: 'https://jams.hackclub.com', image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/dbe38e8eae57fb80ea9d4269c6efba40e7585ed9_image.png"},
         ],
         icon: 'magnifying-glass'
       },
