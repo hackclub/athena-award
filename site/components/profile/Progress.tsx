@@ -21,7 +21,7 @@ export function Progress(){
 
     return (
         <div>
-        <h2> {Number(artifacts)} artifacts earned </h2>
+        <h2 className = "text-lg sm:text-2xl"> {Number(artifacts)} artifacts earned </h2>
         <Tooltip id="artifacts_progress" place="right" className="z-10"/>
 
         <div className="rounded-xl w-full h-8 bg-gray-200 my-3 relative">

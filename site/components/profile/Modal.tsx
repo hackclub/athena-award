@@ -87,14 +87,14 @@ export default function Profile() {
                   exit={{ opacity: 0, scale: 0.95, y: "50vh" }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <div className="w-full h-[80vh] max-w-5xl transform overflow-auto bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 flex gap-4 text-white">
+                  <div className="w-full h-[85vh] max-w-5xl transform overflow-auto bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 flex flex-col-reverse sm:flex-row gap-4 text-white">
                     <div className="">
-                      <div className="rounded-md bg-white/10 flex items-center gap-4 h-fit p-4 mb-4">
+                      <div className="hidden rounded-md bg-white/10 sm:flex items-center gap-4 h-fit p-4 mb-4">
                         <img
                           className="rounded-full size-16 mx-auto md:m-0"
                           src={session.data?.user!.image!}
                         />
-                        <div>
+                        <div className = "*:truncate truncate">
                           <div className="text-xl">
                             Hi {session.data?.user!.name}!
                           </div>
@@ -120,7 +120,7 @@ export default function Profile() {
                           fetchHackathons()
                           setError(hackathon.error)
                         }}>
-                          <input type="text" name="code" className="!outline-none !border-none !ring-0 rounded-l w-full"/>
+                          <input type="text" name="code" className="!outline-none !border-none !ring-0 rounded-l w-full text-black"/>
                           <button type="submit" className="rounded-r text-white p-2 bg-hc-primary">
                             <img src="https://icons.hackclub.com/api/icons/white/send" className="size-[32px]" alt="Submit" />
                           </button>
@@ -132,22 +132,29 @@ export default function Profile() {
                           }
                         </div>
                     </div>
+                    
                     <div className="w-[1px] h-full bg-hc-primary" />
-                    <div>
-                      <div className="flex gap-3">
-                        <div className="w-full h-fit bg-black/25 p-2 rounded flex gap-4">
-                          <img src="https://icons.hackclub.com/api/icons/hackclub-red/person" className="size-[32px]" alt="Profile" />
-                          <div className="text-3xl playfair-display font-bold italic">Profile</div>
+                    
+                    <div className = "flex flex-col gap-3">
+
+                      <div className="self-start *:align-middle flex gap-3 w-full align-middle">
+                        <div className="*:align-middle w-full h-fit bg-black/25 p-2 rounded flex gap-4">
+                          <img src="https://icons.hackclub.com/api/icons/hackclub-red/person" className="size-[32px] self-center align-middle" alt="Profile" />
+                          <div className="self-center align-middle text-xl sm:text-3xl playfair-display font-bold italic">Profile</div>
                         </div>
                         <button className="shrink-0" onClick={() => setUXEvent('map')}>
-                          <FaXmark className="size-14 text-white" />
+                          <FaXmark className="size-8 md:size-14 text-white" />
                         </button>
                       </div>
-                      <div className="text-3xl playfair-display font-bold italic">Progress</div>
-                      <div className = "flex flex-col gap-4">
-                        <Progress/>
-                        <Waka/>
+
+                      <div className = "grow"> 
+                        <div className="text-white uppercase text-2xl grow sm:text-3xl font-bold">Progress</div>
+                        <div className = "flex flex-col gap-4">
+                          <Progress/>
+                          <Waka/>
+                        </div>
                       </div>
+
                     </div>
                   </div>
                 </motion.div>

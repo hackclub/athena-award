@@ -37,7 +37,7 @@ export function Waka(){
 
     return (
         <div>
-            <h2>{ (useableData / 3600).toFixed(2) } hours spent coding</h2>
+            <h2 className = "text-lg sm:text-2xl">{ (useableData / 3600).toFixed(2) } hours spent coding</h2>
             <div className="rounded-xl w-full h-8 bg-gray-200 my-3">
                 <Tooltip id="waka_progress" place="left" className="z-10"/>
                 <div data-tooltip-id="waka_progress" data-tooltip-content={
