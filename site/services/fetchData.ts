@@ -14,8 +14,12 @@ export interface safeData {
     points: number,
     current_stage: string,
     hackathons: string,
-    achievements: string // comma separated list of numbers lol
+    achievements: string, // comma separated list of numbers lol
+    stage_1_project: string,
+    stage_2_project: string,
+    stage_3_project: string
 }
+
 
 // verify req
 async function verifyReq(){
@@ -42,8 +46,11 @@ export async function getValue(emailAddress: string): Promise<safeData> {
         const current_stage = prettyRecordID["current_stage"]
         const hackathons = prettyRecordID["hackathons"]
         const achievements = prettyRecordID["achievements"]
+        const stage_1_project = prettyRecordID["stage_1_project"]
+        const stage_2_project = prettyRecordID["stage_2_project"]
+        const stage_3_project = prettyRecordID["stage_3_project"]
 
         return {
-            slack_id, points, current_stage, hackathons, achievements
+            slack_id, points, current_stage, hackathons, achievements, stage_1_project, stage_2_project, stage_3_project
         }
 }

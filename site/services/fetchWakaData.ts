@@ -1,5 +1,3 @@
-// requires that public data is enabled
-
 // beta trial
 const start_date = "2025-03-24"
 const end_date = "2025-03-31"

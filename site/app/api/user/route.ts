@@ -30,7 +30,8 @@ async function linkUser(emailAddress: string, accessToken: string){
                 fields: {
             "email": emailAddress,
             "slack_id": id,
-            "hashed_token": accessTokenJoined
+            "hashed_token": accessTokenJoined,
+            "points": 0 
                         }
         }])
     return "User added to DB"
