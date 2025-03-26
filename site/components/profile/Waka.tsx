@@ -6,9 +6,14 @@ import { Tooltip } from "react-tooltip";
 
 export function Waka(){
     const session = useSession();
-    const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/waka?query=${session.data!.user.email}`, fetcher)  
+    const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/projects?query=total_time`, fetcher) 
+    let projects, totalTimeSpent
+    if (data){
+        projects = (data as any)["message"]
+        totalTimeSpent = (data as any)["message"].reduce((pSum: any, project: any) => pSum + project.total_seconds, 0)
+    }
     if (error){ 
-        if (error.status === 404){ // handle user not having a profile
+        if (error.status !== 200){ // handle user not having a profile
             return (
                 <div>
                     <h2>Time spent coding</h2>
@@ -31,24 +36,23 @@ export function Waka(){
 
     }
 
-    const useableData = (data as any)
-    console.log(useableData)
-    const hasAchievedTime = useableData / 1080 > 100
+    const hasAchievedTime = totalTimeSpent / 1080 > 100
 
     return (
         <div>
-            <h2 className = "text-lg sm:text-2xl">{ (useableData / 3600).toFixed(2) } hours spent coding</h2>
+            <h2 className = "bg-white/20 p-2 text-white text-lg sm:text-2xl">{ (totalTimeSpent / 3600).toFixed(2) } hours spent coding on your projects.</h2>
             <div className="rounded-xl w-full h-8 bg-gray-200 my-3">
                 <Tooltip id="waka_progress" place="left" className="z-10"/>
                 <div data-tooltip-id="waka_progress" data-tooltip-content={
-                    (useableData / 3600).toFixed(2) + " or " + 
-                    Math.floor((useableData / 3600) / 1080) + "%"
+                    (totalTimeSpent / 3600).toFixed(2) + " or " + 
+                    Math.floor((totalTimeSpent / 3600) / 1080) + "%"
                     } className= "rounded-xl h-8 bg-hc-primary" style= {
                         {
-                            width: hasAchievedTime ? "100%" : Number(useableData) / 1080 + "%"
+                            width: hasAchievedTime ? "100%" : Number(totalTimeSpent) / 1080 + "%"
                         }}/>
             </div>
-            That's about {Math.floor(useableData / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}
+            That's about {Math.floor(totalTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}
+            <div className = "flex flex-row flex-wrap gap-4 my-2">{projects.map((project: any, index: number) => <div key={index}  className = "p-1 border rounded-lg bg-white/30">{project.name} {(project.total_seconds/3600).toFixed(2)} hours</div> )}</div> 
         </div>
          )
 }

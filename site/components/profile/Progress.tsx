@@ -21,7 +21,7 @@ export function Progress(){
 
     return (
         <div>
-        <h2 className = "text-lg sm:text-2xl"> {Number(artifacts)} artifacts earned </h2>
+        <h2 className = "text-lg sm:text-2xl bg-white/10 text-white p-2 rounded"> {Number(artifacts)} artifacts earned </h2>
         <Tooltip id="artifacts_progress" place="right" className="z-10"/>
 
         <div className="rounded-xl w-full h-8 bg-gray-200 my-3 relative">
@@ -31,7 +31,7 @@ export function Progress(){
           <div className= "h-8 absolute z-20 border border-b-0 border-t-0 border-l-0 border-hc-primary/75 border-r-4" aria-valuemax={100} style= {{width: "75%"}}/>
 
         </div>
-        <ul className = "list-disc list-inside *:text-sm *:sm:text-lg">
+        <ul className = "list-disc list-inside">
           <li>Get prizes through earning our currency, <b className = "text-hc-primary">artifacts</b>! You can get artifacts by successfully completing a <b className = "text-hc-primary">stage</b> or through <b className = "text-hc-primary">achievements.</b></li>
           <li>Every <b className = "text-hc-primary">25 artifacts = guaranteed prize</b>. Bonus artifacts can be redeemed for other cool prizes.</li>
           <Tooltip id = "travel"/>

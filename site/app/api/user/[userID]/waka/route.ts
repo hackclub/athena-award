@@ -15,7 +15,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{e
     
     let response
     try {
-        response = (await getWakaTimeData(email!))
+        response = (await getWakaTimeData(session.slack_id!))
         if (response!.status === 200){
             return NextResponse.json((await response!.json())) //argh
         } else {

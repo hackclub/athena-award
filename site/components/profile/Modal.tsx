@@ -149,7 +149,7 @@ export default function Profile() {
 
                       <div className = "grow"> 
                         <div className="text-white uppercase text-2xl grow sm:text-3xl font-bold">Progress</div>
-                        <div className = "flex flex-col gap-4">
+                        <div className = "flex flex-col gap-4 my-3">
                           <Progress/>
                           <Waka/>
                         </div>

@@ -107,7 +107,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   // const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
   const session = useSession();
   const slackId = session.data?.slack_id
-  const urls = [`/api/user/${slackId}/projects?query=all`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`, ]
+  const urls = [`/api/user/${slackId}/projects?query=all`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`]
   const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher, { refreshInterval: 250 }
   )
   if (error){
