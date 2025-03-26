@@ -7,13 +7,24 @@ import WelcomeModal from "../welcome/WelcomeModal";
 export const shineEffect = (props: string) => `${props} border text-center mx-auto focus:outline-none focus:ring focus:ring-slate-500/50 focus-visible:outline-none focus-visible:ring focus-visible:ring-slate-500/50 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms]`
 const shineEffectProps = "m-5 p-5 text-2xl text-hc-secondary rounded-xl bg-hc-primary-dull border-hc-primary-dull/80"
 
-export function AuthStateButton(){
+export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
   const session = useSession();
   const router = useRouter();
+  async function registerUser() {
+    const res = await fetch('/api/user',  
+      {
+        method: "POST", 
+        body: JSON.stringify({
+            email: session.data!.user.email,
+          }),
+        headers: { Authorization: "Bearer " + btoa(session.data!.access_token! + ":" + process.env.AUTH_SECRET!)}
+  }).then(r => r.json())
+    return res
+  }
   return (
     <div className = "flex items-center">
       { session.status === "authenticated" ? 
-         <button onClick={() => router.push("/map")} className={shineEffect(shineEffectProps)}>
+         <button onClick={() => {router.push("/map"); registerUser()}} className={shineEffect(shineEffectProps)}>
             <h1>enter the gallery</h1>
         </button>
        : <WelcomeModal props={shineEffect(shineEffectProps)}/>
