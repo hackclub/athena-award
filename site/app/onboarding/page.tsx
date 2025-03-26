@@ -18,8 +18,8 @@ const steps = [
         "description": "Do this three times (or more, as needed). Earn artifacts - our currency - with each project shipped."
     },
     {
-        "step": "4. Code for 80 hours",
-        "description": "We'll help you track the time you spend working on your projects. Once you hit 80 hours, we'll mail you a kickass certificate to certify your technical skills."
+        "step": "4. Code for 30 hours",
+        "description": "We'll help you track the time you spend working on your projects. Once you hit 30 hours, we'll mail you a kickass certificate to certify your technical skills."
     }
 ]
 
