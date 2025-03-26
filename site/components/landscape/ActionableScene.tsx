@@ -23,14 +23,24 @@ export default function ActionableScene({ shouldAnimate = false, sourceScene = '
               icon={action.icon}
               interactives={action.component || null}
             >
-              <p>Need help coming up with a project idea? want to find resources?</p>
-              <div className="flex flex-col gap-4">
-                {action.resources.map(resource => (
-                  <div key={resource.name} className="p-4 bg-white rounded-lg shadow-lg">
-                    <h2 className="text-xl font-bold">{resource.name}</h2>
-                    <div className="italic text-base">{resource.description}</div>
-                    <a href={resource.link} className="text-blue-600 hover:underline">Learn more</a>
+              <p>Need help coming up with a project idea? Want to find resources?</p>
+              <div className="flex flex-col gap-4 my-2">
+                {action.resources.map((resource: any, index: number)=> (
+
+                <div key={index} className="not-prose basis-1/3 grow group w-full lg:flex hover:scale-105 transition shadow-md relative rounded-lg bg-white">
+                  { resource.image ? <div className="h-auto w-32 flex-none bg-cover rounded-l-lg text-center overflow-hidden shrink-0" style={{backgroundImage: `url(${resource.image})`}}/> : null }
+                  <div className="rounded-r-lg p-4 flex flex-col justify-between leading-normal w-full">
+                    <div className="absolute top-0 right-0 p-4">
+                      <a className="transition group-hover:translate-x-6 group-hover:translate-y-6" target="_blank" href={resource.link}>
+                        <img src="https://icons.hackclub.com/api/icons/hackclub-red/external" className="size-[32px]" alt="" />
+                      </a>
+                    </div>
+                    <div>
+                      <div className="text-gray-900 font-bold text-xl">{resource.name}</div>
+                      <p className="text-gray-700 text-base">{resource.description}</p>
+                    </div>
                   </div>
+                </div>
                 ))}
               </div>
             </Action>
