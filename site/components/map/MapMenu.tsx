@@ -198,11 +198,11 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   </div>
                   
 
-                <div className = "my-5 flex flex-row w-full justify-between">
+                <div className = "my-5 flex flex-col sm:flex-row w-full justify-between gap-4">
                 {data && selectedProject ? 
-                  <div>
+                  <div className = "">
                     <label htmlFor="project" className = "font-bold text-accent">What project are you working on?</label>
-                              <select required className="flex flex-col gap-1 *:bg-darker text-black *:text-black" name = "project" id="project" defaultValue={selectedProject} onChange={handleChange}>
+                              <select required className="w-full sm:w-max flex flex-col gap-1 *:bg-darker text-black *:text-black" name = "project" id="project" defaultValue={selectedProject} onChange={handleChange}>
                                 <option disabled value = "_select">[Select a project]</option>
                                   {projects && projects.map((project: any, index: number) => /* i really cbf to fix the type rn */
                                       <option key={index} value = {project.name}>{project.name}</option>
@@ -211,8 +211,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                     </div>
                     : <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>}
 
-                    <div className = "self-end">
-                      <button className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
+                    <div className = "self-center sm:self-end">
+                      <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
                       <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}`}>Ready to submit?</a>
                       </button>
                     </div>
@@ -220,7 +220,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                 </div>
               </motion.div>
               
-              <div className="flex gap-2 items-center text-white">
+              <div className="flex gap-2 self-center sm:self-auto items-center text-white">
               <button onClick={() => {setModule(prevModule as typeof STAGES[number]['moduleName']); setSelectedProject("")}} className="playfair-display italic text-2xl">
                 <span className="sr-only">Previous</span>
                 <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
@@ -277,7 +277,7 @@ function ProfileModal() {
     <>
       <button onClick={() => {
         setUXEvent("profile");
-      }} id="profile" className="mb-5 absolute right-16 top-16">
+      }} id="profile" className="mb-5 absolute right-8 top-8 sm:right-16 sm:top-16">
         {/* <img src="" width={48} height={48} alt="Profile details" /> */}
         <span className="ml-auto size-10 rounded-full bg-cover bg-no-repeat bg-center block" style={{
           backgroundImage: `url('${session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`

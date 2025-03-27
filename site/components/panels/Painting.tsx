@@ -2,7 +2,7 @@
 import { shineEffect } from "./Header"
 export default function Painting({image, description}: {image: string, description: string}){
     return (
-        <div className={`h-80 flex flex-col items-center justify-center`}> {/* maybe add small random rotations? */}
+        <div className={`h-36 sm:h-80 flex flex-col items-center justify-center`}> {/* maybe add small random rotations? */}
             <svg width="100%" height="100%" viewBox="0 0 202 167" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="10" y="10" width="85%" height="85%" fill="white"/>
             <image x="10" y="10" width="85%" height="85%" xlinkHref={image}></image>

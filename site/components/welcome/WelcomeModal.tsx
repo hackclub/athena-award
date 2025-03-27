@@ -50,9 +50,9 @@ export default function WelcomeModal({props}: {props: string}){
                   exit={{ opacity: 0, scale: .95 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <div className="w-[85vw] h-[85vh] transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-6">
+                  <div className="w-[90vw] h-[90vh] md:w-[85vw] md:h-[85vh] transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-3 sm:p-6">
 
-                    <div className="bg-[#373E2F] w-full h-full rounded-2xl p-12">
+                    <div className="bg-[#373E2F] w-full h-full rounded-2xl p-6 md:p-12">
                       {
                         session.status === 'authenticated' ? (
                           <div id="success-auth" className="justify-center flex flex-col h-full py-[5vh]">

@@ -115,7 +115,7 @@ export default async function Index() {
       <div className="pointer-events-none w-screen h-screen fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <Background shouldAnimate sourceScene={STAGES[1].visuals.scene} />
       </div>
-      <div className="relative z-10 pointer-events-none">
+      <div className="relative z-10 pointer-events-auto sm:pointer-events-none">
         <Header/>
         <div className="pointer-events-none flex flex-col w-screen h-screen justify-center items-center px-8 gap-6 text-hc-secondary italic">
           <div className="grow"/> {/* i cbf finding a better solution */}
@@ -172,18 +172,18 @@ export default async function Index() {
               </div>
         </div>
 
-        <div className="w-screen h-screen py-12 sm:py-16 bg-hc-primary-dull flex flex-col">
+        <div className="w-screen h-max sm:h-screen py-12 sm:py-16 bg-hc-primary-dull flex flex-col">
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center">
                   Prizes
           </h1>
-          <Marquee className = "my-8 grow" pauseOnHover={true}>
-            {prizes.map((prize, index) => 
-              <Painting key={index} image={prize.image} description={prize.description}/>
-            )}
-          </Marquee>
+            <Marquee className = "my-8 grow" autoFill pauseOnHover={true}>
+              {prizes.map((prize, index) => 
+                <Painting key={index} image={prize.image} description={prize.description}/>
+              )}
+            </Marquee>
         </div>
 
-        <div className="w-screen h-full p-12 sm:p-16">
+        <div className="w-screen h-full px-4 py-8 sm:p-16">
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center">
                   Frequently Asked Questions
           </h1>
@@ -199,7 +199,7 @@ export default async function Index() {
           </div>
         </div>
 
-        <div className="w-screen h-screen p-16 sm:p-24 bg-hc-primary-dull">
+        <div className="w-screen h-screen p-12 sm:p-24 bg-hc-primary-dull">
           <h1 className = "text-hc-secondary text-3xl text-left">
                   <i>brought to you by</i>
           </h1>

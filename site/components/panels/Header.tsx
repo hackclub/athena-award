@@ -10,17 +10,6 @@ const shineEffectProps = "m-5 p-5 text-2xl text-hc-secondary rounded-xl bg-hc-pr
 export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
   const session = useSession();
   const router = useRouter();
-  async function registerUser() {
-    const res = await fetch('/api/user',  
-      {
-        method: "POST", 
-        body: JSON.stringify({
-            email: session.data!.user.email,
-          }),
-        headers: { Authorization: "Bearer " + btoa(session.data!.access_token! + ":" + process.env.AUTH_SECRET!)}
-  }).then(r => r.json())
-    return res
-  }
   return (
     <div className = "flex items-center">
       { session.status === "authenticated" ? 

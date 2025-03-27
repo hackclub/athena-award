@@ -24,12 +24,12 @@ export default function UnauthenticatedWelcomeMessage({ setOpen }:{ setOpen: (b:
   ]
 
   return (
-    <div className="flex flex-col justify-between grow">
+    <div className="flex flex-col justify-between grow overflow-y-auto">
       <div className="space-y-5">
         {inspiration.map((text, i) => (
           <motion.div
             key={i}
-            className={i === 0 ? 'text-5xl font-bold italic playfair-display' : 'text-2xl italic font-serif'}
+            className={i === 0 ? 'text-3xl md:text-5xl font-bold italic playfair-display' : 'text-lg md:text-2xl italic font-serif'}
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: i*0.75 }}
           >
             {text}
@@ -39,10 +39,10 @@ export default function UnauthenticatedWelcomeMessage({ setOpen }:{ setOpen: (b:
 
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: inspiration.length }}
-        className="w-full flex justify-between self-end"
+        className="w-full flex flex-col sm:flex-row justify-between self-end"
       >
-        <button className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-4xl italic playfair-display" onClick={() => setOpen(false)}>&lt;- Go back</button>
-        <button className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-4xl italic playfair-display" onClick={() => signIn("slack", {
+        <button className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display" onClick={() => setOpen(false)}>&lt;- Go back</button>
+        <button className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display" onClick={() => signIn("slack", {
           callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/onboarding`, team: "T0266FRGM" 
         })}>Log in with Slack -&gt;</button>
       </motion.div>
