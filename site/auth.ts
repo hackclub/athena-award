@@ -1,9 +1,9 @@
 import NextAuth from "next-auth"
 import SlackProvider from "next-auth/providers/slack"
-
+import { linkUser } from "@/services/addUserToDB"
 import type { NextAuthConfig } from "next-auth"
 
-export const config = {
+export const config: NextAuthConfig = {
   theme: {
     logo: "/logo.svg",
   },
@@ -20,6 +20,12 @@ export const config = {
       }
     }),
   ],
+  events: {
+    async signIn({user, account, profile}) {
+      console.log()
+      linkUser(user.email!, account?.access_token!)
+
+  }},
   callbacks: {
     async jwt({token, account, profile}) {
       if (account) {
@@ -34,6 +40,6 @@ export const config = {
     return { ...session }
     }
   },
-} satisfies NextAuthConfig
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config)

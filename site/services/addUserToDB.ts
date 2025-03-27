@@ -1,8 +1,4 @@
-// POST api/user
-// Create a new user
 import Airtable from 'airtable';
-import { NextResponse } from "next/server";
-import { auth } from "@/auth";
 import { encryptSession, verifySession } from '@/utils/hash'
 
 const airtable = new Airtable({
@@ -10,7 +6,7 @@ const airtable = new Airtable({
 }).base(process.env.AIRTABLE_BASE_ID!)
 
 // Update all info known about the registered user, including their Slack ID if they're in the Slack
-async function linkUser(emailAddress: string, accessToken: string){
+export async function linkUser(emailAddress: string, accessToken: string){
     const accessTokenJoined = encryptSession(accessToken, process.env.AUTH_SECRET!)
     const response = await fetch(`https://slack.com/api/users.lookupByEmail?email=${emailAddress}`,
         {
@@ -35,17 +31,5 @@ async function linkUser(emailAddress: string, accessToken: string){
                         }
         }])
     return "User added to DB"
-    }
-}
-
-export async function POST(request: Request) {
-    const session = await auth();
-    const emailAddress = session!.user.email!
-    try {
-        const r = await linkUser(emailAddress, session!.access_token!)
-        return NextResponse.json({message: "Success"}, {status: 200})
-    } catch {
-        return NextResponse.json({error: "Something went wrong."}, {status: 400})
-
     }
 }

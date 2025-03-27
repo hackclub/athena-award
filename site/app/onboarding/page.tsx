@@ -27,17 +27,6 @@ const steps = [
 export default function Page(){
     const session = useSession();
     const router = useRouter();
-    async function registerUser() {
-        const res = await fetch('/api/user',  
-          {
-            method: "POST", 
-            body: JSON.stringify({
-                email: session.data!.user.email,
-              }),
-            headers: { Authorization: "Bearer " + btoa(session.data!.access_token! + ":" + process.env.AUTH_SECRET!)}
-      }).then(r => r.json())
-        return res
-      }
  return (
     <>
     {session.status === "authenticated" ? 
@@ -55,7 +44,7 @@ export default function Page(){
                     <p className="text-left text-lg py-1 sm:text-xl">{step.description}</p>
                 </div>) }
             </div>
-            <button onClick={()=> {registerUser(); router.push("/map")}} className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-2xl">ready? -{'>'}</h1></button>
+            <button onClick={()=> {router.push("/map")}} className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-2xl">ready? -{'>'}</h1></button>
             </div>
         </div>
     </main>

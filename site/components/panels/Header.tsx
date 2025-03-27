@@ -24,7 +24,7 @@ export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
   return (
     <div className = "flex items-center">
       { session.status === "authenticated" ? 
-         <button onClick={() => {registerUser(); router.push("/map");}} className={shineEffect(shineEffectProps)}>
+         <button onClick={() => {router.push("/map");}} className={shineEffect(shineEffectProps)}>
             <h1>enter the gallery</h1>
         </button>
        : <WelcomeModal props={shineEffect(shineEffectProps)}/>
