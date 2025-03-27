@@ -108,8 +108,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   const session = useSession();
   const slackId = session.data?.slack_id
   const urls = [`/api/user/${slackId}/projects?query=all`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`]
-  const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher, { refreshInterval: 250 }
-  )
+  const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher)
   if (error){
     console.log(error)
   }
@@ -119,7 +118,11 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   }
   useEffect(() => {
     if (data){
-      setSelectedProject((data[1] as any)["message"])
+      if ((data[1] as any)["message"]){
+        setSelectedProject((data[1] as any)["message"])
+      } else {
+        setSelectedProject("_select")
+      }
     }
   }, [data])
 
@@ -200,6 +203,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   <div>
                     <label htmlFor="project" className = "font-bold text-accent">What project are you working on?</label>
                               <select required className="flex flex-col gap-1 *:bg-darker text-black *:text-black" name = "project" id="project" defaultValue={selectedProject} onChange={handleChange}>
+                                <option disabled value = "_select">[Select a project]</option>
                                   {projects && projects.map((project: any, index: number) => /* i really cbf to fix the type rn */
                                       <option key={index} value = {project.name}>{project.name}</option>
                                   )}

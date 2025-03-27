@@ -7,6 +7,7 @@ import { Warning } from '../panels/add-ons/Callout';
 import { Progress } from './Progress';
 import Waka from './Waka';
 import { FaXmark } from 'react-icons/fa6';
+import { signOut } from 'next-auth/react';
 
 // i'll migrate this to use useswr but rn it's weird and doesn't want to support more than one call
 
@@ -60,6 +61,14 @@ export default function Profile() {
 
     const profileIsOpen = uxEvent === "profile"
 
+    useEffect(() => { 
+      if (profileIsOpen) {
+          document.body.classList.add("overflow-y-hidden")
+      } else {
+          document.body.classList.remove("overflow-y-hidden")
+      }}
+  ,[profileIsOpen])
+
     return (
         <>
           <AnimatePresence>
@@ -88,7 +97,7 @@ export default function Profile() {
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                   <div className="w-full h-[85vh] max-w-5xl transform overflow-auto bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 flex flex-col-reverse sm:flex-row gap-4 text-white">
-                    <div className="">
+                    <div className="flex flex-col">
                       <div className="hidden rounded-md bg-white/10 sm:flex items-center gap-4 h-fit p-4 mb-4">
                         <img
                           className="rounded-full size-16 mx-auto md:m-0"
@@ -131,7 +140,8 @@ export default function Profile() {
                             null
                           }
                         </div>
-                    </div>
+                        <button className = "text-white font-bold text-2xl uppercase mt-auto self-start" onClick={() => signOut({ redirectTo: "/" })}>Sign Out</button>                      
+                        </div>
                     
                     <div className="w-[1px] h-full bg-hc-primary" />
                     
