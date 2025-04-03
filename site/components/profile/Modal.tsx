@@ -97,7 +97,7 @@ export default function Profile() {
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                   <div className="w-full h-[85vh] max-w-5xl transform overflow-auto bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 flex flex-col-reverse sm:flex-row gap-4 text-white">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col basis-2/5">
                       <div className="hidden rounded-md bg-white/10 sm:flex items-center gap-4 h-fit p-4 mb-4">
                         <img
                           className="rounded-full size-16 mx-auto md:m-0"
@@ -140,7 +140,14 @@ export default function Profile() {
                             null
                           }
                         </div>
+
+                        <div className="text-white font-bold text-2xl uppercase">NEED HELP?</div>
+                        <ul className = "list-disc list-inside">
+                          <li>For urgent help, DM @phthallo or @phaedra on the Hack Club Slack.</li>
+                          <li>For non-urgent help and other questions, send a message in the <a className = "link" href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-awards</a> channel.</li>
+                        </ul>
                         <button className = "text-white font-bold text-2xl uppercase mt-auto self-start" onClick={() => signOut({ redirectTo: "/" })}>Sign Out</button>                      
+                        
                         </div>
                     
                     <div className="w-[1px] h-full bg-hc-primary" />

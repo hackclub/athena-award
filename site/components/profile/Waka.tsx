@@ -45,7 +45,7 @@ export function Waka(){
                 <Tooltip id="waka_progress" place="left" className="z-10"/>
                 <div data-tooltip-id="waka_progress" data-tooltip-content={
                     (totalTimeSpent / 3600).toFixed(2) + " or " + 
-                    Math.floor((totalTimeSpent / 3600) / 1080) + "%"
+                    (totalTimeSpent / 1080).toFixed(2) + "%"
                     } className= "rounded-xl h-8 bg-hc-primary" style= {
                         {
                             width: hasAchievedTime ? "100%" : Number(totalTimeSpent) / 1080 + "%"
