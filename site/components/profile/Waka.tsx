@@ -16,8 +16,8 @@ export function Waka(){
         if (error.status !== 200){ // handle user not having a profile
             return (
                 <div>
-                    <h2>Time spent coding</h2>
-                    <Warning title = "Your Hackatime data isn't public!">
+            <h2 className = "bg-white/20 p-2 text-white text-lg sm:text-2xl">Time spent coding</h2>
+                <Warning title = "Your Hackatime data isn't public!">
                         Hackatime lets us track how long you've spent on coding. 
                     </Warning>
                         <ul className = "list-decimal list-inside py-2">

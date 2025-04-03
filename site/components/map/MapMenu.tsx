@@ -199,7 +199,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   
 
                 <div className = "my-5 flex flex-col sm:flex-row w-full justify-between gap-4">
-                {data && selectedProject ? 
                   <div className = "">
                     <Tooltip id = "hackatime_info"/>
                     <span className = "flex flex-row gap-2 items-center py-2" data-tooltip-id = "hackatime_info" data-tooltip-content="Nothing showing up here? Check Settings to set up project tracking with Hackatime!">
@@ -215,8 +214,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                                   )}
                               </select>
                     </div>
-                    : <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>}
-
                     <div className = "self-center sm:self-end">
                      {selectedProject !== "_select" ? 
                       <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>  

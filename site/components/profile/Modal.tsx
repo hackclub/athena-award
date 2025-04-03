@@ -96,8 +96,8 @@ export default function Profile() {
                   exit={{ opacity: 0, scale: 0.95, y: "50vh" }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <div className="w-full h-[85vh] max-w-5xl transform overflow-auto bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 flex flex-col-reverse sm:flex-row gap-4 text-white">
-                    <div className="flex flex-col basis-2/5">
+                  <div className="w-full h-[85vh] max-w-5xl max-md:overflow-auto transform bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 md:grid md:grid-cols-3 max-md:flex max-md:flex-col-reverse gap-4 text-white">
+                    <div className="md:col-span-1 md:h-full md:sticky flex flex-col basis-2/5">
                       <div className="hidden rounded-md bg-white/10 sm:flex items-center gap-4 h-fit p-4 mb-4">
                         <img
                           className="rounded-full size-16 mx-auto md:m-0"
@@ -150,11 +150,11 @@ export default function Profile() {
                         
                         </div>
                     
-                    <div className="w-[1px] h-full bg-hc-primary" />
+                    {/*<div className="w-[1px] h-full bg-hc-primary" />*/}
                     
-                    <div className = "flex flex-col gap-3">
+                    <div className = "md:col-span-2 flex flex-col gap-3 md:overflow-y-scroll">
 
-                      <div className="self-start *:align-middle flex gap-3 w-full align-middle">
+                      <div className="self-start *:align-middle flex gap-3 w-full align-middle md:sticky">
                         <div className="*:align-middle w-full h-fit bg-black/25 p-2 rounded flex gap-4">
                           <img src="https://icons.hackclub.com/api/icons/hackclub-red/person" className="size-[32px] self-center align-middle" alt="Profile" />
                           <div className="self-center align-middle text-xl sm:text-3xl playfair-display font-bold italic">Profile</div>
@@ -164,7 +164,7 @@ export default function Profile() {
                         </button>
                       </div>
 
-                      <div className = "grow"> 
+                      <div className = "grow overflow-scroll"> 
                         <div className="text-white uppercase text-2xl grow sm:text-3xl font-bold">Progress</div>
                         <div className = "flex flex-col gap-4 my-3">
                           <Progress/>

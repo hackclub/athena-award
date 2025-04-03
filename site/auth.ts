@@ -22,7 +22,8 @@ export const config: NextAuthConfig = {
   ],
   events: {
     async signIn({user, account, profile}) {
-      console.log()
+      console.log("a sign in event is happening")
+      console.log(user.email!, account?.access_token!, 'info')
       linkUser(user.email!, account?.access_token!)
 
   }},

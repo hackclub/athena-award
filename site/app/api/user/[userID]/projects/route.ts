@@ -15,36 +15,38 @@ const airtable = new Airtable({
 export async function GET(request: NextRequest){
     const query = request.nextUrl.searchParams.get("query")
     const session = await auth()
-    if (query === "all"){
-        const hackatimeProjects = await fetch(`https://hackatime.hackclub.com/api/v1/users/${session?.slack_id}/stats?features=projects`)
-        let projects
-        if (hackatimeProjects.ok){
-            projects = (await hackatimeProjects.json()) as any
+    try {
+        if (query === "all"){
+            const hackatimeProjects = await fetch(`https://hackatime.hackclub.com/api/v1/users/${session?.slack_id}/stats?features=projects`)
+            let projects
+            if (hackatimeProjects.ok && hackatimeProjects){
+                projects = (await hackatimeProjects.json()) as any
+            }
+            return NextResponse.json(projects)
+
+        } else if (query === "selected"){
+            const stage = request.nextUrl.searchParams.get("stage")
+            const projectForStage = (await getValue(session!.user.email!) as any)[`stage_`+stage+`_project`]
+            return NextResponse.json({message: projectForStage }, { status: 200 })
+
+        } else if (query === "total_time"){
+            const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
+            let projects
+            if (hackatimeProjects.ok){
+                projects = (await hackatimeProjects.json())["data"]["projects"] as any
+                const stage_1_project = (await getValue(session!.user.email!) as any)[`stage_1_project`]
+                const stage_2_project = (await getValue(session!.user.email!) as any)[`stage_2_project`]
+                const stage_3_project = (await getValue(session!.user.email!) as any)[`stage_3_project`]    
+                const r = projects.filter((project: any) => [stage_1_project, stage_2_project, stage_3_project].includes(project.name))
+                return NextResponse.json({message: r }, { status: 200 })
+            }
+            return NextResponse.json({error: "Hackatime was unresponsive" }, { status: 400 })
+
+
         }
-        return NextResponse.json(projects)
-
-    } else if (query === "selected"){
-        const stage = request.nextUrl.searchParams.get("stage")
-        const projectForStage = (await getValue(session!.user.email!) as any)[`stage_`+stage+`_project`]
-        return NextResponse.json({message: projectForStage }, { status: 200 })
-
-    } else if (query === "total_time"){
-        const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
-
-        let projects
-        if (hackatimeProjects.ok){
-            projects = (await hackatimeProjects.json())["data"]["projects"] as any
-            const stage_1_project = (await getValue(session!.user.email!) as any)[`stage_1_project`]
-            const stage_2_project = (await getValue(session!.user.email!) as any)[`stage_2_project`]
-            const stage_3_project = (await getValue(session!.user.email!) as any)[`stage_3_project`]    
-            const r = projects.filter((project: any) => [stage_1_project, stage_2_project, stage_3_project].includes(project.name))
-            return NextResponse.json({message: r }, { status: 200 })
-        }
-        return NextResponse.json({error: "Hackatime was unresponsive" }, { status: 400 })
-
-
+    } catch (error) {
+        return NextResponse.json({error: `Something went wrong - generic error for no projects or ${error}`}, { status: 400 })
     }
-    return NextResponse.json({error: "Something went wrong"}, { status: 400 })
 }
 
 export async function POST(request: NextRequest){
