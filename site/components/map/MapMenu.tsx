@@ -14,6 +14,7 @@ import { UXEventContext } from "../context/UXStages";
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
 import { useEffect } from "react";
+import { Action } from "@/components/panels/add-ons/Callout";
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
 interface UserStageData {
@@ -113,11 +114,14 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     console.log(error)
   }
   let projects
+
   if (data){
     projects = (data[0] as any)["data"]["projects"]
   }
+
   useEffect(() => {
     if (data){
+
       if ((data[1] as any)["message"]){
         setSelectedProject((data[1] as any)["message"])
       } else {
@@ -147,7 +151,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
       <AnimatePresence>
         {!fullscreen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-20 ${baseModuleData.visuals.accents.tertiary} transition-all`}>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-16 ${baseModuleData.visuals.accents.tertiary} transition-all`}>
               
               <div className = "self-start">
                 <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">Athena Awards</div>
@@ -199,8 +203,9 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   
 
                 <div className = "my-5 flex flex-col sm:flex-row w-full justify-between gap-4">
-                  <div className = "">
-                    <Tooltip id = "hackatime_info"/>
+                  { data && selectedProject ?
+                  <div>
+                    <Tooltip className = "max-w-[20rem]" id = "hackatime_info"/>
                     <span className = "flex flex-row gap-2 items-center py-2" data-tooltip-id = "hackatime_info" data-tooltip-content="Nothing showing up here? Check Settings to set up project tracking with Hackatime!">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -213,9 +218,13 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                                       <option key={index} value = {project.name}>{project.name}</option>
                                   )}
                               </select>
-                    </div>
+                    </div> 
+                    : isLoading ? 
+                      <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>
+                    : <Action title="Set up Hackatime">Set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> to track which project you're working on!</Action>}
+                    
                     <div className = "self-center sm:self-end">
-                     {selectedProject !== "_select" ? 
+                     {data && selectedProject !== "_select" ? 
                       <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>  
                         <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}`}>Ready to submit?</a>
                       </button>
@@ -284,14 +293,16 @@ function ProfileModal() {
   const session = useSession();
   return (
     <>
+      <div className = "absolute right-8 top-8 sm:right-16 sm:top-16 mb-5 flex flex-col items-center gap-4 text-white">
       <button onClick={() => {
-        setUXEvent("profile");
-      }} id="profile" className="mb-5 absolute right-8 top-8 sm:right-16 sm:top-16">
-        {/* <img src="" width={48} height={48} alt="Profile details" /> */}
-        <span className="ml-auto size-10 rounded-full bg-cover bg-no-repeat bg-center block" style={{
-          backgroundImage: `url('${session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`
-        }}></span>
+          setUXEvent("profile");
+        }} id="profile">
+          {/* <img src="" width={48} height={48} alt="Profile details" /> */}
+          <span className="ml-auto size-10 rounded-full bg-cover bg-no-repeat bg-center block" style={{
+            backgroundImage: `url('${session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`
+          }}></span>
       </button>
+      </div>
     </>
   )
 }

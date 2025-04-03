@@ -25,7 +25,7 @@ export default function WelcomeModal({props}: {props: string}){
 
   return (
     <>
-      <button className={`${props} text-2xl playfair-display`} onClick={() => setIsOpen(true)}>start hacking</button>
+      <button className={`${props} text-xl playfair-display`} onClick={() => setIsOpen(true)}>already in hack club? start hacking</button>
       <AnimatePresence>
         {isOpen && <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

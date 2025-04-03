@@ -42,7 +42,7 @@ export default function UnauthenticatedWelcomeMessage({ setOpen }:{ setOpen: (b:
         className="w-full flex flex-col sm:flex-row justify-between self-end"
       >
         <button className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display" onClick={() => setOpen(false)}>&lt;- Go back</button>
-        <button className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display" onClick={() => signIn(undefined, {
+        <button className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display" onClick={() => signIn("slack", {
           callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/onboarding`, team: "T0266FRGM" 
         })}>Log in with Slack -&gt;</button>
       </motion.div>

@@ -1,11 +1,10 @@
+'use client'
 import Background from "@/components/landscape/Background"
-import WelcomeModal from "@/components/welcome/WelcomeModal"
-import { signIn } from "next-auth/react"
 import { Header, AuthStateButton } from "@/components/panels/Header"
-import { useSession } from "next-auth/react";
 import Marquee from "react-fast-marquee";
 import Painting from "@/components/panels/Painting";
 import { STAGES } from "@/app/STAGES";
+import { Fragment } from "react"
 
 const steps = [
   {title: "Build three projects 💻",
@@ -107,8 +106,7 @@ function Polaroid({image, caption, props}: {image: string, caption: string, prop
   )
 }
 
-
-export default async function Index() {
+export default function Index() {
 
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull">
@@ -123,7 +121,7 @@ export default async function Index() {
             <img className = "my-auto mx-auto" src = "/logo.svg"/>
             {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
             <p className="text-xl text-center">Venture forth into the unknown...</p>
-            <div className = "pointer-events-auto">
+            <div className = "pointer-events-auto flex items-center">
               <AuthStateButton/>
             </div>
           </div>
@@ -140,13 +138,13 @@ export default async function Index() {
             <div className = "flex flex-col md:flex-row">
               <div className = "grid grid-cols-8 w-full lg:w-10/12 text-hc-secondary py-8">
                   { steps.map((step, index) =>
-                  <>
-                  <h1 key={`${index}_number`} className = "col-span-1 text-6xl md:text-8xl">{index+1}</h1>
-                  <div key={`${index}_step`} className = "col-span-7 py-4">
-                    <h1 className="text-2xl md:text-4xl py-2">{step.title}</h1>
-                    <p>{step.description}</p>
-                  </div>
-                  </> 
+                  <Fragment key ={index}>
+                    <h1 key={`${index}_title`} className = "col-span-1 text-6xl md:text-8xl">{index+1}</h1>
+                    <div key={`${index}_step`} className = "col-span-7 py-4">
+                      <h1 className="text-2xl md:text-4xl py-2">{step.title}</h1>
+                      <p>{step.description}</p>
+                    </div>
+                  </Fragment> 
                 )}
               </div>
             </div>
@@ -211,7 +209,7 @@ export default async function Index() {
             <p className ="text-hc-secondary">insert more partners</p>
           </div>
         </div>
-        <div className="w-screen h-full sm:h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">
+        <div className="w-screen h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">
           <h1 className = "text-hc-secondary text-2xl sm:text-4xl text-center grow">
             3 projects. 30 hours.
           </h1>

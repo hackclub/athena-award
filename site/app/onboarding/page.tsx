@@ -4,6 +4,8 @@ import { Header } from "@/components/panels/Header"
 import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
 import { useRouter } from "next/navigation";
+import { motion } from "motion/react";
+
 
 const steps = [
     {
@@ -16,11 +18,11 @@ const steps = [
     },
     {
         "step": "3. Repeat",
-        "description": "Do this three times (or more, as needed). Earn artifacts - our currency - with each project shipped."
+        "description": "Do this three times (or more, as needed). Earn artifacts - our currency - with each project shipped. We'll help you track the time you spend working on your projects."
     },
     {
         "step": "4. Code for 30 hours",
-        "description": "We'll help you track the time you spend working on your projects. Once you hit 30 hours, we'll mail you a kickass certificate to certify your technical skills."
+        "description": " Once you hit 30 hours, you're eligible for a fully-funded, three-day hackathon in New York City alongside other kickass programmers and engineers from the Athena program."
     }
 ]
 
@@ -39,10 +41,10 @@ export default function Page(){
             <h1 className="text-3xl sm:text-5xl text-center">Welcome to the <i>Athena Award</i></h1>
             <div className="text-left pt-8 mx-auto flex flex-col gap-4">
                 { steps.map((step, index) => 
-                <div key={index} className="pb-2">
+                <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: index*0.75 }} className="pb-2">
                     <h1 className="text-2xl sm:text-4xl text-left">{step.step}</h1>
                     <p className="text-left text-lg py-1 sm:text-xl">{step.description}</p>
-                </div>) }
+                </motion.div>) }
             </div>
             <button onClick={()=> {router.push("/map")}} className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-2xl">ready? -{'>'}</h1></button>
             </div>
