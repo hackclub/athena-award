@@ -4,17 +4,17 @@ import Background from "../landscape/Background";
 import { AnimatePresence, motion, Variant, Variants } from "motion/react"
 import Image from "next/image";
 import { Tooltip } from "react-tooltip";
-import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
 import { STAGES } from "@/app/STAGES";
 import ActionableScene from "../landscape/ActionableScene";
 import { FaPaintbrush } from "react-icons/fa6";
-import { UXEventContext } from "../context/UXStages";
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
 import { useEffect } from "react";
 import { Action } from "@/components/panels/add-ons/Callout";
+import Icons from "@/components/panels/Icons";
+
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
 interface UserStageData {
@@ -159,7 +159,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
               </div>
               
               <motion.div className="grow grid grid-cols-5 gap-10 items-center">
-                <ProfileModal />
+                <Icons />
                 <div className="col-span-full lg:col-span-2">
                   <div className={`${baseModuleData.visuals.accents.tertiary} p-4 transition-all`}>
                     <motion.div className='aspect-[3/2] bg-white group transition-all rounded-2xl' style={{
@@ -195,8 +195,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                     <div className={`flex gap-2 mt-3 p-3 duration-700 ${baseModuleData!.visuals.accents.secondary} transition-all`}>
                       <div className="size-20 rounded-md bg-red-800 shrink-0 hidden sm:flex items-center justify-center text-center">to be an image</div>
                       <div className="">
-                        <div className="text-xl">Lorem ipsum!</div>
-                        <div>This is a super cool and intellectually engaging description! Go out there and change the world!</div>
+                        <div className="text-xl">{baseModuleData.completionRewards.name}</div>
+                        <div>{baseModuleData.completionRewards.description}</div>
                       </div>
                     </div>
                   </div>
@@ -221,7 +221,13 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                     </div> 
                     : isLoading ? 
                       <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>
-                    : <Action title="Set up Hackatime">Set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> to track which project you're working on!</Action>}
+                    : <Action title="Complete onboarding: Download Hackatime">
+                        You need to set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> before you start the Athena Awards! 
+                        Go to the{' '}
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="inline align-middle size-5 ">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                        </svg> in the top right corner for more information.
+                        </Action>}
                     
                     <div className = "self-center sm:self-end">
                      {data && selectedProject !== "_select" ? 
@@ -288,22 +294,5 @@ export function StageChecklistItem({ title, link, complete, delay, module }:{ ti
   )
 }
 
-function ProfileModal() {
-  const [_, setUXEvent] = useContext(UXEventContext)
-  const session = useSession();
-  return (
-    <>
-      <div className = "absolute right-8 top-8 sm:right-16 sm:top-16 mb-5 flex flex-col items-center gap-4 text-white">
-      <button onClick={() => {
-          setUXEvent("profile");
-        }} id="profile">
-          {/* <img src="" width={48} height={48} alt="Profile details" /> */}
-          <span className="ml-auto size-10 rounded-full bg-cover bg-no-repeat bg-center block" style={{
-            backgroundImage: `url('${session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`
-          }}></span>
-      </button>
-      </div>
-    </>
-  )
-}
+
 

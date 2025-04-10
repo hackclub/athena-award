@@ -63,7 +63,7 @@ code {
 }
 
 a {
-  @apply underline underline-offset-4 text-hc-primary hover:decoration-wavy
+  @apply underline underline-offset-4 text-[#6FF] hover:decoration-wavy
 }
 
 * {

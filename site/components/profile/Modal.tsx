@@ -8,6 +8,7 @@ import { Progress } from './Progress';
 import Waka from './Waka';
 import { FaXmark } from 'react-icons/fa6';
 import { signOut } from 'next-auth/react';
+import Modal from '@/components/panels/layout/PopUpModal';
 
 // i'll migrate this to use useswr but rn it's weird and doesn't want to support more than one call
 
@@ -59,44 +60,10 @@ export default function Profile() {
       }
     }, [uxEvent]);
 
-    const profileIsOpen = uxEvent === "profile"
-
-    useEffect(() => { 
-      if (profileIsOpen) {
-          document.body.classList.add("overflow-y-hidden")
-      } else {
-          document.body.classList.remove("overflow-y-hidden")
-      }}
-  ,[profileIsOpen])
 
     return (
         <>
-          <AnimatePresence>
-            {profileIsOpen && (
-              <motion.div
-                className="fixed inset-0 z-40"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                {/* Backdrop */}
-                <motion.div
-                  className="fixed inset-0 bg-black/35"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={clear}
-                />
-
-                {/* Modal Panel */}
-                <motion.div
-                  className="fixed inset-0 flex items-center justify-center p-4 text-center"
-                  initial={{ opacity: 0, scale: 0.95, y: "50vh" }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: "50vh" }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                >
-                  <div className="w-full h-[85vh] max-w-5xl max-md:overflow-auto transform bg-hc-primary-dull text-left align-middle shadow-xl transition-all p-8 md:grid md:grid-cols-3 max-md:flex max-md:flex-col-reverse gap-4 text-white">
+        <Modal uxEvent={uxEvent} uxEventName="profile" setUXEvent={setUXEvent} className="md:grid md:grid-cols-3 max-md:flex max-md:flex-col-reverse">
                     <div className="md:col-span-1 md:h-full md:sticky flex flex-col basis-2/5">
                       <div className="hidden rounded-md bg-white/10 sm:flex items-center gap-4 h-fit p-4 mb-4">
                         <img
@@ -173,12 +140,9 @@ export default function Profile() {
                       </div>
 
                     </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-{/* <ProfileIsOpenContext.Provider value={{profileIsOpen: profileIsOpen, setProfileIsOpen: setProfileIsOpen}}>
+                  </Modal>
+            </>
+/* <ProfileIsOpenContext.Provider value={{profileIsOpen: profileIsOpen, setProfileIsOpen: setProfileIsOpen}}>
     <Transition appear show={profileIsOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40" onClose={() => clear()}>
           <Transition.Child
@@ -317,7 +281,6 @@ export default function Profile() {
           </div>
         </Dialog>
       </Transition>
-    </ProfileIsOpenContext.Provider> */}
-    </>
+    </ProfileIsOpenContext.Provider> */
     )
 }

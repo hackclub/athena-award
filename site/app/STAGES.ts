@@ -71,11 +71,11 @@ export const STAGES = [
         icon: 'lightbulb',
       },
     ],
-    completionRewards: [{
+    completionRewards: {
       name: 'Lorem ipsum!',
       id: 'lorem-ipsum',
       description: 'This is a really cool pending reward! Go out there and change the world.',
-    }],
+    },
   },
   {
     moduleName: 'Your second project',
@@ -105,10 +105,10 @@ export const STAGES = [
         icon: 'magnifying-glass'
       },
     ],
-    completionRewards: [{
+    completionRewards: {
       name: 'Lorem ipsum!',
       id: 'lorem-ipsum',
       description: 'This is a really cool reward! Go out there and change the world.',
-    }],
+    },
   }
 ] as const;
