@@ -35,8 +35,16 @@ export async function GET(request: NextRequest){
                     "form_submitted_project"
                 ]
             }).all()
-            const prettyRecordID = JSON.parse(JSON.stringify(projectInformation))[0]["fields"]// jank
-            return NextResponse.json({message: prettyRecordID }, { status: 200 })
+            let prettyRecordID
+            try {
+                prettyRecordID = JSON.parse(JSON.stringify(projectInformation))[0]["fields"]// jank
+                return NextResponse.json({message: prettyRecordID }, { status: 200 })
+            } catch (error) {
+                // no project has been set yet for that stage
+                // this is so stupid
+                return NextResponse.json({message: { project_name: "_select", stage: stage, status: "pending", form_submitted_project: null}}, { status: 200 })
+
+            }
 
         } else if (query === "total_time"){
             const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
@@ -80,7 +88,6 @@ export async function POST(request: NextRequest){
         if (!(verifySession(prettyRecordID[0]["fields"]["hashed_token"], accessTokenEncrypted))){
             throw "Unauthorized"
         }
-        console.log(prettyRecordID[0]["fields"])
         if (prettyRecordID[0]["fields"]["project_unique_names"].includes(uniqueProjectName)){
             // project already exists and linked to user
             const projNumber = uniqueProjectName.slice(-1)
@@ -98,18 +105,19 @@ export async function POST(request: NextRequest){
             // if the project id does not exist, create new project and link it to the user
             const data =  {
                 "fields": {
-                    "unique_name": uniqueProjectName,
                     "slack_id": session?.slack_id,
                     "project_name": projectName,
-                    "stage": body["stage"],
-                    "Registered Users": [
+                    "stage": String(body["stage"]),
+                    "registered_user": [
                         prettyRecordID[0]["id"]
                     ]
                 }
             }
-            await airtable("Projects").create([
+            const r = await airtable("Projects").create([
                 data
-            ])
+            ]).catch((error) => {
+                console.log(error)
+            })
             return NextResponse.json({message: "Project created successfully"}, {status: 200})
 
         }
