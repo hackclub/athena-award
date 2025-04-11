@@ -31,7 +31,8 @@ export async function GET(request: NextRequest){
                 fields: [
                     "project_name",
                     "stage",
-                    "status"
+                    "status",
+                    "form_submitted_project"
                 ]
             }).all()
             const prettyRecordID = JSON.parse(JSON.stringify(projectInformation))[0]["fields"]// jank
