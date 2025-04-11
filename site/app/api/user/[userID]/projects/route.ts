@@ -5,7 +5,6 @@ import { NextResponse, NextRequest } from "next/server";
 import Airtable from 'airtable';
 import { auth } from '@/auth';
 import { encryptSession, verifySession } from '@/utils/hash';
-import { getValue } from "@/services/fetchData";
 import { getWakaTimeData } from "@/services/fetchWakaData";
 
 const airtable = new Airtable({
@@ -26,18 +25,31 @@ export async function GET(request: NextRequest){
 
         } else if (query === "selected"){
             const stage = request.nextUrl.searchParams.get("stage")
-            const projectForStage = (await getValue(session!.user.email!) as any)[`stage_`+stage+`_project`]
-            return NextResponse.json({message: projectForStage }, { status: 200 })
+            const uniqueProjectForStage = session?.slack_id+"_"+stage
+            const projectInformation = await airtable("Projects").select({
+                filterByFormula: `AND({slack_id} = "${session?.slack_id}", {unique_name} = "${uniqueProjectForStage}")`,
+                fields: [
+                    "project_name",
+                    "stage",
+                    "status"
+                ]
+            }).all()
+            const prettyRecordID = JSON.parse(JSON.stringify(projectInformation))[0]["fields"]// jank
+            return NextResponse.json({message: prettyRecordID }, { status: 200 })
 
         } else if (query === "total_time"){
             const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
             let projects
             if (hackatimeProjects.ok){
                 projects = (await hackatimeProjects.json())["data"]["projects"] as any
-                const stage_1_project = (await getValue(session!.user.email!) as any)[`stage_1_project`]
-                const stage_2_project = (await getValue(session!.user.email!) as any)[`stage_2_project`]
-                const stage_3_project = (await getValue(session!.user.email!) as any)[`stage_3_project`]    
-                const r = projects.filter((project: any) => [stage_1_project, stage_2_project, stage_3_project].includes(project.name))
+                const allProjects = await airtable("Projects").select({
+                    filterByFormula: `{slack_id} = "${session?.slack_id}"`,
+                    fields: [
+                        "project_name"
+                    ]
+                }).all()
+                const prettyRecordID = (JSON.parse(JSON.stringify(allProjects))).map((project: any) => project["fields"]["project_name"]) // jank
+                const r = projects.filter((project: any) => prettyRecordID.includes(project.name))
                 return NextResponse.json({message: r }, { status: 200 })
             }
             return NextResponse.json({error: "Hackatime was unresponsive" }, { status: 400 })
@@ -51,15 +63,15 @@ export async function GET(request: NextRequest){
 
 export async function POST(request: NextRequest){
     const body = await request.json()
-    const stage = "stage_" + body["stage"] + "_project"
-    const projectName = body["project"]
     const session = await auth();
+    const uniqueProjectName = session?.slack_id + "_" + body["stage"]
+    const projectName = body["project"]
     const emailAddress = session?.user.email
     try {
         const recordID = await airtable("Registered Users").select({
             filterByFormula: `{email} = "${emailAddress}"`,
             maxRecords: 1,
-            fields: ["record_id", "hashed_token"]
+            fields: ["record_id", "hashed_token", "projects", "project_unique_names"]
         }).all()
 
         const accessTokenEncrypted = encryptSession(session!.access_token!, process.env.AUTH_SECRET!)
@@ -67,19 +79,41 @@ export async function POST(request: NextRequest){
         if (!(verifySession(prettyRecordID[0]["fields"]["hashed_token"], accessTokenEncrypted))){
             throw "Unauthorized"
         }
-
-        const data =  {
-            "id": prettyRecordID[0]["id"],
-            "fields": {
-                [stage]: projectName
+        console.log(prettyRecordID[0]["fields"])
+        if (prettyRecordID[0]["fields"]["project_unique_names"].includes(uniqueProjectName)){
+            // project already exists and linked to user
+            const projNumber = uniqueProjectName.slice(-1)
+            const data =  {
+                "id": prettyRecordID[0]["fields"]["projects"][Number(projNumber) - 1],
+                "fields": {
+                    "project_name": projectName
+                }
             }
+            await airtable("Projects").update([
+                data
+            ])
+            return NextResponse.json({message: "Project updated successfully"}, {status: 200})
+        } else {
+            // if the project id does not exist, create new project and link it to the user
+            const data =  {
+                "fields": {
+                    "unique_name": uniqueProjectName,
+                    "slack_id": session?.slack_id,
+                    "project_name": projectName,
+                    "stage": body["stage"],
+                    "Registered Users": [
+                        prettyRecordID[0]["id"]
+                    ]
+                }
+            }
+            await airtable("Projects").create([
+                data
+            ])
+            return NextResponse.json({message: "Project created successfully"}, {status: 200})
+
         }
-        await airtable("Registered Users").update([
-            data
-        ])
-        return NextResponse.json({message: "Project updated successfully"}, {status: 200})
-    } catch {
-        return NextResponse.json({message: "Something went wrong"}, {status: 400})
+    } catch (error) {
+        return NextResponse.json({message: `Something went wrong: ${error}`}, {status: 400})
     }
 
 }

@@ -1,7 +1,6 @@
 import { auth } from "auth"
 
 export const GET = auth((req) => {
-  console.log(req.auth);
 
   if (req.auth) {
     return Response.json(req.auth);

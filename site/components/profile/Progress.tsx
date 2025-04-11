@@ -25,10 +25,10 @@ export function Progress(){
         <Tooltip id="artifacts_progress" place="right" className="z-10"/>
 
         <div className="rounded-xl w-full h-8 bg-gray-200 my-3 relative">
-          <div data-tooltip-id="artifacts_progress" data-tooltip-content={artifacts + "%"} className= "absolute rounded-xl h-8 bg-hc-primary z-10" style= {{width: Number(artifacts) + "%"}}/>
-          <div className= "h-8 absolute z-20 border border-b-0 border-t-0 border-l-0 border-hc-primary/75 border-r-4" aria-valuemax={100} style= {{width: "25%"}}/>
-          <div className= "h-8 absolute z-20 border border-b-0 border-t-0 border-l-0 border-hc-primary/75 border-r-4" aria-valuemax={100} style= {{width: "50%"}}/>
-          <div className= "h-8 absolute z-20 border border-b-0 border-t-0 border-l-0 border-hc-primary/75 border-r-4" aria-valuemax={100} style= {{width: "75%"}}/>
+          <div data-tooltip-id="artifacts_progress" data-tooltip-content={artifacts + "%"} className= "absolute rounded-l-xl h-8 bg-hc-primary z-10" style= {{width: Number(artifacts) + "%"}}/>
+          <div className= "h-8 absolute z-20 border border-b-0 border-t-0 border-l-0 border-hc-primary brightness-150 border-r-4" aria-valuemax={100} style= {{width: "25%"}}/>
+          <div className= "h-8 absolute z-20 border border-b-0 border-t-0 border-l-0 border-hc-primary brightness-150 border-r-4" aria-valuemax={100} style= {{width: "50%"}}/>
+          <div className= "h-8 absolute z-20 border border-b-0 border-t-0 border-l-0 border-hc-primary brightness-150 border-r-4" aria-valuemax={100} style= {{width: "75%"}}/>
 
         </div>
         <ul className = "list-disc list-inside">

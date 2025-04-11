@@ -1,5 +1,4 @@
 export async function GET() {
-  console.log('the api req worked??')
   const res = await fetch('https://ai.hackclub.com/chat/completions', {
     method: 'POST',
     headers: {

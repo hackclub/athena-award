@@ -118,12 +118,11 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   if (data){
     projects = (data[0] as any)["data"]["projects"]
   }
-
   useEffect(() => {
     if (data){
-
+      console.log(data[1])
       if ((data[1] as any)["message"]){
-        setSelectedProject((data[1] as any)["message"])
+        setSelectedProject((data[1] as any)["message"]["project_name"])
       } else {
         setSelectedProject("_select")
       }
@@ -203,42 +202,51 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                   
 
                 <div className = "my-5 flex flex-col sm:flex-row w-full justify-between gap-4">
-                  { data && selectedProject ?
-                  <div>
-                    <Tooltip className = "max-w-[20rem]" id = "hackatime_info"/>
-                    <span className = "flex flex-row gap-2 items-center py-2" data-tooltip-id = "hackatime_info" data-tooltip-content="Nothing showing up here? Check Settings to set up project tracking with Hackatime!">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                      </svg>
-                      <label htmlFor="project" className = "font-bold text-accent">What project are you working on?</label>
-                    </span>
-                              <select required className="w-full sm:w-max flex flex-col gap-1 *:bg-darker text-black *:text-black" name = "project" id="project" defaultValue={selectedProject} onChange={handleChange}>
-                                <option disabled value = "_select">[Select a project]</option>
-                                  {projects && projects.map((project: any, index: number) => /* i really cbf to fix the type rn */
-                                      <option key={index} value = {project.name}>{project.name}</option>
-                                  )}
-                              </select>
-                    </div> 
-                    : isLoading ? 
-                      <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>
-                    : <Action title="Complete onboarding: Download Hackatime">
-                        You need to set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> before you start the Athena Awards! 
-                        Go to the{' '}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="inline align-middle size-5 ">
+                  { data && selectedProject && data[1] && data[1]["message"]["status"] !== "approved"
+                        ? <div>
+                        <Tooltip className = "max-w-[20rem]" id = "hackatime_info"/>
+                        <span className = "flex flex-row gap-2 items-center py-2" data-tooltip-id = "hackatime_info" data-tooltip-content="Nothing showing up here? Check Settings to set up project tracking with Hackatime!">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
                           <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                        </svg> in the top right corner for more information.
-                        </Action>}
-                    
-                    <div className = "self-center sm:self-end">
-                     {data && selectedProject !== "_select" ? 
-                      <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>  
-                        <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}`}>Ready to submit?</a>
-                      </button>
-                      : 
-                      <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
-                          Select a project to submit                    
-                      </button>
-                    }
+                          </svg>
+                          <label htmlFor="project" className = "font-bold text-accent">What project are you working on?</label>
+                        </span>
+                                  <select required className="w-full sm:w-max flex flex-col gap-1 *:bg-darker text-black *:text-black" name = "project" id="project" defaultValue={selectedProject} onChange={handleChange}>
+                                    <option disabled value = "_select">[Select a project]</option>
+                                      {projects && projects.map((project: any, index: number) => /* i really cbf to fix the type rn */
+                                          <option key={index} value = {project.name}>{project.name}</option>
+                                      )}
+                                  </select>
+                        </div> 
+                        : isLoading 
+                          ? <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>
+                          : data && data[1] && data[1]["message"]["status"] == "approved"
+                            ? <div>Your project {selectedProject} was approved!</div>
+                            : <span><Action title="Complete onboarding: Download Hackatime">
+                            You need to set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> before you start the Athena Awards! 
+                            Go to the
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="inline align-middle size-5 ">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                            </svg> in the top right corner for more information.
+                          </Action></span>
+                        }
+                      <div className = "self-center sm:self-end">
+                          { data && selectedProject !== "_select" && data[1] && data[1]["message"]["status"] === "unreviewed"
+                          ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>  
+                              <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&slack_id=${session.data.slack_id}`}>Ready to submit?</a>
+                            </button>
+                          : (data && !data[1])
+                            ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
+                              Select a project to submit                    
+                              </button>
+                            : (data && data[1]["message"]["status"] == "approved")
+                              ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Stage completed 🎉</button>
+                              : (data && data[1]["message"]["status"] == "rejected") 
+                                ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
+                                    <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&slack_id=${session.data.slack_id}`}>Your project was rejected - click here to resubmit!</a>
+                                  </button>
+                                : <div>huh</div>
+                            }
                     </div>
                   </div>
                 </div>
