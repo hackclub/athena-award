@@ -245,7 +245,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                                 ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
                                     <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&slack_id=${session.data.slack_id}`}>Your project was rejected - click here to resubmit!</a>
                                   </button>
-                                : <div>huh</div>
+                                : <div>Loading...</div>
                             }
                     </div>
                   </div>
