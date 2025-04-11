@@ -120,8 +120,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   }
   useEffect(() => {
     if (data){
-      console.log(data[1])
-      console.log(data[1]["message"]["form_submitted_project"])
       if ((data[1] as any)["message"]){
         setSelectedProject((data[1] as any)["message"]["project_name"])
       } else {
