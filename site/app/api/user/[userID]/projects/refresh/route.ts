@@ -40,22 +40,15 @@ export async function POST(request: NextRequest){
                 ]
             }).all()
             const prettyRecordID = (JSON.parse(JSON.stringify(selectedProjectToSearchFor)))[0] // jank
-            console.log(prettyRecordID["fields"]["project_name"])
             const filtered = projects.filter((project: any) => project.name == prettyRecordID["fields"]["project_name"])[0]
-            console.log([{ 
-                id: prettyRecordID["fields"]["record_id"], 
-                fields: {
-                    duration: Number((filtered.total_seconds/3600)) 
-                }
-                }])
             const updateDuration = await airtable("Projects").update([{ 
                 id: prettyRecordID["fields"]["record_id"], 
                 fields: {
-                    duration: Number((filtered.total_seconds/3600))
+                    duration: Number((filtered.total_seconds/3600).toFixed(2))
                 }
                 }]
             )
-            return NextResponse.json({ message: Number((filtered.total_seconds/60).toFixed(2)) }, { status: 200 })
+            return NextResponse.json({ message: Number((filtered.total_seconds/3600).toFixed(2)) }, { status: 200 })
 
         }
           
