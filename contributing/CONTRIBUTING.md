@@ -66,3 +66,14 @@ When testing Slack OAuth, make sure you have both the local dev environment and 
 ## Airtable Contributions
 
 Obtain the Airtable API key and base ID and enter them into your .env file as appropriate (If you're involved in this project, DM @phthallo on the Hack Club Slack for help with this)
+
+### Project Review
+When a user submits a project for a specific stage, it is added to the centralised Athena Awards Airtable where it is then manually reviewed. Projects can be either rejected, approved, pending, or unreviewed. 
+
+`rejected` - project was submitted through the form and was deemed insufficient.
+`approved` - project was submitted through the form and was deemed sufficient.
+`pending` - project has been selected on the Athena Awards website but not submitted through the form yet.
+`unreviewed` - project was submitted through the form and has not been manually reviewed yet.
+
+Users are prompted to resubmit projects if it is initially rejected. Projects are then tied to their record (slackId_projectNumber), to keep track of what has been submitted to what stage.
+

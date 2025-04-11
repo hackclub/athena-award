@@ -12,7 +12,7 @@ import { FaPaintbrush } from "react-icons/fa6";
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
 import { useEffect } from "react";
-import { Action } from "@/components/panels/add-ons/Callout";
+import { Action, Tip } from "@/components/panels/add-ons/Callout";
 import Icons from "@/components/panels/Icons";
 
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
@@ -202,7 +202,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
 
                 <div className = "my-5 flex flex-col sm:flex-row w-full justify-between gap-4">
                   {/* to do, clean this entire section up lmfao*/}
-                  { data && selectedProject && data[1] && (data[1]["message"]["status"] == "rejected" || (data[1]["message"]["status"] == "unreviewed" && !data[1]["message"]["form_submitted_project"]))
+                  { data && selectedProject && data[1] && (data[1]["message"]["status"] == "rejected" || (data[1]["message"]["status"] == "unreviewed"))
                         ? <div>
                         <Tooltip className = "max-w-[20rem]" id = "hackatime_info"/>
                         <span className = "flex flex-row gap-2 items-center py-2" data-tooltip-id = "hackatime_info" data-tooltip-content="Nothing showing up here? Check Settings to set up project tracking with Hackatime!">
@@ -221,9 +221,9 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                         : isLoading 
                           ? <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>
                           : data && data[1] && data[1]["message"]["status"] == "approved"
-                            ? <div>Your project {selectedProject} was approved!</div>
-                            : data && data[1] && data[1]["message"]["form_submitted_project"] && data[1]["message"]["status"] == "unreviewed"
-                              ? <div>Your project {selectedProject} has been submitted for review.</div>
+                            ? <Tip title="Project approved">Your project {selectedProject} was approved!</Tip>
+                            : data && data[1] && data[1]["message"]["status"] == "pending"
+                              ? <Action title = "Project pending review">Your project {selectedProject} has been submitted for review.</Action>
                               : <span><Action title="Complete onboarding: Download Hackatime">
                               You need to set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> before you start the Athena Awards! 
                               Go to the
@@ -233,7 +233,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                             </Action></span>
                         }
                       <div className = "self-center sm:self-end">
-                          { data && selectedProject !== "_select" && data[1] && data[1]["message"]["status"] === "unreviewed" && !(data[1]["message"]["form_submitted_project"])
+                          { data && selectedProject !== "_select" && data[1] && data[1]["message"]["status"] === "unreviewed"
                           ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>  
                               <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&slack_id=${session.data.slack_id}`}>Ready to submit?</a>
                             </button>
@@ -247,7 +247,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                                 ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
                                     <a className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&slack_id=${session.data.slack_id}`}>Your project was rejected - click here to resubmit!</a>
                                   </button>
-                                : (data && data[1]["message"]["status"] == "unreviewed" && data[1]["message"]["form_submitted_project"])
+                                : (data && data[1]["message"]["status"] == "pending")
                                   ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Project pending review</button>
                                   : <div>Loading...</div> 
                             }
