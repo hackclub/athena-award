@@ -28,7 +28,6 @@ export async function linkUser(emailAddress: string, accessToken: string){
                 "email": emailAddress,
                 "slack_id": id,
                 "hashed_token": accessTokenJoined,
-                "points": 0 
                             }
             }])
         return "User added to DB"
