@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { Tooltip } from "react-tooltip";
 import { fetcher } from "@/services/fetcher";
 import useSWR from "swr";
-import { Warning } from "../panels/add-ons/Callout";
+import { Warning } from "@/components/panels/add-ons/Callout";
 // TO DO:
 // add a scrolling list of point-giving initiatives (including completed stages for later)
 

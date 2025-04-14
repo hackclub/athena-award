@@ -1,9 +1,9 @@
 import { useState, useContext, FormEvent, useEffect, Fragment } from 'react'
 import { useSession } from "next-auth/react";
-import { UXEventContext } from '../context/UXStages';
+import { UXEventContext } from '@/components/context/UXStages';
 import { AnimatePresence, motion } from 'motion/react';
 import { Tooltip } from 'react-tooltip';
-import { Warning } from '../panels/add-ons/Callout';
+import { Warning } from '@/components/panels/add-ons/Callout';
 import { Progress } from './Progress';
 import Waka from './Waka';
 import { FaXmark } from 'react-icons/fa6';

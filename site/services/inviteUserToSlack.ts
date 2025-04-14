@@ -81,6 +81,12 @@ export async function inviteSlackUser(email: string) {
 
     } catch (error: any) {
         console.log(`Error in inviteSlackUser: ${error}`, "error");
+        const addError = await airtable("Email Slack Invites").create([{
+          fields: {
+            email: email, 
+            error: error
+          }
+        }])
         return { ok: false, error: error.message };
     }
 }

@@ -88,7 +88,7 @@ export async function POST(request: NextRequest){
         if (!(verifySession(prettyRecordID[0]["fields"]["hashed_token"], accessTokenEncrypted))){
             throw "Unauthorized"
         }
-        if (prettyRecordID[0]["fields"]["project_unique_names"].includes(uniqueProjectName)){
+        if (prettyRecordID[0]["fields"]["project_unique_names"] && prettyRecordID[0]["fields"]["project_unique_names"].includes(uniqueProjectName)){
             // project already exists and linked to user
             const projNumber = uniqueProjectName.slice(-1)
             const data =  {

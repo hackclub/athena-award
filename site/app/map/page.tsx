@@ -2,9 +2,8 @@
 import Background from "@/components/landscape/Background";
 import MapMenu from "@/components/map/MapMenu";
 import { useState, useContext } from "react";
-import { ProfileIsOpenContext } from "@/components/island/Modal";
-import ProfileModal from "@/components/profile/Modal";
-import InfoModal from "@/components/info/Modal";
+import ProfileModal from "@/components/modals/profile/Modal";
+import InfoModal from "@/components/modals/info/Modal";
 import { SessionProvider } from "next-auth/react"
 import { STAGES } from "@/app/STAGES";
 import { UXEvent, UXEventContext } from "@/components/context/UXStages";

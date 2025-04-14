@@ -1,7 +1,7 @@
 import useSWR from "swr"
 import { useSession } from "next-auth/react"
 import { fetcher } from "@/services/fetcher";
-import { Warning } from "../panels/add-ons/Callout";
+import { Warning } from "@/components/panels/add-ons/Callout";
 import { Tooltip } from "react-tooltip";
 
 export function Waka(){

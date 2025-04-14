@@ -1,9 +1,10 @@
+// defunct
 import ACHIEVEMENTS_LIST from "@/app/Achievements";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { fetcher } from "@/services/fetcher";
-import { Warning } from "../panels/add-ons/Callout";
+import { Warning } from "@/components/panels/add-ons/Callout";
 
 
 export function Achievements(){
