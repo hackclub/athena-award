@@ -32,10 +32,10 @@ export function Progress(){
 
         </div>
         <ul className = "list-disc list-inside">
-          <li>Get prizes through earning our currency, <b className = "text-hc-primary">artifacts</b>! You can get artifacts by successfully completing a <b className = "text-hc-primary">stage</b> or through <b className = "text-hc-primary">achievements.</b></li>
-          <li>Every <b className = "text-hc-primary">25 artifacts = guaranteed prize</b>. Bonus artifacts can be redeemed for other cool prizes.</li>
+          <li>Get prizes through earning our currency, <b className = "text-[#6FF]">artifacts</b>! You can get artifacts by successfully completing a <b className = "text-[#6FF] ">stage</b> or through <b className = "text-[#6FF]">achievements.</b></li>
+          <li>Every <b className = "text-[#6FF]">25 artifacts = guaranteed prize</b>. Bonus artifacts can be redeemed for other cool prizes.</li>
           <Tooltip id = "travel"/>
-          <li data-tooltip-id="travel" data-tooltip-content="Accommodation and meals fully covered. We'll help you with visas, flights and anything else you might need to enter the country!"><b className = "text-hc-primary">100 artifacts</b> makes you eligible for a travel grant for an <b className = "text-hc-primary">exclusive hackathon</b> in New York City!</li>
+          <li data-tooltip-id="travel" data-tooltip-content="Accommodation and meals fully covered. We'll help you with visas, flights and anything else you might need to enter the country!"><b className = "text-[#6FF] ">100 artifacts</b> makes you eligible for a travel grant for an <b className = "text-[#6FF]">exclusive hackathon</b> in New York City!</li>
         </ul>
         </div>
     )
