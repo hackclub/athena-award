@@ -176,7 +176,7 @@ export default function Index() {
           </h1>
             <Marquee className = "my-8 grow" autoFill pauseOnHover={true}>
               {prizes.map((prize, index) => 
-                <Painting key={index} image={prize.image}>{prize.description}</Painting>
+                <Painting key={index} image={prize.image} description={prize.description}/>
               )}
             </Marquee>
         </div>

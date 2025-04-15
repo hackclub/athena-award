@@ -221,7 +221,12 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                         : isLoading 
                           ? <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>
                           : data && data[1] && data[1]["message"]["status"] == "approved"
-                            ? <Tip title="Project approved">Your project {selectedProject} was approved!</Tip>
+                            ? <Tip title="Project approved">
+                                  Your project {selectedProject} was approved! Head to the Shop 
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 inline-block mx-1">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                                  </svg> to order your prize.
+                                </Tip>
                             : data && data[1] && data[1]["message"]["status"] == "unreviewed"
                               ? <Action title = "Project awaiting review">Your project {selectedProject} has been submitted for review.</Action>
                               : <span><Action title="Complete onboarding: Download Hackatime">
@@ -235,7 +240,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                       <div className = "self-center sm:self-end">
                           { data && selectedProject !== "_select" && (data[1] && data[1]["message"]["status"] === "pending")
                           ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`, { method: "POST" })}>  
-                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&slack_id=${session.data.slack_id}`}>Ready to submit?</a>
+                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&email=${session.data.user.email}`}>Ready to submit?</a>
                             </button>
                           : (data && selectedProject == "_select")
                             ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
@@ -245,7 +250,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                               ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Stage completed 🎉</button>
                               : (data && data[1]["message"]["status"] == "rejected") 
                                 ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`, { method: "POST" })}>
-                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&slack_id=${session.data.slack_id}`}>Your project was rejected - click here to resubmit!</a>
+                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&email=${session.data.user.email}`}>Your project was rejected - click here to resubmit!</a>
                                   </button>
                                 : (data && data[1]["message"]["status"] == "unreviewed")
                                   ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Project awaiting review</button>
