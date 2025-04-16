@@ -28,21 +28,21 @@ export interface BaseModule {
     description: string,
   }[]
 }
-
 export const STAGES = [
+  
   {
     moduleName: 'Start hacking',
     description: "This is the first project you will be working on. It is a great way to get started with the Athena Award.\nDon't know where to start? Explore the painting for resources!",
     visuals: {
-      name: 'Vista from a Grotto',
-      artist: 'David Teniers the Younger',
-      src: '/vista.jpg', // the background image
+      name: 'The Swing',
+      artist: 'Jean-Honoré Fragonard',
+      src: '/swing.jpg', // the background image
       // 
-      scene: 'https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode', // for the interactive worldly component
+      scene: 'https://prod.spline.design/iYn5IygfPTvAr0eR/scene.splinecode', // for the interactive worldly component
       accents: {
-        primary: 'bg-rose-950',
-        secondary: 'bg-red-900/30',
-        tertiary: 'bg-red-900/40'
+        primary: 'bg-emerald-950',
+        secondary: 'bg-emerald-900/30',
+        tertiary: 'bg-emerald-900/40'
       }
     },
     actions: [
@@ -101,6 +101,41 @@ export const STAGES = [
         resources: [
           { name: 'Hack Club YSWS', description: 'Hack Club runs several You-Ship-We-Ship (YSWS) programs that encourage you to build different kinds of projects (ex. websites, games, and hardware projects) in exchange for completely free stuff in return!', link: 'https://ysws.hackclub.com', image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/fb7308e47eb968083aa5902af086bcadc5fdd8cc_image.png" },
           { name: 'Jams', description: "Want to build something cool? Don't know how to do it? Check out Jams, a series of workshops that show you how to build new things.", link: 'https://jams.hackclub.com', image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/dbe38e8eae57fb80ea9d4269c6efba40e7585ed9_image.png"},
+        ],
+        icon: 'magnifying-glass'
+      },
+    ],
+    completionRewards: {
+      name: 'Lorem ipsum!',
+      id: 'lorem-ipsum',
+      description: 'This is a really cool reward! Go out there and change the world.',
+    },
+  },
+  {
+    moduleName: 'Your final project',
+    description: "This is the final stretch. Build something you thought you would have never been capable of.",
+    visuals: {
+      name: 'Vista from a Grotto',
+      artist: 'David Teniers the Younger',
+      src: '/vista.jpg', // the background image
+      scene: 'https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode', // for the interactive worldly component
+      accents: {
+        primary: 'bg-rose-950',
+        secondary: 'bg-red-900/30',
+        tertiary: 'bg-red-900/40'
+      }
+    },
+    actions: [
+      {
+        id: 'stage3-resources',
+        name: 'Resources',
+        x: 80,
+        y: 60,
+        component: null,
+        resources: [
+          { name: 'Starting a Hack Club', description: "Start a Hack Club at your 🫵 school - we'll give you all the resources need to do it!", link: 'https://hackclub.com/clubs', image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/fb7308e47eb968083aa5902af086bcadc5fdd8cc_image.png" },
+          { name: 'Run your own hackathon', description: "Run a high school hackathon in your community!", link: 'https://hackclub.com/hackathons', image: "https://cloud-25h1tatrt-hack-club-bot.vercel.app/0260102957-168f5ff5-ca65-44d9-8814-a7baad487f31.png"},
+          { name: 'Start your nonprofit with HCB', description: 'Thinking of starting a nonprofit or community initiative? Part of a First Robotics team? Fundraise with HCB!', link: 'https://hackclub.com/fiscal-sponsorship/', image: 'https://hc-cdn.hel1.your-objectstorage.com/s/v3/1b6f7952c2cea122a22dcf85afe896f3679dfc34_image.png'}
         ],
         icon: 'magnifying-glass'
       },

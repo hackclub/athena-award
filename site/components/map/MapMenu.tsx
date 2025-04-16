@@ -61,12 +61,16 @@ const secondExampleData: UserModuleData = {
   moduleName: "Your second project"
 }
 
+const thirdExampleData: UserModuleData = {
+  moduleName: "Your final project"
+}
 /**
  * This will not be hardcoded data; the user's progress is indicated by User{item}Data while to-be-hardcoded information is represented as Base{item}.
  */
 const compositeUserModuleData: UserModuleData[] = [
   exampleData,
   secondExampleData,
+  thirdExampleData
 ] as const;
 
 /**
