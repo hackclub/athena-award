@@ -54,12 +54,30 @@ export async function GET(request: NextRequest){
                 const allProjects = await airtable("Projects").select({
                     filterByFormula: `{slack_id} = "${session?.slack_id}"`,
                     fields: [
-                        "project_name"
+                        "project_name",
+                        "status"
                     ]
                 }).all()
-                const prettyRecordID = (JSON.parse(JSON.stringify(allProjects))).map((project: any) => project["fields"]["project_name"]) // jank
-                const r = projects.filter((project: any) => prettyRecordID.includes(project.name))
-                return NextResponse.json({message: r }, { status: 200 })
+                let r
+                try { 
+                    const prettyRecordID = (JSON.parse(JSON.stringify(allProjects))).map((project: any) => project["fields"]["project_name"]) // jank
+                    const userProjectStatus = ((JSON.parse(JSON.stringify(allProjects))).map((project: any) => 
+                        ({
+                            name: project["fields"]["project_name"],
+                            stage: project["fields"]["stage"],
+                            status: project["fields"]["status"]}
+                        )))
+                    const userProject = projects.filter((project: any) => prettyRecordID.includes(project.name))
+                    const newThing =(userProjectStatus.map((projPair: any) => 
+                        ({ ...(userProject.filter((project: any) => project.name === projPair.name))[0], status: projPair["status"]})
+                        ))
+
+                    return NextResponse.json({ message: newThing }, { status: 200 })
+
+                } catch (error){
+                    console.log(error)
+                    return NextResponse.json({ error: error }, { status: 400 })
+                }
             }
             return NextResponse.json({error: "Hackatime was unresponsive" }, { status: 400 })
 

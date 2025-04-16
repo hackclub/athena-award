@@ -94,7 +94,7 @@ export default function Index() {
   }
 
   return (
-    <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull">
+    <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull ">
       <div className="pointer-events-none w-screen h-screen fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <Background shouldAnimate sourceScene={STAGES[1].visuals.scene} />
       </div>
@@ -116,7 +116,7 @@ export default function Index() {
           </div>  
 
         </div>
-        <div className="w-screen h-max bg-hc-primary-dull p-12 sm:p-16 flex flex-col gap-10 lg:flex-row">
+        <div className="w-screen h-max bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 flex flex-col gap-10 lg:flex-row">
           {/* to do: a blurb about days of service, think something like the counter from the gwynne shotwell site: https://gwynne.hackclub.dev */}
           <div>
             <h1 className = "text-hc-secondary text-5xl">How this works:</h1>
@@ -155,7 +155,7 @@ export default function Index() {
               </div>
         </div>
 
-        <div className="relative w-screen h-max sm:h-screen py-12 sm:py-16 bg-hc-primary-dull bg-[url(/bg.svg)] flex flex-col">
+        <div className="relative w-screen h-max sm:h-[110vh] py-12 sm:py-16 bg-hc-primary-dull bg-[url(/bg.svg)] flex flex-col">
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center">
                   Prizes
           </h1>
@@ -169,7 +169,7 @@ export default function Index() {
               <path d="M85.2968 59.491L88.8239 77.5839L29.7081 80.6777L29.0873 75.0322L85.2968 59.491Z" fill="#F4BF4F"/>
             </svg>
           </div>
-            <Marquee className = "my-8 grow" autoFill pauseOnHover={true}>
+            <Marquee className = "grow" autoFill pauseOnHover={true}>
               {prizes.map((prize: any, index: any) => 
                 <Painting key={index} image={prize.fields.image} description={prize.fields.item_friendly_name}/>
               )}
@@ -198,7 +198,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="w-screen h-screen p-12 sm:p-24 bg-hc-primary-dull">
+        <div className="w-screen h-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
           <h1 className = "text-hc-secondary text-3xl text-left">
                   <i>brought to you by</i>
           </h1>

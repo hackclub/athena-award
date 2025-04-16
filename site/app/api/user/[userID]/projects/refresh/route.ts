@@ -11,29 +11,23 @@ const airtable = new Airtable({
 }).base(process.env.AIRTABLE_BASE_ID!)
 
 
-export async function POST(request: NextRequest){
+export async function POST(request: NextRequest, { params }: { params: { userID: string }}){
     const stageNumber = request.nextUrl.searchParams.get("stage")
-      const session = await auth();
-      const emailAddress = session?.user.email
-      try {
+    const slackId = (await params).userID
+    console.log(slackId)
+    try {
           const recordID = await airtable("Registered Users").select({
-              filterByFormula: `{email} = "${emailAddress}"`,
+              filterByFormula: `{slack_id} = "${slackId}"`,
               maxRecords: 1,
               fields: ["record_id", "hashed_token"]
           }).all()
-  
-          const accessTokenEncrypted = encryptSession(session!.access_token!, process.env.AUTH_SECRET!)
-          const prettyRecordID = JSON.parse(JSON.stringify(recordID)) // jank
-          if (!(verifySession(prettyRecordID[0]["fields"]["hashed_token"], accessTokenEncrypted))){
-              throw "Unauthorized"
-          }
 
-        const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
+        const hackatimeProjects = await getWakaTimeData(slackId);
         let projects
         if (hackatimeProjects.ok){
             projects = (await hackatimeProjects.json())["data"]["projects"] as any
             const selectedProjectToSearchFor = await airtable("Projects").select({
-                filterByFormula: `AND({slack_id} = "${session?.slack_id}", {stage} = "${stageNumber}")`,
+                filterByFormula: `AND({slack_id} = "${slackId}", {stage} = "${stageNumber}")`,
                 fields: [
                     "project_name",
                     "record_id"

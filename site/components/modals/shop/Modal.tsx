@@ -43,6 +43,8 @@ export default function ShopModal(){
                             {prizeStage.filter((prize: any) => prize.fields.stage == index+1).map((prize: any, idx: number) => 
                                 <Painting 
                                     showCaptionOnSmall 
+                                    index={index+1 + "_" + String(idx+1)+"_painting"}
+                                    tooltip={prize.fields.description}
                                     className="inline grow sm:basis-1/2 md:basis-1/3" key= {idx} image={prize.fields.image}
                                     description={prize.fields.item_friendly_name}
                                     link={`https://forms.hackclub.com/athena-awards-orders?stage=${index+1}&item=${prize.fields.item_name}`}

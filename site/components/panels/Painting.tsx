@@ -1,8 +1,11 @@
 "use client"
+import { Tooltip } from "react-tooltip"
 import { shineEffect } from "./Header"
-export default function Painting({image, description, link, className, showCaptionOnSmall=false}: {image: string, description: string, link?: string, className?: string, showCaptionOnSmall?: boolean}){
+export default function Painting({image, index, tooltip, description, link, className, showCaptionOnSmall=false}: {image: string, index?: string, description: string, link?: string, className?: string, tooltip?: string, showCaptionOnSmall?: boolean}){
     return (
-        <div className={`h-42 sm:h-80 flex flex-col items-center justify-center ${className}`}> {/* maybe add small random rotations? */}
+        <>
+        <Tooltip id = {index} place="top" className="max-w-96"/>
+        <div data-tooltip-id={index} data-tooltip-content={tooltip} className={`h-42 sm:h-80 flex flex-col items-center justify-center ${className}`}> {/* maybe add small random rotations? */}
             <svg width="100%" height="100%" viewBox="0 0 202 167" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="10" y="10" width="85%" height="85%" fill="white"/>
             <image x="10" y="10" width="85%" height="85%" xlinkHref={image}></image>
@@ -16,6 +19,7 @@ export default function Painting({image, description, link, className, showCapti
                 </span>
             </a>
         </div>
+        </>
 
     )
 }

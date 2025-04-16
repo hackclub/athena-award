@@ -51,8 +51,9 @@ export function Waka(){
                             width: hasAchievedTime ? "100%" : Number(totalTimeSpent) / 1080 + "%"
                         }}/>
             </div>
-            That's about {Math.floor(totalTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}
-            <div className = "flex flex-row flex-wrap gap-4 my-2">{projects.map((project: any, index: number) => <div key={index}  className = "p-1 border rounded-lg bg-white/30">{project.name} {(project.total_seconds/3600).toFixed(2)} hours</div> )}</div> 
+            That's about {Math.floor(totalTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}{' '}
+            If you have spent 30 hours of time on projects that are approved, you'll get 25 artifacts from this.
+            <div className = "flex flex-row flex-wrap gap-4 my-2">{projects.map((project: any, index: number) => <div key={index}  className = {`p-1 border rounded-lg ${project.status === "approved" ? "bg-green-500/30" : project.status === "unreviewed" ? "bg-yellow-500/30" : "bg-white/30"}`}>{project.name} {(project.total_seconds/3600).toFixed(2)} hours</div> )}</div> 
         </div>
          )
 }

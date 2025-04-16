@@ -29,7 +29,7 @@ export async function linkUser(emailAddress: string, accessToken: string){
                 "slack_id": id,
                 "hashed_token": accessTokenJoined,
                             }
-            }])
+            }])            
         return "User added to DB"
         }
 } catch(error) {

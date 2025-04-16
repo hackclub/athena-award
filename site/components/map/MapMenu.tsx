@@ -244,7 +244,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                       <div className = "self-center sm:self-end">
                           { data && selectedProject !== "_select" && (data[1] && data[1]["message"]["status"] === "pending")
                           ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`, { method: "POST" })}>  
-                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&email=${session.data.user.email}`}>Ready to submit?</a>
+                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}`}>Ready to submit?</a>
                             </button>
                           : (data && selectedProject == "_select")
                             ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
@@ -254,7 +254,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                               ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Stage completed 🎉</button>
                               : (data && data[1]["message"]["status"] == "rejected") 
                                 ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`, { method: "POST" })}>
-                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}&project_name=${selectedProject}&email=${session.data.user.email}`}>Your project was rejected - click here to resubmit!</a>
+                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}    `}>Your project was rejected - click here to resubmit!</a>
                                   </button>
                                 : (data && data[1]["message"]["status"] == "unreviewed")
                                   ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Project awaiting review</button>
