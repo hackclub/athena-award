@@ -11,10 +11,9 @@ const airtable = new Airtable({
 }).base(process.env.AIRTABLE_BASE_ID!)
 
 
-export async function POST(request: NextRequest, { params }: { params: { userID: string }}){
+export async function POST(request: NextRequest, { params }: { params: Promise<{ userID: string }>} ){
     const stageNumber = request.nextUrl.searchParams.get("stage")
     const slackId = (await params).userID
-    console.log(slackId)
     try {
           const recordID = await airtable("Registered Users").select({
               filterByFormula: `{slack_id} = "${slackId}"`,
