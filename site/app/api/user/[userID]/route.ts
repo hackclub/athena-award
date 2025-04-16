@@ -6,6 +6,8 @@ import Airtable from 'airtable';
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getValue } from '@/services/fetchData';
+import { verifyAuth } from "@/services/verifyAuth";
+
 
 
 const validData = ["current_stage", "slack_id"]; // this is really stupid
@@ -19,6 +21,9 @@ export async function GET(request: NextRequest) {
     if (!query || !validData.includes(query)){ // this is stupid
         return NextResponse.json({error: "Invalid query"}, {status: 400})
     }
+    const invalidSession = await verifyAuth()
+    if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
+    
     const session = await auth();
     const emailAddress = session!.user.email!
     try {

@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import Airtable from 'airtable';
 import { auth } from '@/auth';
-import { encryptSession, verifySession } from '@/utils/hash';
+import { encryptSession, verifySession } from '@/services/hash';
 
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,

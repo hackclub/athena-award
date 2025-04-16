@@ -4,6 +4,7 @@
 import { NextResponse } from "next/server";
 import Airtable from 'airtable';
 import { auth } from '@/auth';
+import { verifyAuth } from "@/services/verifyAuth";
 
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,
@@ -28,6 +29,9 @@ export async function GET(request: Request, { params }: { params: Promise<{slug:
     const session = await auth();
     const slug = ((await params).slug)
     const code = await slug
+    const invalidSession = await verifyAuth()
+    if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
+    
     const hackathon = await validateHackathon(code)
     if (hackathon){
         return NextResponse.json({message: "Success", status: "200"})

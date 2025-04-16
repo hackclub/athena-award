@@ -4,7 +4,8 @@
 import { NextResponse } from "next/server";
 import Airtable from 'airtable';
 import { auth } from '@/auth';
-import { encryptSession, verifySession } from '@/utils/hash';
+import { encryptSession, verifySession } from '@/services/hash';
+import { verifyAuth } from "@/services/verifyAuth";
 
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,
@@ -27,6 +28,9 @@ async function getHackathonStatus(emailAddress: string, accessTokenEncrypted: st
 }
 export async function GET(request: Request){
     const session = await auth();
+    const invalidSession = await verifyAuth()
+    if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
+
     const encryptedToken = encryptSession(session!.access_token!, process.env.AUTH_SECRET!)
     try {
         const response = await getHackathonStatus(session!.user.email!, encryptedToken)

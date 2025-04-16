@@ -4,18 +4,18 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getWakaTimeData } from "@/services/fetchWakaData";
 import { auth } from "@/auth";
+import { verifyAuth } from "@/services/verifyAuth";
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{email: string}>}){
+export async function GET(request: NextRequest){
     const session = await auth()
-    const email = request.nextUrl.searchParams.get("query")
 
-    if (!session || email != session!.user.email){
-        return NextResponse.json({error: "Unauthed"}, { status: 401})
-    }
+    const invalidSession = await verifyAuth()
+    if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
+
     
     let response
     try {
-        response = (await getWakaTimeData(session.slack_id!))
+        response = (await getWakaTimeData(session?.slack_id!))
         if (response!.status === 200){
             return NextResponse.json((await response!.json())) //argh
         } else {

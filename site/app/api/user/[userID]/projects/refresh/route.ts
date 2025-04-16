@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import Airtable from "airtable";
-import { encryptSession, verifySession } from "@/utils/hash";
+import { encryptSession, verifySession } from "@/services/hash";
 import { getWakaTimeData } from "@/services/fetchWakaData";
 
 const airtable = new Airtable({
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
           const recordID = await airtable("Registered Users").select({
               filterByFormula: `{slack_id} = "${slackId}"`,
               maxRecords: 1,
-              fields: ["record_id", "hashed_token"]
+              fields: ["record_id"]
           }).all()
 
         const hackatimeProjects = await getWakaTimeData(slackId);

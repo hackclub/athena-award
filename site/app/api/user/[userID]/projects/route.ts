@@ -4,9 +4,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import Airtable from 'airtable';
 import { auth } from '@/auth';
-import { encryptSession, verifySession } from '@/utils/hash';
+import { encryptSession, verifySession } from '@/services/hash';
 import { getWakaTimeData } from "@/services/fetchWakaData";
-
+import { verifyAuth } from "@/services/verifyAuth";
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,
 }).base(process.env.AIRTABLE_BASE_ID!)
@@ -14,6 +14,9 @@ const airtable = new Airtable({
 export async function GET(request: NextRequest){
     const query = request.nextUrl.searchParams.get("query")
     const session = await auth()
+    const invalidSession = await verifyAuth()
+    if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
+    
     try {
         if (query === "all"){
             const hackatimeProjects = await fetch(`https://hackatime.hackclub.com/api/v1/users/${session?.slack_id}/stats?features=projects`)

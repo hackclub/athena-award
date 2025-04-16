@@ -4,7 +4,8 @@
 import { NextResponse } from "next/server";
 import Airtable from 'airtable';
 import { auth } from '@/auth';
-import { encryptSession, verifySession } from '@/utils/hash';
+import { encryptSession, verifySession } from '@/services/hash';
+import { verifyAuth } from "@/services/verifyAuth";
 
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,
@@ -65,6 +66,8 @@ export async function POST(request: Request, { params }: { params: Promise<{hack
     const session = await auth();
     const code = ((await params).hackathonID)
     const encryptedToken = encryptSession(session!.access_token!, process.env.AUTH_SECRET!)
+    const invalidSession = await verifyAuth()
+    if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
     const hackathon = await validateHackathon(code)
     if (hackathon){
         const response = await linkUserToHackathon(session!.user.email!, code, hackathon[0]["fields"]["Name"], encryptedToken)
