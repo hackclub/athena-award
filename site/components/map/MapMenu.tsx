@@ -105,6 +105,7 @@ const slidingParentVariant: Variants = {
 export default function MapMenu({ module, progress = compositeUserModuleData, setModule }:{ module: typeof STAGES[number]['moduleName'], progress?: UserModuleData[], setModule: (module: typeof STAGES[number]['moduleName']) => void }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [ selectedProject, setSelectedProject ] = useState("")
+  const [ prizeScroller, setPrizeScroller ] = useState(0)
   const baseModuleData = STAGES.find(m => m.moduleName === module)!;
   const currModuleIdx = progress.findIndex(p => p.moduleName === module)
   const nextModule = progress[(currModuleIdx + 1) % progress.length].moduleName
@@ -112,15 +113,18 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   // const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
   const session = useSession();
   const slackId = session.data?.slack_id
-  const urls = [`/api/user/${slackId}/projects?query=all`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`]
+  const urls = [`/api/user/${slackId}/projects?query=all`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`, `/api/shop?stage=${currModuleIdx+1}`]
   const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher)
   if (error){
     console.log(error)
   }
   let projects
+  let prizes = [{"item_friendly_name": "Loading..."}, {"description": "Loading..."}, {"image": null}]
 
   if (data){
     projects = (data[0] as any)["data"]["projects"]
+    prizes = data[2]
+    console.log(prizes)
   }
   useEffect(() => {
     if (data){  
@@ -138,6 +142,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     setSelectedProject(projectName)
     return update
   }
+
   return (
     <>
     <div>
@@ -192,14 +197,25 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                       </Fragment>
                     ))}</motion.p>
                   </motion.div>
-                  <div className = "my-5">
-                    <h2 className="text-2xl sm:text-3xl text-white italic">Completion Rewards</h2>
-                    <div className={`flex gap-2 mt-3 p-3 duration-700 ${baseModuleData!.visuals.accents.secondary} transition-all`}>
-                      <div className="size-20 rounded-md bg-red-800 shrink-0 hidden sm:flex items-center justify-center text-center">to be an image</div>
-                      <div className="">
-                        <div className="text-xl">{baseModuleData.completionRewards.name}</div>
-                        <div>{baseModuleData.completionRewards.description}</div>
+
+                    <div className = "my-5">
+                      <h2 className="text-2xl sm:text-3xl text-white italic">Completion Rewards</h2>
+                      <div className = "flex flex-row gap-2 align-middle justify-center">
+
+                      <div className={`grow flex gap-2 mt-3 p-3 duration-700 ${baseModuleData!.visuals.accents.secondary} transition-all`}>
+                      <button onClick={() => setPrizeScroller((prizeScroller - 1 + prizes.length) % prizes.length)}>
+                      <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
+                    </button>
+                        <div className="size-20 rounded-md bg-red-800 shrink-0 hidden sm:flex items-center justify-center text-center">{ prizes[prizeScroller]["image"] ? <img src = {prizes[prizeScroller]["image"]}/> : "image" }</div>
+                        <div className="grow">
+                          <div className="text-xl"><span className = "font-bold">{prizes[prizeScroller]["item_friendly_name"]}</span></div>
+                          <ul>{prizes[prizeScroller]["description"]}</ul>
+                        </div>
+                        <button onClick={() => setPrizeScroller((prizeScroller + 1) % prizes.length)}>
+                      <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
+                    </button>
                       </div>
+
                     </div>
                   </div>
                   
@@ -266,14 +282,14 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
               </motion.div>
               
               <div className="flex gap-2 self-center sm:self-auto items-center text-white">
-              <button onClick={() => {setModule(prevModule as typeof STAGES[number]['moduleName']); setSelectedProject("")}} className="playfair-display italic text-2xl">
+              <button onClick={() => {setModule(prevModule as typeof STAGES[number]['moduleName']); setSelectedProject(""); setPrizeScroller(0)}} className="playfair-display italic text-2xl">
                 <span className="sr-only">Previous</span>
                 <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
               </button>
               <span key={`${module}-section-status`} className="italic text-lg md:text-2xl">
                 Project {currModuleIdx + 1} / {progress.length}
               </span>
-              <button onClick={() => {setModule(nextModule as typeof STAGES[number]['moduleName']); setSelectedProject("")}} className="playfair-display italic text-2xl">
+              <button onClick={() => {setModule(nextModule as typeof STAGES[number]['moduleName']); setSelectedProject(""); setPrizeScroller(0)}} className="playfair-display italic text-2xl">
                 <span className="sr-only">Next</span>
                 <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
               </button>

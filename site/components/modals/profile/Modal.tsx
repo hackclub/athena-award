@@ -132,7 +132,6 @@ export default function Profile() {
                       </div>
 
                       <div className = "grow overflow-scroll"> 
-                        <div className="text-white uppercase text-2xl grow sm:text-3xl font-bold">Progress</div>
                         <div className = "flex flex-col gap-4 my-3">
                           <Progress/>
                           <Waka/>

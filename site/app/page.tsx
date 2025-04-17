@@ -171,7 +171,7 @@ export default function Index() {
           </div>
             <Marquee className = "grow" autoFill pauseOnHover={true}>
               {prizes.map((prize: any, index: any) => 
-                <Painting key={index} image={prize.fields.image} description={prize.fields.item_friendly_name}/>
+                <Painting key={index} image={prize.image} description={prize.item_friendly_name}/>
               )}
             </Marquee>
             <svg className = "mx-auto sm:float-left sm:ml-20" width="320" height="110" viewBox="0 0 232 83" fill="none" xmlns="http://www.w3.org/2000/svg">

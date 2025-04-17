@@ -1,5 +1,3 @@
-
-import { NextResponse } from "next/server";
 import Airtable from 'airtable';
 import { auth } from '@/auth';
 import { encryptSession, verifySession } from '@/services/hash';
@@ -7,7 +5,6 @@ import { encryptSession, verifySession } from '@/services/hash';
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,
 }).base(process.env.AIRTABLE_BASE_ID!)
-
 
 export interface safeData {
     slack_id: string,
@@ -57,3 +54,4 @@ export async function getValue(emailAddress: string): Promise<safeData> {
             slack_id, points, current_stage, hackathons, achievements, stage_1_project, stage_2_project, stage_3_project, projects, project_unique_names
         }
 }
+ 

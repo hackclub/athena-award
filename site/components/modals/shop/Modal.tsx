@@ -40,14 +40,14 @@ export default function ShopModal(){
                         <h1 className = "text-2xl md:text-4xl">Stage {index+1}</h1>
                         <div className = {`p-6 my-6 flex flex-row flex-wrap relative h-full justify-center items-center ${points/25 >= index+1 ? "" : "select-none"}`}>
                             <h1 className = {`${points/25 >= index+1 ? "hidden" : "absolute text-4xl text-center m-auto z-50 w-full h-full p-4 bg-gray-800/65"}`}>locked</h1>
-                            {prizeStage.filter((prize: any) => prize.fields.stage == index+1).map((prize: any, idx: number) => 
+                            {prizeStage.filter((prize: any) => prize.stage == index+1).map((prize: any, idx: number) => 
                                 <Painting 
                                     showCaptionOnSmall 
                                     index={index+1 + "_" + String(idx+1)+"_painting"}
-                                    tooltip={prize.fields.description}
-                                    className="inline grow sm:basis-1/2 md:basis-1/3" key= {idx} image={prize.fields.image}
-                                    description={prize.fields.item_friendly_name}
-                                    link={`https://forms.hackclub.com/athena-awards-orders?stage=${index+1}&item=${prize.fields.item_name}`}
+                                    tooltip={prize.description}
+                                    className="inline grow sm:basis-1/2 md:basis-1/3" key= {idx} image={prize.image}
+                                    description={prize.item_friendly_name}
+                                    link={`https://forms.hackclub.com/athena-awards-orders?stage=${index+1}&item=${prize.item_name}`}
                                     />)}
                         </div>
                     </div>
