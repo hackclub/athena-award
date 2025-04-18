@@ -10,8 +10,8 @@ export function Waka(){
     let projects, totalTimeSpent, totalApprovedTimeSpent
     if (data){
         projects = (data as any)["message"]
-        totalTimeSpent = (data as any)["message"].reduce((pSum: any, project: any) => pSum + project.total_seconds, 0)
-        totalApprovedTimeSpent = (data as any)["message"].reduce((pSum: any, project: any) => project.status === "approved" ? pSum + project.total_seconds : 0, 0)
+        totalTimeSpent = projects.reduce((pSum: any, project: any) => pSum + project.total_seconds, 0)
+        totalApprovedTimeSpent = projects.reduce((pSum: any, project: any) => project.status === "approved" ? pSum + (project.total_seconds || 0) : pSum, 0)
     }
     if (error){ 
         if (error.status !== 200){ // handle user not having a profile

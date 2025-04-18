@@ -70,14 +70,20 @@ export async function GET(request: NextRequest){
                             name: project["fields"]["project_name"],
                             stage: project["fields"]["stage"],
                             status: project["fields"]["status"],
-                            total_seconds: project["fields"]["existing_ysws_project_hour_override"] * 3600 }
+                            total_seconds:  project["fields"]["existing_ysws_project_hour_override"] ? project["fields"]["existing_ysws_project_hour_override"] * 3600 : null}
                         )))
-   
+
+
                     const userProject = projects.filter((project: any) => prettyRecordID.includes(project.name))
-                    let newThing =(userProjectStatus.map((projPair: any) => 
-                        ({ ...(userProject.filter((project: any) => project.name === projPair.name))[0], name: projPair["name"] ? projPair["name"] : "Other YSWS Project", status: projPair["status"], total_seconds: projPair["total_seconds"] ? projPair["total_seconds"] : (userProject.filter((project: any) => project.name === projPair.name))[0].total_seconds})
-                        )) // HELP ME
-                    console.log(newThing)
+                    let newThing = userProjectStatus.map((projPair: any) => {
+                        const matchingProject = userProject.find((project: any) => project.name === projPair.name);
+                        return {
+                            ...(matchingProject || {}),
+                            name: projPair.name || "Other YSWS Project",
+                            status: projPair.status,
+                            total_seconds: projPair.total_seconds ?? matchingProject?.total_seconds ?? 0
+                        }
+                    }) // HELP ME
                     return NextResponse.json({ message: newThing }, { status: 200 })
 
                 } catch (error){
@@ -99,7 +105,7 @@ export async function GET(request: NextRequest){
                     filterByFormula: `{slack_id} = "${session?.slack_id}"`,
                     fields: [
                         "stage",
-                        "project_name"
+                        "project_name",
                     ]
                 }).all())).map((project: any) => project.fields).filter((proj: any) => proj.stage !== stage)
                 
