@@ -37,7 +37,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
             const updateDuration = await airtable("Projects").update([{ 
                 id: prettyRecordID["fields"]["record_id"], 
                 fields: {
-                    duration: Number((filtered.total_seconds/3600).toFixed(2))
+                    hackatime_duration: Number((filtered.total_seconds/3600).toFixed(2))
                 }
                 }]
             )

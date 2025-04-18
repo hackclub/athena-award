@@ -8,6 +8,7 @@ import { SessionProvider } from "next-auth/react"
 import { STAGES } from "@/app/STAGES";
 import { UXEvent, UXEventContext } from "@/components/context/UXStages";
 import ShopModal from "@/components/modals/shop/Modal";
+import LeaderboardModal from "@/components/modals/leaderboard/Modal";
 
 export default function Map() {
   // api calls for progress go here
@@ -20,6 +21,7 @@ export default function Map() {
         <ShopModal/>
         <ProfileModal />
         <InfoModal/>
+        <LeaderboardModal/>
         <MapMenu module={module} setModule={setModule}>
         </MapMenu>
       </UXEventContext.Provider>

@@ -7,16 +7,17 @@ import { STAGES } from "@/app/STAGES";
 import { Fragment } from "react"
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
+import Link from "next/link";
 
 const steps = [
   {title: "Build three projects 💻",
-    description: "Spend 30 hours hacking on cool technical projects! Examples: building a blogging website, coding an app, or creating a video game."
+    description: "Spend 30 hours hacking on cool technical projects! Examples: building a blogging website, coding a desktop and mobile app, or creating a video game."
   },
   {title: "Ship your projects ⛵",
     description: "Share your projects with our community of teen makers. Sign in with the Hack Club Slack and ship them! Earn artifacts for each project shipped to the gallery."
   },
-  {title: "Earn a fully-paid flight to New York City 🎁",
-    description: "Unlock awesome prizes as you earn artifacts, including a chance to participate in a fully-funded hackathon in New York!"
+  {title: "Earn a trip to a hackathon in New York City 🎁",
+    description: "Unlock awesome prizes as you earn artifacts, including a chance to participate in an exclusive hackathon in New York - with travel stipends available!"
   }
 ]
 
@@ -51,7 +52,7 @@ const stats = [
 const FAQ = [
   {
     question: "Is this actually real?",
-    answer: "yea"
+    answer: "Yes! Hack Club has run <a target='_blank' href = 'https://youtu.be/8iM1W8kXrQA'>tons of</a> <a target='_blank' href = 'https://youtu.be/ufMUJ9D1fi8'>awesome</a> <a target='_blank' href = 'https://youtu.be/2BID8_pGuqA'>events</a> in the past. Check out the main website <a target = '_blank' href = 'https://hackclub.com'>here</a>."
   },
   {
     question: "Who can participate?",
@@ -63,7 +64,7 @@ const FAQ = [
   },
   {
     question: "How do prizes work?",
-    answer: "As you earn artifacts by completing the requirements of the Athena Award, you'll become automatically eligible for prizes along the way."
+    answer: "As you earn artifacts by completing the stages of the Athena Award, you'll become automatically eligible to select prizes along the way."
   },
   {
     question: "How does the trip to New York work?",
@@ -71,7 +72,7 @@ const FAQ = [
   },
   {
     question: "How can I get help on my projects?",
-    answer: "Join the Hack Club Slack!"
+    answer: "Join the <a href = 'https://hackclub.com/slack'>Hack Club Slack!</a>"
   }
 ]
 
@@ -182,7 +183,7 @@ export default function Index() {
 
         </div>
 
-        <div className="w-screen h-full px-4 py-8 sm:p-16">
+        <div className="w-screen h-full px-4 py-8 sm:p-16 pointer-events-auto">
           <h1 className = "text-hc-secondary text-5xl sm:text-7xl text-center">
                   Frequently Asked Questions
           </h1>
@@ -192,7 +193,7 @@ export default function Index() {
                     <h1 className = "text-2xl">
                       {q.question}
                     </h1>
-                    <p className="text-lg">{q.answer}</p>
+                    <p className="text-lg" dangerouslySetInnerHTML={{__html: q.answer}}/>
                   </div>
                   )}
           </div>
@@ -210,6 +211,7 @@ export default function Index() {
             <p className ="text-hc-secondary">insert more partners</p>
           </div>
         </div>
+
         <div className="w-screen h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">
           <h1 className = "text-hc-secondary text-2xl sm:text-4xl text-center grow">
             3 projects. 30 hours.
@@ -220,7 +222,44 @@ export default function Index() {
           <div className="pointer-events-auto"><AuthStateButton/></div>
           </div>    
       </div>
-  
+
+        <div className="*:text-hc-secondary flex flex-wrap justify-between gap-4 *:md:basis-5/12 flex-row z-10 w-screen h-max p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
+
+        <div className = "flex flex-col gap-2">
+          <h1 className = "text-2xl text-left mb-3">
+              <i>a project by <Link target = "_blank" href = "https://hackclub.com">Hack Club</Link></i>
+          </h1>
+          <i>made with {'<'}3 by <Link target = "_blank" href = "https://phaedras.space">phaedra</Link> (17, Boston) and <Link target = "_blank" href = "https://phthallo.com">annabel</Link> (17, Australia) </i>
+          <i>open source at <Link target="_blank" href="https://github.com/hackclub/dos-journey">hackclub/athena-awards</Link></i>
+          <p className = "">Hack Club is a 501(c)(3) nonprofit and network of 30k+ technical high schoolers. We believe you learn best by building so we're creating community and providing grants so you can make awesome projects. In the past few years, we've launched <Link target = "_blank" href = "https://highseas.hackclub.com">High Seas</Link> at GitHub Universe, hosted the world's longest hackathon on land, and ran <Link target = "_blank" href = "https://scrapyard.hackclub.com">Scrapyard</Link>, a hackathon in 60 cities worldwide simultaneously.</p>
+        </div>
+
+        <div>
+          <div className = "flex flex-row gap-8">
+            <div className = "flex flex-col gap-1">
+              <h1 className = "text-xl">Hack Club</h1>
+              <Link href="https://hackclub.com/philosophy/">Philosophy</Link>
+              <Link href="https://hackclub.com/team/">Our Team & Board</Link>
+              <Link href="https://hackclub.com/jobs/">Jobs</Link>
+              <Link href="https://hackclub.com/brand/">Branding</Link>
+              <Link href="https://hackclub.com/press/">Press Inquiries</Link>
+              <Link href="https://hackclub.com/philanthropy/">Donate</Link>          
+            </div>
+          
+            <div className = "flex flex-col gap-1">
+              <h1 className = "text-xl">Resources</h1>
+                <Link href="https://events.hackclub.com/">Community Events</Link>
+                <Link href="https://jams.hackclub.com/">Jams</Link>
+                <Link href="https://workshops.hackclub.com/">Workshops</Link>
+                <Link href="https://toolbox.hackclub.com/">Toolbox</Link>
+                <Link href="https://directory.hackclub.com/">Clubs Directory</Link>
+                <Link href="https://hackclub.com/conduct/">Code of Conduct</Link>
+            </div>
+          </div>
+          </div>
+
+
+        </div>
     </main>
   )
 }

@@ -14,19 +14,19 @@ export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
   const session = useSession();
   const router = useRouter();
   const [ emailSubmitted, setEmailSubmitted ] = useState(false);
+  const [ err, setErr ] = useState("")
 
-  function handleEmailSubmit(event: FormEvent<HTMLFormElement>){
+  async function handleEmailSubmit(event: FormEvent<HTMLFormElement>){
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const email = String(formData.get("email"))
-    
-    try { 
-      inviteSlackUser(email)
-      setEmailSubmitted(true)
-    } catch (error) {
-      // i am good at error handling
+    setEmailSubmitted(true)
+    const r = await inviteSlackUser(email)
+    if (r.ok){
+      console.log("ok")
+    } else {
+      setErr(r.error)
     }
-
   }
   return (
     <>
@@ -45,8 +45,14 @@ export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
               <button type = "submit">Submit</button>
             </span>
           </form>
-          : <span className = "not-italic text-lg md:text-xl text-center text-white max-w-1/2">
-            <p className = "underline decoration-wavy text-xl">We got your request to join!</p> 
+          : err
+            ? <span className = "not-italic text-lg md:text-xl text-center text-white max-w-1/2">
+              <p className = "underline decoration-wavy text-xl">Something went wrong!</p>
+              <p>{err}</p>
+              <p className = "text-sm">Please send an email to annabel@hackclub.com with this error message if you're seeing this.</p>
+              </span>
+            : <span className = "not-italic text-lg md:text-xl text-center text-white max-w-1/2">
+            <p className = "underline decoration-wavy text-xl">Your request to join is pending!</p> 
             <p>Keep an eye on your inbox for an invite to our community of high school hackers.</p>
             <p className = "font-semibold">Then, come back here and sign in!</p></span> }
         </div>  

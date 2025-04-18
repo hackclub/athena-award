@@ -35,9 +35,9 @@ export default function ShopModal(){
             <div>
                 <p>Click on a placard to order a prize after completing a stage! You can only order one prize per stage, so choose carefully 👀</p>
                 <div>
-                    {[...Array(3)].map((_, index) => 
+                    {[...Array(4)].map((_, index) => 
                     <div key={index} className = "my-6">
-                        <h1 className = "text-2xl md:text-4xl">Stage {index+1}</h1>
+                        <h1 className = "text-2xl md:text-4xl">{(index+1) * 25} artifacts</h1>
                         <div className = {`p-6 my-6 flex flex-row flex-wrap relative h-full justify-center items-center ${points/25 >= index+1 ? "" : "select-none"}`}>
                             <h1 className = {`${points/25 >= index+1 ? "hidden" : "absolute text-4xl text-center m-auto z-50 w-full h-full p-4 bg-gray-800/65"}`}>locked</h1>
                             {prizeStage.filter((prize: any) => prize.stage == index+1).map((prize: any, idx: number) => 

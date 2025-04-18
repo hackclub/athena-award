@@ -16,10 +16,9 @@ export async function GET(request: NextRequest){
     const session = await auth()
     const invalidSession = await verifyAuth()
     if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
-    
     try {
         if (query === "all"){
-            const hackatimeProjects = await fetch(`https://hackatime.hackclub.com/api/v1/users/${session?.slack_id}/stats?features=projects`)
+            const hackatimeProjects = await getWakaTimeData(session?.slack_id!)
             let projects
             if (hackatimeProjects.ok && hackatimeProjects){
                 projects = (await hackatimeProjects.json()) as any
@@ -58,7 +57,9 @@ export async function GET(request: NextRequest){
                     filterByFormula: `{slack_id} = "${session?.slack_id}"`,
                     fields: [
                         "project_name",
-                        "status"
+                        "stage",
+                        "status",
+                        "existing_ysws_project_hour_override"
                     ]
                 }).all()
                 let r
@@ -68,13 +69,15 @@ export async function GET(request: NextRequest){
                         ({
                             name: project["fields"]["project_name"],
                             stage: project["fields"]["stage"],
-                            status: project["fields"]["status"]}
+                            status: project["fields"]["status"],
+                            total_seconds: project["fields"]["existing_ysws_project_hour_override"] * 3600 }
                         )))
+   
                     const userProject = projects.filter((project: any) => prettyRecordID.includes(project.name))
-                    const newThing =(userProjectStatus.map((projPair: any) => 
-                        ({ ...(userProject.filter((project: any) => project.name === projPair.name))[0], status: projPair["status"]})
-                        ))
-
+                    let newThing =(userProjectStatus.map((projPair: any) => 
+                        ({ ...(userProject.filter((project: any) => project.name === projPair.name))[0], name: projPair["name"] ? projPair["name"] : "Other YSWS Project", status: projPair["status"], total_seconds: projPair["total_seconds"] ? projPair["total_seconds"] : (userProject.filter((project: any) => project.name === projPair.name))[0].total_seconds})
+                        )) // HELP ME
+                    console.log(newThing)
                     return NextResponse.json({ message: newThing }, { status: 200 })
 
                 } catch (error){
@@ -83,8 +86,30 @@ export async function GET(request: NextRequest){
                 }
             }
             return NextResponse.json({error: "Hackatime was unresponsive" }, { status: 400 })
+        } else if (query === "valid_for_selection"){ // projects which haven't already been selected for another stage
+            const stage = request.nextUrl.searchParams.get("stage")
+            if (!stage){
+                return NextResponse.json({error: "Must select stage to filter for valid projects"}, { status: 400 })
+            }
+            const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
+            let projects
+            if (hackatimeProjects.ok){
+                projects = ((await hackatimeProjects.json())["data"]["projects"] as any).filter((project: any) => project.name)
+                const selectedProject = JSON.parse(JSON.stringify(await airtable("Projects").select({
+                    filterByFormula: `{slack_id} = "${session?.slack_id}"`,
+                    fields: [
+                        "stage",
+                        "project_name"
+                    ]
+                }).all())).map((project: any) => project.fields).filter((proj: any) => proj.stage !== stage)
+                
+                const selectedProjectNames = new Set(selectedProject.map((proj: any) => proj.project_name));
+                const filteredProjects = projects.filter((project: any) => !selectedProjectNames.has(project.name));
+                
+                return NextResponse.json(filteredProjects)
 
-
+            }
+            return NextResponse.json({error: "Hackatime or Airtable was unresponsive"}, { status: 400 })
         }
     } catch (error) {
         return NextResponse.json({error: `Something went wrong - generic error for no projects or ${error}`}, { status: 400 })

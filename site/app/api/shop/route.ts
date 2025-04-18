@@ -8,9 +8,7 @@ const airtable = new Airtable({
 }).base(process.env.AIRTABLE_BASE_ID!)
 
 export async function GET(request: NextRequest){
-    const invalidSession = await verifyAuth()
     const stage = request.nextUrl.searchParams.get("stage")
-    if (invalidSession){ return NextResponse.json(invalidSession, {status: 401})}
     const allPrizes = (await airtable("Shop").select().all())
     let prettyPrizeID
     if (stage){

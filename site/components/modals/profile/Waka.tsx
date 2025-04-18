@@ -7,10 +7,11 @@ import { Tooltip } from "react-tooltip";
 export function Waka(){
     const session = useSession();
     const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/projects?query=total_time`, fetcher) 
-    let projects, totalTimeSpent
+    let projects, totalTimeSpent, totalApprovedTimeSpent
     if (data){
         projects = (data as any)["message"]
         totalTimeSpent = (data as any)["message"].reduce((pSum: any, project: any) => pSum + project.total_seconds, 0)
+        totalApprovedTimeSpent = (data as any)["message"].reduce((pSum: any, project: any) => project.status === "approved" ? pSum + project.total_seconds : 0, 0)
     }
     if (error){ 
         if (error.status !== 200){ // handle user not having a profile
@@ -44,15 +45,18 @@ export function Waka(){
             <div className="rounded-xl w-full h-8 bg-gray-200 my-3">
                 <Tooltip id="waka_progress" place="left" className="z-10"/>
                 <div data-tooltip-id="waka_progress" data-tooltip-content={
-                    (totalTimeSpent / 3600).toFixed(2) + " or " + 
-                    (totalTimeSpent / 1080).toFixed(2) + "%"
+                    "Only time tracked using Hackatime is counted here! " + 
+                    (totalTimeSpent / 1080).toFixed(2) + "%" 
                     } className= "rounded-xl h-8 bg-hc-primary" style= {
                         {
                             width: hasAchievedTime ? "100%" : Number(totalTimeSpent) / 1080 + "%"
                         }}/>
             </div>
-            That's about {Math.floor(totalTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work!" : "You're getting there :)"}{' '}
-            If you have spent 30 hours of time on projects that are approved, you'll get 25 artifacts from this.
+
+            Of those {(totalTimeSpent/3600).toFixed(2)} hours, {(totalApprovedTimeSpent/3600).toFixed(2)} hours are approved.
+
+            That's about {Math.floor(totalApprovedTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work! You've earned 25 artifacts from this." : "You're getting there :) Complete this for 25 artifacts!"}{' '}
+            
             <div className = "flex flex-row flex-wrap gap-4 my-2">{projects.map((project: any, index: number) => <div key={index}  className = {`p-1 border rounded-lg ${project.status === "approved" ? "bg-green-500/30" : project.status === "unreviewed" ? "bg-yellow-500/30" : "bg-white/30"}`}>{project.name} {(project.total_seconds/3600).toFixed(2)} hours</div> )}</div> 
         </div>
          )

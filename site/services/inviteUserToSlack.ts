@@ -16,6 +16,7 @@ const channels = ([
     "C06T17NQB0B", // #athena-awards
     "C05T8E9GY64", // #days-of-service
     "C01504DCLVD", // #scrapbook
+    "C0266FRGV", // lounge
 
 ]).join(",")
 export async function inviteGuestToSlackToriel(email: string) {
@@ -84,7 +85,7 @@ export async function inviteSlackUser(email: string) {
         const addError = await airtable("Email Slack Invites").create([{
           fields: {
             email: email, 
-            error: error
+            error: String(error)
           }
         }])
         return { ok: false, error: error.message };

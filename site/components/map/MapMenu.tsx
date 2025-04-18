@@ -113,25 +113,25 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   // const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
   const session = useSession();
   const slackId = session.data?.slack_id
-  const urls = [`/api/user/${slackId}/projects?query=all`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`, `/api/shop?stage=${currModuleIdx+1}`]
+  const urls = [`/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx+1}`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`, `/api/shop?stage=${currModuleIdx+1}`]
   const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher)
   if (error){
     console.log(error)
   }
   let projects
   let prizes = [{"item_friendly_name": "Loading..."}, {"description": "Loading..."}, {"image": null}]
-
   if (data){
-    projects = (data[0] as any)["data"]["projects"]
+    projects = (data[0])
     prizes = data[2]
-    console.log(prizes)
+    console.log(data[3])
   }
+
   useEffect(() => {
     if (data){  
-      if ((data[1] as any)["message"]){
+      if ((data[1] as any)["message"]["project_name"] !== "_select#"){
         setSelectedProject((data[1] as any)["message"]["project_name"])
       } else {
-        setSelectedProject("_select")
+        setSelectedProject("_select#")
       }
     }
   }, [data])
@@ -204,8 +204,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
 
                       <div className={`grow flex gap-2 mt-3 p-3 duration-700 ${baseModuleData!.visuals.accents.secondary} transition-all`}>
                       <button onClick={() => setPrizeScroller((prizeScroller - 1 + prizes.length) % prizes.length)}>
-                      <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
-                    </button>
+                        <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
+                      </button>
                         <div className="size-20 rounded-md bg-red-800 shrink-0 hidden sm:flex items-center justify-center text-center">{ prizes[prizeScroller]["image"] ? <img src = {prizes[prizeScroller]["image"]}/> : "image" }</div>
                         <div className="grow">
                           <div className="text-xl"><span className = "font-bold">{prizes[prizeScroller]["item_friendly_name"]}</span></div>
@@ -231,12 +231,22 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                           </svg>
                           <label htmlFor="project" className = "font-bold text-accent">What project are you working on?</label>
                         </span>
+
+                          <span className = "flex flex-row items-center gap-2">
                                   <select required className="w-full sm:w-max flex flex-col gap-1 *:bg-darker text-black *:text-black" name = "project" id="project" defaultValue={selectedProject} onChange={handleChange}>
-                                    <option disabled value = "_select">[Select a project]</option>
+                                    <option disabled value = "_select#">[Select a project]</option>
                                       {projects && projects.map((project: any, index: number) => /* i really cbf to fix the type rn */
                                           <option key={index} value = {project.name}>{project.name}</option>
                                       )}
+                                    <option value = "Other YSWS Project">[Other YSWS Project]</option>
                                   </select>
+                                  <button onClick={async () => {setSelectedProject("_select#"); await fetch (`/api/user/${slackId}/projects`, { method: "POST", body: JSON.stringify({stage: currModuleIdx + 1, project: "_select#" })}); mutate()}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 inline">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                    </svg>
+                                  </button>
+                            </span>
+
                         </div> 
                         : isLoading 
                           ? <div className={`flex gap-2 mt-3 p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Loading...</div>
@@ -258,11 +268,11 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                             </Action></span>
                         }
                       <div className = "self-center sm:self-end">
-                          { data && selectedProject !== "_select" && (data[1] && data[1]["message"]["status"] === "pending")
+                          { data && selectedProject !== "_select#" && (data[1] && data[1]["message"]["status"] === "pending")
                           ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`, { method: "POST" })}>  
                               <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}`}>Ready to submit?</a>
                             </button>
-                          : (data && selectedProject == "_select")
+                          : (data && selectedProject == "_select#")
                             ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
                               Select a project to submit                    
                               </button>
