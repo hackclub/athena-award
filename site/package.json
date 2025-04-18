@@ -1,11 +1,10 @@
 {
   "private": true,
   "description": "An example project for NextAuth.js with Next.js",
-  "repository": "https://github.com/hackclub/dos-journey",
+  "repository": "https://github.com/hackclub/athena-awards",
   "bugs": {
-    "url": "https://github.com/hackclub/dos-journey/issues"
+    "url": "https://github.com/hackclub/athena-awards/issues"
   },
-  "homepage": "https://next-auth-example.vercel.app",
   "scripts": {
     "dev": "next",
     "build": "next build",

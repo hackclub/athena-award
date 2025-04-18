@@ -8,7 +8,7 @@ export async function GET() {
       messages: [
         {
           role: 'user',
-          content: 'Give me a fun, creative, and realistic programming project idea for a high schooler. Do not add anything extra to your response, just state a potential project idea in the imperative voice in one sentence.',
+          content: 'You are an embedded model that takes a project idea and outputs an action plan of how one could go about building it to a creative developer, preferably in about 4 bullet points. Your explanation should not include dumb stuff like "testing" but should describe the subsystems and how they will fit together. Do not preface your answer. There is no option to converse - your first answer will be displayed on the website. Do not waffle. Use plaintext only. No markdown. Keep it extremely concise and technical. Remember to number the bullet points!',
         },
       ],
     }),
