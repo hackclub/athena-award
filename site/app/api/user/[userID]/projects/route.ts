@@ -44,7 +44,7 @@ export async function GET(request: NextRequest){
             } catch (error) {
                 // no project has been set yet for that stage
                 // this is so stupid
-                return NextResponse.json({message: { project_name: "_select", stage: stage, status: "pending", form_submitted_project: null}}, { status: 200 })
+                return NextResponse.json({message: { project_name: "_select#", stage: stage, status: "pending", form_submitted_project: null}}, { status: 200 })
 
             }
 
