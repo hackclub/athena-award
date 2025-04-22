@@ -1,27 +1,30 @@
 import { useSession } from "next-auth/react";
 import { Tooltip } from "react-tooltip";
-import { fetcher } from "@/services/fetcher";
+import { multiFetcher } from "@/services/fetcher";
 import useSWR from "swr";
 import { Warning } from "@/components/panels/add-ons/Callout";
-// TO DO:
-// add a scrolling list of point-giving initiatives (including completed stages for later)
 
 export function Progress(){
     const session = useSession();
-    let artifacts
-      const { data, error, isLoading} = useSWR(`/api/user/${session.data!.slack_id}/points`, fetcher)  
+    let artifacts, shippedProjects, totalApprovedTimeSpent
+      const { data, error, isLoading} = useSWR([`/api/user/${session.data!.slack_id}/points`, `/api/user/${session.data!.slack_id}/projects?query=total_time`], multiFetcher)  
       if (error){
-        return (<div><Warning title = "Error">Wasn't able to fetch your artifacts.</Warning></div>)
+        return (<div><Warning title = "Error">Wasn't able to fetch your progress.</Warning></div>)
       }
       if (isLoading){
         return (<div>Loading progress data...</div>)
 
       }
-      artifacts = (data as any)["message"] // fix types
+
+      if (data){
+        artifacts = (data[0] as any)["message"] // fix types
+        shippedProjects = ((data[1] as any)["message"]).filter((project: any) => project.status === "approved")
+        totalApprovedTimeSpent = shippedProjects.reduce((pSum: any, project: any) => pSum + (project.total_seconds || 0), 0)
+      }
 
     return (
         <div>
-        <h2 className = "text-lg sm:text-2xl bg-white/10 text-white p-2 rounded"> {Number(artifacts)} artifacts earned </h2>
+        <h2 className = "text-lg sm:text-2xl bg-white/10 text-white p-2 rounded"> {Number(artifacts)}% Athena Awards completion </h2>
         <Tooltip id="artifacts_progress" place="right" className="z-10"/>
 
         <div className="rounded-xl w-full h-8 bg-gray-200 my-3 relative">
@@ -32,10 +35,9 @@ export function Progress(){
 
         </div>
         <ul className = "list-disc list-inside">
-          <li>Get prizes through earning our currency, <b className = "text-[#6FF]">artifacts</b>! You can get artifacts by successfully completing a <b className = "text-[#6FF] ">stage</b> and through <b className = "text-[#6FF]">coding for 30 hours.</b></li>
-          <li>Every <b className = "text-[#6FF]">25 artifacts = guaranteed prize</b>.</li>
-          <Tooltip id = "travel"/>
-          <li data-tooltip-id="travel" data-tooltip-content="Accommodation and meals fully covered. We'll help you with visas, flights and anything else you might need to enter the country!"><b className = "text-[#6FF] ">100 artifacts</b> makes you eligible for a travel grant for an <b className = "text-[#6FF]">exclusive hackathon</b> in New York City!</li>
+          <li>Look at you go! You only need {100 - Number(artifacts)}% more to qualify for an invite to the New York City hackathon. </li>
+          <li>{shippedProjects.length} projects approved out of 3 required for the Athena Awards</li>
+          <li>{(totalApprovedTimeSpent/3600).toFixed(2)} hours spent out of the 30 hours required for the Athena Awards.</li>
         </ul>
         </div>
     )

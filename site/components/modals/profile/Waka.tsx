@@ -53,9 +53,10 @@ export function Waka(){
                         }}/>
             </div>
 
-            Of those {(totalTimeSpent/3600).toFixed(2)} hours, {(totalApprovedTimeSpent/3600).toFixed(2)} hours are approved.
+            <p>Of those {(totalTimeSpent/3600).toFixed(2)} hours, {(totalApprovedTimeSpent/3600).toFixed(2)} hours are approved.</p>
 
-            That's about {Math.floor(totalApprovedTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena award. { hasAchievedTime ? "Great work! You've earned 25 artifacts from this." : "You're getting there :) Complete this for 25 artifacts!"}{' '}
+            <p>That's about {Math.floor(totalApprovedTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena Award.</p>
+            <p>{ hasAchievedTime ? "Great work! You've completed the hour requirement for getting the Athena Award. Keep going for more prizes!" : "You're getting there :) Complete this to qualify for the Athena Award!"}</p>
             
             <div className = "flex flex-row flex-wrap gap-4 my-2">{projects.map((project: any, index: number) => <div key={index}  className = {`p-1 border rounded-lg ${project.status === "approved" ? "bg-green-500/30" : project.status === "unreviewed" ? "bg-yellow-500/30" : "bg-white/30"}`}>{project.name} {(project.total_seconds/3600).toFixed(2)} hours</div> )}</div> 
         </div>

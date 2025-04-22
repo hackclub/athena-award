@@ -9,12 +9,9 @@ const airtable = new Airtable({
 export interface safeData {
     slack_id: string,
     points: number,
+    artifacts: number,
     current_stage: string,
     hackathons: string,
-    achievements: string, // comma separated list of numbers lol
-    stage_1_project: string,
-    stage_2_project: string,
-    stage_3_project: string,
     projects: string[],
     project_unique_names: string[]
 }
@@ -44,14 +41,11 @@ export async function getValue(emailAddress: string): Promise<safeData> {
         const points = prettyRecordID["points"]
         const current_stage = prettyRecordID["current_stage"]
         const hackathons = prettyRecordID["hackathons"]
-        const achievements = prettyRecordID["achievements"]
-        const stage_1_project = prettyRecordID["stage_1_project"]
-        const stage_2_project = prettyRecordID["stage_2_project"]
-        const stage_3_project = prettyRecordID["stage_3_project"]
+        const artifacts = prettyRecordID["artifacts"]
         const projects = prettyRecordID["projects"]
         const project_unique_names = prettyRecordID["project_unique_names"]
         return {
-            slack_id, points, current_stage, hackathons, achievements, stage_1_project, stage_2_project, stage_3_project, projects, project_unique_names
+            slack_id, points, current_stage, hackathons, artifacts, projects, project_unique_names
         }
 }
  

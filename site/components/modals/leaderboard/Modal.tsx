@@ -35,7 +35,7 @@ export default function LeaderboardModal(){
                     <div className ={`${index >= 70 ? "bg-hc-primary/10" : "bg-hc-primary/40"} p-4 rounded-md flex flex-row justify-between w-full border border-white`}>
                         <span className = "flex flex-row items-center align-middle gap-4">{index+1}. <img src = {user.profile_picture} className = "inline size-5 rounded-full"/> {user.display_name} {user.slack_id === session.data?.slack_id ? <span className = "font-bold">(You)</span> : null} </span>
                         <span className = "self-end">
-                            { (user.total_time_approved_projects).toFixed(2)} hours ({user.points} artifacts)
+                            { (user.total_time_approved_projects).toFixed(2)} hours ({user.points}% completion)
                         </span>
                     </div>
                 </div>

@@ -9,7 +9,8 @@ const airtable = new Airtable({
 
 export async function GET(request: NextRequest){
     const stage = request.nextUrl.searchParams.get("stage")
-    const allPrizes = (await airtable("Shop").select().all())
+    const allPrizes = (await airtable("Shop").select({sort: 
+        [{field: "stage", direction: "asc"}, {field: "price", direction: "asc"}]}).all())
     let prettyPrizeID
     if (stage){
         prettyPrizeID = ((JSON.parse(JSON.stringify(allPrizes))).map((item: any) => item["fields"])).filter((key: any) => !['Orders'].includes(key) && key["stage"] == stage)// jank

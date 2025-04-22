@@ -32,7 +32,7 @@ export const STAGES = [
   
   {
     moduleName: 'Start hacking',
-    description: "This is the first project you will be working on. It is a great way to get started with the Athena Award.\nDon't know where to start? Explore the painting for resources!",
+    description: "This is the first project you will be working on. It is a great way to get started with the Athena Awards.\nDon't know where to start? Explore the painting for resources!",
     visuals: {
       name: 'The Swing',
       artist: 'Jean-Honoré Fragonard',
