@@ -96,26 +96,20 @@ export default function Index() {
 
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull ">
-      <div className="pointer-events-none w-screen h-screen fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
+      <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <Background shouldAnimate sourceScene={STAGES[1].visuals.scene} />
       </div>
       <div className="relative z-10 pointer-events-auto sm:pointer-events-none">
         <Header/>
-        <div className="pointer-events-none flex flex-col w-screen h-screen justify-center items-center px-8 gap-6 text-hc-secondary italic">
+        <div className="pointer-events-none flex flex-col w-screen h-max justify-center items-center px-8 gap-6 text-hc-secondary italic">
           <div className="grow"/> {/* i cbf finding a better solution */}
-          <div className = "grow">
-            <img className = "my-auto mx-auto" src = "/logo.svg"/>
-            {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
-            <p className="text-xl text-center">Venture forth into the unknown...</p>
-            <div className = "pointer-events-auto flex items-center">
-              <AuthStateButton/>
+              <img className = "mr-auto max-h-48" src = "/logo.svg"/>
+              {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
+              <div className = "pointer-events-auto flex items-center absolute">
+                <AuthStateButton/>
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="text-hc-secondary playfair-display">get started</div><br/><br/>
-            <div className="text-hc-secondary rotate-90 text-3xl playfair-display">-{'>'}</div>
-          </div>  
-
+            <div>
         </div>
         <div className="w-screen h-max bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 flex flex-col gap-10 lg:flex-row">
           {/* to do: a blurb about days of service, think something like the counter from the gwynne shotwell site: https://gwynne.hackclub.dev */}

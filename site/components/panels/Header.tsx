@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import WelcomeModal from "../welcome/WelcomeModal";
 import { inviteSlackUser } from "@/services/inviteUserToSlack";
 import { FormEvent } from "react";
+import { useSearchParams } from 'next/navigation'
 
 export const shineEffect = (props: string) => `${props} border text-center mx-auto focus:outline-none focus:ring focus:ring-slate-500/50 focus-visible:outline-none focus-visible:ring focus-visible:ring-slate-500/50 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms]`
 const shineEffectProps = "m-5 p-5 text-2xl text-hc-secondary rounded-xl bg-hc-primary-dull border-hc-primary-dull/80"
@@ -15,6 +16,9 @@ export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
   const router = useRouter();
   const [ emailSubmitted, setEmailSubmitted ] = useState(false);
   const [ err, setErr ] = useState("")
+  
+  const searchParams = useSearchParams()
+  const email = searchParams.get('email')
 
   async function handleEmailSubmit(event: FormEvent<HTMLFormElement>){
     event.preventDefault()
@@ -39,9 +43,9 @@ export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
        <div className = "flex flex-col p-5 m-5 bg-hc-primary-dull/80 rounded-xl">
           { !emailSubmitted ? 
           <form className = "flex flex-col gap-3 *:text-white items-center" onSubmit={(e) => handleEmailSubmit(e)}>
-            <label className = "not-italic text-xl text-center ">New to Hack Club? Sign up for <b>free stickers!</b>✨</label>
+            <label className = "not-italic text-xl text-center ">New to Hack Club? ✨</label>
             <span className = "flex flex-col md:flex-row gap-2 w-full">
-              <input placeholder="orpheus@mail.com" className="text-black w-full" required type="text" name="email" id="email"/>
+              <input placeholder="orpheus@mail.com" defaultValue={email ? email : ""} className="text-black w-full" required type="text" name="email" id="email"/>
               <button type = "submit">Submit</button>
             </span>
           </form>
@@ -52,7 +56,7 @@ export function AuthStateButton(){ /// @ PAST SELF WHY IS THIS EVEN IN HERE
               <p className = "text-sm">Please send an email to annabel@hackclub.com with this error message if you're seeing this.</p>
               </span>
             : <span className = "not-italic text-lg md:text-xl text-center text-white max-w-1/2">
-            <p className = "underline decoration-wavy text-xl">Your request to join is pending!</p> 
+            <p className = "underline decoration-wavy text-xl">Check your email!</p> 
             <p>Keep an eye on your inbox for an invite to our community of high school hackers.</p>
             <p className = "font-semibold">Then, come back here and sign in!</p></span> }
         </div>  

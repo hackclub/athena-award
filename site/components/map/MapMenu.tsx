@@ -102,6 +102,14 @@ const slidingParentVariant: Variants = {
 }
 
 
+
+function InfoPage(){
+  return (
+    <div>This is an info page! wow</div>
+  )
+}
+
+
 export default function MapMenu({ module, progress = compositeUserModuleData, setModule }:{ module: typeof STAGES[number]['moduleName'], progress?: UserModuleData[], setModule: (module: typeof STAGES[number]['moduleName']) => void }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [ selectedProject, setSelectedProject ] = useState("_select#")
@@ -115,6 +123,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   const session = useSession();
   const slackId = session.data?.slack_id
   const urls = [`/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx+1}`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`, `/api/shop?stage=${currModuleIdx+1}`, `/api/user/${slackId}/points`]
+  
   const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher)
   if (error){
     console.log(error)
@@ -130,24 +139,16 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   useEffect(() => {
     if (data){  
       console.log((data[1] as any)["message"]["project_name"], "this is project_name")
-      console.log(selectedProject, "this is the selectedProject")
 
       if ((data[1] as any)["message"]["project_name"]){
         setSelectedProject((data[1] as any)["message"]["project_name"])
-        console.log("set selected project to",(data[1] as any)["message"]["project_name"])
       } else {
         setSelectedProject("_select#")
-        console.log("set selected project to _select# because project_name didn't exist")
       }
       setProjectRetrievalComplete(true)
-
-
     } else {
       setSelectedProject("_select#")
-      console.log("set selected project to _select# because data did not exist")
     }
-
-
   }, [data])
 
   async function handleChange(e: any){ // i cbf to fix type 2
