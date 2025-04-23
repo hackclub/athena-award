@@ -35,9 +35,13 @@ export function Unauthenticated(){
 
 
 export function Error({error}: {error: string}){
-    <div className = "bg-black w-screen h-screen flex flex-col items-center justify-center">
-    <h1 className="text-white text-2xl">Something's gone wrong!</h1>
-    <p className="mt-2 text-white text-base">{error}</p>
-</div>
+    return (
+        <div className = "bg-black w-screen h-screen flex flex-col items-center justify-center">
+        <h1 className="text-white text-2xl">Something's gone wrong!</h1>
+        <p className="mt-2 text-white text-base">Please email athena@hackclub.com with this error and a description of what you were doing when you saw it.</p>
+
+        <p className="mt-2 text-white text-base">{error}</p>
+    </div>
+    )
 }
 

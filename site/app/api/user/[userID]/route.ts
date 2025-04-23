@@ -10,10 +10,11 @@ import { verifyAuth } from "@/services/verifyAuth";
 
 
 
-const validData = ["current_stage", "slack_id"]; // this is really stupid
+const validData = ["current_stage", "slack_id", "total_time_approved_projects"]; // this is really stupid
 interface validData {
     current_stage: string,
-    slack_id: string
+    slack_id: string,
+    total_time_approved_projects: number
 }
 
 export async function GET(request: NextRequest) {

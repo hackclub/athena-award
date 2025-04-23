@@ -14,6 +14,8 @@ import { multiFetcher } from "@/services/fetcher";
 import { useEffect } from "react";
 import { Action, Tip } from "@/components/panels/add-ons/Callout";
 import Icons from "@/components/panels/Icons";
+import { Error } from "@/components/screens/Modal";
+import Link from "next/link";
 
 // TODO: make it so you can switch between the landscape with all of the interactive content + the map menu
 
@@ -53,6 +55,11 @@ interface BaseModule {
   // stages: BaseStage[],
 }
 
+
+const introData = {
+  moduleName: "Intro"
+}
+
 const exampleData: UserModuleData = {
   moduleName: "Start hacking"
 }
@@ -68,6 +75,7 @@ const thirdExampleData: UserModuleData = {
  * This will not be hardcoded data; the user's progress is indicated by User{item}Data while to-be-hardcoded information is represented as Base{item}.
  */
 const compositeUserModuleData: UserModuleData[] = [
+  introData,
   exampleData,
   secondExampleData,
   thirdExampleData
@@ -101,33 +109,165 @@ const slidingParentVariant: Variants = {
   }
 }
 
+const introResources = [
+  {
+    "name": "Learn to make a website with Boba Drops",
+    "id:": "boba-drops",
+    "link": "https://boba.hackclub.com"
+  },
+  {
+    "name": "Create a video game with Sprig",
+    "id:": "sprig",
+    "link": "https://sprig.hackclub.com"
 
+  },
+  {
+    "name": "Design a PCB with Onboard",
+    "id:": "onboard",
+    "link": "https://onboard.hackclub.com"
+  },
+]
 
-function InfoPage(){
-  return (
-    <div>This is an info page! wow</div>
-  )
-}
-
-
-export default function MapMenu({ module, progress = compositeUserModuleData, setModule }:{ module: typeof STAGES[number]['moduleName'], progress?: UserModuleData[], setModule: (module: typeof STAGES[number]['moduleName']) => void }) {
+export default function MapMenu({ module, progress = compositeUserModuleData, setModule }:{ module: any, progress?: UserModuleData[], setModule: (module: typeof STAGES[number]['moduleName']) => void }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [ selectedProject, setSelectedProject ] = useState("_select#")
   const [ prizeScroller, setPrizeScroller ] = useState(0)
   const [ projectRetrievalComplete, setProjectRetrievalComplete ] = useState(false)
-  const baseModuleData = STAGES.find(m => m.moduleName === module)!;
-  const currModuleIdx = progress.findIndex(p => p.moduleName === module)
-  const nextModule = progress[(currModuleIdx + 1) % progress.length].moduleName
-  const prevModule = progress[(currModuleIdx - 1 + progress.length) % progress.length].moduleName
-  // const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
   const session = useSession();
   const slackId = session.data?.slack_id
-  const urls = [`/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx+1}`, `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`, `/api/shop?stage=${currModuleIdx+1}`, `/api/user/${slackId}/points`]
+
+  let currModuleIdx = progress.findIndex(p => p.moduleName === module) 
+  const nextModule = progress[(currModuleIdx + 1) % progress.length].moduleName 
+  const prevModule = progress[(currModuleIdx - 1 + progress.length) % progress.length].moduleName
+
+
+  function Navigation(){
+    let currModuleIdx = STAGES.find( m => m.moduleName === module) ? progress.findIndex(p => p.moduleName === module) : 0
+    return (
+      <div className = "flex flex-row w-full gap-20">
+        <div className="flex gap-2 items-center self-center text-white">
+          <button onClick={() => {
+                  currModuleIdx 
+                      ? setModule(prevModule as typeof STAGES[number]['moduleName']) 
+                      : setModule( compositeUserModuleData[compositeUserModuleData.length - 1]["moduleName"] as typeof STAGES[number]['moduleName'])
+                  setSelectedProject("_select#"); 
+                  setProjectRetrievalComplete(false); 
+                  setPrizeScroller(0)}} className="playfair-display italic text-2xl">
+            <span className="sr-only">Previous</span>
+            <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
+          </button>
+          <span key={`${module}-section-status`} className="italic text-lg md:text-2xl">
+            {currModuleIdx 
+              ? <span>Project {currModuleIdx} / {progress.length - 1}</span>
+              : <span>{module}</span>
+            } 
+          </span>
+          <button onClick={() => { 
+                    currModuleIdx 
+                        ? setModule(nextModule as typeof STAGES[number]['moduleName']) 
+                        : setModule( compositeUserModuleData[1]["moduleName"] as typeof STAGES[number]['moduleName']); 
+                      setSelectedProject("_select#"); 
+                      setProjectRetrievalComplete(false); 
+                      setPrizeScroller(0)}} className="playfair-display italic text-2xl">
+            <span className="sr-only">Next</span>
+            <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  function DefaultFrame({title, children, primaryTheme}: {title: string, children: React.ReactNode, primaryTheme: string}){
+    return (
+      <div className={`h-full w-full relative ${primaryTheme}`}>
+      <div id="tw-palette" className="hidden">
+        <div className="bg-sky-900/30"></div>
+        <div className="bg-sky-950/40"></div>
+        <div className="bg-red-900/30"></div>
+        <div className="bg-red-900/40"></div>
+      </div>
+      <AnimatePresence>
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-16 transition-all ${primaryTheme} overflow-y-scroll`}>
+              
+              <div className = "self-start">
+                <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">Athena Awards</div>
+                <h1 className="text-4xl sm:text-6xl uppercase italic text-white font-bold">{title}</h1>
+              </div>
+              <Icons />
+
+              <motion.div className="grow grid grid-cols-4 gap-4"> 
+                {children}
+              </motion.div>
+
+                <Navigation/>
+              </motion.div>
+          </>
+          </AnimatePresence>
+        </div>
+    )
+  }
+
+
+  function InfoPage({points}: {points: number}){
+    return (
+      <DefaultFrame title="Introduction" primaryTheme="bg-sky-950">
+        <div className = "items-center grow flex flex-col md:flex-row gap-4 col-span-full">
+            <div className="md:basis-1/2 text-white h-max md:h-full w-full">
+                <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Build something with help</motion.h2>
+                <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-full overflow-scroll my-5 flex flex-col gap-3 pr-4">
+                {introResources.map((resource, index) =>
+                    <StageChecklistItem key={index} title={resource.name} link={resource.link} delay={index}/>
+                )}
+                </motion.div>
+            </div>
+            <span className = "mx-auto md:my-auto uppercase text-white/40">OR</span>
+            <div className = "md:basis-1/2 h-max md:h-full text-white">
+              <motion.h2 variants={slidingUpVariant} className = "text-3xl text-white text-center md:text-left">Build something yourself</motion.h2>
+              <motion.div variants={slidingUpVariant} transition={{ delay: 0.4}} initial='hidden' animate='visible' className="md:w-11/12 flex flex-col gap-10">
+                <p>You can submit any three technical projects for the Athena Award.</p>
+                <p>
+                  However, for every hour you code on an original project, you will earn an Artifact to be spent in the Shop
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-1 inline align-middle">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                </svg>
+                on iPads, Framework 12 laptops, and more.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+          <div className = "col-span-full py-5 md:py-0">
+          <div className = "bg-white/40 relative h-6 rounded-lg">
+                    <div className = {`absolute bg-sky-950/40 h-6 rounded-l-lg`} style={{width: points+"%"}}/>
+                    <div className = "absolute text-center w-full uppercase z-50 text-white">Athena Award - {points}% completed</div>
+                  </div>
+          </div>
+      </DefaultFrame>
+    )
+  }
+  
+  const baseModuleData = STAGES.find(m => m.moduleName === module)!;
+
+  const urls = [
+    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx}`, 
+    `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx}`, 
+    `/api/shop?stage=${currModuleIdx}`, 
+    `/api/user/${slackId}/points`]
   
   const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher)
   if (error){
     console.log(error)
   }
+
+  // const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
+  
+  async function handleChange(e: any){ // i cbf to fix type 2
+    const projectName = e.target.value
+    const update = await fetch (`/api/user/${slackId}/projects`, { method: "POST", body: JSON.stringify({stage: currModuleIdx, project: projectName})})
+    setSelectedProject(projectName)
+    return update
+  }
+
   let projects, points
   let prizes = [{"item_friendly_name": "Loading..."}, {"description": "Loading..."}, {"image": null}]
   if (data){
@@ -138,8 +278,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
 
   useEffect(() => {
     if (data){  
-      console.log((data[1] as any)["message"]["project_name"], "this is project_name")
-
       if ((data[1] as any)["message"]["project_name"]){
         setSelectedProject((data[1] as any)["message"]["project_name"])
       } else {
@@ -151,13 +289,17 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     }
   }, [data])
 
-  async function handleChange(e: any){ // i cbf to fix type 2
-    const projectName = e.target.value
-    const update = await fetch (`/api/user/${slackId}/projects`, { method: "POST", body: JSON.stringify({stage: currModuleIdx + 1, project: projectName})})
-    setSelectedProject(projectName)
-    return update
+  if (!(baseModuleData)){
+    switch (module){
+      case ("Intro"):
+        return (
+         <InfoPage points={points}/>
+        ) 
+    }
+    return (
+      <>
+      <Error error={`Module '${module}' was not found.`}/></>)
   }
-
 
   return (
     <>
@@ -180,9 +322,9 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                 <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">Athena Awards</div>
                 <h1 className="text-4xl sm:text-6xl uppercase italic text-white font-bold">The Gallery</h1>
               </div>
-              
+              <Icons />
+
               <motion.div className="grow grid grid-cols-5 gap-10 items-center">
-                <Icons />
                 <div className="col-span-full lg:col-span-2">
                   <div className={`${baseModuleData.visuals.accents.tertiary} p-4 transition-all`}>
                     <motion.div className='aspect-[3/2] bg-white group transition-all rounded-2xl' style={{
@@ -204,7 +346,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                 </div>
                 <div className="col-span-full lg:col-span-3 text-white">
                   <motion.div transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="my-5 space-y-3 pr-4">
-                    <h1 className="text-white font-bold text-4xl sm:text-5xl italic mb-3">{currModuleIdx+1}: {module}</h1>
+                    <h1 className="text-white font-bold text-4xl sm:text-5xl italic mb-3">{currModuleIdx}: {module}</h1>
                     
                     <motion.p transition={{ delay: 0.45 }} initial='hidden' animate='visible' className="text-white leading-normal text-md sm:text-lg italic font-light">{baseModuleData.description.split('\n').map((text, i) => (
                       <Fragment key={i}>
@@ -256,7 +398,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                                       )}
                                     <option value = "Other YSWS Project">[Other YSWS Project]</option>
                                   </select>
-                                  <button onClick={async () => {setSelectedProject("_select#"); await fetch (`/api/user/${slackId}/projects`, { method: "POST", body: JSON.stringify({stage: currModuleIdx + 1, project: "_select#" })}); mutate()}}>
+                                  <button onClick={async () => {setSelectedProject("_select#"); await fetch (`/api/user/${slackId}/projects`, { method: "POST", body: JSON.stringify({stage: currModuleIdx, project: "_select#" })}); mutate()}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 inline">
                                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                                     </svg>
@@ -285,8 +427,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                         }
                       <div className = "self-center sm:self-end">
                           { data && selectedProject !== "_select#" && (data[1] && data[1]["message"]["status"] === "pending")
-                          ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`, { method: "POST" })}>  
-                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}`}>Ready to submit?</a>
+                          ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx}`, { method: "POST" })}>  
+                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx}`}>Ready to submit?</a>
                             </button>
                           : (data && selectedProject == "_select#")
                             ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
@@ -295,8 +437,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                             : (data && data[1]["message"]["status"] == "approved")
                               ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Stage completed 🎉</button>
                               : (data && data[1]["message"]["status"] == "rejected") 
-                                ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`, { method: "POST" })}>
-                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx+1}    `}>Your project was rejected - click here to resubmit!</a>
+                                ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx}`, { method: "POST" })}>
+                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx}    `}>Your project was rejected - click here to resubmit!</a>
                                   </button>
                                 : (data && data[1]["message"]["status"] == "unreviewed")
                                   ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Project awaiting review</button>
@@ -307,27 +449,16 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                 </div>
               </motion.div>
               
-              <div className = "flex flex-row w-full gap-20">
-                <div className="flex gap-2 items-center self-center text-white">
-                  <button onClick={() => {setModule(prevModule as typeof STAGES[number]['moduleName']); setSelectedProject("_select#"); setProjectRetrievalComplete(false); setPrizeScroller(0)}} className="playfair-display italic text-2xl">
-                    <span className="sr-only">Previous</span>
-                    <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
-                  </button>
-                  <span key={`${module}-section-status`} className="italic text-lg md:text-2xl">
-                    Project {currModuleIdx + 1} / {progress.length}
-                  </span>
-                  <button onClick={() => {setModule(nextModule as typeof STAGES[number]['moduleName']); setSelectedProject("_select#"); setProjectRetrievalComplete(false); setPrizeScroller(0)}} className="playfair-display italic text-2xl">
-                    <span className="sr-only">Next</span>
-                    <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
-                  </button>
-                </div>
+             <div className = "flex flex-row w-full gap-20">
+                <Navigation/>
 
-                <div className = "self-center grow text-center">
+                {/* <div className = "self-center grow text-center">
                   <div className = "bg-white/40 relative h-6 rounded-lg">
                     <div className = {`absolute ${baseModuleData.visuals.accents.tertiary} h-6 rounded-l-lg`} style={{width: points+"%"}}/>
                     <div className = "text-center w-full uppercase text-white/75">ATHENA AWARDS COMPLETION - {points}%</div>
                   </div>
                 </div>
+                */}
 
             </div>
               </motion.div>
@@ -345,24 +476,16 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   )
 }
 
-export function StageChecklistItem({ title, link, complete, delay, module }:{ title: string, link?: string, complete: boolean, delay: number, module: typeof STAGES[number]['moduleName'] }) {
-  const currModule = STAGES.find(m => m.moduleName === module)!;
+export function StageChecklistItem({ title, delay, link }:{ title: string, link: string, delay: number}) {
   return (
-    <motion.div variants={slidingUpVariant} transition={{ delay: 0.5 + (0.09 * delay) }} initial='hidden' animate='visible'  className={`w-full bg-red-900 p-4 flex justify-between items-center ${currModule.visuals.accents.secondary}`}>
-      <div className="flex gap-2 items-center">
-        <span>
-          {complete ? 
-            <svg className="size-7" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="checkmark" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48" ><g><path d="M16,8c2.476,0 4.074,0.209 5.138,0.572c0.414,0.141 0.886,0.076 1.195,-0.234l0.509,-0.508c0.222,-0.222 0.186,-0.593 -0.092,-0.739c-1.527,-0.801 -3.704,-1.091 -6.75,-1.091c-8,0 -10,2 -10,10c0,8 2,10 10,10c8,0 10,-2 10,-10c0,-0.346 -0.004,-0.68 -0.012,-1.004c-0.01,-0.431 -0.526,-0.629 -0.831,-0.324l-0.863,0.862c-0.188,0.189 -0.294,0.444 -0.291,0.711c0.02,2.029 0.074,4.85 -1.417,6.341c-0.864,0.864 -2.572,1.414 -6.586,1.414c-4.014,0 -5.722,-0.55 -6.586,-1.414c-0.864,-0.864 -1.414,-2.572 -1.414,-6.586c0,-4.014 0.55,-5.722 1.414,-6.586c0.864,-0.864 2.572,-1.414 6.586,-1.414Z"></path><path d="M10.707,14.293c-0.39,0.39 -0.39,1.024 0,1.414l4.586,4.586c0.39,0.39 1.024,0.39 1.414,0l11.586,-11.586c0.39,-0.39 0.39,-1.024 0,-1.414l-0.336,-0.336c-0.39,-0.39 -1.024,-0.39 -1.414,0l-10.543,10.543l-3.543,-3.543c-0.39,-0.39 -1.024,-0.39 -1.414,0l-0.336,0.336Z"></path></g></svg> : 
-            <svg className="size-7" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="checkmark" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48" ><g><path d="M22.586,22.586c0.864,-0.864 1.414,-2.572 1.414,-6.586c0,-4.014 -0.55,-5.722 -1.414,-6.586c-0.864,-0.864 -2.572,-1.414 -6.586,-1.414c-4.014,0 -5.722,0.55 -6.586,1.414c-0.864,0.864 -1.414,2.572 -1.414,6.586c0,4.014 0.55,5.722 1.414,6.586c0.864,0.864 2.572,1.414 6.586,1.414c4.014,0 5.722,-0.55 6.586,-1.414Zm-6.586,3.414c8,0 10,-2 10,-10c0,-8 -2,-10 -10,-10c-8,0 -10,2 -10,10c0,8 2,10 10,10Z"></path></g></svg>
-          }
-        </span>
+    <motion.div variants={slidingUpVariant} transition={{ delay: 0.5 + (0.09 * delay) }} initial='hidden' animate='visible'  className={`w-full bg-red-900 p-4 flex justify-between`}>
+      <div className="flex gap-2">
         <span className="italic">{title}</span>
       </div>
       <button className="flex gap-2 flex-row-reverse">
         <svg className="size-7 peer" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
-        <span className="text-sm opacity-0 peer-hover:opacity-100 transition">Go to activity</span>
+        <span className="text-sm opacity-0 peer-hover:opacity-100 transition"><Link href = {link}>Go to activity</Link></span>
       </button>
-      
     </motion.div>
   )
 }

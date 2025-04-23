@@ -12,7 +12,7 @@ import LeaderboardModal from "@/components/modals/leaderboard/Modal";
 
 export default function Map() {
   // api calls for progress go here
-  const [module, setModule] = useState("Start hacking" as typeof STAGES[number]['moduleName']);
+  const [module, setModule] = useState("Intro" as typeof STAGES[number]['moduleName']);
   const [ profileIsOpen, setProfileIsOpen ] = useState(false)
   const [_uxEvent, setUXEvent] = useState<UXEvent>('map')
   return (
