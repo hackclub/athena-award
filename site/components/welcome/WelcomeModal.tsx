@@ -25,7 +25,9 @@ export default function WelcomeModal({props}: {props: string}){
 
   return (
     <>
-      <button className={`${props} text-xl playfair-display`} onClick={() => setIsOpen(true)}>already in hack club? start hacking</button>
+    { session.status === "unauthenticated" && 
+    <>
+      <button className={`${props} text-xl playfair-display`} onClick={() => setIsOpen(true)}>already in hack club?<br/>start hacking</button>
       <AnimatePresence>
         {isOpen && <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -53,23 +55,10 @@ export default function WelcomeModal({props}: {props: string}){
                   <div className="w-[90vw] h-[90vh] md:w-[85vw] md:h-[85vh] transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-3 sm:p-6">
 
                     <div className="bg-[#373E2F] w-full h-full rounded-2xl p-6 md:p-12">
-                      {
-                        session.status === 'authenticated' ? (
-                          <div id="success-auth" className="justify-center flex flex-col h-full py-[5vh]">
-                            <div>
-                              <div className="text-5xl font-bold text-white">Hello <span className="text-hc-secondary">{session.data.user!.name}</span>!</div>
-                              <div className="text-xl text-white">You've successfully logged in with Slack. Proceed with your journey...</div>
-                            </div>
-                            <button className="w-full bg-hc-primary font-bold text-white rounded-full mt-10 text-center py-3 text-4xl" onClick={() => {router.push("/onboarding"); registerUser() }}>Proceed</button>
-                          </div>
-                        ) : (
                           <div id="inspiration" className="text-white flex flex-col h-full">
                             <UnauthenticatedWelcomeMessage setOpen={setIsOpen} />
                           </div>
-                        )
-                      }
                     </div>
-
                   </div>
                 </motion.div>
               </div>
@@ -77,6 +66,8 @@ export default function WelcomeModal({props}: {props: string}){
           </motion.div>
         </motion.div>}
       </AnimatePresence>
+      </>
+      }
     </>
   )
 }

@@ -11,7 +11,7 @@ import ActionableScene from "../landscape/ActionableScene";
 import { FaPaintbrush } from "react-icons/fa6";
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Action, Tip } from "@/components/panels/add-ons/Callout";
 import Icons from "@/components/panels/Icons";
 import { Error } from "@/components/screens/Modal";
@@ -212,8 +212,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   function InfoPage({points}: {points: number}){
     return (
       <DefaultFrame title="Introduction" primaryTheme="bg-sky-950">
-        <div className = "items-center grow flex flex-col md:flex-row gap-4 col-span-full">
-            <div className="md:basis-1/2 text-white h-max md:h-full w-full">
+        <div className = "grow flex flex-col md:flex-row gap-4 col-span-full *:bg-black/80 *:p-4 *:my-5">
+            <div className="md:basis-1/2 text-white h-max w-full">
                 <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Build something with help</motion.h2>
                 <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-full overflow-scroll my-5 flex flex-col gap-3 pr-4">
                 {introResources.map((resource, index) =>
@@ -222,12 +222,12 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
                 </motion.div>
             </div>
             <span className = "mx-auto md:my-auto uppercase text-white/40">OR</span>
-            <div className = "md:basis-1/2 h-max md:h-full text-white">
+            <div className = "md:basis-1/2 h-max  text-white">
               <motion.h2 variants={slidingUpVariant} className = "text-3xl text-white text-center md:text-left">Build something yourself</motion.h2>
               <motion.div variants={slidingUpVariant} transition={{ delay: 0.4}} initial='hidden' animate='visible' className="md:w-11/12 flex flex-col gap-10">
                 <p>You can submit any three technical projects for the Athena Award.</p>
                 <p>
-                  However, for every hour you code on an original project, you will earn an Artifact to be spent in the Shop
+                  However, for every hour you code on an original project, you will earn an Artifact that can be spent in the Shop
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-1 inline align-middle">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
                 </svg>
@@ -237,7 +237,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
             </div>
           </div>
           <div className = "col-span-full py-5 md:py-0">
-          <div className = "bg-white/40 relative h-6 rounded-lg">
+          <div className = "bg-white/40 relative h-6 rounded-lg self-end">
                     <div className = {`absolute bg-sky-950/40 h-6 rounded-l-lg`} style={{width: points+"%"}}/>
                     <div className = "absolute text-center w-full uppercase z-50 text-white">Athena Award - {points}% completed</div>
                   </div>
@@ -275,18 +275,20 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
     prizes = data[2]
     points = data[3]["message"]
   }
-
-  useEffect(() => {
-    if (data){  
-      if ((data[1] as any)["message"]["project_name"]){
-        setSelectedProject((data[1] as any)["message"]["project_name"])
+ 
+  useLayoutEffect(() => {
+    if (baseModuleData){
+      if (data){  
+        if ((data[1] as any)["message"]["project_name"]){
+          setSelectedProject((data[1] as any)["message"]["project_name"])
+        } else {
+          setSelectedProject("_select#")
+        }
+        setProjectRetrievalComplete(true)
       } else {
         setSelectedProject("_select#")
       }
-      setProjectRetrievalComplete(true)
-    } else {
-      setSelectedProject("_select#")
-    }
+  }
   }, [data])
 
   if (!(baseModuleData)){

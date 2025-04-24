@@ -8,6 +8,9 @@ import { Fragment } from "react"
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
 import Link from "next/link";
+import WelcomeModal from "@/components/welcome/WelcomeModal";
+import { shineEffect } from "@/components/panels/Header";
+import { shineEffectProps } from "@/components/panels/Header";
 
 const steps = [
   {title: "Build three projects 💻",
@@ -100,13 +103,14 @@ export default function Index() {
         <Background shouldAnimate sourceScene={STAGES[1].visuals.scene} />
       </div>
       <div className="relative z-10 pointer-events-auto sm:pointer-events-none">
-        <Header/>
-        <div className="pointer-events-none flex flex-col w-screen h-max justify-center items-center px-8 gap-6 text-hc-secondary italic">
-          <div className="grow"/> {/* i cbf finding a better solution */}
-              <img className = "mr-auto max-h-48" src = "/logo.svg"/>
+        <Header skipWelcomeModal={true}/>
+        <div className="pointer-events-none flex flex-col w-screen h-max justify-center items-center p-8 gap-6 text-hc-secondary italic">
+          <div className="grow flex flex-row"/> {/* i cbf finding a better solution */}
+              <img className = "max-lg:mx-auto lg:mr-auto max-h-48" src = "/logo.svg"/>
               {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
-              <div className = "pointer-events-auto flex items-center absolute">
-                <AuthStateButton/>
+              <div className = "pointer-events-auto lg:absolute flex flex-col lg:flex-row gap-4 self-center *:mx-auto lg:self-end">
+                <AuthStateButton className = "h-full"/>
+                <div className = "*:h-full"><WelcomeModal props={`${shineEffect(shineEffectProps)}`}/></div>
               </div>
             </div>
             <div>
