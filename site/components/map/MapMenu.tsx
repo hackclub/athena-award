@@ -212,22 +212,29 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   function InfoPage({points}: {points: number}){
     return (
       <DefaultFrame title="Introduction" primaryTheme="bg-sky-950">
-        <div className = "grow flex flex-col md:flex-row gap-4 col-span-full *:bg-black/80 *:p-4 *:my-5">
-            <div className="md:basis-1/2 text-white h-max w-full">
-                <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Build something with help</motion.h2>
-                <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-full overflow-scroll my-5 flex flex-col gap-3 pr-4">
+        <div className = "grow flex flex-col md:flex-row gap-4 col-span-full *:bg-black/30 *:px-4 *:py-2 *:my-2">
+            <div className="md:basis-1/2 text-white flex-1 w-full">
+                <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Build something with help 👥</motion.h2>
+                <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-full overflow-scroll flex flex-col gap-3">
+                <p>Stuck? Complete one of Hack Club's You Ship We Ship programs to learn some new skills and earn goodies along the way.</p>
                 {introResources.map((resource, index) =>
                     <StageChecklistItem key={index} title={resource.name} link={resource.link} delay={index}/>
                 )}
                 </motion.div>
             </div>
             <span className = "mx-auto md:my-auto uppercase text-white/40">OR</span>
-            <div className = "md:basis-1/2 h-max  text-white">
-              <motion.h2 variants={slidingUpVariant} className = "text-3xl text-white text-center md:text-left">Build something yourself</motion.h2>
+            <div className = "md:basis-1/2  flex-1 text-white">
+            <Tooltip id = "original" className = "max-w-64"/>
+              <motion.h2 variants={slidingUpVariant} className = "text-3xl text-white text-center md:text-left">Build something yourself 👤</motion.h2>
               <motion.div variants={slidingUpVariant} transition={{ delay: 0.4}} initial='hidden' animate='visible' className="md:w-11/12 flex flex-col gap-10">
                 <p>You can submit any three technical projects for the Athena Award.</p>
                 <p>
-                  However, for every hour you code on an original project, you will earn an Artifact that can be spent in the Shop
+                  However, for every hour you code on an <span data-tooltip-id="original" data-tooltip-content="A project which is not completed from a tutorial, or existing Hack Club YSWS ('You Ship We Ship') program">
+                    original
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mx-1 size-6 inline">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>
+                  </span> project, you will earn Artifacts - currency that can be spent in the Shop
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-1 inline align-middle">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
                 </svg>
@@ -236,7 +243,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
               </motion.div>
             </div>
           </div>
-          <div className = "col-span-full py-5 md:py-0">
+          <div className = "col-span-full py-2 md:py-0">
           <div className = "bg-white/40 relative h-6 rounded-lg self-end">
                     <div className = {`absolute bg-sky-950/40 h-6 rounded-l-lg`} style={{width: points+"%"}}/>
                     <div className = "absolute text-center w-full uppercase z-50 text-white">Athena Award - {points}% completed</div>
@@ -480,13 +487,13 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
 
 export function StageChecklistItem({ title, delay, link }:{ title: string, link: string, delay: number}) {
   return (
-    <motion.div variants={slidingUpVariant} transition={{ delay: 0.5 + (0.09 * delay) }} initial='hidden' animate='visible'  className={`w-full bg-red-900 p-4 flex justify-between`}>
+    <motion.div variants={slidingUpVariant} transition={{ delay: 0.5 + (0.09 * delay) }} initial='hidden' animate='visible'  className={`w-full bg-red-900 p-3 flex justify-between`}>
       <div className="flex gap-2">
         <span className="italic">{title}</span>
       </div>
       <button className="flex gap-2 flex-row-reverse">
         <svg className="size-7 peer" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
-        <span className="text-sm opacity-0 peer-hover:opacity-100 transition"><Link href = {link}>Go to activity</Link></span>
+        <span className="text-sm opacity-0 peer-hover:opacity-100 transition"><Link href = {link} className = "text-white">Go to activity</Link></span>
       </button>
     </motion.div>
   )
