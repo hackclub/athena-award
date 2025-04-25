@@ -3,10 +3,8 @@
 import { useRouter } from "next/navigation";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import SidePanel from "../panels/layout/SidePanel";
-import Icon, { glyphs } from "@hackclub/icons";
 import { motion } from "motion/react";
 import { FaLightbulb, FaMagnifyingGlass, FaPlus } from "react-icons/fa6"
-import { IconType } from "react-icons";
 
 interface ActionProps {
   title: string
@@ -18,7 +16,6 @@ interface ActionProps {
 }
 
 export default function Action(props: ActionProps) {
-  const router = useRouter();
   const { percentX, percentY } = props;
   const [openPanel, setOpenPanel] = useState(false);
   const [transformation, setTransformation] = useState({ x: 0, y: 0 });
