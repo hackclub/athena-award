@@ -37,7 +37,7 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY })
 
 setInterval(async () => {
   try {
-    const records = await base('Test Email Slack Invites').select({filterByFormula: "NOT({welcome_message_sent})"}).all();
+    const records = await base('Email Slack Invites').select({filterByFormula: "NOT({welcome_message_sent})"}).all();
     for (const record of records) {
       const email = record.get('email');
       if (!email) continue;
@@ -73,7 +73,7 @@ To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Awa
           ],
           username: 'Athena Award',
         });
-        await base('Test Email Slack Invites').update([
+        await base('Email Slack Invites').update([
           {
             id: record.id,
             fields: { welcome_message_sent: true },
@@ -81,6 +81,12 @@ To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Awa
         ]);
         app.logger.info(`Sent welcome message to ${email} and marked as sent.`);
       } catch (err) {
+        await base('Email Slack Invites').update([
+          {
+            id: record.id,
+            fields: { dm_error: err },
+          },
+        ]);
         app.logger.error(`Failed to message ${email}:`, err);
       }
     }

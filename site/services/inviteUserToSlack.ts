@@ -16,7 +16,7 @@ const channels = ([
     "C06T17NQB0B", // #athena-awards
     "C05T8E9GY64", // #days-of-service
     "C01504DCLVD", // #scrapbook
-    "C0266FRGV", // lounge
+    "C0266FRGV", // #lounge
 
 ]).join(",")
 export async function inviteGuestToSlackToriel(email: string) {
