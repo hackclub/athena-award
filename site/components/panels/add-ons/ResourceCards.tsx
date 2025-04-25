@@ -1,5 +1,4 @@
 'use client';
-import Icon from "@hackclub/icons"
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react"
 
