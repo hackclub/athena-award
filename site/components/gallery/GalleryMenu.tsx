@@ -112,12 +112,12 @@ const slidingParentVariant: Variants = {
 const introResources = [
   {
     "name": "Learn to make a website with Boba Drops 🧋",
-    "id:": "boba-drops",
+    "id": "boba-drops",
     "link": "https://boba.hackclub.com"
   },
   {
     "name": "Create a video game with Sprig 🎮",
-    "id:": "sprig",
+    "id": "sprig",
     "link": "https://sprig.hackclub.com"
 
   },

@@ -1,4 +1,3 @@
-// A simple interactive map page using react-leaflet
 'use client';
 import dynamic from 'next/dynamic';
 import "leaflet/dist/leaflet.css";
