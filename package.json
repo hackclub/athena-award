@@ -8,11 +8,6 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "devDependencies": {
-        "@types/leaflet": "^1.9.17"
-    },
-    "dependencies": {
-        "dotenv": "^16.5.0",
-        "heroicons": "^2.2.0"
-    }
+    "devDependencies": {},
+    "dependencies": {}
 }

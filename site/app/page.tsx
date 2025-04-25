@@ -11,6 +11,7 @@ import Link from "next/link";
 import WelcomeModal from "@/components/welcome/WelcomeModal";
 import { shineEffect } from "@/components/panels/Header";
 import { shineEffectProps } from "@/components/panels/Header";
+import { Error } from "@/components/screens/Modal";
 
 const steps = [
   {title: "Build three projects 💻",
@@ -26,29 +27,16 @@ const steps = [
 
 const stats = [
   {
-    number: 40000000,
-    description: "participants"
+    number: "800000+",
+    description: "dollars (USD) in prizes distributed"
   },
   {
-    number: 20390239,
-    description: "dollars in prizes distributed"
+    number: "18000+",
+    description: "prizes sent out to teenagers"
    },
   {
     number: 23092039,
     description: "projects shipped"
-  },
-  {
-    number: 43594385,
-    description: "useless statistics"
-  },
-  {
-    number: 8395849,
-    description: "more useless stats"
-  }, 
-
-  {
-    number: 38492, 
-    description: "even more useless stats"
   }
 ]
 
@@ -95,6 +83,10 @@ export default function Index() {
   let prizes = []
   if (data){
     prizes = data[0]
+  }
+
+  if (error){
+    return (<Error error = {error}/>)
   }
 
   return (
