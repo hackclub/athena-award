@@ -3,9 +3,16 @@
     "version": "1.0.0",
     "description": "A Hack Club project gamifying the experience of learning to code through the [Athena Initiative](https://athena.hackclub.com).",
     "scripts": {
-      "dev": "cd site && npm run dev"
+        "dev": "cd site && npm run dev"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "@types/leaflet": "^1.9.17"
+    },
+    "dependencies": {
+        "dotenv": "^16.5.0",
+        "heroicons": "^2.2.0"
+    }
 }

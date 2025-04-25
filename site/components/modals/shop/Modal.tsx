@@ -13,10 +13,10 @@ export default function ShopModal(){
     const { data, error, isLoading } = useSWR(["/api/shop", `/api/user/${session.data?.slack_id}/artifacts`], multiFetcher)
     const [uxEvent, setUXEvent] = useContext(UXEventContext)
 
-    let shop, artifacts: number
+    let shop, artifacts
     if (data){
         shop = data[0]
-        artifacts = data[1]["message"]
+        artifacts = Math.floor(data[1]["message"])
     }
 
 
@@ -34,6 +34,8 @@ export default function ShopModal(){
             </div>
             <div>
                 <p>Click on a placard to order a prize with your approved artifacts! You can earn more artifacts by spending time on projects and getting them approved.</p>
+
+                <p>You have {artifacts} artifacts.</p>
                 <div>
                     <div className = "my-6">
                         <div className = {`p-6 my-6 flex flex-row flex-wrap relative h-full justify-center items-center`}>

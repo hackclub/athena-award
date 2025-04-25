@@ -111,24 +111,24 @@ const slidingParentVariant: Variants = {
 
 const introResources = [
   {
-    "name": "Learn to make a website with Boba Drops",
+    "name": "Learn to make a website with Boba Drops 🧋",
     "id:": "boba-drops",
     "link": "https://boba.hackclub.com"
   },
   {
-    "name": "Create a video game with Sprig",
+    "name": "Create a video game with Sprig 🎮",
     "id:": "sprig",
     "link": "https://sprig.hackclub.com"
 
   },
   {
-    "name": "Design a PCB with Onboard",
-    "id:": "onboard",
+    "name": "Design a PCB with Onboard ⚡",
+    "id": "onboard",
     "link": "https://onboard.hackclub.com"
   },
 ]
 
-export default function MapMenu({ module, progress = compositeUserModuleData, setModule }:{ module: any, progress?: UserModuleData[], setModule: (module: typeof STAGES[number]['moduleName']) => void }) {
+export default function GalleryMenu({ module, progress = compositeUserModuleData, setModule }:{ module: any, progress?: UserModuleData[], setModule: (module: typeof STAGES[number]['moduleName']) => void }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [ selectedProject, setSelectedProject ] = useState("_select#")
   const [ prizeScroller, setPrizeScroller ] = useState(0)
@@ -139,7 +139,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
   let currModuleIdx = progress.findIndex(p => p.moduleName === module) 
   const nextModule = progress[(currModuleIdx + 1) % progress.length].moduleName 
   const prevModule = progress[(currModuleIdx - 1 + progress.length) % progress.length].moduleName
-
 
   function Navigation(){
     let currModuleIdx = STAGES.find( m => m.moduleName === module) ? progress.findIndex(p => p.moduleName === module) : 0
@@ -199,7 +198,6 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
               <motion.div className="grow grid grid-cols-4 gap-4"> 
                 {children}
               </motion.div>
-
                 <Navigation/>
               </motion.div>
           </>
@@ -211,7 +209,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
 
   function InfoPage({points}: {points: number}){
     return (
-      <DefaultFrame title="Introduction" primaryTheme="bg-sky-950">
+      <DefaultFrame title="Introduction" primaryTheme="bg-[url('/pattern.svg')] bg-cover">
         <div className = "grow flex flex-col md:flex-row gap-4 col-span-full *:bg-black/30 *:px-4 *:py-2 *:my-2">
             <div className="md:basis-1/2 text-white flex-1 w-full">
                 <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Build something with help 👥</motion.h2>
@@ -245,8 +243,8 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
           </div>
           <div className = "col-span-full py-2 md:py-0">
           <div className = "bg-white/40 relative h-6 rounded-lg self-end">
-                    <div className = {`absolute bg-sky-950/40 h-6 rounded-l-lg`} style={{width: points+"%"}}/>
-                    <div className = "absolute text-center w-full uppercase z-50 text-white">Athena Award - {points}% completed</div>
+                    <div className = {`absolute bg-white/80 h-6 rounded-l-lg`} style={{width: points+"%"}}/>
+                    <div className = "absolute text-center w-full uppercase z-50 text-gray-500">Athena Award - {points}% completed</div>
                   </div>
           </div>
       </DefaultFrame>
@@ -297,6 +295,10 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
       }
   }
   }, [data])
+
+  if (session.status === "unauthenticated"){
+    return <Unauthenticated/>
+  }
 
   if (!(baseModuleData)){
     switch (module){
@@ -371,7 +373,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
 
                       <div className={`grow flex gap-2 mt-3 p-3 duration-700 ${baseModuleData!.visuals.accents.secondary} transition-all`}>
                       <button onClick={() => setPrizeScroller((prizeScroller - 1 + prizes.length) % prizes.length)}>
-                        <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 5.1,-5.085 6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
+                        <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-back" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M19.768,23.89c0.354,-0.424 0.296,-1.055 -0.128,-1.408c-1.645,-1.377 -5.465,-4.762 -6.774,-6.482c1.331,-1.749 -5.1,-5.085 -6.774,-6.482c0.424,-0.353 0.482,-0.984 0.128,-1.408c-0.353,-0.425 -0.984,-0.482 -1.409,-0.128c-1.839,1.532 -5.799,4.993 -7.2,6.964c-0.219,0.312 -0.409,0.664 -0.409,1.054c0,0.39 0.19,0.742 0.409,1.053c1.373,1.932 5.399,5.462 7.2,6.964l0.001,0.001c0.424,0.354 1.055,0.296 1.408,-0.128Z"></path></g></svg>
                       </button>
                         <div className="size-20 rounded-md bg-red-800 shrink-0 hidden sm:flex items-center justify-center text-center">{ prizes[prizeScroller]["image"] ? <img src = {prizes[prizeScroller]["image"]}/> : "image" }</div>
                         <div className="grow">
@@ -487,7 +489,7 @@ export default function MapMenu({ module, progress = compositeUserModuleData, se
 
 export function StageChecklistItem({ title, delay, link }:{ title: string, link: string, delay: number}) {
   return (
-    <motion.div variants={slidingUpVariant} transition={{ delay: 0.5 + (0.09 * delay) }} initial='hidden' animate='visible'  className={`w-full bg-red-900 p-3 flex justify-between`}>
+    <motion.div variants={slidingUpVariant} transition={{ delay: 0.5 + (0.09 * delay) }} initial='hidden' animate='visible'  className={`w-full bg-white/20 p-3 flex justify-between`}>
       <div className="flex gap-2">
         <span className="italic">{title}</span>
       </div>

@@ -1,0 +1,95 @@
+require('dotenv').config();
+const { App, LogLevel } = require('@slack/bolt');
+const Airtable = require('airtable');
+
+const app = new App({
+  token: process.env.SLACK_BOT_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  socketMode: true,
+  appToken: process.env.SLACK_APP_TOKEN,
+  logLevel: LogLevel.DEBUG,
+});
+
+async function getSlackIdByEmail(email) {
+  const userResult = await app.client.users.lookupByEmail({
+    token: process.env.SLACK_BOT_TOKEN,
+    email: email,
+  });
+  return userResult.user.id;
+}
+
+async function openConversationWithEmail(email) {
+  const userResult = await app.client.users.lookupByEmail({
+    token: process.env.SLACK_BOT_TOKEN,
+    email: email,
+  });
+  const userId = userResult.user.id;
+
+  const convo = await app.client.conversations.open({
+    token: process.env.SLACK_BOT_TOKEN,
+    users: userId,
+  });
+  return convo.channel.id; 
+}
+
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY })
+  .base(process.env.AIRTABLE_BASE_ID);
+
+setInterval(async () => {
+  try {
+    const records = await base('Test Email Slack Invites').select({filterByFormula: "NOT({welcome_message_sent})"}).all();
+    for (const record of records) {
+      const email = record.get('email');
+      if (!email) continue;
+      try {
+        const channelId = await openConversationWithEmail(email);
+        await app.client.chat.postMessage({
+          token: process.env.SLACK_BOT_TOKEN,
+          channel: channelId,
+          blocks:  [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `
+                *Hi <@${await getSlackIdByEmail(email)}>! Welcome to the Athena Award!* :hyper-dino-wave:
+I'm Orpheus. :orpheus-love: You might be wondering what you're doing here...
+
+The Hack Club Slack is a community of high school programmers from all over the world.
+
+You can meet others completing the Athena Award in the #athena-awards channel*. You can also meet other *girls and gender diverse programmers* in the #days-of-service channel.
+
+Here's where you are right now:
+
+1. Join the Hack Club Slack  :tw_white_check_mark: 
+2. Hack on projects ← _You are here_
+3. Earn cool prizes and your invite for the NYC hackathon. :tw_statue_of_liberty:
+
+
+To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Awards> and sign in from the button in the top right corner.
+                `
+              }
+            }
+          ],
+          username: 'Athena Award',
+        });
+        await base('Test Email Slack Invites').update([
+          {
+            id: record.id,
+            fields: { welcome_message_sent: true },
+          },
+        ]);
+        app.logger.info(`Sent welcome message to ${email} and marked as sent.`);
+      } catch (err) {
+        app.logger.error(`Failed to message ${email}:`, err);
+      }
+    }
+  } catch (err) {
+    app.logger.info('Airtable fetch error:', err);
+  }
+}, 10000);
+
+(async () => {
+  await app.start();
+  console.log('Slack Bolt app is running!');
+})();
