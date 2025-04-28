@@ -32,6 +32,56 @@ async function openConversationWithEmail(email) {
   return convo.channel.id; 
 }
 
+async function upgradeUser( email) {
+  // stolen from toriel lol
+  const userProfile = await app.client.users.lookupByEmail({
+    token: process.env.SLACK_BOT_TOKEN,
+    email: email,
+  });
+  const team_id = userProfile.user.team_id
+  const userId = userProfile.user.id;
+
+  if (
+    !userProfile.user.is_restricted &&
+    !userProfile.user.is_ultra_restricted
+  ) {
+    console.log(`User ${userId} is already a full user - skipping`)
+    return null
+  }
+  console.log(`Attempting to upgrade user ${userId}`)
+
+  const cookieValue = `d=${process.env.SLACK_COOKIE}`
+
+  const headers = new Headers()
+
+  headers.append('Cookie', cookieValue)
+  headers.append('Content-Type', 'application/json')
+  headers.append('Authorization', `Bearer ${process.env.SLACK_BROWSER_TOKEN}`)
+
+  const form = JSON.stringify({
+    userId,
+    team_id,
+  })
+  await fetch(
+    `https://slack.com/api/users.admin.setRegular?slack_route=${team_id}&user=${userId}`,
+    {
+      headers,
+      method: 'POST',
+      body: form,
+    }
+  )
+    .then((r) => {
+      r.json()
+    })
+    .catch((e) => {
+      app.logger.error(`Upgrading <@${userId}> from a multi channel user to a regular user has failed.`,
+      )
+    })
+
+}
+
+
+
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY })
   .base(process.env.AIRTABLE_BASE_ID);
 
@@ -57,19 +107,28 @@ I'm Orpheus. :orpheus-love: You might be wondering what you're doing here...
 
 The Hack Club Slack is a community of high school programmers from all over the world.
 
-You can meet others completing the Athena Award in the #athena-awards channel*. You can also meet other *girls and gender diverse programmers* in the #days-of-service channel.
+You can meet others completing the Athena Award in the #athena-awards channel. You can also meet other *girls and gender diverse programmers* in the #days-of-service channel.
 
 Here's where you are right now:
 
 1. Join the Hack Club Slack  :tw_white_check_mark: 
 2. Hack on projects ← _You are here_
-3. Earn cool prizes and your invite for the NYC hackathon. :tw_statue_of_liberty:
-
-
-To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Awards> and sign in from the button in the top right corner.
-                `
+3. Earn cool prizes and your invite for the NYC hackathon. :tw_statue_of_liberty:`
               }
-            }
+            }, 
+            {
+              "type": "actions",
+              "elements": [
+                {
+                  "type": "button",
+                  "text": {
+                    "type": "plain_text",
+                    "emoji": true,
+                    "text": "Continue"
+                  },
+                  "style": "primary",
+                  "action_id": "upgrade"
+                }]}
           ],
           username: 'Athena Award',
         });
@@ -89,11 +148,32 @@ To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Awa
         ]);
         app.logger.error(`Failed to message ${email}:`, err);
       }
+
+      app.action('upgrade', async ({ ack }) => {
+        await ack();
+        upgradeUser(app.client, email)
+        const channelId = await openConversationWithEmail(email);
+        await app.client.chat.postMessage({
+          token: process.env.SLACK_BOT_TOKEN,
+          channel: channelId,
+          blocks:  [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Awards> and sign in from the button in the top right corner.`}
+              }
+            ]
+          })
+          
+      })
     }
+    
   } catch (err) {
     app.logger.info('Airtable fetch error:', err);
   }
 }, 10000);
+
 
 (async () => {
   await app.start();

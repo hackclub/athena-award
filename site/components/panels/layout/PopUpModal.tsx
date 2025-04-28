@@ -2,10 +2,11 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useContext, useEffect } from 'react';
 import { UXEventContext } from '@/components/context/UXStages';
 
-export default function Modal({uxEventName, children, uxEvent, setUXEvent, className}: {uxEventName: string, children: React.ReactNode, uxEvent: string, setUXEvent: (value: any) => void, className?: string}){
+export default function Modal({uxEventName, children, uxEvent, setUXEvent, className, customClear}: {uxEventName: string, children: React.ReactNode, uxEvent: string, setUXEvent: (value: any) => void, className?: string, customClear?: any}){
     const clear = () => {
+        customClear();
         setUXEvent("map");
-      }
+    }
     const modalIsOpen = uxEvent === uxEventName
     useEffect(() => { 
     if (modalIsOpen) {

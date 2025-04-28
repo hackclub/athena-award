@@ -1,11 +1,9 @@
 "use client"
-import { Header } from "@/components/panels/Header"
 import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { useState } from "react";
-
 
 const steps = [
     {
@@ -18,7 +16,7 @@ const steps = [
     },
     {
         "step": "3. Code for 30 hours ⏰",
-        "description": "Every hour you code earns you an artifact, which can be redeemed for prizes. The grand prize? Travel stipend for a hackathon in New York City."
+        "description": "Redeem the artifacts you earn from coding for prizes. Complete the Athena Award to earn an invite for a hackathon in New York City."
     }
 ]
 
@@ -28,6 +26,8 @@ export default function Page(){
     const [ stage, setStage ] = useState(1);
 
     const [ hackatimeInstallStep, setHackatimeInstallStep ] = useState(0);
+
+    const [ track, setTrack ] = useState("beginner");
 
     if (session.status === "loading"){
         return (<Loading/>)
@@ -66,16 +66,25 @@ export default function Page(){
                 <div className="relative z-10">
                 <div className="flex flex-col w-screen h-full md:h-screen p-16 sm:p-24 gap-6 text-hc-secondary">
                 <div className = "bottom-10 flex w-full flex-row justify-between gap-10 items-center">
-                    <button onClick={()=> {stage > 1 ? setStage(stage-1) : null}}  className={`${stage === 1 ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"}  no-underline text-right ml-auto`}><h1 className="text-md md:text-lg inline">{'<'}- prev</h1></button>
+                    <button onClick={()=> {stage > 1  
+                                                ? stage === 4 && track === "beginner" 
+                                                    ? setStage(2) 
+                                                    : setStage(stage-1) 
+                                                : null
+                                    }} className={`${stage === 1 ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"}  no-underline text-right ml-auto`}><h1 className="text-md md:text-lg inline">{'<'}- prev</h1></button>
                     <span className = "relative grow mx-auto rounded-lg h-5 *:h-5 bg-white/40">
-                    <span style={{width: stage * 100/3+"%"}} className = {`border border-white absolute bg-hc-primary-dull rounded-l-lg ${stage * 100/3 === 100 ? "rounded-r-lg" : null}`}/>
+                    <span style={{width: stage * 100/4+"%"}} className = {`border border-white absolute bg-hc-primary-dull rounded-l-lg ${stage * 100/4 === 100 ? "rounded-r-lg" : null}`}/>
                     </span>
-                    <button onClick={()=> {stage < 3 ? setStage(stage+1) : router.push("/gallery")}} className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-md md:text-lg">next -{'>'}</h1></button>
+                    <button onClick={()=> {stage < 4 
+                                            ? stage === 2 && track === "beginner"  
+                                                ? setStage(4)
+                                                : setStage(stage+1) 
+                                            : router.push("/gallery")}} className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-md md:text-lg">next -{'>'}</h1></button>
                 </div>
 
                     { stage === 1 && 
                     <>
-                    <h1 className="text-3xl sm:text-5xl text-center">Welcome to the <i>Athena Awards</i></h1>
+                    <h1 className="text-3xl sm:text-5xl text-center">Welcome to the <i>Athena Award</i></h1>
                     <div className="text-left pt-8 mx-auto flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-4 w-full">
                         { steps.map((step, index) => 
                         <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: index*0.75 }} className = "bg-black/40 basis-1/3 p-4 h-max lg:h-48 overflow-y-scroll">
@@ -87,6 +96,25 @@ export default function Page(){
 
                     { stage === 2 &&
                     <>
+                        <h1 className="text-3xl sm:text-5xl text-center">Select a track</h1>
+                        <div className="text-center mx-auto gap-4 w-full flex flex-col">
+                        <div className = "text-2xl">Are you a beginner or advanced programmer?</div>
+                        <p>Select the one that describes you best - this choice will only affect resources provided to you.</p>
+                        <div className = {`grid md:grid-cols-2 *:col-span-1 gap-6 justify-center *:bg-black/40 *:p-4 *:h-max *:lg:h-48 `}>
+                            <motion.button onClick={async () => {setTrack("beginner"); await fetch (`/api/user/${session.data?.slack_id}/track`, {method: "POST", body: JSON.stringify({ "track": "beginner" })}) }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: 0.75 }} className = {`hover:!scale-105 ${track === "beginner" ? "border-2 border-white" : null}`}>
+                                <h1 className="text-2xl sm:text-4xl text-left">Beginner</h1>
+                                <p className="text-left text-lg py-1 sm:text-xl">I haven't really programmed before, but I'm excited to learn how to make websites, apps, games and more.</p>
+                            </motion.button>
+                            <motion.button onClick={async () => {setTrack("advanced"); await fetch (`/api/user/${session.data?.slack_id}/track`, {method: "POST", body: JSON.stringify({ "track": "advanced" })}) }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: 0.75 }} className = {`hover:!scale-105 ${track === "advanced" ? "border-2 border-white" : null}`}>
+                                <h1 className="text-2xl sm:text-4xl text-left">Advanced</h1>
+                                <p className="text-left text-lg py-1 sm:text-xl">I'm a confident programmer and have created multiple projects that other people have been able to use.</p>
+                            </motion.button>     
+                        </div>                
+                        </div>
+                    </>}
+
+                    { stage === 3 &&
+                    <>
                         <h1 className="text-3xl sm:text-5xl text-center">Project Tracking Setup</h1>
                         <div className="text-left pt-8 mx-auto items-center justify-center gap-4 w-full">
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: 0.75 }} className = "md:grid md:grid-cols-3 gap-4">
@@ -95,15 +123,18 @@ export default function Page(){
                                     <span className = "text-center italic">hi ^-^ i'm orpheus, and i'm here to guide you through getting started with the athena awards!</span>
                                 </div>
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: 2 }} className = "col-span-2 flex flex-col gap-4">
-                                    <p className="text-left text-lg py-1 sm:text-xl">let's help you get started with hackatime! it's a nifty tool we use to track time you spend coding!</p>
-                                    <p>what <span className = "bold">operating system</span> are you using? it looks like <span className = "bg-hc-primary-dull px-1">{userOS.readable_name}</span>!</p>
-                                    <p>open up <span className = "bg-hc-primary-dull px-1">{userOS.script}</span> and copy and run this script below.</p>
+                                    <p className="text-left text-lg py-1 sm:text-xl">you're a little more advanced, so let's help you get started with hackatime! it's a nifty tool we hack clubbers use to track time spent coding!</p>
+                                    <p>you're using <span className = "bg-hc-primary-dull px-1">{userOS.readable_name}</span>, so follow these instructions.</p>
+                                    <ul className = "text-lg list-outside list-decimal">
+                                        <li>install a code editor or IDE. i recommend <a href = "https://code.visualstudio.com/" target="_blank">VS Code</a>. however, any code editor on <a href = "https://wakatime.com/plugins" target="_blank">this list</a> will work.</li>
+                                        <li>open up <span className = "bg-hc-primary-dull px-1">{userOS.script}</span> and copy and run this script below.</li>
+                                    </ul>
                                 </motion.div>
                             </motion.div>
                         </div>
                     </>}
                     
-                    { stage === 3 &&
+                    { stage === 4 &&
                     <>
                         <h1 className="text-3xl sm:text-5xl text-center">Support</h1>
                         <div className="text-left pt-8 mx-auto items-center justify-center gap-4 w-full">
@@ -134,7 +165,7 @@ export default function Page(){
                         </div>
                     </>}
 
-                    <span className = "self-end mt-auto uppercase text-md mx-auto text-white/40">onboarding - {Math.floor(stage * 100 /3)}% complete</span>
+                    <span className = "self-end mt-auto uppercase text-md mx-auto text-white/40">onboarding - {Math.floor(stage * 100 /4)}% complete</span>
                     </div>
 
                 </div>

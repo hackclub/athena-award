@@ -1,5 +1,5 @@
 'use client'
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useState, useMemo } from "react";
 import Background from "../landscape/Background";
 import { AnimatePresence, motion, Variant, Variants } from "motion/react"
 import Image from "next/image";
@@ -11,7 +11,7 @@ import ActionableScene from "../landscape/ActionableScene";
 import { FaPaintbrush } from "react-icons/fa6";
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { Action, Tip } from "@/components/panels/add-ons/Callout";
 import Icons from "@/components/panels/Icons";
 import { Error } from "@/components/screens/Modal";
@@ -212,22 +212,25 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
       <DefaultFrame title="Introduction" primaryTheme="bg-[url('/pattern.svg')] bg-cover">
         <div className = "grow flex flex-col md:flex-row gap-4 col-span-full *:bg-black/30 *:px-4 *:py-2 *:my-2">
             <div className="md:basis-1/2 text-white flex-1 w-full">
-                <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Build something with help 👥</motion.h2>
+                <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Beginner Track 👥</motion.h2>
+                <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="text-xl text-white text-center md:text-left">Build something with help</motion.h2>
                 <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-full overflow-scroll flex flex-col gap-3">
-                <p>Stuck? Complete one of Hack Club's You Ship We Ship programs to learn some new skills and earn goodies along the way.</p>
+                <p>Stuck? For your three projects, you could complete one of Hack Club's You Ship We Ship programs to learn some new skills.</p>
                 {introResources.map((resource, index) =>
                     <StageChecklistItem key={index} title={resource.name} link={resource.link} delay={index}/>
                 )}
+              <p>To submit one of these projects for the Beginner Track, use the [Other YSWS Project] option.</p>
                 </motion.div>
             </div>
             <span className = "mx-auto md:my-auto uppercase text-white/40">OR</span>
             <div className = "md:basis-1/2  flex-1 text-white">
             <Tooltip id = "original" className = "max-w-64"/>
-              <motion.h2 variants={slidingUpVariant} className = "text-3xl text-white text-center md:text-left">Build something yourself 👤</motion.h2>
+              <motion.h2 variants={slidingUpVariant} className = "text-3xl text-white text-center md:text-left">Advanced Track 👤</motion.h2>
+              <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="text-xl text-white text-center md:text-left">Build something yourself</motion.h2>
               <motion.div variants={slidingUpVariant} transition={{ delay: 0.4}} initial='hidden' animate='visible' className="md:w-11/12 flex flex-col gap-10">
                 <p>You can submit any three technical projects for the Athena Award.</p>
                 <p>
-                  However, for every hour you code on an <span data-tooltip-id="original" data-tooltip-content="A project which is not completed from a tutorial, or existing Hack Club YSWS ('You Ship We Ship') program">
+                  For every hour you code on an <span data-tooltip-id="original" data-tooltip-content="A project which is not completed from a tutorial, or existing Hack Club YSWS ('You Ship We Ship') program">
                     original
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mx-1 size-6 inline">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -243,7 +246,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
           </div>
           <div className = "col-span-full py-2 md:py-0">
           <div className = "bg-white/40 relative h-6 rounded-lg self-end">
-                    <div className = {`absolute bg-white/80 h-6 rounded-l-lg`} style={{width: points+"%"}}/>
+                    <div className = {`absolute bg-white/80 h-6 rounded-l-lg ${points >= 100 && "rounded-r-lg"}`} style={{width: points+"%"}}/>
                     <div className = "absolute text-center w-full uppercase z-50 text-gray-500">Athena Award - {points}% completed</div>
                   </div>
           </div>
@@ -253,13 +256,13 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
   
   const baseModuleData = STAGES.find(m => m.moduleName === module)!;
 
-  const urls = [
+  let urls = [
     `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx}`, 
     `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx}`, 
     `/api/shop?stage=${currModuleIdx}`, 
     `/api/user/${slackId}/points`]
   
-  const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher)
+  const { data, error, isLoading, mutate } = useSWR(baseModuleData ? urls : [`/api/user/${slackId}/points`], multiFetcher)
   if (error){
     console.log(error)
   }
@@ -273,17 +276,19 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
     return update
   }
 
-  let projects, points
+  let projects
+  let points: number = 0
   let prizes = [{"item_friendly_name": "Loading..."}, {"description": "Loading..."}, {"image": null}]
   if (data){
     projects = (data[0])
     prizes = data[2]
-    points = data[3]["message"]
+    if (!baseModuleData){
+      points = Number(data[0]["message"])
+    }
   }
  
-  useLayoutEffect(() => {
-    if (baseModuleData){
-      if (data){  
+  useEffect(() => {
+      if (baseModuleData && data){  
         if ((data[1] as any)["message"]["project_name"]){
           setSelectedProject((data[1] as any)["message"]["project_name"])
         } else {
@@ -293,19 +298,18 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
       } else {
         setSelectedProject("_select#")
       }
-  }
   }, [data])
 
   if (session.status === "unauthenticated"){
     return <Unauthenticated/>
   }
 
+  const memoizedInfoPage = useMemo(() => <InfoPage points={points}/>, [points]);
+
   if (!(baseModuleData)){
     switch (module){
       case ("Intro"):
-        return (
-         <InfoPage points={points}/>
-        ) 
+        return memoizedInfoPage;
     }
     return (
       <>
@@ -381,7 +385,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
                           <ul>{prizes[prizeScroller]["description"]}</ul>
                         </div>
                         <button onClick={() => setPrizeScroller((prizeScroller + 1) % prizes.length)}>
-                      <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
+                      <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" className="size-4"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 -5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
                     </button>
                       </div>
 
@@ -462,15 +466,6 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
               
              <div className = "flex flex-row w-full gap-20">
                 <Navigation/>
-
-                {/* <div className = "self-center grow text-center">
-                  <div className = "bg-white/40 relative h-6 rounded-lg">
-                    <div className = {`absolute ${baseModuleData.visuals.accents.tertiary} h-6 rounded-l-lg`} style={{width: points+"%"}}/>
-                    <div className = "text-center w-full uppercase text-white/75">ATHENA AWARDS COMPLETION - {points}%</div>
-                  </div>
-                </div>
-                */}
-
             </div>
               </motion.div>
 
@@ -494,8 +489,11 @@ export function StageChecklistItem({ title, delay, link }:{ title: string, link:
         <span className="italic">{title}</span>
       </div>
       <button className="flex gap-2 flex-row-reverse">
-        <svg className="size-7 peer" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
-        <span className="text-sm opacity-0 peer-hover:opacity-100 transition"><Link href = {link} className = "text-white">Go to activity</Link></span>
+        <a href = {link} className = "text-white" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 peer">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+          </svg>
+        </a>
       </button>
     </motion.div>
   )

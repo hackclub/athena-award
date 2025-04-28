@@ -7,6 +7,7 @@ import { auth } from '@/auth';
 import { encryptSession, verifySession } from '@/services/hash';
 import { getWakaTimeData } from "@/services/fetchWakaData";
 import { verifyAuth } from "@/services/verifyAuth";
+
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,
 }).base(process.env.AIRTABLE_BASE_ID!)
@@ -49,31 +50,32 @@ export async function GET(request: NextRequest){
             }
 
         } else if (query === "total_time"){
+            // TO DO: DON'T FAIL IF HACKATIMEPROJECTS !OK, BUT INSTEAD JUST RETRIEVE PROJECTS FROM AIRTABLE
             const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
             let projects
+            const allProjects = await airtable("Projects").select({
+                filterByFormula: `{slack_id} = "${session?.slack_id}"`,
+                fields: [
+                    "project_name",
+                    "stage",
+                    "status",
+                    "existing_ysws_project_hour_override"
+                ]
+            }).all()
+            const userProjectStatus = ((JSON.parse(JSON.stringify(allProjects))).map((project: any) => 
+                ({
+                    name: project["fields"]["project_name"],
+                    stage: project["fields"]["stage"],
+                    status: project["fields"]["status"],
+                    total_seconds:  project["fields"]["existing_ysws_project_hour_override"] ? project["fields"]["existing_ysws_project_hour_override"] * 3600 : null}
+                )))
             if (hackatimeProjects.ok){
+                // user has hackatime
                 projects = (await hackatimeProjects.json())["data"]["projects"] as any
-                const allProjects = await airtable("Projects").select({
-                    filterByFormula: `{slack_id} = "${session?.slack_id}"`,
-                    fields: [
-                        "project_name",
-                        "stage",
-                        "status",
-                        "existing_ysws_project_hour_override"
-                    ]
-                }).all()
+
                 let r
                 try { 
                     const prettyRecordID = (JSON.parse(JSON.stringify(allProjects))).map((project: any) => project["fields"]["project_name"]) // jank
-                    const userProjectStatus = ((JSON.parse(JSON.stringify(allProjects))).map((project: any) => 
-                        ({
-                            name: project["fields"]["project_name"],
-                            stage: project["fields"]["stage"],
-                            status: project["fields"]["status"],
-                            total_seconds:  project["fields"]["existing_ysws_project_hour_override"] ? project["fields"]["existing_ysws_project_hour_override"] * 3600 : null}
-                        )))
-
-
                     const userProject = projects.filter((project: any) => prettyRecordID.includes(project.name))
                     let newThing = userProjectStatus.map((projPair: any) => {
                         const matchingProject = userProject.find((project: any) => project.name === projPair.name);
@@ -90,8 +92,10 @@ export async function GET(request: NextRequest){
                     console.log(error)
                     return NextResponse.json({ error: error }, { status: 400 })
                 }
+            } else {
+                // user does NOT have hackatime
+                return NextResponse.json({message: userProjectStatus})
             }
-            return NextResponse.json({error: "Hackatime was unresponsive" }, { status: 400 })
         } else if (query === "valid_for_selection"){ // projects which haven't already been selected for another stage
             const stage = request.nextUrl.searchParams.get("stage")
             if (!stage){

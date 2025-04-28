@@ -26,7 +26,7 @@ export default function ShopModal(){
             <div className="self-start *:align-middle flex gap-3 w-full align-middle md:sticky">
                 <div className="*:align-middle h-fit w-full bg-black/25 p-2 rounded flex gap-4 grow">
                     <img src="https://icons.hackclub.com/api/icons/hackclub-red/bag-add" className="size-[32px] self-center align-middle" alt="info" />
-                    <div className="self-center align-middle text-xl sm:text-3xl playfair-display font-bold italic">Prizes</div>
+                    <div className="self-center align-middle text-xl sm:text-3xl playfair-display font-bold italic">Shop</div>
                 </div>
                 <button className="" onClick={() => setUXEvent('map')}>
                     <FaXmark className="size-8 md:size-14 text-white" />

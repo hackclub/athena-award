@@ -15,7 +15,8 @@ export interface safeData {
     achievements: string,
     projects: string[],
     project_unique_names: string[],
-    total_time_approved_projects: number
+    total_time_approved_projects: number,
+    track: 'beginner' | 'advanced' 
 }
 
 
@@ -48,8 +49,10 @@ export async function getValue(emailAddress: string): Promise<safeData> {
         const projects = prettyRecordID["projects"]
         const project_unique_names = prettyRecordID["project_unique_names"]
         const total_time_approved_projects = prettyRecordID["total_time_approved_projects"]
+        const track = prettyRecordID["track"]
+
         return {
-            slack_id, points, current_stage, hackathons, artifacts, achievements, projects, project_unique_names, total_time_approved_projects
+            slack_id, points, current_stage, hackathons, artifacts, achievements, projects, project_unique_names, total_time_approved_projects, track
         }
 }
  
