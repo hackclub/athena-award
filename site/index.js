@@ -32,7 +32,7 @@ async function openConversationWithEmail(email) {
   return convo.channel.id; 
 }
 
-async function upgradeUser( email) {
+async function upgradeUser(email) {
   // stolen from toriel lol
   const userProfile = await app.client.users.lookupByEmail({
     token: process.env.SLACK_BOT_TOKEN,
@@ -151,7 +151,7 @@ Here's where you are right now:
 
       app.action('upgrade', async ({ ack }) => {
         await ack();
-        upgradeUser(app.client, email)
+        upgradeUser(email)
         const channelId = await openConversationWithEmail(email);
         await app.client.chat.postMessage({
           token: process.env.SLACK_BOT_TOKEN,
