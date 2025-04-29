@@ -20,6 +20,10 @@ const steps = [
     }
 ]
 
+function checkIfHackatime({slackId}: {slackId: string}){
+    
+}
+
 export default function Page(){
     const session = useSession();
     const router = useRouter();
@@ -28,6 +32,13 @@ export default function Page(){
     const [ hackatimeInstallStep, setHackatimeInstallStep ] = useState(0);
 
     const [ track, setTrack ] = useState("beginner");
+
+    const [ buttonDisabled, setButtonDisabled ] = useState(false);
+
+    function onButtonClick(){
+        setButtonDisabled(true)
+        setTimeout(() => setButtonDisabled(false), 3000);
+    }
 
     if (session.status === "loading"){
         return (<Loading/>)
@@ -66,20 +77,20 @@ export default function Page(){
                 <div className="relative z-10">
                 <div className="flex flex-col w-screen h-full md:h-screen p-16 sm:p-24 gap-6 text-hc-secondary">
                 <div className = "bottom-10 flex w-full flex-row justify-between gap-10 items-center">
-                    <button onClick={()=> {stage > 1  
+                    <button disabled={buttonDisabled} onClick={()=> {stage > 1  
                                                 ? stage === 4 && track === "beginner" 
                                                     ? setStage(2) 
                                                     : setStage(stage-1) 
                                                 : null
-                                    }} className={`${stage === 1 ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"}  no-underline text-right ml-auto`}><h1 className="text-md md:text-lg inline">{'<'}- prev</h1></button>
+                                    ; onButtonClick()}} className={`${stage === 1 || buttonDisabled ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"}  no-underline text-right ml-auto`}><h1 className="text-md md:text-lg inline">{'<'}- prev</h1></button>
                     <span className = "relative grow mx-auto rounded-lg h-5 *:h-5 bg-white/40">
                     <span style={{width: stage * 100/4+"%"}} className = {`border border-white absolute bg-hc-primary-dull rounded-l-lg ${stage * 100/4 === 100 ? "rounded-r-lg" : null}`}/>
                     </span>
-                    <button onClick={()=> {stage < 4 
+                    <button disabled={buttonDisabled} onClick={()=> {stage < 4 
                                             ? stage === 2 && track === "beginner"  
                                                 ? setStage(4)
                                                 : setStage(stage+1) 
-                                            : router.push("/gallery")}} className="text-hc-secondary no-underline text-right ml-auto"><h1 className="text-md md:text-lg">next -{'>'}</h1></button>
+                                            : router.push("/gallery"); onButtonClick()}} className={`${buttonDisabled ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"} text-hc-secondary no-underline text-right ml-auto`}><h1 className="text-md md:text-lg">next -{'>'}</h1></button>
                 </div>
 
                     { stage === 1 && 
@@ -126,9 +137,12 @@ export default function Page(){
                                     <p className="text-left text-lg py-1 sm:text-xl">you're a little more advanced, so let's help you get started with hackatime! it's a nifty tool we hack clubbers use to track time spent coding!</p>
                                     <p>you're using <span className = "bg-hc-primary-dull px-1">{userOS.readable_name}</span>, so follow these instructions.</p>
                                     <ul className = "text-lg list-outside list-decimal">
+                                        <li>sign in <a target="_blank" href = "https://hackatime.hackclub.com/auth/slack?close_window=true">here</a> to create your hackatime account</li>
                                         <li>install a code editor or IDE. i recommend <a href = "https://code.visualstudio.com/" target="_blank">VS Code</a>. however, any code editor on <a href = "https://wakatime.com/plugins" target="_blank">this list</a> will work.</li>
-                                        <li>open up <span className = "bg-hc-primary-dull px-1">{userOS.script}</span> and copy and run this script below.</li>
+                                        <li>follow these handy <a target="_blank" href = "https://hackatime.hackclub.com/my/wakatime_setup">setup instructions</a>, then come back here!</li>
                                     </ul>
+                                    <p>confused? ask for help in <a target="_blank" className = "bg-hc-primary-dull px-1 text-white" href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-awards</a>.</p>
+
                                 </motion.div>
                             </motion.div>
                         </div>

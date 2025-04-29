@@ -215,7 +215,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
                 <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Beginner Track 👥</motion.h2>
                 <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="text-xl text-white text-center md:text-left">Build something with help</motion.h2>
                 <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-full overflow-scroll flex flex-col gap-3">
-                <p>Stuck? For your three projects, you could complete one of Hack Club's You Ship We Ship programs to learn some new skills.</p>
+                <p>New to coding? For your three projects, you could complete one of Hack Club's You Ship We Ship programs to learn some new skills.</p>
                 {introResources.map((resource, index) =>
                     <StageChecklistItem key={index} title={resource.name} link={resource.link} delay={index}/>
                 )}
