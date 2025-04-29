@@ -6,36 +6,44 @@ import { Action } from "@/components/panels/add-ons/Callout";
 
 
 const PRIZEFAQ = [{
-        question: "How do I earn prizes?",
-        answer: "Spend time working on a technical project that challenges you for each stage, while tracking your time with Hackatime, then submit it. We'll then review it. We'll (a team of teenage coders, just like you!) then review your project. Approved projects earn 'artifacts'!"
-    }, 
-    {
-        question: "How many artifacts does each prize cost?",
-        answer: "Semi-trick question! You don't actually spend your artifacts - when you complete a project for a stage, you're eligible to select one prize from that stage. The prizes for each stage are different. Artifacts help you track how close you are to the final prize."
-    },
-    {
-        question: "What's the final prize?",
-        answer: "When you achieve 100 artifacts, and have 30 hours logged of coding, you become eligible for a fully-covered flight (dependent on location) to a hackathon hosted in New York City for all Athena Awards alumni. Hack Club has hosted dozens of hackathons before and will cover accommodation, meals and help with other logistics."
-    },
-    {
-        question: "Can I earn more artifacts? What if I want more prizes?",
-        answer: "Sure can! Keep on submitting projects to get more artifacts."
-    },
-]
+    question: "How do I earn prizes?",
+    answer: "Work on a technical project that challenges you for each stage, track your time with Hackatime, and submit it. We (a team of teen coders like you!) will review it — approved projects earn artifacts!"
+}, 
+{
+    question: "How many artifacts does each prize cost?",
+    answer: "Think of it like an arcade! For every approved hour you log, you get 1 artifact to 'spend' on prizes (only for original projects — not pre-existing YSWS projects, which are part of Hack Club’s 'You Ship, We Ship' series where you build something and get rewarded)."
+},
+{
+    question: "What's the final prize?",
+    answer: "Complete 3 original projects and log 30 approved coding hours, and you can win a fully-covered flight (depending on where you're from) to a NYC hackathon for Athena Award alumni. Hack Club has hosted dozens of hackathons like these before — covered travel, stay, food — all of it."
+},
+{
+    question: "Can I earn more artifacts? What if I want more prizes?",
+    answer: "Yep! Just keep submitting projects and stacking up artifacts."
+}]
 
 const PROJECTFAQ = [{
     question: "What counts for a project?",
     answer: `
-        Any technical project that is NOT for school or for a job, that's unique to you, and that has functionality. 
-        No assignments done for your computer science class or following tutorials exactly - we want you to be creative! 
-        Go on, build that blog or design that cute <a href = 'https://hackpad.hackclub.com/guide'>mini keyboard</a> for your desk. 
-        <span class = 'py-2' ><img style = 'width: 50%' class = "mx-auto" src = 'https://github.com/user-attachments/assets/3ec939e7-5c2f-4628-91d5-7aeafd76d2bc'/><span class = 'block italic text-sm text-center w-full'>Nigiri sushi and cat-themed macropad built by Jeslyn from Houston, Texas. View the design <a href = 'https://github.com/se1yu/NigiriPad'>here</a>.</span></span>`
+        Any technical project that's NOT for school, work, or copied tutorials — it should be unique and have real functionality. 
+        Build a blog, design a <a href='https://hackpad.hackclub.com/guide'>mini keyboard</a>, anything creative you want! 
+        <span class='py-2'>
+            <img style='width: 50%' class='mx-auto' src='https://github.com/user-attachments/assets/3ec939e7-5c2f-4628-91d5-7aeafd76d2bc'/>
+            <span class='block italic text-sm text-center w-full'>Nigiri sushi + cat-themed macropad by Jeslyn from Houston. See it <a href='https://github.com/se1yu/NigiriPad'>here</a>.</span>
+        </span>`
 },
 {
     question: "What do I need to submit?",
-    answer: "<p>Your project needs to work, first of all - and it needs to work for everyone! This means people should be able to use your project from a link, or be able to download it and run it easily on their own device. Secondly, your project needs to be open source. This means your code needs to be public on a website such as GitHub.</p> <p>Those are the main two - we'll reach out if there are any issues with your project.</p>"
+    answer: `
+        Two main things:
+        <br>1) Your project needs to work! People should be able to easily use it through a link or download and run it without issues.
+        <br>2) It also needs to be open source. Your code should be public on GitHub (or a similar site).
+        <br><br>Bonus points: include a good README to explain what your project is and how to use it! 
+        <br><br>If anything's unclear or missing, we'll reach out and help you fix it!`
 },
 ]
+
+
 
 export default function InfoModal(){
     const [uxEvent, setUXEvent] = useContext(UXEventContext)
