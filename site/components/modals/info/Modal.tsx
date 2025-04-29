@@ -11,11 +11,11 @@ const PRIZEFAQ = [{
 }, 
 {
     question: "How many artifacts does each prize cost?",
-    answer: "Think of it like an arcade! For every approved hour you log, you get 1 artifact to 'spend' on prizes (only for original projects, not pre-existing ysws projects)."
+    answer: "Think of it like an arcade! For every approved hour you log, you get 1 artifact to 'spend' on prizes (only for original projects — not pre-existing YSWS projects, which are part of Hack Club’s 'You Ship, We Ship' series where you build something and get rewarded)."
 },
 {
     question: "What's the final prize?",
-    answer: "Hit 100 artifacts + 30 coding hours, and you can win a fully-covered flight (depending on where you're from) to a NYC hackathon for Athena Awards alumni. Hack Club has hosted dozens of hackathons like these before; covered travel, stay, food — all of it."
+    answer: "Complete 3 original projects and log 30 approved coding hours, and you can win a fully-covered flight (depending on where you're from) to a NYC hackathon for Athena Award alumni. Hack Club has hosted dozens of hackathons like these before — covered travel, stay, food — all of it."
 },
 {
     question: "Can I earn more artifacts? What if I want more prizes?",
