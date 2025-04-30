@@ -2,7 +2,7 @@ FROM node:23.11.0-slim
 
 WORKDIR /app
 
-COPY /bot ./
+COPY . ./
 
 RUN npm install
 
