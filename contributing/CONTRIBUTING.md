@@ -4,29 +4,12 @@ Step one is to join the `#athena-award` channel on Slack. This can help you stay
 
 Here's a couple of general things about the project that can help you get up and running quickly:
 ## Site Contributions
-* The `DEVELOPMENT_SETTINGS.ts` file can help to optimize your work. When using Developer Tools in your browser, toggling some of these settings can ease lag.
+* The `/site/DEVELOPMENT_SETTINGS.ts` file can help to optimize your work. When using Developer Tools in your browser, toggling some of these settings can ease lag.
 
 ### Data and Other Contributions
 * Stages are added through the file [site/app/STAGE.ts](site/app/STAGE.ts)
 
-You can also create interactive components in the `components/panels/add-ons` directory. Import them the way you would any other React component and use however you'd like!
-
-## `.env` File Explanation
-
-In the `/site` folder, you'll see a file called `.env.example`. When you develop locally, you'll need to fill this out (in `.env`) as appropriate. Here's an explanation of what each environment variable represents.
-
-
-| Variable name | Description | 
-| ------------- | ----------- |
-| `AUTH_SECRET` | A randomly generated string that is used to encode user secrets 
-| `AUTH_URL`    | [will be updated] A URL where your site is accessible, with "/api/auth" appended |
-| `SLACK_CLIENT_ID` | Client ID of the Slack App used for OAuth aka the "Sign in with Slack" function | 
-| `SLACK_CLIENT_SECRET` | Client secret of the Slack App used for Oauth aka the "Sign in with Slack" function |  
-| `AIRTABLE_API_KEY` | Technically now a PAT (personal access token). The token has to have read and write access to the base corresponding to the `AIRTABLE_BASE_ID` |
-| `AIRTABLE_BASE_ID` | ID of the main 'Athena Award' Airtable base[^1] |
-| `NEXT_PUBLIC_BASE_URL` | [will be updated] The base URL where your site is accessible |
-
-[^1]: what i would never develop using the production db idk what you're talking about
+You can also create interactive components in the `components` directory. Import them the way you would any other React component and use however you'd like!
 
 ## Slack Contributions
 
