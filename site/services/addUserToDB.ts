@@ -9,7 +9,8 @@ const airtable = new Airtable({
 export async function linkUser(emailAddress: string, accessToken: string){
     try {
         const accessTokenJoined = encryptSession(accessToken, process.env.AUTH_SECRET!)
-        const response = await fetch(`https://slack.com/api/users.lookupByEmail?email=${emailAddress}`,
+        const urlEncodedEmail = emailAddress.replace("+", "%2b") 
+        const response = await fetch(`https://slack.com/api/users.lookupByEmail?email=${urlEncodedEmail}`,
             {
                 method: "GET",
                 headers: {
@@ -17,7 +18,7 @@ export async function linkUser(emailAddress: string, accessToken: string){
             }
         ).then(res => res.json())
         const id = response["user"]["id"]
-        const r = await airtable("Registered Users").select({filterByFormula: `{email} = "${emailAddress}"`}).all()
+        const r = await airtable("Registered Users").select({filterByFormula: `{email} = "${urlEncodedEmail}"`}).all()
         if (r.length) { // user exists in DB
             const m = await airtable("Registered Users").update([
                 {
@@ -40,7 +41,10 @@ export async function linkUser(emailAddress: string, accessToken: string){
                 "slack_id": id,
                 "hashed_token": accessTokenJoined,
                             }
-            }])            
+            }])      
+            // this doesn't work because the access token isn't recognised with the endpoint currently used, and the other alternative returns data which isn't really compatible with hackatime
+            // https://github.com/hackclub/harbor/blob/2f29f8a055404c4f19275803655b0988736d2589/app/controllers/api/v1/external_slack_controller.rb#L24
+            // lmao 
             const createHackatimeAccount = await fetch('https://hackatime.hackclub.com/api/v1/external/slack/oauth', {
                 method: 'POST',
                 headers: {

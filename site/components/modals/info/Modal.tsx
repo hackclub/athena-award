@@ -59,7 +59,7 @@ export default function InfoModal(){
                     <FaXmark className="size-8 md:size-14 text-white" />
                 </button>
             </div>
-            <Action title = "Question not answered here?">Send a message in the <a href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-awards</a> channel on the Hack Club Slack to get help.</Action>
+            <Action title = "Question not answered here?">Send a message in the <a href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-award</a> channel on the Hack Club Slack to get help.</Action>
 
             <div className = "flex flex-col gap-3">
                 <div className="text-white font-bold text-2xl uppercase">Technical Stuff</div>

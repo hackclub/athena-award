@@ -85,11 +85,10 @@ export default function Profile() {
                           }
                         </div>
 
-                        <div className="text-white font-bold text-2xl uppercase">NEED HELP?</div>
+                        <div className="text-white font-bold text-2xl uppercase">Referral Code</div>
                         <ul className = "list-disc list-inside">
-                          <li>For urgent help, DM @phthallo or @phaedra on the Hack Club Slack.</li>
-                          <li>For non-urgent help and other questions, send a message in the <a className = "link" href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-awards</a> channel.</li>
-                        </ul>
+                          <li>Share your referral link and earn prizes!</li>
+=                        </ul>
                         <button className = "text-white font-bold text-2xl uppercase mt-auto self-start" onClick={() => signOut({ redirectTo: "/" })}>Sign Out</button>                      
                         
                         </div>

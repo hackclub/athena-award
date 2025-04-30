@@ -48,7 +48,7 @@ export default function ShopModal(){
                                         className="inline" key= {idx} image={prize.image}
                                         description={prize.item_friendly_name}
                                         descriptionBottom={`${prize.price} artifacts`}
-                                        link={`https://forms.hackclub.com/athena-awards-orders?item=${prize.item_name}`}
+                                        link={`https://forms.hackclub.com/athena-award-orders?item=${prize.item_name}`}
                                         />
                                 </div>)}
                         </div>

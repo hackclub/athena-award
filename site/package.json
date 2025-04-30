@@ -1,9 +1,9 @@
 {
   "private": true,
-  "description": "An example project for NextAuth.js with Next.js",
-  "repository": "https://github.com/hackclub/athena-awards",
+  "description": "Website for the Athena Award",
+  "repository": "https://github.com/hackclub/athena-award",
   "bugs": {
-    "url": "https://github.com/hackclub/athena-awards/issues"
+    "url": "https://github.com/hackclub/athena-award/issues"
   },
   "scripts": {
     "dev": "next",

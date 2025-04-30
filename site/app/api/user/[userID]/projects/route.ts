@@ -115,14 +115,14 @@ export async function GET(request: NextRequest){
                 
                 const selectedProjectNames = new Set(selectedProject.map((proj: any) => proj.project_name));
                 const filteredProjects = projects.filter((project: any) => !selectedProjectNames.has(project.name));
-                
                 return NextResponse.json(filteredProjects)
 
             }
-            return NextResponse.json({error: "Hackatime or Airtable was unresponsive"}, { status: 400 })
+            // case where no hackatime account exists
+            return NextResponse.json([])
         }
     } catch (error) {
-        return NextResponse.json({error: `Something went wrong - generic error for no projects or ${error}`}, { status: 400 })
+        return NextResponse.json({error: `Something went wrong - ${error}`}, { status: 400 })
     }
 }
 

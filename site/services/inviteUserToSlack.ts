@@ -13,7 +13,7 @@ const airtable = new Airtable({
 const channels = ([
     "C75M7C0SY", // #welcome
     "C039PAG1AV7", // #slack-welcome-start
-    "C06T17NQB0B", // #athena-awards
+    "C06T17NQB0B", // #athena-award
     "C05T8E9GY64", // #days-of-service
     "C01504DCLVD", // #scrapbook
     "C0266FRGV", // #lounge
@@ -66,13 +66,22 @@ export async function inviteGuestToSlackToriel(email: string) {
   return { ok: true }
 }
 
-export async function inviteSlackUser(email: string) {
+export async function inviteSlackUser(email: string, referredBy?: string, utmSource?: string) {
     try {
         console.log(`Inviting ${email} to Slack...`);
+        console.log(referredBy)
+        const searchExistingUserByReferral = JSON.parse(JSON.stringify(await airtable("Registered Users").select({
+          filterByFormula: `{slack_id} = "${referredBy}"`,
+          fields: [
+            "email"
+          ]
+        }).all()))
         const result = await inviteGuestToSlackToriel(email)
         const addUserToAirtable = await airtable("Email Slack Invites").create([{
           fields: {
-            email: email
+            email: email,
+            referred_by: [searchExistingUserByReferral[0]["id"]],
+            utm_source: utmSource
           }
         }])
         console.log(`Invited ${email} to Slack!`);

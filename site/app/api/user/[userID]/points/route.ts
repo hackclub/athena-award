@@ -1,5 +1,5 @@
 // GET api/user/[userID]/points
-// Returns a percentage value of the user's progress towards the Athena Awards
+// Returns a percentage value of the user's progress towards the Athena Award
 
 import { NextResponse } from "next/server";
 import { auth } from '@/auth';

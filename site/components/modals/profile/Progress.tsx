@@ -24,7 +24,7 @@ export function Progress(){
 
     return (
         <div>
-        <h2 className = "text-lg sm:text-2xl bg-white/10 text-white p-2 rounded"> {Number(artifacts)}% Athena Awards completion </h2>
+        <h2 className = "text-lg sm:text-2xl bg-white/10 text-white p-2 rounded"> {Number(artifacts)}% Athena Award completion </h2>
         <Tooltip id="artifacts_progress" place="right" className="z-10"/>
 
         <div className="rounded-xl w-full h-8 bg-gray-200 my-3 relative">
@@ -36,8 +36,8 @@ export function Progress(){
         </div>
         <ul className = "list-disc list-inside">
           <li>Look at you go! You only need {100 - Number(artifacts)}% more to qualify for an invite to the New York City hackathon. </li>
-          <li>{shippedProjects.length} projects approved out of 3 required for the Athena Awards</li>
-          <li>{(totalApprovedTimeSpent/3600).toFixed(2)} hours spent out of the 30 hours required for the Athena Awards.</li>
+          <li>{shippedProjects.length} projects approved out of 3 required for the Athena Award</li>
+          <li>{(totalApprovedTimeSpent/3600).toFixed(2)} hours spent out of the 30 hours required for the Athena Award.</li>
         </ul>
         </div>
     )

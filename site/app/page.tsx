@@ -220,7 +220,7 @@ export default function Index() {
               <i>a project by <Link target = "_blank" href = "https://hackclub.com">Hack Club</Link></i>
           </h1>
           <i>made with {'<'}3 by <Link target = "_blank" href = "https://phaedras.space">phaedra</Link> (17, Boston) and <Link target = "_blank" href = "https://phthallo.com">annabel</Link> (17, Australia) </i>
-          <i>open source at <Link target="_blank" href="https://github.com/hackclub/dos-journey">hackclub/athena-awards</Link></i>
+          <i>open source at <Link target="_blank" href="https://github.com/hackclub/athena-award">hackclub/athena-award</Link></i>
           <p className = "">Hack Club is a 501(c)(3) nonprofit and network of 30k+ technical high schoolers. We believe you learn best by building so we're creating community and providing grants so you can make awesome projects. In the past few years, we've launched <Link target = "_blank" href = "https://highseas.hackclub.com">High Seas</Link> at GitHub Universe, hosted the world's longest hackathon on land, and ran <Link target = "_blank" href = "https://scrapyard.hackclub.com">Scrapyard</Link>, a hackathon in 60 cities worldwide simultaneously.</p>
         </div>
 

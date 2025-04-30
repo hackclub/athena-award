@@ -1,4 +1,4 @@
-# Athena Awards
+# Athena Award
 A Hack Club project gamifying the experience of learning to code through the [Athena Initiative](https://athena.hackclub.com).
 
 
@@ -7,7 +7,7 @@ A Hack Club project gamifying the experience of learning to code through the [At
 1. Clone the repository
 
     ```
-    git clone https://github.com/hackclub/dos-journey && cd dos-journey/site
+    git clone https://github.com/hackclub/athena-award && cd athena-award/site
     ```
 
 2. Install dependencies

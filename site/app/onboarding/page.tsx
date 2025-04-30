@@ -131,7 +131,7 @@ export default function Page(){
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: 0.75 }} className = "md:grid md:grid-cols-3 gap-4">
                                 <div className = "*:mx-auto w-full text-center">
                                     <img src = "https://cloud-g5g5sistf-hack-club-bot.vercel.app/1untitled_artwork_8_1.png"/>
-                                    <span className = "text-center italic">hi ^-^ i'm orpheus, and i'm here to guide you through getting started with the athena awards!</span>
+                                    <span className = "text-center italic">hi ^-^ i'm orpheus, and i'm here to guide you through getting started with the athena award!</span>
                                 </div>
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ease: 'easeOut', delay: 2 }} className = "col-span-2 flex flex-col gap-4">
                                     <p className="text-left text-lg py-1 sm:text-xl">you're a little more advanced, so let's help you get started with hackatime! it's a nifty tool we hack clubbers use to track time spent coding!</p>
@@ -141,7 +141,7 @@ export default function Page(){
                                         <li>install a code editor or IDE. i recommend <a href = "https://code.visualstudio.com/" target="_blank">VS Code</a>. however, any code editor on <a href = "https://wakatime.com/plugins" target="_blank">this list</a> will work.</li>
                                         <li>follow these handy <a target="_blank" href = "https://hackatime.hackclub.com/my/wakatime_setup">setup instructions</a>, then come back here!</li>
                                     </ul>
-                                    <p>confused? ask for help in <a target="_blank" className = "bg-hc-primary-dull px-1 text-white" href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-awards</a>.</p>
+                                    <p>confused? ask for help in <a target="_blank" className = "bg-hc-primary-dull px-1 text-white" href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-award</a>.</p>
 
                                 </motion.div>
                             </motion.div>
@@ -159,7 +159,7 @@ export default function Page(){
                                         <li>introduce yourself in <a className = "bg-hc-primary-dull px-1 text-white" href = "https://app.slack.com/client/T0266FRGM/C75M7C0SY">#welcome</a></li>
                                         <li>
                                             chat with others in the <a target="_blank" className = "bg-hc-primary-dull px-1 text-white" href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">
-                                            #athena-awards
+                                            #athena-award
                                             </a> channel on the Hack Club Slack 
                                         </li>
                                         <li>

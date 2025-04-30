@@ -24,8 +24,11 @@ export function AuthStateButton({className}: {className?: string}){ /// @ PAST S
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const email = String(formData.get("email"))
+    const referredBy = searchParams.get('referred_by')!
+    const utm_source = searchParams.get('utm_source')!
+
     setEmailSubmitted(true)
-    const r = await inviteSlackUser(email)
+    const r = await inviteSlackUser(email, referredBy, utm_source)
     if (r.ok){
       console.log("ok")
     } else {

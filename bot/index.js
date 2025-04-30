@@ -107,7 +107,7 @@ I'm Orpheus. :orpheus-love: You might be wondering what you're doing here...
 
 The Hack Club Slack is a community of high school programmers from all over the world.
 
-You can meet others completing the Athena Award in the #athena-awards channel. You can also meet other *girls and gender diverse programmers* in the #days-of-service channel.
+You can meet others completing the Athena Award in the #athena-award channel. You can also meet other *girls and gender diverse programmers* in the #days-of-service channel.
 
 Here's where you are right now:
 
@@ -161,7 +161,7 @@ Here's where you are right now:
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Awards> and sign in from the button in the top right corner.`}
+                text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Award> and sign in from the button in the top right corner.`}
               }
             ]
           })
@@ -171,6 +171,55 @@ Here's where you are right now:
     
   } catch (err) {
     app.logger.info('Airtable fetch error:', err);
+  }
+
+  try {
+    const records = await base('YSWS Project Submission').select({filterByFormula: `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "approved", {status} = "rejected"))`}).all();
+    for (const record of records) {
+      const email = record.get('Email');
+      const project = record.get('Project Name')
+      const status = record.get('status')
+      const reason = record.get('status_change_reason')
+      app.logger.info(email, project, status, reason)
+      if (!email) continue;
+      try {
+        const channelId = await openConversationWithEmail(email);
+        await app.client.chat.postMessage({
+          token: process.env.SLACK_BOT_TOKEN,
+          channel: channelId,
+          blocks:  [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `
+*Hey <@${await getSlackIdByEmail(email)}>!*
+
+Your project '${project}' has had a status update! It's now *${status}*.
+The reason given was:
+
+>${reason}
+
+If you have questions, send a message in #athena-award.
+                `
+              }
+            }, 
+          ],
+          username: 'Athena Award',
+        });
+        await base('YSWS Project Submission').update([
+          {
+            id: record.id,
+            fields: { status_change_dm_sent: true },
+          },
+        ]);
+        app.logger.info(`Sent status change update to ${email} and marked as sent.`);
+      } catch (error) { 
+        app.logger.info(`Failed to message ${email}`)
+      }
+    }
+  } catch (err) {
+    app.logger.info("Airtable fetch error:", err);
   }
 }, 10000);
 

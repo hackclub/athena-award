@@ -1,6 +1,6 @@
-# Contribute to Athena Awards
+# Contribute to Athena Award
 Contributions are welcome to this repository!
-Step one is to join the `#athena-awards` channel on Slack. This can help you stay posted on major changes and also have you contribute to the project in collaboration with other people!
+Step one is to join the `#athena-award` channel on Slack. This can help you stay posted on major changes and also have you contribute to the project in collaboration with other people!
 
 Here's a couple of general things about the project that can help you get up and running quickly:
 ## Site Contributions
@@ -23,7 +23,7 @@ In the `/site` folder, you'll see a file called `.env.example`. When you develop
 | `SLACK_CLIENT_ID` | Client ID of the Slack App used for OAuth aka the "Sign in with Slack" function | 
 | `SLACK_CLIENT_SECRET` | Client secret of the Slack App used for Oauth aka the "Sign in with Slack" function |  
 | `AIRTABLE_API_KEY` | Technically now a PAT (personal access token). The token has to have read and write access to the base corresponding to the `AIRTABLE_BASE_ID` |
-| `AIRTABLE_BASE_ID` | ID of the main 'Athena Awards' Airtable base[^1] |
+| `AIRTABLE_BASE_ID` | ID of the main 'Athena Award' Airtable base[^1] |
 | `NEXT_PUBLIC_BASE_URL` | [will be updated] The base URL where your site is accessible |
 
 [^1]: what i would never develop using the production db idk what you're talking about
@@ -68,11 +68,11 @@ When testing Slack OAuth, make sure you have both the local dev environment and 
 Obtain the Airtable API key and base ID and enter them into your .env file as appropriate (If you're involved in this project, DM @phthallo on the Hack Club Slack for help with this)
 
 ### Project Review
-When a user submits a project for a specific stage, it is added to the centralised Athena Awards Airtable where it is then manually reviewed. Projects can be either rejected, approved, pending, or unreviewed. 
+When a user submits a project for a specific stage, it is added to the centralised Athena Award Airtable where it is then manually reviewed. Projects can be either rejected, approved, pending, or unreviewed. 
 
 `rejected` - project was submitted through the form and was deemed insufficient.
 `approved` - project was submitted through the form and was deemed sufficient.
-`pending` - project has been selected on the Athena Awards website but not submitted through the form yet.
+`pending` - project has been selected on the Athena Award website but not submitted through the form yet.
 `unreviewed` - project was submitted through the form and has not been manually reviewed yet.
 
 Users are prompted to resubmit projects if it is initially rejected. Projects are then tied to their record (slackId_projectNumber), to keep track of what has been submitted to what stage.

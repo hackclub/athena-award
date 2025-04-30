@@ -171,6 +171,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
             <span className="sr-only">Next</span>
             <svg fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414" xmlns="http://www.w3.org/2000/svg" aria-label="view-forward" viewBox="0 0 32 32" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="48" height="48"><g><path d="M12.982,23.89c-0.354,-0.424 -0.296,-1.055 0.128,-1.408c1.645,-1.377 5.465,-4.762 6.774,-6.482c-1.331,-1.749 -5.1,-5.085 -6.774,-6.482c-0.424,-0.353 -0.482,-0.984 -0.128,-1.408c0.353,-0.425 0.984,-0.482 1.409,-0.128c1.839,1.532 5.799,4.993 7.2,6.964c0.219,0.312 0.409,0.664 0.409,1.054c0,0.39 -0.19,0.742 -0.409,1.053c-1.373,1.932 -5.399,5.462 -7.2,6.964l-0.001,0.001c-0.424,0.354 -1.055,0.296 -1.408,-0.128Z"></path></g></svg>
           </button>
+          <span className = "text-white uppercase text-sm">Next: {nextModule as typeof STAGES[number]['moduleName']}</span>
         </div>
       </div>
     )
@@ -190,7 +191,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-16 transition-all ${primaryTheme} overflow-y-scroll`}>
               
               <div className = "self-start">
-                <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">Athena Awards</div>
+                <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">Athena Award</div>
                 <h1 className="text-4xl sm:text-6xl uppercase italic text-white font-bold">{title}</h1>
               </div>
               <Icons />
@@ -215,11 +216,10 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
                 <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.3 }} initial='hidden' animate='visible' className="text-3xl text-white text-center md:text-left">Beginner Track 👥</motion.h2>
                 <motion.h2 variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="text-xl text-white text-center md:text-left">Build something with help</motion.h2>
                 <motion.div key={`${module}-details`} variants={slidingUpVariant} transition={{ delay: 0.4 }} initial='hidden' animate='visible' className="h-full overflow-scroll flex flex-col gap-3">
-                <p>New to coding? For your three projects, you could complete one of Hack Club's You Ship We Ship programs to learn some new skills.</p>
+                <p>New to coding? For your three projects, you could complete one of Hack Club's You Ship We Ship (YSWS) programs to learn some new skills.</p>
                 {introResources.map((resource, index) =>
                     <StageChecklistItem key={index} title={resource.name} link={resource.link} delay={index}/>
                 )}
-              <p>To submit one of these projects for the Beginner Track, use the [Other YSWS Project] option.</p>
                 </motion.div>
             </div>
             <span className = "mx-auto md:my-auto uppercase text-white/40">OR</span>
@@ -266,6 +266,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
   if (error){
     console.log(error)
   }
+
 
   // const percentageProgressInThisModule = progress.find(p => p.moduleName === module)!.stages.filter(s => s.complete).length / progress.find(p => p.moduleName === module)!.stages.length * 100;
   
@@ -315,7 +316,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
       <>
       <Error error={`Module '${module}' was not found.`}/></>)
   }
-
+  
   return (
     <>
     <div>
@@ -334,7 +335,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-16 ${baseModuleData.visuals.accents.tertiary} transition-all`}>
               
               <div className = "self-start">
-                <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">Athena Awards</div>
+                <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">Athena Award</div>
                 <h1 className="text-4xl sm:text-6xl uppercase italic text-white font-bold">The Gallery</h1>
               </div>
               <Icons />
@@ -395,7 +396,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
 
                 <div className = "my-5 flex flex-col sm:flex-row w-full justify-between gap-4">
                   {/* to do, clean this entire section up lmfao*/}
-                  { projectRetrievalComplete && data && selectedProject && data[1] && (data[1]["message"]["status"] == "rejected" || (data[1]["message"]["status"] == "pending"))
+                  { projectRetrievalComplete && data && selectedProject && data[1] && (data[1]["message"]["status"] == "rejected" || (data[1]["message"]["status"] == "pending")) // don't ask bro 
                         ? <div>
                         <Tooltip className = "max-w-[20rem]" id = "hackatime_info"/>
                         <span className = "flex flex-row gap-2 items-center py-2" data-tooltip-id = "hackatime_info" data-tooltip-content="Nothing showing up here? Check Settings to set up project tracking with Hackatime!">
@@ -413,11 +414,6 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
                                       )}
                                     <option value = "Other YSWS Project">[Other YSWS Project]</option>
                                   </select>
-                                  <button onClick={async () => {setSelectedProject("_select#"); await fetch (`/api/user/${slackId}/projects`, { method: "POST", body: JSON.stringify({stage: currModuleIdx, project: "_select#" })}); mutate()}}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 inline">
-                                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                    </svg>
-                                  </button>
                             </span>
 
                         </div> 
@@ -430,20 +426,20 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
                                   </svg> to order your prize.
                                 </Tip>
-                            : data && data[1] && data[1]["message"]["status"] == "unreviewed"
+                             : data && data[1] && data[1]["message"]["status"] == "unreviewed" 
                               ? <Action title = "Project awaiting review">Your project {selectedProject} has been submitted for review.</Action>
                               : <span><Action title="Complete onboarding: Download Hackatime">
-                              You need to set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> before you start the Athena Awards! 
+                              You need to set up <a className = "text-white" href = "https://hackatime.hackclub.com/my/wakatime_setup">Hackatime</a> before you start the Athena Award! 
                               Go to the
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="inline align-middle size-5 ">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
                               </svg> in the top right corner for more information.
-                            </Action></span>
+                            </Action></span> 
                         }
                       <div className = "self-center sm:self-end">
                           { data && selectedProject !== "_select#" && (data[1] && data[1]["message"]["status"] === "pending")
                           ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx}`, { method: "POST" })}>  
-                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx}`}>Ready to submit?</a>
+                              <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx}`}>Ready to submit?</a>
                             </button>
                           : (data && selectedProject == "_select#")
                             ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>
@@ -453,7 +449,7 @@ export default function GalleryMenu({ module, progress = compositeUserModuleData
                               ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Stage completed 🎉</button>
                               : (data && data[1]["message"]["status"] == "rejected") 
                                 ? <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`} onClick={ async () =>  await fetch(`/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx}`, { method: "POST" })}>
-                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-awards-projects?stage=${currModuleIdx}    `}>Your project was rejected - click here to resubmit!</a>
+                                    <a target="_blank" className = "text-white no-underline" href = {`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx}`}>Your project was rejected - click here to resubmit!</a>
                                   </button>
                                 : (data && data[1]["message"]["status"] == "unreviewed")
                                   ? <button disabled className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}>Project awaiting review</button>
