@@ -126,8 +126,8 @@ export default function Index() {
             </div>
           </div>
           <div className = "relative sm:pr-12 md:pr-24 pt-12">
-            <Polaroid image = "https://cdn.hackclubber.dev/slackcdn/e20a8569d31870caf1f0cb8d4aa97b7b.png" caption = "code on websites..." props="rotate-[345deg] md:w-96"/>
-            <Polaroid image = "https://cdn.hackclubber.dev/slackcdn/e20a8569d31870caf1f0cb8d4aa97b7b.png" caption = "...earn rewards" props="absolute lg:relative rotate-[12deg] top-0 sm:right-10 md:w-96"/>
+            <Polaroid image = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426.jpg" caption = "code on websites..." props="rotate-[345deg] md:w-96"/>
+            <Polaroid image = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/38b3527b24755420728d2b7634fb803ada27f189_dsc04571.jpg" caption = "...earn rewards" props="absolute lg:relative rotate-[12deg] top-0 sm:right-10 md:w-96"/>
           </div>
         </div>
         <div className="w-screen h-full sm:h-screen p-12 sm:p-16 flex flex-col items-center justify-center">
