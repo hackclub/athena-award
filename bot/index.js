@@ -11,33 +11,38 @@ const app = new App({
 });
 
 async function getSlackIdByEmail(email) {
-  const userResult = await app.client.users.lookupByEmail({
-    token: process.env.SLACK_BOT_TOKEN,
-    email: email,
-  });
+  const userResult = await fetch(`https://slack.com/api/users.lookupByEmail?email=${email}`, { 
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + process.env.SLACK_BOT_TOKEN
+    }
+  }).then(response => response.json())
   return userResult.user.id;
 }
 
 async function openConversationWithEmail(email) {
-  const userResult = await app.client.users.lookupByEmail({
-    token: process.env.SLACK_BOT_TOKEN,
-    email: email,
-  });
-  const userId = userResult.user.id;
+  const userId = await getSlackIdByEmail(email)
 
-  const convo = await app.client.conversations.open({
-    token: process.env.SLACK_BOT_TOKEN,
-    users: userId,
-  });
+  const convo = await fetch(`https://slack.com/api/conversations.open`, {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + process.env.SLACK_BOT_TOKEN
+    },
+    body: JSON.stringify({
+      users: userId
+    })
+  }).then(response => response.json())
   return convo.channel.id; 
 }
 
 async function upgradeUser(email) {
   // stolen from toriel lol
-  const userProfile = await app.client.users.lookupByEmail({
-    token: process.env.SLACK_BOT_TOKEN,
-    email: email,
-  });
+  const userProfile = await fetch(`https://slack.com/api/users.lookupByEmail?email=${email}`, { 
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + process.env.SLACK_BOT_TOKEN
+    }
+  }).then(response => response.json())
   const team_id = userProfile.user.team_id
   const userId = userProfile.user.id;
 
@@ -131,6 +136,7 @@ Here's where you are right now:
                 }]}
           ],
           username: 'Athena Award',
+          text: 'Welcome to the Athena Award!'
         });
         await base('Email Slack Invites').update([
           {
@@ -143,7 +149,7 @@ Here's where you are right now:
         await base('Email Slack Invites').update([
           {
             id: record.id,
-            fields: { dm_error: err },
+            fields: { dm_error: String(err) },
           },
         ]);
         app.logger.error(`Failed to message ${email}:`, err);
@@ -163,8 +169,10 @@ Here's where you are right now:
                 type: "mrkdwn",
                 text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Award> and sign in from the button in the top right corner.`}
               }
-            ]
-          })
+            ],
+          username: 'Athena Award',
+          text: 'Continue on Athena Award'
+        });
           
       })
     }
@@ -192,16 +200,7 @@ Here's where you are right now:
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `
-*Hey <@${await getSlackIdByEmail(email)}>!*
-
-Your project '${project}' has had a status update! It's now *${status}*.
-The reason given was:
-
->${reason}
-
-If you have questions, send a message in #athena-award.
-                `
+                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour project '${project}' has had a status update! It's now *${status}*.\nThe reason given was:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `
               }
             }, 
           ],

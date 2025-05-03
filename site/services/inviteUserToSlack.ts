@@ -2,8 +2,6 @@
 // this is taken from arrpheus' invite flow (https://github.com/hackclub/arrpheus/blob/e5bc6f12802bb3a2d39e8d46d48a514d3a57cbd0/src/undocumentedSlack.ts#L2)
 
 import Airtable from "airtable";
-import { auth } from '@/auth';
-
 
 const airtable = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY,
