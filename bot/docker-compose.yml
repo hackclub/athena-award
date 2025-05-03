@@ -5,3 +5,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.bot
+    restart: unless-stopped
