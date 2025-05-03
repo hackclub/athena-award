@@ -11,38 +11,29 @@ const app = new App({
 });
 
 async function getSlackIdByEmail(email) {
-  const userResult = await fetch(`https://slack.com/api/users.lookupByEmail?email=${email}`, { 
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer " + process.env.SLACK_BOT_TOKEN
-    }
-  }).then(response => response.json())
+  const userResult = await app.client.users.lookupByEmail({
+    token: process.env.SLACK_BOT_TOKEN,
+    email: email,
+  });
   return userResult.user.id;
 }
 
 async function openConversationWithEmail(email) {
   const userId = await getSlackIdByEmail(email)
 
-  const convo = await fetch(`https://slack.com/api/conversations.open`, {
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer " + process.env.SLACK_BOT_TOKEN
-    },
-    body: JSON.stringify({
-      users: userId
-    })
-  }).then(response => response.json())
+  const convo = await app.client.conversations.open({
+    token: process.env.SLACK_BOT_TOKEN,
+    users: userId,
+  });
   return convo.channel.id; 
 }
 
 async function upgradeUser(email) {
   // stolen from toriel lol
-  const userProfile = await fetch(`https://slack.com/api/users.lookupByEmail?email=${email}`, { 
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer " + process.env.SLACK_BOT_TOKEN
-    }
-  }).then(response => response.json())
+  const userProfile = await app.client.users.lookupByEmail({
+    token: process.env.SLACK_BOT_TOKEN,
+    email: email,
+  });
   const team_id = userProfile.user.team_id
   const userId = userProfile.user.id;
 
