@@ -9,9 +9,9 @@ FROM node:23.11.0-slim
 
 WORKDIR /app
 
-COPY ./ ./
+COPY . ./
 
-RUN echo ls
+EXPOSE 3000
 
 RUN npm install
 
