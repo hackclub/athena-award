@@ -41,20 +41,12 @@ export default function MapView() {
   if (error) return <Error error="Failed to load projects"/>
 
   const coordinates = useMemo(() => (data ? (data as any) : []), [data]);
-
   const center = useMemo(() => {
     if (coordinates.length > 0) {
       return [coordinates[0].lat, coordinates[0].long] as [number, number];
     }
     return [0, 0] as [number, number];
   }, [coordinates]);
-
-  const validProjects = useMemo(() =>
-    coordinates
-      .map((c: any) => c.label && Array.isArray(c.label) && c.label[0]?.project_name)
-      .filter(Boolean),
-    [coordinates]
-  );
 
   const fetchEmojiForProject = async (projectName: string) => {
     try {
@@ -117,7 +109,7 @@ export default function MapView() {
   }), []);
 
   return (
-    <div className="flex flex-col items-center justify-start w-screen overflow-y-scroll h-screen bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 relative overflow-hidden">
+    <>
       <div className = "absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {mosaicGrid.map((cell, i) => (
           <span key={i} style={mosaicEmojiStyle(cell.x, cell.y, cell.delay)}>{cell.emoji}</span>
@@ -130,13 +122,14 @@ export default function MapView() {
           }
         `}</style>
       </div>
-      <div className="self-start mb-2">
+
+    <div className="w-screen flex flex-col justify-between gap-4 overflow-y-scroll h-screen bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 relative">
+      <div className="self-start">
         <a className="text-xl sm:text-2xl uppercase text-white font-bold mb-2" href = "/">Athena Award</a>
         <h1 className="text-4xl sm:text-6xl uppercase italic text-white font-bold playfair-display">World Map</h1>
+        <div className = "text-white">Athena Award recipients - and Hack Clubbers - come from all over the world! Check out this map to see all the projects which have been approved so far.</div>
       </div>
-      <div className = "text-white">Athena Award recipients - and Hack Clubbers - come from all over the world! Check out this map to see all the projects which have been approved so far.</div>
-      <div className="h-full grow gap-2 w-full flex items-center justify-center">
-        <div className="rounded-2xl z-0 h-full shadow-lg w-full border-4 border-white/20 bg-white/10 flex flex-col md:flex-row">
+        <div className="min-h-0 grow rounded-2xl z-0 shadow-lg w-full border-4 border-white/20 bg-white/10 flex flex-col md:flex-row">
           <div className="w-full h-full col-span-1">
             { isLoading ? <div className = "flex items-center justify-center text-white">Loading projects... 🌎</div> : 
               <MapContainer
@@ -159,7 +152,7 @@ export default function MapView() {
                         {coord.label && Array.isArray(coord.label) && coord.label.length > 0 ? (
                           <>
                             <div className="playfair-display italic font-bold text-2xl text-white mb-1">
-                              {coord.label[0].project_name}
+                              {coord.label[0].project_name_override || coord.label[0].project_name}
                             </div>
                             {coord.label[0].playable_url && (
                               <div>
@@ -207,7 +200,7 @@ export default function MapView() {
                       onClick={() => setSelectedProjectIdx(idx)}
                     >
                       <div className="font-bold text-xl text-white playfair-display italic truncate">
-                        {coord.label?.[0]?.project_name || 'Untitled Project'}
+                        {coord.label?.[0]?.project_name_override || coord.label?.[0]?.project_name || 'Untitled Project'}
                       </div>
                       {coord.label?.[0]?.country && (
                         <div className="text-white/80 text-sm italic mb-1">{coord.label[0].country}</div>
@@ -245,9 +238,9 @@ export default function MapView() {
                 </div>
               )
             )}
-          </div>
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -33,6 +33,7 @@ export async function GET(request: NextRequest){
                 filterByFormula: `AND({slack_id} = "${session?.slack_id}", {unique_name} = "${uniqueProjectForStage}")`,
                 fields: [
                     "project_name",
+                    "project_name_override",
                     "stage",
                     "status",
                     "form_submitted_project"
@@ -57,6 +58,7 @@ export async function GET(request: NextRequest){
                 filterByFormula: `{slack_id} = "${session?.slack_id}"`,
                 fields: [
                     "project_name",
+                    "project_name_override",
                     "stage",
                     "status",
                     "existing_ysws_project_hour_override"
@@ -65,10 +67,11 @@ export async function GET(request: NextRequest){
             const userProjectStatus = ((JSON.parse(JSON.stringify(allProjects))).map((project: any) => 
                 ({
                     name: project["fields"]["project_name"],
+                    project_name_override: project["fields"]["project_name_override"],
                     stage: project["fields"]["stage"],
                     status: project["fields"]["status"],
                     total_seconds:  project["fields"]["existing_ysws_project_hour_override"] ? project["fields"]["existing_ysws_project_hour_override"] * 3600 : null}
-                )))
+                ))).filter((project: any) => project.name != "_select#") // this is so bad 
             if (hackatimeProjects.ok){
                 // user has hackatime
                 projects = (await hackatimeProjects.json())["data"]["projects"] as any
@@ -81,7 +84,8 @@ export async function GET(request: NextRequest){
                         const matchingProject = userProject.find((project: any) => project.name === projPair.name);
                         return {
                             ...(matchingProject || {}),
-                            name: projPair.name || "Other YSWS Project",
+                            name: projPair.name,
+                            project_name_override: projPair.project_name_override,
                             status: projPair.status,
                             total_seconds: projPair.total_seconds ?? matchingProject?.total_seconds ?? 0
                         }
@@ -94,7 +98,7 @@ export async function GET(request: NextRequest){
                 }
             } else {
                 // user does NOT have hackatime
-                return NextResponse.json({message: userProjectStatus})
+                return NextResponse.json({message: userProjectStatus }) // believe it or not i am capable of writing worse code than this
             }
         } else if (query === "valid_for_selection"){ // projects which haven't already been selected for another stage
             const stage = request.nextUrl.searchParams.get("stage")
@@ -111,7 +115,7 @@ export async function GET(request: NextRequest){
                         "stage",
                         "project_name",
                     ]
-                }).all())).map((project: any) => project.fields).filter((proj: any) => proj.stage !== stage)
+                }).all())).map((project: any) => project.fields).filter((proj: any) => proj.stage !== stage && proj.name != "_select#" )
                 
                 const selectedProjectNames = new Set(selectedProject.map((proj: any) => proj.project_name));
                 const filteredProjects = projects.filter((project: any) => !selectedProjectNames.has(project.name));

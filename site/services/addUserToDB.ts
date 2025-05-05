@@ -30,7 +30,7 @@ export async function linkUser(emailAddress: string, accessToken: string){
                 }
             ])
             return ("User exists in DB")
-        } else { // user is logging on for the first time
+        } else  // user is logging on for the first time
             console.log("adding user to database")
             const l = await airtable("Registered Users").create(
                 [{
@@ -42,25 +42,41 @@ export async function linkUser(emailAddress: string, accessToken: string){
                 "hashed_token": accessTokenJoined,
                             }
             }])      
+        
+
+            const userRecordIDInTable = JSON.parse(JSON.stringify(l))[0]["fields"].record_id
+
+            const autoProject = Array.from(["1", "2", "3"], (x) => (
+            {
+                fields: {
+                    slack_id: id,
+                    stage: x,
+                    project_name: "_select#",
+                    registered_user: [userRecordIDInTable]
+                }
+                
+            }))
+            const createProjects = await airtable("Projects").create(autoProject)
+
             // this doesn't work because the access token isn't recognised with the endpoint currently used, and the other alternative returns data which isn't really compatible with hackatime
             // https://github.com/hackclub/harbor/blob/2f29f8a055404c4f19275803655b0988736d2589/app/controllers/api/v1/external_slack_controller.rb#L24
             // lmao 
-            const createHackatimeAccount = await fetch('https://hackatime.hackclub.com/api/v1/external/slack/oauth', {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${process.env.HACKATIME_API_KEY}`,
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                  token: accessToken
-                })
-              })
-              .then(response => response.json())
-              .then(data => console.log(data))
-              .catch(error => console.error('Error:', error));
+            // const createHackatimeAccount = await fetch('https://hackatime.hackclub.com/api/v1/external/slack/oauth', {
+            //   method: 'POST',
+            //    headers: {
+            //      'Authorization': `Bearer ${process.env.HACKATIME_API_KEY}`,
+            //      'Content-Type': 'application/json'
+            //    },
+            //    body: JSON.stringify({
+            //      token: accessToken
+            //    })
+            //  })
+            //  .then(response => response.json())
+            //  .then(data => console.log(data))
+            //  .catch(error => console.error('Error:', error));
 
         return "User added to DB"
-        }
+        
 } catch(error) {
     throw error
     }

@@ -38,27 +38,38 @@ export function Waka(){
     }
 
     const hasAchievedTime = totalTimeSpent / 1080 > 100
+    const hasAchievedApprovedTime = totalApprovedTimeSpent / 1080 > 100
 
     return (
         <div>
             <h2 className = "bg-white/20 p-2 text-white text-lg sm:text-2xl">{ (totalTimeSpent / 3600).toFixed(2) } hours spent coding on your projects.</h2>
-            <div className="rounded-xl w-full h-8 bg-gray-200 my-3">
-                <Tooltip id="waka_progress" place="left" className="z-10"/>
+            <div className="rounded-xl w-full h-8 bg-gray-200 my-3 relative">
+                <Tooltip id="waka_progress" place="top" className="z-10 max-w-48"/>
+                <Tooltip id="waka_approved_progress" place="top" className="z-10 max-w-48"/>
+
                 <div data-tooltip-id="waka_progress" data-tooltip-content={
-                    "Only time tracked using Hackatime is counted here! " + 
-                    (totalTimeSpent / 1080).toFixed(2) + "%" 
-                    } className= "rounded-xl h-8 bg-hc-primary" style= {
+                    `This is how much time you've spent on projects in total  
+                    (${(totalTimeSpent / 1080).toFixed(2)}% of the total needed)` 
+                    } className= "rounded-xl h-8 bg-hc-primary/40 z-80 absolute" style= {
                         {
                             width: hasAchievedTime ? "100%" : Number(totalTimeSpent) / 1080 + "%"
                         }}/>
+                <div data-tooltip-id="waka_approved_progress" data-tooltip-content={
+                    `This is how much time you've spent on approved projects.  
+                    (${(totalApprovedTimeSpent / 1080).toFixed(2)}% of the total needed)` 
+                    } className = "rounded-xl h-8 bg-hc-primary absolute" style = {
+                        {
+                            width: hasAchievedApprovedTime ? "100%" : Number(totalApprovedTimeSpent) / 1080 + "%"
+                        }}/>
+
             </div>
 
             <p>Of those {(totalTimeSpent/3600).toFixed(2)} hours, {(totalApprovedTimeSpent/3600).toFixed(2)} hours are approved.</p>
 
             <p>That's about {Math.floor(totalApprovedTimeSpent / 1080) + "%"} of the 30 hours you need to complete the Athena Award.</p>
-            <p>{ hasAchievedTime ? "Great work! You've completed the hour requirement for getting the Athena Award. Keep going for more prizes!" : "You're getting there :) Complete this to qualify for the Athena Award!"}</p>
+            <p>{ hasAchievedApprovedTime ? "Great work! You've completed the hour requirement for getting the Athena Award. Keep going for more prizes!" : "You're getting there :) Complete this to qualify for the Athena Award!"}</p>
             
-            <div className = "flex flex-row flex-wrap gap-4 my-2">{projects.map((project: any, index: number) => <div key={index}  className = {`p-1 border rounded-lg ${project.status === "approved" ? "bg-green-500/30" : project.status === "unreviewed" ? "bg-yellow-500/30" : "bg-white/30"}`}>{project.name} {(project.total_seconds/3600).toFixed(2)} hours</div> )}</div> 
+            <div className = "flex flex-row flex-wrap gap-4 my-2">{projects.map((project: any, index: number) => <div key={index}  className = {`p-1 border rounded-lg ${project.status === "approved" ? "bg-green-500/30" : project.status === "unreviewed" ? "bg-yellow-500/30" : "bg-white/30"}`}>{project.project_name_override || project.name} {(project.total_seconds/3600).toFixed(2)} hours</div> )}</div> 
         </div>
          )
 }

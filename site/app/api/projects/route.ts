@@ -48,10 +48,11 @@ export async function GET() {
                 const addressParts = address[0].split("\n")[address[0].split("\n").length - 1]
                 country = addressParts;
                 if (latLng) {
-                    latLng = fuzzLatLng(latLng.lat, latLng.lng, 30);
+                    latLng = fuzzLatLng(latLng.lat, latLng.lng, 300);
                 }
             }
             const project_name = fields['project_name'];
+            const project_name_override = (String(fields["project_name_override"])?.split("–"))[0]; // they contain the author's full name, which optimally we are not broadcasting to the entire world
             const playable_url = fields['playable_url'];
             const code_url = fields['code_url'];
             if (latLng) {
@@ -60,6 +61,7 @@ export async function GET() {
                     long: latLng.lng,
                     label: [{
                         project_name,
+                        project_name_override,
                         playable_url,
                         code_url,
                         country,

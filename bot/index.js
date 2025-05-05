@@ -177,6 +177,7 @@ Here's where you are right now:
     for (const record of records) {
       const email = record.get('Email');
       const project = record.get('Project Name')
+      const project_name_override = record.get('project_name_override')
       const status = record.get('status')
       const reason = record.get('status_change_reason')
       app.logger.info(email, project, status, reason)
@@ -191,7 +192,7 @@ Here's where you are right now:
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour project '${project}' has had a status update! It's now *${status}*.\nThe reason given was:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `
+                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour project '${project_name_override || project}' has had a status update! It's now *${status}*.\nThe reason given was:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `
               }
             }, 
           ],
