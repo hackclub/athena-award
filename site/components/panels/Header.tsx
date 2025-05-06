@@ -48,7 +48,7 @@ export function AuthStateButton({className}: {className?: string}){ /// @ PAST S
           <form className = "flex flex-col gap-3 *:text-white items-center" onSubmit={(e) => handleEmailSubmit(e)}>
             <label className = "not-italic text-xl text-center ">New to Hack Club? ✨</label>
             <span className = "flex flex-col md:flex-row gap-2 w-full">
-              <input placeholder="orpheus@mail.com" defaultValue={email ? email : ""} className="text-black w-full" required type="text" name="email" id="email"/>
+              <input type="email" placeholder="orpheus@mail.com" defaultValue={email ? email : ""} className="text-black w-full" required name="email" id="email"/>
               <button type = "submit">Submit</button>
             </span>
           </form>
@@ -56,7 +56,7 @@ export function AuthStateButton({className}: {className?: string}){ /// @ PAST S
             ? <span className = "not-italic text-lg md:text-xl text-center text-white max-w-1/2">
               <p className = "underline decoration-wavy text-xl">Something went wrong!</p>
               <p>{err}</p>
-              <p className = "text-sm">Please send an email to annabel@hackclub.com with this error message if you're seeing this.</p>
+              <p className = "text-sm">Please send an email to athena@hackclub.com with this error message if you're seeing this.</p>
               </span>
             : <span className = "not-italic text-lg md:text-xl text-center text-white max-w-1/2">
             <p className = "underline decoration-wavy text-xl">Check your email!</p> 

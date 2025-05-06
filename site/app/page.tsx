@@ -27,16 +27,16 @@ const steps = [
 
 const stats = [
   {
-    number: "800000+",
+    number: "800 000+",
     description: "dollars (USD) in prizes distributed"
   },
   {
-    number: "18000+",
+    number: "18 000+",
     description: "prizes sent out to teenagers"
    },
   {
-    number: 23092039,
-    description: "projects shipped"
+    number: "11 000+",
+    description: "technical projects finished"
   }
 ]
 
@@ -55,7 +55,7 @@ const FAQ = [
   },
   {
     question: "How do prizes work?",
-    answer: "As you earn artifacts by completing the stages of the Athena Award, you'll become automatically eligible to select prizes along the way."
+    answer: "Every hour coded = one artifact earned. Artifacts can be redeemed for cool prizes in the shop."
   },
   {
     question: "How does the trip to New York work?",
@@ -189,17 +189,23 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="w-screen h-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
+        <div className="*:flex *:flex-col *:gap-4 flex flex-col gap-6 w-screen h-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
+        <div>
           <h1 className = "text-hc-secondary text-3xl text-left">
                   <i>brought to you by</i>
           </h1>
-          <h1 className = "text-hc-secondary text-7xl text-left">
-            Athena
+          <img className="py-4 w-48" src = "https://assets.hackclub.com/flag-standalone-wtransparent.svg"/>
+         </div>
+         <div>
+          <h1 className = "text-hc-secondary text-3xl text-left italic">
+            in collaboration with
           </h1>
-          <div className = "py-16">
-            <img className="w-48" src = "https://assets.hackclub.com/flag-standalone-wtransparent.svg"/>
-            <p className ="text-hc-secondary">insert more partners</p>
+          <div className = "flex flex-row flex-wrap gap-6 w-full items-center justify-center md:justify-start md:items-left image-cover *:h-36">
+            <img src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/b150edd0de91fa5008f55466bbbef9dc32b86994_image.png"/>
+            <img src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"/>
+            <img src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"/>
           </div>
+        </div>
         </div>
 
         <div className="w-screen h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">

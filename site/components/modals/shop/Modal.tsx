@@ -21,17 +21,8 @@ export default function ShopModal(){
 
 
     return (
-        shop && <Modal uxEventName="shop" uxEvent={uxEvent} setUXEvent={setUXEvent} className="overflow-auto">
+        shop && <Modal customHeader = {{icon: 'bag-add', heading: 'Shop' }} uxEventName="shop" uxEvent={uxEvent} setUXEvent={setUXEvent} className="overflow-auto">
             <div className = "flex flex-col gap-3">
-            <div className="self-start *:align-middle flex gap-3 w-full align-middle md:sticky">
-                <div className="*:align-middle h-fit w-full bg-black/25 p-2 rounded flex gap-4 grow">
-                    <img src="https://icons.hackclub.com/api/icons/hackclub-red/bag-add" className="size-[32px] self-center align-middle" alt="info" />
-                    <div className="self-center align-middle text-xl sm:text-3xl playfair-display font-bold italic">Shop</div>
-                </div>
-                <button className="" onClick={() => setUXEvent('map')}>
-                    <FaXmark className="size-8 md:size-14 text-white" />
-                </button>
-            </div>
             <div>
                 <p>Click on a placard to order a prize with your approved artifacts! You can earn more artifacts by spending time on projects and getting them approved.</p>
 

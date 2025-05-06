@@ -212,6 +212,26 @@ Here's where you are right now:
   } catch (err) {
     app.logger.info("Airtable fetch error:", err);
   }
+
+
+  try {
+    const records = await base('Email Slack Invites').select({filterByFormula: "NOT({registered_user})"}).all();
+    for (const record of records){
+      const email = record.get("email")
+      const userInRegisteredUsers = await base('Registered Users').select({filterByFormula: `{email} = "${email}"`}).all();
+      app.logger.info(`Searched for invited user ${email} in Registered Users`)
+      if (userInRegisteredUsers.length && userInRegisteredUsers[0].get("record_id")){
+        await base("Email Slack Invites").update([{
+          id: record.id,
+          fields: { registered_user: [userInRegisteredUsers[0].get("record_id")]}
+        }])
+        app.logger.info(`Linked ${email} to their record in Registered Users.`);
+
+      }
+    }
+  } catch (err) {
+    app.logger.info("Airtable fetch error:", err);
+  }
 }, 10000);
 
 

@@ -48,17 +48,8 @@ const PROJECTFAQ = [{
 export default function InfoModal(){
     const [uxEvent, setUXEvent] = useContext(UXEventContext)
     return (
-        <Modal uxEventName = "info" uxEvent={uxEvent} setUXEvent={setUXEvent} className="overflow-auto">
+        <Modal customHeader={{icon: "person", heading: "Info"}} uxEventName = "info" uxEvent={uxEvent} setUXEvent={setUXEvent} className="overflow-auto">
             <div className = "flex flex-col gap-3">
-            <div className="self-start *:align-middle flex gap-3 w-full align-middle md:sticky">
-                <div className="*:align-middle h-fit w-full bg-black/25 p-2 rounded flex gap-4 grow">
-                    <img src="https://icons.hackclub.com/api/icons/hackclub-red/person" className="size-[32px] self-center align-middle" alt="info" />
-                    <div className="self-center align-middle text-xl sm:text-3xl playfair-display font-bold italic">Info</div>
-                </div>
-                <button className="" onClick={() => setUXEvent('map')}>
-                    <FaXmark className="size-8 md:size-14 text-white" />
-                </button>
-            </div>
             <Action title = "Question not answered here?">Send a message in the <a href = "https://app.slack.com/client/T0266FRGM/C06T17NQB0B">#athena-award</a> channel on the Hack Club Slack to get help.</Action>
 
             <div className = "flex flex-col gap-3">
