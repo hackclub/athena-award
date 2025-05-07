@@ -15,12 +15,9 @@ module.exports = {
         "hc-secondary": "#FDEBED",
         "hc-blue": "#338EDA",
         "hc-green": "#33D6A6",
-        "hc-primary-dull": "#8C2E37"
-      }
-    }
+        "hc-primary-dull": "#8C2E37",
+      },
+    },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
-  ]
-}
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
+};

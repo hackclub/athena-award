@@ -1,17 +1,17 @@
 // defunct
-'use client';
+"use client";
 import { useRouter } from "next/navigation";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import SidePanel from "../panels/layout/SidePanel";
 import { motion } from "motion/react";
-import { FaLightbulb, FaMagnifyingGlass, FaPlus } from "react-icons/fa6"
+import { FaLightbulb, FaMagnifyingGlass, FaPlus } from "react-icons/fa6";
 
 interface ActionProps {
-  title: string
-  children: ReactNode
+  title: string;
+  children: ReactNode;
   percentX: number;
   percentY: number;
-  icon?: 'lightbulb' | 'magnifying-glass';
+  icon?: "lightbulb" | "magnifying-glass";
   interactives: (() => JSX.Element) | null;
 }
 
@@ -25,18 +25,18 @@ export default function Action(props: ActionProps) {
     setTimeout(() => {
       setOpenPanel(true);
     }, 0);
-  }
+  };
 
   useEffect(() => {
     const handleMouseMovement = (e: MouseEvent) => {
       setTransformation({
         x: e.clientX,
-        y: e.clientY
+        y: e.clientY,
       });
-    }
+    };
 
     setWindow(window);
-    window.addEventListener('mousemove', handleMouseMovement);
+    window.addEventListener("mousemove", handleMouseMovement);
   }, []);
 
   return (
@@ -48,26 +48,28 @@ export default function Action(props: ActionProps) {
         exit={{ opacity: 0 }}
         onClick={handleClick}
         style={{
-          top: `${(percentY * 1.15) - 7.5}vh`,
-          left: `${(percentX * 1.15) - 7.5}vw`,
-          transform: `translate3d(${transformation.x * 0.05 * (1440 / (win?.innerWidth || 1440))}px, ${transformation.y * 0.05 * (1024 / (win?.innerHeight || 1024))}px, 0)`
+          top: `${percentY * 1.15 - 7.5}vh`,
+          left: `${percentX * 1.15 - 7.5}vw`,
+          transform: `translate3d(${transformation.x * 0.05 * (1440 / (win?.innerWidth || 1440))}px, ${transformation.y * 0.05 * (1024 / (win?.innerHeight || 1024))}px, 0)`,
         }}
       >
-        {props.icon === 'magnifying-glass' && <FaMagnifyingGlass className="size-8 text-white" />}
-        {props.icon === 'lightbulb' && <FaLightbulb className="size-8 text-white" />}
+        {props.icon === "magnifying-glass" && (
+          <FaMagnifyingGlass className="size-8 text-white" />
+        )}
+        {props.icon === "lightbulb" && (
+          <FaLightbulb className="size-8 text-white" />
+        )}
         {/* <Icon glyph={"controls"} size={32} /> */}
       </motion.button>
       <SidePanel
-        openPanel={openPanel} setOpenPanel={setOpenPanel}
+        openPanel={openPanel}
+        setOpenPanel={setOpenPanel}
         title={props.title}
       >
         {props.children}
-        {props.title.includes('gen') && 'generator'}
-        {props.interactives && (
-          props.interactives()
-        )}
+        {props.title.includes("gen") && "generator"}
+        {props.interactives && props.interactives()}
       </SidePanel>
     </>
-
-  )
+  );
 }

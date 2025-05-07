@@ -1,69 +1,77 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Phantom Sans';
-  src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff')
-      format('woff'),
-    url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2')
-      format('woff2');
+  font-family: "Phantom Sans";
+  src:
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2")
+      format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Phantom Sans';
-  src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff')
-      format('woff'),
-    url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff2')
-      format('woff2');
+  font-family: "Phantom Sans";
+  src:
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff2")
+      format("woff2");
   font-weight: normal;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Phantom Sans';
-  src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff')
-      format('woff'),
-    url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2')
-      format('woff2');
+  font-family: "Phantom Sans";
+  src:
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff")
+      format("woff"),
+    url("https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2")
+      format("woff2");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
 .playfair-display {
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display';
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Playfair Display";
   font-weight: 600;
 }
 
 h2 {
-  @apply text-hc-primary text-2xl py-2
+  @apply text-hc-primary text-2xl py-2;
 }
 
 .phantom-sans {
-  font-family: 'Phantom Sans';
+  font-family: "Phantom Sans";
 }
 
 p {
-  @apply text-base sm:text-lg
+  @apply text-base sm:text-lg;
 }
 
 code {
-  @apply bg-gray-200 p-1 select-all
+  @apply bg-gray-200 p-1 select-all;
 }
 
 a {
-  @apply underline underline-offset-4 text-[#6FF] hover:decoration-wavy
+  @apply underline underline-offset-4 text-[#6FF] hover:decoration-wavy;
 }
 
 * {
@@ -90,5 +98,5 @@ a {
 }
 
 #content > * {
-  @apply pointer-events-auto
+  @apply pointer-events-auto;
 }

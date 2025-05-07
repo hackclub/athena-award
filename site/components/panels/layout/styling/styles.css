@@ -1,4 +1,4 @@
-.prose h2, .prose h3 {
+.prose h2,
+.prose h3 {
   @apply text-hc-primary;
 }
-
