@@ -168,7 +168,7 @@ export default function GalleryMenu({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-16 transition-all ${primaryTheme} overflow-y-scroll`}
+              className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-16 transition-all ${primaryTheme} overflow-auto-scroll`}
             >
               <div className="self-start">
                 <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">
@@ -235,7 +235,7 @@ export default function GalleryMenu({
               transition={{ delay: 0.4 }}
               initial="hidden"
               animate="visible"
-              className="h-full overflow-scroll flex flex-col gap-3"
+              className="h-full overflow-auto flex flex-col gap-3"
             >
               <p>
                 New to coding? For your three projects, you could complete one

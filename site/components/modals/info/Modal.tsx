@@ -4,6 +4,13 @@ import Modal from "@/components/panels/layout/PopUpModal";
 import { FaXmark } from "react-icons/fa6";
 import { Action } from "@/components/panels/add-ons/Callout";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 const PRIZEFAQ = [
   {
     question: "How do I earn prizes?",
@@ -74,7 +81,7 @@ export default function InfoModal() {
           <h2 className="text-lg sm:text-2xl bg-white/10 text-white p-2 rounded">
             Hackatime
           </h2>
-          <div className="grid md:grid-cols-2 gap-3">
+          <div className="grid md:grid-cols-2 gap-3 pl-4 pr-2">
             <div className="col-span-1">
               <p>
                 <a target="_blank" href="https://hackatime.hackclub.com">
@@ -84,7 +91,7 @@ export default function InfoModal() {
                 projects. Before you start working on your projects, you will
                 need to set this up.
               </p>
-              <ul className="list-decimal list-inside py-2">
+              <ul className="list-decimal list-inside py-2 px-3">
                 <li>
                   To set up Hackatime, head to{" "}
                   <a target="_blank" href="https://hackatime.hackclub.com/">
@@ -120,14 +127,46 @@ export default function InfoModal() {
               </a>
             </div>
             <img
-              className="col-span-1 aspect-video cover"
+              className="col-span-1 aspect-video cover rounded"
               src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3057e5a387b8e8ce117e4cb86965525aa5e03d5b_image.png"
             />
           </div>
           <h2 className="text-lg sm:text-2xl bg-white/10 text-white p-2 rounded">
             Programming
           </h2>
-          <span>
+
+          <div>
+            <Accordion
+              type="single"
+              collapsible
+              className="bg-black/10 rounded sm:mx-5 mx-2"
+            >
+              <AccordionItem value="item-1" className=" px-5 my-2 border-none">
+                <span>
+                  <AccordionTrigger className=" py-3 phantom-sans hover:underline-offset-4  [&>svg]:text-white">
+                    <p className="font-bold text-left">
+                      I don't really know how to code!
+                    </p>
+                  </AccordionTrigger>
+                  <AccordionContent className="">
+                    <p>
+                      That's okay. Hack Club is a community of 55000+ teenagers
+                      from all over the world who love coding. Check out some of
+                      our{" "}
+                      <a target="_blank" href="https://jams.hackclub.com/">
+                        introductory guides
+                      </a>
+                      , or ask a few questions in the{" "}
+                      <a href="https://hackclub.slack.com/">Hack Club Slack</a>{" "}
+                      if you need help.
+                    </p>
+                  </AccordionContent>
+                </span>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          {/* <span className="px-3">
             <p className="font-bold">I don't really know how to code!</p>
             <p>
               That's okay. Hack Club is a community of 55000+ teenagers from all
@@ -139,7 +178,7 @@ export default function InfoModal() {
               <a href="https://hackclub.slack.com/">Hack Club Slack</a> if you
               need help.
             </p>
-          </span>
+          </span> */}
         </div>
 
         <div className="text-white font-bold text-2xl uppercase">
@@ -148,21 +187,74 @@ export default function InfoModal() {
         <h2 className="text-lg sm:text-2xl bg-white/10 text-white p-2 rounded">
           Prizes
         </h2>
-        {PRIZEFAQ.map((query, index) => (
+
+        <div className="">
+          {PRIZEFAQ.map((query, index) => (
+            <Accordion
+              type="single"
+              collapsible
+              key={index}
+              className="bg-black/10 rounded sm:mx-5 mx-2"
+            >
+              <AccordionItem
+                value={`item-${index}`}
+                className=" px-5 my-2 border-none"
+              >
+                <span key={index}>
+                  <AccordionTrigger className=" py-3 phantom-sans hover:underline-offset-4  [&>svg]:text-white">
+                    <p className="font-bold text-left">{query.question}</p>
+                  </AccordionTrigger>
+                  <AccordionContent className="">
+                    <p>{query.answer}</p>
+                  </AccordionContent>
+                </span>
+              </AccordionItem>
+            </Accordion>
+          ))}
+        </div>
+
+        {/* {PRIZEFAQ.map((query, index) => (
           <span key={index}>
             <p className="font-bold">{query.question}</p>
             <p>{query.answer}</p>
           </span>
-        ))}
+        ))} */}
+
         <h2 className="text-lg sm:text-2xl bg-white/10 text-white p-2 rounded">
           Projects
         </h2>
-        {PROJECTFAQ.map((query, index) => (
+
+        <div className="">
+          {PROJECTFAQ.map((query, index) => (
+            <Accordion
+              type="single"
+              collapsible
+              key={index}
+              className="bg-black/10 rounded sm:mx-5 mx-2"
+            >
+              <AccordionItem
+                value={`item-${index}`}
+                className=" px-5 my-2 border-none"
+              >
+                <span key={index}>
+                  <AccordionTrigger className="font-bold py-3 phantom-sans hover:underline-offset-4  [&>svg]:text-white">
+                    <p className="font-bold text-left">{query.question}</p>
+                  </AccordionTrigger>
+                  <AccordionContent className="">
+                    <p dangerouslySetInnerHTML={{ __html: query.answer }} />
+                  </AccordionContent>
+                </span>
+              </AccordionItem>
+            </Accordion>
+          ))}
+        </div>
+
+        {/* {PROJECTFAQ.map((query, index) => (
           <span key={index}>
             <p className="font-bold">{query.question}</p>
             <p dangerouslySetInnerHTML={{ __html: query.answer }} />
           </span>
-        ))}
+        ))} */}
       </div>
     </Modal>
   );
