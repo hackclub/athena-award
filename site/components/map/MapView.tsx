@@ -8,6 +8,7 @@ import { Error } from "@/components/screens/Modal";
 import L from "leaflet";
 import { motion } from "framer-motion";
 import { useMap } from "react-leaflet";
+import { Header } from "@/components/panels/Header";
 import {
   ArrowTopRightOnSquareIcon,
   CodeBracketIcon,
@@ -149,6 +150,7 @@ export default function MapView() {
 
   return (
     <>
+      <Header skipWelcomeModal={true}/>
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
         aria-hidden="true"
@@ -167,7 +169,7 @@ export default function MapView() {
         `}</style>
       </div>
 
-      <div className="w-screen flex flex-col justify-between gap-4 overflow-y-scroll h-screen bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 relative">
+      <div className="w-screen flex flex-col justify-between gap-4 overflow-y-scroll h-screen bg-hc-primary-dull bg-[url(/bg.svg)] px-16 pb-16 pt-24 relative">
         <div className="self-start">
           <a
             className="text-xl sm:text-2xl uppercase text-white font-bold mb-2"

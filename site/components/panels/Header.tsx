@@ -115,37 +115,23 @@ export function Header({
 }) {
   const session = useSession();
   return (
-    <div className="absolute pointer-events-auto w-full">
-      <div className="flex flex-row justify-end sm:justify-between px-6 w-full">
-        <a className="hidden sm:inline" href="https://hackclub.com">
+    <div className="fixed pointer-events-auto w-full z-50 bg-hc-primary-dull/90 border-b-2 border-gold/20">
+      <div className="flex flex-row justify-between px-6 w-full">
+        <div className = "flex flex-row gap-3">
+        <a className="inline" href="https://hackclub.com">
           <img
             className="w-32"
             src="https://assets.hackclub.com/flag-orpheus-top.svg"
           />
         </a>
+        </div>
 
-        {session.status === "authenticated" ? (
-          <div className="pointer-events-auto ml-auto self-end">
-            <Tooltip id="profile_picture" place="left" className="z-10" />
-            <a
-              data-tooltip-id="profile_picture"
-              data-tooltip-content="You're logged in! Click here to skip to the gallery."
-              className="hidden sm:flex no-underline items-center justify-center"
-              href={`${process.env.NEXT_PUBLIC_BASE_URL}/gallery`}
-            >
-              <span
-                className="sm:inline-block ml-auto size-10 m-6 rounded-full bg-cover bg-no-repeat bg-center"
-                style={{
-                  backgroundImage: `url('${session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`,
-                }}
-              />
-              <h2 className="italic -ml-4 text-base sm:text-xl text-hc-secondary inline-block">
-                {" "}
-                -{">"}
-              </h2>
-            </a>
-          </div>
-        ) : skipWelcomeModal ? null : (
+        <div className = "self-center flex flex-row uppercase font-semibold *:text-2xl justify-between gap-10 *:text-[#E89368]">
+          <a href = "/about" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">ABOUT</a>
+          <a href = "/map" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">PROJECT MAP</a>
+        </div>
+
+      { skipWelcomeModal ? null : (
           <div className="pointer-events-auto max-sm:mx-auto *:sm:ml-auto">
             <WelcomeModal props={`${shineEffect(shineEffectProps)}`} />
           </div>

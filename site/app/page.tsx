@@ -55,10 +55,10 @@ const FAQ = [
   {
     question: "Who can participate?",
     answer:
-      "If you are a high school student and a gender minority, you're eligible to complete the Athena Award.",
+      "If you are a high school student and identify as female, nonbinary or another gender minority, you're eligible to complete the Athena Award.",
   },
   {
-    question: "Why do I have to verify my ID?",
+    question: "Why do I have to give my birthday/verify my ID?",
     answer:
       "We have to make sure you're not an adult trying to get stuff for free! In the past, Hack Club has given away hundreds of thousands of dollars of prizes to technical teenagers across the world.",
   },
@@ -89,7 +89,7 @@ function Polaroid({
   props?: string;
 }) {
   return (
-    <div className={`bg-white w-full h-max p-3 ${props}`}>
+    <div className={`hover:scale-105 transition transition-duration-300 bg-white w-full h-max p-3 z-40 ${props}`}>
       <img className="object-cover" src={image} />
       <p className="text-center">{caption}</p>
     </div>
@@ -112,12 +112,12 @@ export default function Index() {
       <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <Background shouldAnimate sourceScene={STAGES[1].visuals.scene} />
       </div>
-      <div className="relative z-10 pointer-events-auto sm:pointer-events-none">
+      <div className="relative pointer-events-auto sm:pointer-events-none">
         <Header skipWelcomeModal={true} />
-        <div className="pointer-events-none flex flex-col w-screen h-max justify-center items-center p-8 gap-6 text-hc-secondary italic">
+        <div className="pointer-events-none flex flex-col w-screen h-max justify-center items-center mt-14 p-8 gap-6 text-hc-secondary italic">
           <div className="grow flex flex-row" />{" "}
           {/* i cbf finding a better solution */}
-          <img className="max-lg:mx-auto lg:mr-auto max-h-48" src="/logo.svg" />
+          <img className="max-lg:mx-auto lg:mr-auto max-h-64" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg" />
           {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
           <div className="pointer-events-auto lg:absolute flex flex-col lg:flex-row gap-4 self-center *:mx-auto lg:self-end">
             <AuthStateButton className="h-full" />
@@ -126,11 +126,11 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div></div>
+
         <div className="w-screen h-max bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 flex flex-col gap-10 lg:flex-row">
           {/* to do: a blurb about days of service, think something like the counter from the gwynne shotwell site: https://gwynne.hackclub.dev */}
-          <div>
-            <h1 className="text-hc-secondary text-5xl">How this works:</h1>
+          <div className = "relative">
+            <h1 className="text-hc-secondary text-5xl w-max">How this works:</h1>
             <div className="flex flex-col md:flex-row">
               <div className="grid grid-cols-8 w-full lg:w-10/12 text-hc-secondary py-8">
                 {steps.map((step, index) => (
@@ -152,37 +152,37 @@ export default function Index() {
               </div>
             </div>
           </div>
-          <div className="relative sm:pr-12 md:pr-24 pt-12">
+          <div className="relative pointer-events-auto z-40 sm:pr-12 md:pr-24 pt-12">
             <Polaroid
               image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426.jpg"
               caption="code on websites..."
-              props="rotate-[345deg] md:w-96"
+              props="z-40 rotate-[345deg] md:w-96 hover:rotate-[360deg]"
             />
             <Polaroid
               image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/38b3527b24755420728d2b7634fb803ada27f189_dsc04571.jpg"
               caption="...earn rewards"
-              props="absolute lg:relative rotate-[12deg] top-0 sm:right-10 md:w-96"
+              props="z-40 absolute lg:relative rotate-[12deg] hover:-rotate-1 top-0 sm:right-10 md:w-96"
             />
           </div>
         </div>
-        <div className="w-screen h-full sm:h-screen p-12 sm:p-16 flex flex-col items-center justify-center">
-          <h1 className="text-hc-secondary text-5xl md:text-7xl text-center">
-            Last time we did this:
-          </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 my-10">
+        <div className="pointer-events-auto w-screen h-full sm:h-screen p-12 sm:p-16 flex flex-col items-center justify-center">
+         
+            <h1 className="text-hc-secondary text-5xl md:text-7xl text-center">
+              Last time we did this:
+            </h1>
+         
+          <div className="flex flex-row flex-wrap items-center justify-center gap-12 my-10">
             {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="col-span-1 text-hc-secondary text-center"
-              >
-                <h1 className="text-4xl">{stat.number}</h1>
-                <p className="text-lg">{stat.description}</p>
-              </div>
+                <div key = {index}
+                  className="col-span-1 text-hc-secondary text-center">
+                  <h1 className="text-4xl">{stat.number}</h1>
+                  <p className="text-lg">{stat.description}</p>
+                </div>
             ))}
           </div>
         </div>
 
-        <div className="relative w-screen h-max sm:h-[110vh] py-12 sm:py-16 bg-hc-primary-dull bg-[url(/bg.svg)] flex flex-col">
+        <div className="w-screen h-max py-12 z-40 sm:py-16 bg-hc-primary-dull bg-[url(/bg.svg)] flex flex-col">
           <h1 className="text-hc-secondary text-5xl sm:text-7xl text-center">
             Prizes
           </h1>
@@ -221,7 +221,7 @@ export default function Index() {
               />
             </svg>
           </div>
-          <Marquee className="grow" autoFill pauseOnHover={true}>
+          <Marquee className="grow pointer-events-auto" autoFill pauseOnHover={true}>
             {prizes.map((prize: any, index: any) => (
               <Painting
                 key={index}
@@ -262,7 +262,7 @@ export default function Index() {
             {FAQ.map((q, index) => (
               <div
                 key={index}
-                className="col-span-1 text-hc-secondary text-left m-3 p-5 bg-hc-primary-dull/50 "
+                className="transition transition-duration-300 border border-white/20 hover:scale-105 hover:rotate-1 col-span-1 text-hc-secondary text-left m-3 p-5 bg-hc-primary-dull/50 "
               >
                 <h1 className="text-2xl">{q.question}</h1>
                 <p
@@ -274,7 +274,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="*:flex *:flex-col *:gap-4 flex flex-col gap-6 w-screen h-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
+        <div className="*:flex *:flex-col *:gap-4 flex flex-col gap-6 w-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
           <div>
             <h1 className="text-hc-secondary text-3xl text-left">
               <i>brought to you by</i>
@@ -288,10 +288,12 @@ export default function Index() {
             <h1 className="text-hc-secondary text-3xl text-left italic">
               in collaboration with
             </h1>
-            <div className="flex flex-row flex-wrap gap-6 w-full items-center justify-center md:justify-start md:items-left image-cover *:h-36">
+            <div className="flex flex-row flex-wrap gap-6 w-full items-center justify-center md:justify-start md:items-left image-cover *:h-20 *:md:h-36">
               <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b150edd0de91fa5008f55466bbbef9dc32b86994_image.png" />
               <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png" />
               <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png" />
+              <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"/>
+              <img src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"/>
             </div>
           </div>
         </div>
@@ -309,8 +311,10 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="*:text-hc-secondary flex flex-wrap justify-between gap-4 *:md:basis-5/12 flex-row z-10 w-screen h-max p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
-        <div className="flex flex-col gap-2">
+      <div className="relative *:text-hc-secondary flex flex-wrap justify-end gap-4 *:lg:basis-1/3 flex-row z-10 w-screen h-max p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
+        <img className = "h-full opacity-75 hidden lg:inline absolute mt-0 bottom-0 -left-10" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/315b4d8271ec9804a39feb90d0c8c0da22be2411_image.png"/>
+
+        <div className="lg:self-end flex flex-col gap-2">
           <h1 className="text-2xl text-left mb-3">
             <i>
               a project by{" "}
@@ -356,7 +360,7 @@ export default function Index() {
           </p>
         </div>
 
-        <div>
+        <div className = "w-full">
           <div className="flex flex-row gap-8">
             <div className="flex flex-col gap-1">
               <h1 className="text-xl">Hack Club</h1>
