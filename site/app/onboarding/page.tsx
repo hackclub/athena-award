@@ -125,7 +125,7 @@ export default function Page() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ ease: "easeOut", delay: index * 0.75 }}
-                    className="bg-hc-primary-dull/40 rounded basis-1/3 p-4 h-max lg:h-48 overflow-y-scroll"
+                    className="bg-hc-primary-dull/40 rounded basis-1/3 p-4 h-max lg:h-48 overflow-auto-scroll"
                   >
                     <h1 className="text-2xl sm:text-4xl text-left whitespace-nowrap">
                       {step.step}
