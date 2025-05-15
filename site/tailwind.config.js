@@ -16,6 +16,7 @@ module.exports = {
   			'hc-blue': '#338EDA',
   			'hc-green': '#33D6A6',
   			'hc-primary-dull': '#8C2E37',
+         "gold": "#F4BF4F"
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
