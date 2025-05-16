@@ -17,6 +17,10 @@ export async function POST(request: NextRequest) {
   if (!body["track"]) {
     return NextResponse.json({ error: "Track not provided." });
   }
+  if (body["track"] !== "beginner" && body["track"] !== "advanced"){
+    return NextResponse.json({ error: "Invalid track provided." })
+
+  }
   const session = await auth();
   const emailAddress = session?.user.email;
   try {

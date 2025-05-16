@@ -5,7 +5,7 @@ import type { NextAuthConfig } from "next-auth";
 
 export const config: NextAuthConfig = {
   theme: {
-    logo: "/logo.svg",
+    logo: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg",
   },
   debug: true,
   providers: [

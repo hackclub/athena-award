@@ -11,6 +11,7 @@ export async function GET(request: NextRequest) {
   const stage = request.nextUrl.searchParams.get("stage");
   const allPrizes = await airtable("Shop")
     .select({
+      fields: [ "item_name", "item_friendly_name", "description", "image", "stage", "price"],
       sort: [
         { field: "stage", direction: "asc" },
         { field: "price", direction: "asc" },
@@ -27,5 +28,6 @@ export async function GET(request: NextRequest) {
       .map((item: any) => item["fields"])
       .filter((key: any) => !["Orders"].includes(key)); // jank
   }
+  console.log(prettyPrizeID)
   return NextResponse.json(prettyPrizeID);
 }
