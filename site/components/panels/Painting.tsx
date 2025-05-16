@@ -26,7 +26,7 @@ export default function Painting({
       <div
         data-tooltip-id={index}
         data-tooltip-content={tooltip}
-        className={`h-42 sm:h-80 flex flex-col items-center justify-center ${className}`}
+        className={`h-36 sm:h-80 flex flex-col items-center justify-center ${className}`}
       >
         {" "}
         {/* maybe add small random rotations? */}

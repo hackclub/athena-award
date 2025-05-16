@@ -116,19 +116,19 @@ export function Header({
   const session = useSession();
   return (
     <div className="fixed pointer-events-auto w-full z-50 bg-hc-primary-dull/90 border-b-2 border-gold/20">
-      <div className="flex flex-row justify-between px-6 w-full">
+      <div className="flex flex-row justify-around md:justify-between px-6 w-full">
         <div className = "flex flex-row gap-3">
         <a className="inline" href="https://hackclub.com">
           <img
-            className="w-32"
+            className="w-24 md:w-32"
             src="https://assets.hackclub.com/flag-orpheus-top.svg"
           />
         </a>
         </div>
 
-        <div className = "self-center flex flex-row uppercase font-semibold *:text-2xl justify-between gap-10 *:text-[#E89368]">
+        <div className = "flex flex-row uppercase font-semibold items-center text-xl *:md:text-2xl justify-between gap-10 *:text-[#E89368]">
           <a href = "/about" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">ABOUT</a>
-          <a href = "/map" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">PROJECT MAP</a>
+          <a href = "/map" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">MAP</a>
         </div>
 
       { skipWelcomeModal ? null : (

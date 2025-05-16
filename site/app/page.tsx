@@ -130,7 +130,7 @@ export default function Index() {
         <div className="w-screen h-max bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 flex flex-col gap-10 lg:flex-row">
           {/* to do: a blurb about days of service, think something like the counter from the gwynne shotwell site: https://gwynne.hackclub.dev */}
           <div className = "relative">
-            <h1 className="text-hc-secondary text-5xl w-max">How this works:</h1>
+            <h1 className="text-hc-secondary text-5xl">How this works:</h1>
             <div className="flex flex-col md:flex-row">
               <div className="grid grid-cols-8 w-full lg:w-10/12 text-hc-secondary py-8">
                 {steps.map((step, index) => (
