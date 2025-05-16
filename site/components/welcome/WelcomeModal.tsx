@@ -31,7 +31,7 @@ export default function WelcomeModal({ props }: { props: string }) {
       {session.status === "unauthenticated" && (
         <>
           <button
-            className={`${props} text-xl playfair-display`}
+            className={`${props} text-xl playfair-display bg-[#E89368] border-[#E89368]`}
             onClick={() => setIsOpen(true)}
           >
             already in hack club?
