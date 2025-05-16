@@ -296,6 +296,7 @@ export default function Index() {
               <a target = "_blank" href = "https://girlswhocode.com/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png" /></a>
               <a target = "_blank" href = "https://www.girlscoutsnyc.org/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"/></a>
               <a target = "_blank" href = "https://www.theknowledgehouse.org/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"/></a>
+              <a target = "_blank" href = "https://www.wearebgc.org/"><img className="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
             </div>
           </div>
         </div>

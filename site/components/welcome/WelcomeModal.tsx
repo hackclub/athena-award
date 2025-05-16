@@ -46,7 +46,7 @@ export default function WelcomeModal({ props }: { props: string }) {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                <motion.div className="relative z-10">
+                <motion.div className="relative z-50">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
