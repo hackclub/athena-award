@@ -12,8 +12,8 @@ import LeaderboardModal from "@/components/modals/leaderboard/Modal";
 
 export default function Gallery() {
   // api calls for progress go here
-  const [module, setModule] = useState<"Start hacking" | "Your second project" | "Your final project">(
-    "Intro" as (typeof STAGES)[number]["moduleName"],
+  const [module, setModule] = useState<(typeof STAGES)[number]["moduleName"] | "Intro">(
+      "Intro",
   );
   const [profileIsOpen, setProfileIsOpen] = useState(false);
   const [_uxEvent, setUXEvent] = useState<UXEvent>("map");

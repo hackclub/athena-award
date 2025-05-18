@@ -1,17 +1,13 @@
 import IdeaGenerator from "../components/panels/add-ons/IdeaGenerator";
 
-export interface UserStageData {
+export interface BaseStage {
   name: string;
   id: string;
-  complete: boolean;
-}
-
-export interface UserModuleData {
-  moduleName: string;
 }
 
 export interface BaseModule {
   moduleName: string;
+  description: string;
   visuals: {
     name: string;
     artist: string;
@@ -20,14 +16,30 @@ export interface BaseModule {
     accents: {
       primary: string;
       secondary: string;
+      tertiary: string;
     };
   };
+  actions: {
+    id: string;
+    name: string;
+    x: number;
+    y: number;
+    component: any | null;
+    resources: {
+      name: string;
+      description: string;
+      link: string;
+      image: string;
+    }[];
+    icon: string;
+  }[];
   completionRewards: {
     name: string;
     id: string;
     description: string;
-  }[];
+  };
 }
+
 export const STAGES = [
   {
     moduleName: "Start hacking",
@@ -211,6 +223,63 @@ export const STAGES = [
       id: "lorem-ipsum",
       description:
         "This is a really cool reward! Go out there and change the world.",
+    },
+  },
+  {
+    moduleName: "Onward!",
+    description: "Finished your three projects? Keep going! The journey of building and learning never ends. Take your skills to the next level by contributing to open source, mentoring others, or starting something in your community.",
+    visuals: {
+      name: "Vista from a Grotto",
+      artist: "David Teniers the Younger",
+      src: "/vista.jpg",
+      scene: "https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode",
+      accents: {
+        primary: "bg-indigo-950",
+        secondary: "bg-indigo-900/30",
+        tertiary: "bg-indigo-900/40",
+      },
+    },
+    actions: [
+      {
+        id: "stage4-resources",
+        name: "Next Steps",
+        x: 80,
+        y: 60,
+        component: null,
+        resources: [
+          {
+            name: "Contribute to Open Source",
+            description:
+              "Ready to collaborate with others? Start contributing to open source projects and make a real impact in the developer community!",
+            link: "https://github.com/hackclub",
+            image:
+              "https://cloud-j0p07nviw-hack-club-bot.vercel.app/0image.png",
+          },
+          {
+            name: "Become a Leader",
+            description:
+              "Start a Hack Club at your school, organize a hackathon, or become a mentor. Help others discover the joy of coding!",
+            link: "https://hackclub.com/clubs",
+            image:
+              "https://hc-cdn.hel1.your-objectstorage.com/s/v3/fb7308e47eb968083aa5902af086bcadc5fdd8cc_image.png",
+          },
+          {
+            name: "Join the Community",
+            description:
+              "Connect with other teen hackers, share your projects, and find collaborators in the Hack Club community!",
+            link: "https://hackclub.com/slack",
+            image:
+              "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1b6f7952c2cea122a22dcf85afe896f3679dfc34_image.png",
+          },
+        ],
+        icon: "magnifying-glass",
+      },
+    ],
+    completionRewards: {
+      name: "The Journey Continues",
+      id: "onward-journey",
+      description:
+        "Your Athena Award journey might be complete, but your adventure in tech is just beginning. Keep building, keep learning, keep sharing!",
     },
   },
 ] as const;

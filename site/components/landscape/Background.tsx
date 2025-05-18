@@ -8,9 +8,11 @@ import { AnimatePresence, motion } from "motion/react";
 const Background = ({
   shouldAnimate = false,
   sourceScene,
+  paused = false,
 }: {
   shouldAnimate: boolean;
   sourceScene: string;
+  paused?: boolean;
 }) => {
   const appRef = useRef<Application | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(shouldAnimate);
@@ -26,7 +28,7 @@ const Background = ({
     app
       .load(sourceScene)
       .then(() => {
-        if (!shouldAnimate) {
+        if (!shouldAnimate || paused) {
           setTimeout(() => app.stop(), 1000);
         }
       })
@@ -37,7 +39,7 @@ const Background = ({
         console.error(e);
       });
 
-    if (shouldAnimate) {
+    if (shouldAnimate && !paused) {
       app.play();
     }
 
@@ -45,15 +47,15 @@ const Background = ({
       app?.dispose();
       appRef.current = null;
     };
-  }, [sourceScene]);
+  }, [sourceScene, paused]);
 
   useEffect(() => {
-    if (shouldAnimate) {
+    if (shouldAnimate && !paused) {
       appRef.current?.play();
     } else {
       appRef.current?.stop();
     }
-  }, [shouldAnimate]);
+  }, [shouldAnimate, paused]);
 
   return (
     <div className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto">

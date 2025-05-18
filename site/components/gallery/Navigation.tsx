@@ -1,9 +1,7 @@
 import { STAGES } from "@/app/STAGES";
 
 interface NavigationProps {
-  module: string;
-  progress: { moduleName: string }[];
-  compositeUserModuleData: { moduleName: string }[];
+  module: (typeof STAGES)[number]["moduleName"] | "Intro";
   prevModule: string;
   nextModule: string;
   setModule: (moduleName: (typeof STAGES)[number]["moduleName"]) => void;
@@ -14,8 +12,6 @@ interface NavigationProps {
 
 export default function Navigation({
   module,
-  progress,
-  compositeUserModuleData,
   prevModule,
   nextModule,
   setModule,
@@ -23,9 +19,7 @@ export default function Navigation({
   setProjectRetrievalComplete,
   setPrizeScroller,
 }: NavigationProps) {
-  let currModuleIdx = STAGES.find((m) => m.moduleName === module)
-    ? progress.findIndex((p) => p.moduleName === module)
-    : 0;
+  let currModuleIdx = STAGES.findIndex((m) => m.moduleName === module);
 
   return (
     <div className="flex flex-row w-full gap-20">
@@ -35,9 +29,7 @@ export default function Navigation({
             currModuleIdx
               ? setModule(prevModule as (typeof STAGES)[number]["moduleName"])
               : setModule(
-                  compositeUserModuleData[compositeUserModuleData.length - 1][
-                    "moduleName"
-                  ] as (typeof STAGES)[number]["moduleName"]
+                  STAGES[STAGES.length - 1].moduleName as (typeof STAGES)[number]["moduleName"]
                 );
             setSelectedProject("_select#");
             setProjectRetrievalComplete(false);
@@ -68,9 +60,9 @@ export default function Navigation({
           key={`${module}-section-status`}
           className="italic text-lg md:text-2xl"
         >
-          {currModuleIdx ? (
+          {currModuleIdx !== -1 && currModuleIdx !== 3 ? (
             <span>
-              Project {currModuleIdx} / {progress.length - 1}
+              Project {currModuleIdx + 1} / {STAGES.length - 1}
             </span>
           ) : (
             <span>{module}</span>
@@ -80,7 +72,7 @@ export default function Navigation({
           onClick={() => {
             currModuleIdx
               ? setModule(nextModule as (typeof STAGES)[number]["moduleName"])
-              : setModule(compositeUserModuleData[1]["moduleName"] as (typeof STAGES)[number]["moduleName"]);
+              : setModule(STAGES[1].moduleName as (typeof STAGES)[number]["moduleName"]);
             setSelectedProject("_select#");
             setProjectRetrievalComplete(false);
             setPrizeScroller(0);

@@ -2,7 +2,7 @@
 
 import { STAGES } from "@/app/STAGES";
 import Background from "./Background";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Action from "./Action";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -18,12 +18,45 @@ export default function ActionableScene({
   setFullscreen: (b: boolean) => void;
 }) {
   const actions = STAGES.find((stage) => stage.moduleName === module)!.actions;
-  const [openPanel, setOpenPanel] = useState(false);
+  const [isLandscape, setIsLandscape] = useState(true);
+
+  useEffect(() => {
+    // Function to check if we're in landscape mode
+    const checkOrientation = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
+
+    // Check on mount
+    checkOrientation();
+
+    // Add event listener for resize
+    window.addEventListener('resize', checkOrientation);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkOrientation);
+  }, []);
 
   return (
     <div className="fixed w-screen h-screen z-0">
-      <Background shouldAnimate={shouldAnimate} sourceScene={sourceScene} />
+      <Background 
+        shouldAnimate={shouldAnimate} 
+        sourceScene={sourceScene} 
+        paused={!isLandscape}
+      />
       <AnimatePresence>
+        {!isLandscape && shouldAnimate && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+          >
+            <div className="text-white text-center p-8">
+              <h2 className="text-2xl font-bold mb-4">Please rotate your device</h2>
+              <p>This experience works best in landscape mode</p>
+            </div>
+          </motion.div>
+        )}
         {shouldAnimate &&
           actions.map((action, i) => (
             <motion.div
