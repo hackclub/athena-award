@@ -5,7 +5,7 @@ import UnauthenticatedWelcomeMessage from "./UnauthenticatedWelcomeMessage";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 
-export default function WelcomeModal({ props }: { props: string }) {
+export default function WelcomeModal({ props }: { props?: string }) {
   const session = useSession();
   const router = useRouter();
   // session.status === 'authenticated'
@@ -31,7 +31,7 @@ export default function WelcomeModal({ props }: { props: string }) {
       {session.status === "unauthenticated" && (
         <>
           <button
-            className={`${props} text-xl playfair-display bg-[#E89368] border-[#E89368]`}
+            className={`${props} text-xl playfair-display border-[#E89368]`}
             onClick={() => setIsOpen(true)}
           >
             already in hack club?
@@ -64,7 +64,7 @@ export default function WelcomeModal({ props }: { props: string }) {
                         transition={{ delay: 0.3 }}
                       >
                         <div className="w-[90vw] h-[90vh] md:w-[85vw] md:h-[85vh] transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-3 sm:p-6">
-                          <div className="bg-[#373E2F] w-full h-full rounded-2xl p-6 md:p-12">
+                          <div className="bg-green w-full h-full rounded-2xl p-6 md:p-12">
                             <div
                               id="inspiration"
                               className="text-white flex flex-col h-full"

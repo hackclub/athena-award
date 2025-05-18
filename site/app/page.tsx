@@ -22,7 +22,7 @@ const steps = [
   {
     title: "Ship your projects ⛵",
     description:
-      "Share your projects with our community of teen makers. Sign in with the Hack Club Slack and ship them! Earn artifacts for each project shipped to the gallery.",
+      "Share your finished projects with our community of teen makers. Earn artifacts for each deployed project shipped to the gallery.",
   },
   {
     title: "Earn a trip to a hackathon in New York City 🎁",
@@ -110,7 +110,8 @@ export default function Index() {
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull ">
       <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
-        <Background shouldAnimate sourceScene={STAGES[1].visuals.scene} />
+      <img className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/427997bef21567cf6bb86d73c1349bbc65694498_image.png"/>
+
       </div>
       <div className="relative pointer-events-auto sm:pointer-events-none">
         <Header skipWelcomeModal={true} />
@@ -262,7 +263,7 @@ export default function Index() {
             {FAQ.map((q, index) => (
               <div
                 key={index}
-                className="transition transition-duration-300 border border-white/20 hover:scale-105 hover:rotate-1 col-span-1 text-hc-secondary text-left m-3 p-5 bg-hc-primary-dull/50 "
+                className="transition transition-duration-300 borderhover:scale-105 hover:rotate-1 col-span-1 text-hc-secondary border-cream/30 text-left m-3 p-5 bg-hc-primary-dull/50 "
               >
                 <h1 className="text-2xl">{q.question}</h1>
                 <p

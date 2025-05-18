@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 export const shineEffect = (props: string) =>
   `${props} border text-center mx-auto focus:outline-none focus:ring focus:ring-slate-500/50 focus-visible:outline-none focus-visible:ring focus-visible:ring-slate-500/50 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms]`;
 export const shineEffectProps =
-  "p-5 text-2xl text-hc-secondary rounded-xl bg-hc-primary-dull/80 border-hc-primary-dull/80";
+  "p-5 text-2xl text-hc-primary-dull rounded-xl bg-cream border-hc-primary-dull/80";
 
 export function AuthStateButton({ className }: { className?: string }) {
   /// @ PAST SELF WHY IS THIS EVEN IN HERE
@@ -46,7 +46,6 @@ export function AuthStateButton({ className }: { className?: string }) {
             onClick={() => {
               router.push("/gallery");
             }}
-            className={shineEffect(shineEffectProps)}
           >
             <h1>enter the gallery</h1>
           </button>
@@ -116,19 +115,26 @@ export function Header({
   const session = useSession();
   return (
     <div className="fixed pointer-events-auto w-full z-50 bg-hc-primary-dull/90 border-b-2 border-gold/20">
-      <div className="flex flex-row justify-around md:justify-between px-6 w-full">
-        <div className = "flex flex-row gap-3">
-        <a className="inline" href="https://hackclub.com">
-          <img
-            className="w-24 md:w-32"
-            src="https://assets.hackclub.com/flag-orpheus-top.svg"
-          />
+      <div className="flex flex-row justify-around md:justify-between px-3 md:px-6 w-full">
+        <div className = "flex flex-row gap-6 items-center">
+        <a className = "inline self-center m-2" href = "/">
+        <img 
+          className = "w-96"
+          src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/9b4863034f8b13e0c0a5066d408c69f1a536cd7b_19w_flag-cropped.svg"/>
         </a>
         </div>
 
-        <div className = "flex flex-row uppercase font-semibold items-center text-xl *:md:text-2xl justify-between gap-10 *:text-[#E89368]">
+        <div className = "flex flex-row uppercase font-semibold items-center text-xl *:md:text-2xl justify-between gap-5 *:text-cream">
           <a href = "/about" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">ABOUT</a>
           <a href = "/map" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">MAP</a>
+          <span className = "hidden md:inline border border-cream/10 h-full"/>
+          <a className="hidden md:inline" href="https://hackclub.com">
+          <img
+            className = "w-16 md:w-24"
+            src="https://assets.hackclub.com/flag-standalone-wtransparent.svg"
+          />
+        </a>
+
         </div>
 
       { skipWelcomeModal ? null : (

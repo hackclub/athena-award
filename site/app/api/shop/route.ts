@@ -28,6 +28,5 @@ export async function GET(request: NextRequest) {
       .map((item: any) => item["fields"])
       .filter((key: any) => !["Orders"].includes(key)); // jank
   }
-  console.log(prettyPrizeID)
   return NextResponse.json(prettyPrizeID);
 }

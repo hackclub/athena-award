@@ -33,7 +33,7 @@ export default function UnauthenticatedWelcomeMessage({
             key={i}
             className={
               i === 0
-                ? "text-3xl md:text-5xl font-bold italic playfair-display"
+                ? "text-3xl text-cream md:text-5xl font-bold italic playfair-display"
                 : "text-lg md:text-2xl italic font-serif"
             }
             initial={{ opacity: 0, y: 20 }}
@@ -52,13 +52,13 @@ export default function UnauthenticatedWelcomeMessage({
         className="w-full flex flex-col sm:flex-row justify-between self-end"
       >
         <button
-          className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display"
+          className="underline decoration-slice text-white hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display"
           onClick={() => setOpen(false)}
         >
           &lt;- Go back
         </button>
         <button
-          className="underline decoration-slice text-hc-secondary hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display"
+          className="underline decoration-slice text-white hover:text-hc-primary transition font-bold rounded-full text-center text-lg md:text-4xl italic playfair-display"
           onClick={() =>
             signIn("slack", {
               callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/onboarding`,
