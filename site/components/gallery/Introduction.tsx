@@ -60,7 +60,7 @@ export default function Introduction({
             transition={{ delay: 0.4 }}
             initial="hidden"
             animate="visible"
-            className="text-xl text-cream text-center md:text-left"
+            className="text-xl text-black text-center md:text-left"
           >
             Build something with help
           </motion.h2>
