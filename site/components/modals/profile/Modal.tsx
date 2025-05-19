@@ -116,12 +116,8 @@ export default function Profile() {
           <div className="text-white font-bold text-2xl uppercase">
             Referral Code
           </div>
-          <ul className="list-disc list-inside">
-            <li>Share your referral link and earn prizes!</li>
-            <li>
-              https://athena.hackclub.com?referred_by={session.data?.slack_id}
-            </li>
-          </ul>
+            <span>Earn prizes for people who sign up using your referral link!</span>
+            <span className = "text-center">https://award.athena.hackclub.com?referred_by={session.data?.slack_id}</span>
           <button
             className="text-white font-bold text-2xl uppercase mt-auto self-start"
             onClick={() => signOut({ redirectTo: "/" })}
@@ -132,7 +128,7 @@ export default function Profile() {
 
         {/*<div className="w-[1px] h-full bg-hc-primary" />*/}
 
-        <div className="md:col-span-2 flex flex-col gap-3 md:overflow-auto-scroll">
+        <div className="md:col-span-2 flex flex-col gap-3 md:overflow-scroll">
           <div className="self-start *:align-middle flex gap-3 w-full align-middle sticky">
             <div className="*:align-middle w-full h-fit bg-black/25 p-2 rounded flex gap-4">
               <img
@@ -149,7 +145,7 @@ export default function Profile() {
             </button>
           </div>
 
-          <div className="grow overflow-auto">
+          <div className="grow overflow-y-auto">
             <div className="flex flex-col gap-4 my-3">
               <Progress />
               <Waka />

@@ -7,14 +7,14 @@ export const introResources = [
     link: "https://tribute.athena.hackclub.com",
   },
   {
-    name: "Create a video game with Sprig 🎮",
-    id: "sprig",
-    link: "https://sprig.hackclub.com",
+    name: "Level up your website with Express 👾",
+    id: "express",
+    link: "https://express.athena.hackclub.com",
   },
   {
-    name: "Design a PCB with Onboard ⚡",
-    id: "onboard",
-    link: "https://onboard.hackclub.com",
+    name: "Make a video game with Sprig 🪴",
+    id: "sprig",
+    link: "https://sprig.hackclub.com",
   },
 ];
 

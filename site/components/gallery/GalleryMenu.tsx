@@ -35,7 +35,7 @@ export function ResourceCue({
       transition={{ delay: 0.5 + 0.09 * delay }}
       initial="hidden"
       animate="visible"
-      className={`w-full bg-white/20 p-3 flex justify-between rounded no-underline text-white`}
+      className={`w-full bg-white/20 p-3 flex justify-between rounded no-underline text-black/80`}
       href={link}
       target="_blank"
       rel="noopener noreferrer"

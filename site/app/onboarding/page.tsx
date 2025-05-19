@@ -146,7 +146,7 @@ export default function Page() {
               </h1>
               <div className="text-center mx-auto gap-4 w-full flex flex-col">
                 <div className="text-2xl">
-                  Are you a beginner or advanced programmer?
+                   Do you want to build guided or custom projects?
                 </div>
                 <p>
                   Select the one that describes you best - this choice will only
@@ -168,11 +168,11 @@ export default function Page() {
                     transition={{ ease: "easeOut", delay: 0.75 }}
                     className={`hover:!scale-105 rounded transition ${track === "beginner" ? "border-2 border-hc-primary" : null}`}
                   >
-                    <h1 className="text-2xl sm:text-4xl text-left">Beginner</h1>
-                    <p className="text-left text-lg py-1 sm:text-xl">
-                      I haven't really programmed before, but I'm excited to
-                      learn how to make websites, apps, games and more.
-                    </p>
+                    <h1 className="text-2xl sm:text-4xl text-left">Guided</h1>
+                    <ul className="text-left text-lg py-1 sm:text-xl list-inside list-disc">
+                      <li>I'm not sure what to make and would like some more resources.</li>
+                      <li>I completed a project from GirlsWhoCode, Black Girls Code or another summer program and want to submit it here!</li>
+                    </ul>
                   </motion.button>
                   <motion.button
                     onClick={async () => {
@@ -187,11 +187,11 @@ export default function Page() {
                     transition={{ ease: "easeOut", delay: 0.75 }}
                     className={`hover:!scale-105 rounded transition ${track === "advanced" ? "border-2 border-hc-primary" : null}`}
                   >
-                    <h1 className="text-2xl sm:text-4xl text-left">Advanced</h1>
-                    <p className="text-left text-lg py-1 sm:text-xl">
-                      I'm a confident programmer and have created multiple
-                      projects that other people have been able to use.
-                    </p>
+                    <h1 className="text-2xl sm:text-4xl text-left">Custom</h1>
+                    <ul className="text-left text-lg py-1 sm:text-xl list-disc list-inside">
+                      <li>I have a lot of ideas about things I want to make.</li>
+                      <li>I'm a confident programmer and have created some projects before</li>
+                    </ul>
                   </motion.button>
                 </div>
               </div>

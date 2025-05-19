@@ -44,7 +44,7 @@ export default function Introduction({
       setPrizeScroller={setPrizeScroller}
       setProjectRetrievalComplete={setProjectRetrievalComplete}
     >
-      <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded *:bg-white/30 *:!text-black *:backdrop-blur *:px-4 *:py-2 *:my-2">
+      <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded-lg *:bg-white/30 *:!text-black *:backdrop-blur *:px-4 *:py-2 *:my-2">
         <div className="md:basis-1/2 text-black flex-1 w-full">
           <motion.h2
             variants={slidingUpVariant}
@@ -60,7 +60,7 @@ export default function Introduction({
             transition={{ delay: 0.4 }}
             initial="hidden"
             animate="visible"
-            className="text-xl text-black text-center md:text-left"
+            className="text-xl text-cream text-center md:text-left"
           >
             Build something with help
           </motion.h2>
