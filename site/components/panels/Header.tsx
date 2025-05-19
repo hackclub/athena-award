@@ -46,6 +46,7 @@ export function AuthStateButton({ className }: { className?: string }) {
             onClick={() => {
               router.push("/gallery");
             }}
+            className="bg-cream text-2xl p-5 rounded-lg text-hc-primary-dull"
           >
             <h1>enter the gallery</h1>
           </button>

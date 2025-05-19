@@ -44,23 +44,23 @@ export default function Introduction({
       setPrizeScroller={setPrizeScroller}
       setProjectRetrievalComplete={setProjectRetrievalComplete}
     >
-      <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded *:bg-hc-primary-dull/80 *:backdrop-blur *:px-4 *:py-2 *:my-2">
-        <div className="md:basis-1/2 text-white flex-1 w-full">
+      <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded *:bg-white/30 *:!text-black *:backdrop-blur *:px-4 *:py-2 *:my-2">
+        <div className="md:basis-1/2 text-black flex-1 w-full">
           <motion.h2
             variants={slidingUpVariant}
             transition={{ delay: 0.3 }}
             initial="hidden"
             animate="visible"
-            className="text-3xl text-white text-center md:text-left"
+            className="text-3xl text-black text-center md:text-left"
           >
-            Beginner Track 👥
+            Guided Track 👥
           </motion.h2>
           <motion.h2
             variants={slidingUpVariant}
             transition={{ delay: 0.4 }}
             initial="hidden"
             animate="visible"
-            className="text-xl text-white text-center md:text-left"
+            className="text-xl text-black text-center md:text-left"
           >
             Build something with help
           </motion.h2>
@@ -73,9 +73,7 @@ export default function Introduction({
             className="h-full overflow-auto flex flex-col gap-3"
           >
             <p>
-              New to coding? For your three projects, you could complete one
-              of Hack Club's You Ship We Ship (YSWS) programs to learn some
-              new skills.
+              Not sure what to make?
             </p>
             {introResources.map((resource: Resource, index: number) => (
               <ResourceCue
@@ -87,21 +85,21 @@ export default function Introduction({
             ))}
           </motion.div>
         </div>
-        <span className="mx-auto md:my-auto !bg-transparent text-white rounded-none text-2xl lowercase playfair-display italic">or</span>
-        <div className="md:basis-1/2  flex-1 text-white">
+        <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">or</span>
+        <div className="md:basis-1/2 flex-1 text-black">
           <Tooltip id="original" className="max-w-64" />
           <motion.h2
             variants={slidingUpVariant}
-            className="text-3xl text-white text-center md:text-left"
+            className="text-3xl text-black text-center md:text-left"
           >
-            Advanced Track 👤
+            Custom Track 👤
           </motion.h2>
           <motion.h2
             variants={slidingUpVariant}
             transition={{ delay: 0.4 }}
             initial="hidden"
             animate="visible"
-            className="text-xl text-white text-center md:text-left"
+            className="text-xl text-black text-center md:text-left"
           >
             Build something yourself
           </motion.h2>

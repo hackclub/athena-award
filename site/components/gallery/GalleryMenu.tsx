@@ -35,7 +35,7 @@ export function ResourceCue({
       transition={{ delay: 0.5 + 0.09 * delay }}
       initial="hidden"
       animate="visible"
-      className={`w-full bg-white/20 p-3 flex justify-between rounded`}
+      className={`w-full bg-white/20 p-3 flex justify-between rounded no-underline text-white`}
       href={link}
       target="_blank"
       rel="noopener noreferrer"
@@ -87,16 +87,17 @@ export default function GalleryMenu({
     currModuleIdx === 0
       ? "Intro"
       : currModuleIdx === -1
-      ? progress[progress.length - 1].moduleName
-      : progress[(currModuleIdx - 1 + progress.length) % progress.length].moduleName;
+        ? progress[progress.length - 1].moduleName
+        : progress[(currModuleIdx - 1 + progress.length) % progress.length].moduleName;
 
-  let urls = [
-    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx}`,
-    `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx}`,
-    `/api/shop?stage=${currModuleIdx}`,
+        let urls = [
+    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx+1}`,
+    `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`,
+    `/api/shop?stage=${currModuleIdx+1}`,
     `/api/user/${slackId}/points`,
   ];
 
+  console.log("current module is ", currModuleIdx)
   /** this is the current stage represented as a module object with the relevant visuals data */
   const baseModuleData = STAGES.find((m) => m.moduleName === module)!;
 
@@ -181,6 +182,8 @@ export default function GalleryMenu({
       </>
     );
   }
+  console.log("progress is", progress)
+  console.log(currModuleIdx)
 
   return (
     <>

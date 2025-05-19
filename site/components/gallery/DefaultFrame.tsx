@@ -36,7 +36,7 @@ export default function DefaultFrame({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md h-full lg:h-screen w-screen p-12 sm:p-16 transition-all ${primaryTheme} overflow-auto-scroll`}
+            className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md w-full lg:h-screen p-12 sm:p-16 transition-all ${primaryTheme} overflow-auto-scroll`}
           >
             <div className="self-start">
               <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">

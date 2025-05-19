@@ -20,7 +20,6 @@ export default function Navigation({
   setPrizeScroller,
 }: NavigationProps) {
   let currModuleIdx = STAGES.findIndex((m) => m.moduleName === module);
-
   return (
     <div className="flex flex-row w-full gap-20">
       <div className="flex gap-2 items-center self-center text-white">
@@ -28,9 +27,8 @@ export default function Navigation({
           onClick={() => {
             currModuleIdx
               ? setModule(prevModule as (typeof STAGES)[number]["moduleName"])
-              : setModule(
-                  STAGES[STAGES.length - 1].moduleName as (typeof STAGES)[number]["moduleName"]
-                );
+              : // @ts-ignore
+                setModule("Intro"); 
             setSelectedProject("_select#");
             setProjectRetrievalComplete(false);
             setPrizeScroller(0);
