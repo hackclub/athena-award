@@ -10,7 +10,7 @@ interface DefaultFrameProps {
   module: string;
   prevModule: string;
   nextModule: string;
-  setModule: (module: (typeof STAGES)[number]["moduleName"]) => void;
+  setModule: (module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void;
   setSelectedProject: (project: string) => void;
   setPrizeScroller: (value: number) => void;
   setProjectRetrievalComplete: (status: boolean) => void;

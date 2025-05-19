@@ -1,10 +1,10 @@
 import { STAGES } from "@/app/STAGES";
 
 interface NavigationProps {
-  module: (typeof STAGES)[number]["moduleName"] | "Intro";
+  module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!";
   prevModule: string;
   nextModule: string;
-  setModule: (moduleName: (typeof STAGES)[number]["moduleName"]) => void;
+  setModule: (m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void;
   setSelectedProject: (project: string) => void;
   setProjectRetrievalComplete: (status: boolean) => void;
   setPrizeScroller: (value: number) => void;
@@ -25,10 +25,11 @@ export default function Navigation({
       <div className="flex gap-2 items-center self-center text-white">
         <button
           onClick={() => {
-            currModuleIdx
-              ? setModule(prevModule as (typeof STAGES)[number]["moduleName"])
-              : // @ts-ignore
-                setModule("Intro"); 
+            module === "Intro"
+              ? setModule("Onward!")
+              : currModuleIdx === 0
+              ? setModule("Intro")
+              : setModule(prevModule as (typeof STAGES)[number]["moduleName"]);
             setSelectedProject("_select#");
             setProjectRetrievalComplete(false);
             setPrizeScroller(0);
@@ -60,7 +61,7 @@ export default function Navigation({
         >
           {currModuleIdx !== -1 && currModuleIdx !== 3 ? (
             <span>
-              Project {currModuleIdx + 1} / {STAGES.length - 1}
+              Project {currModuleIdx + 1} / {STAGES.length}
             </span>
           ) : (
             <span>{module}</span>

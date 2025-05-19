@@ -12,7 +12,7 @@ import LeaderboardModal from "@/components/modals/leaderboard/Modal";
 
 export default function Gallery() {
   // api calls for progress go here
-  const [module, setModule] = useState<(typeof STAGES)[number]["moduleName"] | "Intro">(
+  const [module, setModule] = useState<(typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!">(
       "Intro",
   );
   const [profileIsOpen, setProfileIsOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function Gallery() {
         <ProfileModal />
         <InfoModal />
         <LeaderboardModal />
-        <GalleryMenu module={module} setModule={setModule as (m: (typeof STAGES)[number]["moduleName"]) => void}></GalleryMenu>
+        <GalleryMenu module={module} setModule={setModule as (m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void}></GalleryMenu>
       </UXEventContext.Provider>
     </div>
   );

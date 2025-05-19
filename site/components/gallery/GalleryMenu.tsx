@@ -18,6 +18,7 @@ import { Error } from "@/components/screens/Modal";
 import Link from "next/link";
 import Navigation from "./Navigation";
 import Introduction from "./Introduction";
+import NextSteps from "./NextSteps";
 import { slidingUpVariant } from "./constants";
 
 export function ResourceCue({
@@ -66,9 +67,9 @@ export default function GalleryMenu({
   progress = STAGES,
   setModule,
 }: {
-  module: (typeof STAGES)[number]["moduleName"] | "Intro";
+  module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!";
   progress?: typeof STAGES;
-  setModule: (module: (typeof STAGES)[number]["moduleName"]) => void;
+  setModule: (module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void;
 }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [selectedProject, setSelectedProject] = useState("_select#");
@@ -79,16 +80,17 @@ export default function GalleryMenu({
   const slackId = session.data?.slack_id;
 
   let currModuleIdx = progress.findIndex((p) => p.moduleName === module);
-  const nextModule =
-    currModuleIdx === progress.length - 1
-      ? "Intro"
-      : progress[(currModuleIdx + 1) % progress.length].moduleName;
-  const prevModule =
-    currModuleIdx === 0
-      ? "Intro"
-      : currModuleIdx === -1
-        ? progress[progress.length - 1].moduleName
-        : progress[(currModuleIdx - 1 + progress.length) % progress.length].moduleName;
+  const nextModule = 
+    module === "Intro" ? progress[0].moduleName :
+    module === "Onward!" ? "Intro" :
+    currModuleIdx === progress.length - 1 ? "Onward!" :
+    progress[currModuleIdx + 1].moduleName;
+
+  const prevModule = 
+    module === "Intro" ? "Onward!" :
+    module === "Onward!" ? progress[progress.length - 1].moduleName :
+    currModuleIdx === 0 ? "Intro" :
+    progress[currModuleIdx - 1].moduleName;
 
         let urls = [
     `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx+1}`,
@@ -155,11 +157,27 @@ export default function GalleryMenu({
     return <Unauthenticated />;
   }
 
-  const memoizedInfoPage = useMemo(
+  const memoizedIntroPage = useMemo(
     () => (
       <Introduction 
         points={points}
-        module={module}
+        module={module as "Intro"}
+        prevModule={prevModule}
+        nextModule={nextModule}
+        setModule={setModule as (m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void}
+        setSelectedProject={setSelectedProject}
+        setPrizeScroller={setPrizeScroller}
+        setProjectRetrievalComplete={setProjectRetrievalComplete}
+      />
+    ),
+    [points, module, progress, prevModule, nextModule, setModule, setSelectedProject, setPrizeScroller, setProjectRetrievalComplete]
+  );
+
+  const memoizedNextStepsPage = useMemo(
+    () => (
+      <NextSteps
+        points={points}
+        module={module as "Onward!"}
         prevModule={prevModule}
         nextModule={nextModule}
         setModule={setModule}
@@ -174,7 +192,9 @@ export default function GalleryMenu({
   if (!baseModuleData) {
     switch (module) {
       case "Intro":
-        return memoizedInfoPage;
+        return memoizedIntroPage;
+      case "Onward!":
+        return memoizedNextStepsPage;
     }
     return (
       <>
