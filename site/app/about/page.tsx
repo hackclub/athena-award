@@ -26,6 +26,7 @@ export default function About(){
                 <li>GitHub</li>
                 <li>GirlsWhoCode</li>
                 <li>Girl Scouts of Greater New York</li>
+                <li>and numerous others</li>
             </ul>
             <h2 className = "!text-3xl">What's in it for me?</h2>
             <p>Build three projects (or more!) in 30 hours, and you'll be invited to a <span className = "font-bold !text-gold">three-day hackathon</span> running November 14th - November 16th in the <span className = "!text-gold">heart of New York City</span>.{' '}
@@ -57,17 +58,27 @@ export default function About(){
                 </div>
                 <div>
                     <h1>Advanced Track</h1>
-                    <p>Build three of your own projects - for people who want to challenge themselves! Things for work and school don't count for the Athena Award!</p>
+                    <p>Build three of your own projects - for people who know how to code already and want to challenge themselves! Things for work and school don't count for the Athena Award!</p>
                 </div>
             </div>
             <h2 className = "!text-3xl">How do I submit my projects?</h2>
             <p>Your project needs to meet some criteria before you submit.</p>
             <ul className = "list-disc list-inside">
-                <li>Code needs to be open source. Use a website like <a target = "_blank" href = "https://github.com">GitHub</a> to publish your code.</li>
+                <li>Code needs to be open source. Use a website like <a target = "_blank" href = "https://github.com">GitHub</a> to publish your code. If you're unsure of how to do this, check out the guide on <a target="_blank">Tribute</a>.</li>
                 <li>Your project needs to, well, exist. It doesn't count if you're the only one who can access it! For instance, websites need to have a public URL, and apps need to be downloadable. This is called <span className = "!text-gold">deploying</span> your project.</li>
-                <li>It needs to be something original, that's not for work or school. Also - come on, you can do better than using AI to write your entire project for you.</li>
+                <li>It needs to be something original, that's not for work or school.</li>
+                <li>Make it portfolio-ready! Is this project something that you'd be proud to show off to an employer or teacher?</li>
+            
             </ul>
             <p>Once that's done, a member of the team will review and approve your project. Your project might be rejected if it doesn't meet the criteria, in which case, you're free to resubmit once you fix any issues.</p>
+            
+            <h2 className = "!text-3xl">How do I track the 30 hours of time spent on my projects?</h2>
+            <p>For Beginner Track projects, each workshop has its own set amount of hours, and we'll also ask you to self-report hours.</p>
+            <p>For Advanced Track projects, we'll ask you to install Wakatime - an extension for your code editor that will let us track how long you spend making your projects.</p>
+            
+            <h2 className = "!text-3xl">What if I've finished 3 projects but haven't spent 30 hours coding?</h2>
+            <p>Make and submit another project! You can submit more than 3 projects, for extra artifacts.</p>
+
           </div>
           </div>
         </div>

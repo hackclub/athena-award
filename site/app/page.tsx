@@ -275,7 +275,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="pointer-events-auto *:flex *:flex-col *:gap-4 flex flex-col gap-6 w-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
+        <div className="pointer-events-auto *:flex *:flex-col *:gap-4 flex flex-col h-full gap-6 w-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
           <div>
             <h1 id = "collaborators" className="text-hc-secondary text-3xl text-left">
               <i>brought to you by</i>
@@ -291,13 +291,13 @@ export default function Index() {
             <h1 className="text-hc-secondary text-3xl text-left italic">
               in collaboration with
             </h1>
-            <div className="flex flex-row flex-wrap gap-6 w-full items-center justify-center md:justify-start md:items-left">
+            <div className="flex flex-row flex-wrap gap-6 w-full justify-center items-center">
               <a target = "_blank" href = "https://bwsi.mit.edu/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b150edd0de91fa5008f55466bbbef9dc32b86994_image.png" /></a>
               <a target = "_blank" href = "https://github.com/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png" /></a>
               <a target = "_blank" href = "https://girlswhocode.com/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png" /></a>
               <a target = "_blank" href = "https://www.girlscoutsnyc.org/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"/></a>
               <a target = "_blank" href = "https://www.theknowledgehouse.org/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"/></a>
-              <a target = "_blank" href = "https://www.wearebgc.org/"><img className="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
+              <a target = "_blank" href = "https://www.wearebgc.org/"><img className = "image-cover h-20 md:h-36"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
             </div>
           </div>
         </div>
