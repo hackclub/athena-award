@@ -21,17 +21,15 @@ export default function Painting({
   showCaptionOnSmall?: boolean;
 }) {
   return (
-    <>
-      <Tooltip id={index} place="top" className="max-w-96 z-70" />
-      <div
-        data-tooltip-id={index}
-        data-tooltip-content={tooltip}
-        className={`h-36 sm:h-80 flex flex-col items-center justify-center ${className}`}
-      >
+    <div className = "relative">
+      <Tooltip id={index} place="top" className="max-w-64 z-[100]" />
+      <div className={`h-36 sm:h-80 z-50 flex flex-col items-center justify-center ${className}`}>
         {" "}
         {/* maybe add small random rotations? */}
         <a target="_blank" className="text-black no-underline">
           <span
+            data-tooltip-id={index}
+            data-tooltip-content={tooltip}
             className={`${showCaptionOnSmall ? "inline" : "hidden sm:inline"} text-sm sm:text-base mx-auto w-max max-w-full px-5 my-4 py-2 ${shineEffect("bg-[#F4BF4F] border-[#F4BF4F]/80 rounded-sm text-gray-600")}`}
           >
             <span className="hidden lg:inline -pl-2 pr-2"> • </span>
@@ -73,6 +71,6 @@ export default function Painting({
           </a>
         )}
       </div>
-    </>
+    </div>
   );
 }

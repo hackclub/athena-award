@@ -57,6 +57,7 @@ export default function NextSteps({
       module={module}
       prevModule={prevModule}
       nextModule={nextModule}
+      // @ts-ignore
       setModule={setModule}
       setSelectedProject={setSelectedProject}
       setPrizeScroller={setPrizeScroller}
@@ -64,6 +65,39 @@ export default function NextSteps({
     >
       <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded-lg *:bg-white/30 *:!text-black *:backdrop-blur *:px-4 *:py-2 *:my-2">
         <div className="md:basis-1/2 text-black flex-1 w-full">
+          <motion.h2
+            variants={slidingUpVariant}
+            transition={{ delay: 0.3 }}
+            initial="hidden"
+            animate="visible"
+            className="text-3xl text-black text-center md:text-left"
+          >
+            Keep hacking 👥
+          </motion.h2>
+          <motion.h2
+            variants={slidingUpVariant}
+            transition={{ delay: 0.4 }}
+            initial="hidden"
+            animate="visible"
+            className="text-xl text-black text-center md:text-left"
+          >
+            Submit more projects for more prizes!
+          </motion.h2>
+          <motion.div
+            key={`next-steps-details`}
+            variants={slidingUpVariant}
+            transition={{ delay: 0.4 }}
+            initial="hidden"
+            animate="visible"
+            className="h-full overflow-auto flex flex-col gap-3"
+          >
+            <p>
+              You might have finished the required projects for the Athena Award, but keep on submitting projects for bonus artifacts to be spent in the shop.
+            </p>
+          </motion.div>
+        </div>
+        <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">or</span>
+               <div className="md:basis-1/2 text-black flex-1 w-full">
           <motion.h2
             variants={slidingUpVariant}
             transition={{ delay: 0.3 }}
@@ -101,40 +135,6 @@ export default function NextSteps({
                 delay={index}
               />
             ))}
-          </motion.div>
-        </div>
-        <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">or</span>
-        <div className="md:basis-1/2 flex-1 text-black">
-          <Tooltip id="original" className="max-w-64" />
-          <motion.h2
-            variants={slidingUpVariant}
-            className="text-3xl text-black text-center md:text-left"
-          >
-            Leadership Track 👤
-          </motion.h2>
-          <motion.h2
-            variants={slidingUpVariant}
-            transition={{ delay: 0.4 }}
-            initial="hidden"
-            animate="visible"
-            className="text-xl text-black text-center md:text-left"
-          >
-            Lead and inspire others
-          </motion.h2>
-          <motion.div
-            variants={slidingUpVariant}
-            transition={{ delay: 0.4 }}
-            initial="hidden"
-            animate="visible"
-            className="md:w-11/12 flex flex-col gap-10"
-          >
-            <p>
-              Take on leadership roles and help others discover the joy of coding.
-            </p>
-            <p>
-              Start a Hack Club at your school, organize a hackathon, or become a mentor.
-              Help others discover the joy of coding and build a stronger tech community!
-            </p>
           </motion.div>
         </div>
       </div>

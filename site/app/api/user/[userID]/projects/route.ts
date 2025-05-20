@@ -19,6 +19,9 @@ export async function GET(request: NextRequest) {
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
+  if (!query){
+    return NextResponse.json({ message: "Query not specified" }, { status: 200 })
+  }
   try {
     if (query === "all") {
       const hackatimeProjects = await getWakaTimeData(session?.slack_id!);

@@ -34,6 +34,7 @@ export async function linkUser(emailAddress: string, accessToken: string) {
           fields: {
             display_name: response["user"]["profile"]["display_name"],
             profile_picture: response["user"]["profile"]["image_48"],
+            hashed_token: accessTokenJoined
           },
         },
       ]);

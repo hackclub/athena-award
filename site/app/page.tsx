@@ -132,8 +132,9 @@ export default function Index() {
           {/* to do: a blurb about days of service, think something like the counter from the gwynne shotwell site: https://gwynne.hackclub.dev */}
           <div className = "relative">
             <h1 className="text-hc-secondary text-5xl">How this works:</h1>
-            <div className="flex flex-col md:flex-row">
-              <div className="grid grid-cols-8 w-full lg:w-10/12 text-hc-secondary py-8">
+            <div className="flex flex-col md:flex-row gap-4">
+              <img className = "hidden md:inline w-40" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"/>
+              <div className="grid grid-cols-8 w-full lg:w-9/12 text-hc-secondary py-8">
                 {steps.map((step, index) => (
                   <Fragment key={index}>
                     <h1
@@ -292,17 +293,21 @@ export default function Index() {
               in collaboration with
             </h1>
             <div className="flex flex-row flex-wrap gap-6 w-full justify-center items-center">
-              <a target = "_blank" href = "https://bwsi.mit.edu/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b150edd0de91fa5008f55466bbbef9dc32b86994_image.png" /></a>
-              <a target = "_blank" href = "https://github.com/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png" /></a>
-              <a target = "_blank" href = "https://girlswhocode.com/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png" /></a>
-              <a target = "_blank" href = "https://www.girlscoutsnyc.org/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"/></a>
-              <a target = "_blank" href = "https://www.theknowledgehouse.org/"><img className = "image-cover h-20 md:h-36" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"/></a>
-              <a target = "_blank" href = "https://www.wearebgc.org/"><img className = "image-cover h-20 md:h-36"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
+              <a target = "_blank" href = "https://engineering.mit.edu/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png" /></a>
+              <a target = "_blank" href = "https://bwsi.mit.edu/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png" /></a>
+              <a target = "_blank" href = "https://ll.mit.edu/"><img className = "image-cover h-12 md:h-18" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"/></a>
+              <a target = "_blank" href = "https://github.com/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png" /></a>
+              <a target = "_blank" href = "https://girlswhocode.com/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png" /></a>
+              <a target = "_blank" href = "https://www.girlscoutsnyc.org/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"/></a>
+              <a target = "_blank" href = "https://www.theknowledgehouse.org/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"/></a>
+              <a target = "_blank" href = "https://www.wearebgc.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
+              <a target = "_blank" href = "https://code.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"/></a>
+
             </div>
           </div>
         </div>
 
-        <div className="w-screen h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">
+        <div className="w-screen h-max md:h-screen p-12 sm:p-16 flex flex-col gap-8 items-center justify-center">
           <h1 className="text-hc-secondary text-2xl sm:text-4xl text-center grow">
             3 projects. 30 hours.
           </h1>

@@ -62,8 +62,8 @@ h2 {
   font-family: "Phantom Sans";
 }
 
-p {
-  @apply text-base sm:text-lg;
+p, ul {
+  @apply text-lg sm:text-xl;
 }
 
 code {

@@ -121,7 +121,7 @@ export function Header({
         <a className = "inline self-center m-2" href = "/">
         <img 
           className = "w-96"
-          src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/9b4863034f8b13e0c0a5066d408c69f1a536cd7b_19w_flag-cropped.svg"/>
+          src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/6338dbbd7a0200f2b9f2f5b7b59834511c45cc58_athena_award_1000x1000-cropped.svg"/>
         </a>
         </div>
 
