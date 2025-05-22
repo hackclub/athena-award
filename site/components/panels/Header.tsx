@@ -85,11 +85,18 @@ export function AuthStateButton({ className }: { className?: string }) {
                 <p className="underline decoration-wavy text-xl">
                   Something went wrong!
                 </p>
-                <p>{err}</p>
-                <p className="text-sm">
+                <p>{err.includes("already_in_team") ? <span>You're already in the Hack Club Slack - sign in{' '}
+                  <a target = "_blank" href = "https://hackclub.slack.com">here</a></span> : 
+                  
+                  <span>
+                    <p>{err}</p>
+                  <p className="text-sm">
                   Please send an email to athena@hackclub.com with this error
                   message if you're seeing this.
                 </p>
+                  </span>
+                  }</p>
+
               </span>
             ) : (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
