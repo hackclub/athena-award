@@ -35,7 +35,7 @@ export default function Introduction({
   return (
     <DefaultFrame
       title="Introduction"
-      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/c0fecb8d1d545a2c132b00a0d723d55fcd61cd02_image__6_.png')] bg-cover bg-center bg-cream/50 bg-blend-overlay"
+      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/ae493cd1ff65ba6de7674f0a1f88623c548b79d8_a86775ba70e6f71f9aa8e9619a4c7f89d17a6f6d_image.png')] bg-cover bg-center bg-hc-primary/50 bg-blend-overlay"
       module={module}
       prevModule={prevModule}
       nextModule={nextModule}
@@ -43,16 +43,16 @@ export default function Introduction({
       setSelectedProject={setSelectedProject}
       setPrizeScroller={setPrizeScroller}
       setProjectRetrievalComplete={setProjectRetrievalComplete}
-      titleProps="*:text-black/75"
+      titleProps="*:text-cream"
     >
       <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded-lg *:bg-white/30 *:!text-black *:backdrop-blur *:px-4 *:py-2 *:my-2">
-        <div className="md:basis-1/2 text-black flex-1 w-full">
+        <div className="md:basis-1/2 text-hc-primary-dull flex-1 w-full">
           <motion.h2
             variants={slidingUpVariant}
             transition={{ delay: 0.3 }}
             initial="hidden"
             animate="visible"
-            className="text-3xl text-black text-center md:text-left"
+            className="text-3xl text-hc-primary-dull text-center md:text-left"
           >
             Guided Track 👥
           </motion.h2>
@@ -61,7 +61,7 @@ export default function Introduction({
             transition={{ delay: 0.4 }}
             initial="hidden"
             animate="visible"
-            className="text-xl text-black text-center md:text-left"
+            className="text-xl text-hc-primary-dull text-center md:text-left"
           >
             Build something with help
           </motion.h2>
@@ -87,11 +87,11 @@ export default function Introduction({
           </motion.div>
         </div>
         <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">or</span>
-        <div className="md:basis-1/2 flex-1 text-black">
+        <div className="md:basis-1/2 flex-1 text-hc-primary-dull">
           <Tooltip id="original" className="max-w-64" />
           <motion.h2
             variants={slidingUpVariant}
-            className="text-3xl text-black text-center md:text-left"
+            className="text-3xl text-hc-primary-dull text-center md:text-left"
           >
             Custom Track 👤
           </motion.h2>
@@ -100,7 +100,7 @@ export default function Introduction({
             transition={{ delay: 0.4 }}
             initial="hidden"
             animate="visible"
-            className="text-xl text-black text-center md:text-left"
+            className="text-xl text-hc-primary-dull text-center md:text-left"
           >
             Build something yourself
           </motion.h2>

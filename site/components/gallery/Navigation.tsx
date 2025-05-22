@@ -22,7 +22,7 @@ export default function Navigation({
   let currModuleIdx = STAGES.findIndex((m) => m.moduleName === module);
   return (
     <div className="flex flex-row w-full gap-20">
-      <div className="flex gap-2 items-center self-center text-white animate-bounce">
+      <div className="flex gap-2 items-center self-center text-white">
         <button
           onClick={() => {
             module === "Intro"
@@ -97,7 +97,7 @@ export default function Navigation({
             </g>
           </svg>
         </button>
-        <span className="text-white uppercase text-sm">
+        <span className="text-white uppercase text-sm animate-bounce">
           Next: {nextModule}
         </span>
       </div>

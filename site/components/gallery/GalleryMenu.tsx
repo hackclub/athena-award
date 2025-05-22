@@ -36,7 +36,7 @@ export function ResourceCue({
       transition={{ delay: 0.5 + 0.09 * delay }}
       initial="hidden"
       animate="visible"
-      className={`w-full bg-white/20 p-3 flex justify-between rounded no-underline text-black/80`}
+      className={`w-full bg-white/20 p-3 flex justify-between rounded no-underline text-black`}
       href={link}
       target="_blank"
       rel="noopener noreferrer"
@@ -99,7 +99,6 @@ export default function GalleryMenu({
     `/api/user/${slackId}/points`,
   ];
 
-  console.log("current module is ", currModuleIdx)
   /** this is the current stage represented as a module object with the relevant visuals data */
   const baseModuleData = STAGES.find((m) => m.moduleName === module)!;
 
@@ -202,9 +201,6 @@ export default function GalleryMenu({
       </>
     );
   }
-  console.log("progress is", progress)
-  console.log(currModuleIdx)
-
   return (
     <>
       <div>

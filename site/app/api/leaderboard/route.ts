@@ -10,6 +10,7 @@ const airtable = new Airtable({
 export async function GET() {
   const users = await airtable("Registered Users")
     .select({
+      filterByFormula: `NOT({role}="admin")`,
       fields: [
         "display_name",
         "slack_id",
