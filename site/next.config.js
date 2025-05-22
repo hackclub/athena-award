@@ -1,5 +1,4 @@
-const withMDX = require("@next/mdx")();
-import { withPlausibleProxy } from 'next-plausible';
+const { withPlausibleProxy } = require('next-plausible')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,13 +10,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*-hack-club-bot.vercel.app",
+        hostname: "*-hack-club-bot.vercel.apzp",
         port: "",
       },
     ],
   },
 };
 
-export default withPlausibleProxy()({
-  ...nextConfig
-});
+module.exports = withPlausibleProxy()({
+    ...nextConfig
+})
