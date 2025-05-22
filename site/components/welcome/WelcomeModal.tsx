@@ -34,9 +34,7 @@ export default function WelcomeModal({ props }: { props?: string }) {
             className={`${props} text-xl playfair-display border-[#E89368]`}
             onClick={() => setIsOpen(true)}
           >
-            already in hack club?
-            <br />
-            start hacking
+            log in with hack club slack
           </button>
           <AnimatePresence>
             {isOpen && (
