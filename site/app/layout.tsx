@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
+import PlausibleProvider from 'next-plausible'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,9 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body className={`phantom-sans`}>
-        <SessionProvider>{children}</SessionProvider>
+        <PlausibleProvider domain="https://award.athena.hackclub.com">
+          <SessionProvider>{children}</SessionProvider>
+        </PlausibleProvider>
       </body>
     </html>
   );

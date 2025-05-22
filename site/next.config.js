@@ -1,4 +1,5 @@
 const withMDX = require("@next/mdx")();
+import { withPlausibleProxy } from 'next-plausible';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -17,4 +18,6 @@ const nextConfig = {
   },
 };
 
-module.exports = withMDX(nextConfig);
+export default withPlausibleProxy()({
+  ...nextConfig
+});
