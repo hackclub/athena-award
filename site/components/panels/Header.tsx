@@ -93,7 +93,7 @@ export function AuthStateButton({ className }: { className?: string }) {
               </span>
             ) : (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
-                <p className="underline decoration-wavy text-xl">
+                <p className="underline decoration-wavy text-xl text-gold">
                   Check your email!
                 </p>
                 <p className="font-semibold">
