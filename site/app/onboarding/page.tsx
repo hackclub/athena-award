@@ -300,7 +300,7 @@ export default function Page() {
                   <li>A commit is effectively a snapshot of the changes you've made in your code since the last time you committed.</li>
                   <li>Commits are helpful particularly if you want to track when you added a certain feature or introduced a certain bug (oops)!</li>
                   <li>In general: commit often. For the Athena Award, we require that you commit your changes around <span className = "bg-gold px-1 text-hc-primary-dull">once per hour.</span></li>
-                  <li>For example, you can see the current commit of this website here:  </li>
+                  <li>For example, you can see the current commit that this website is on by checking out the <a target = "_blank" href = "https://github.com/hackclub/athena-award">GitHub repository</a>.</li>
                 </ul>
               </div>
             </>
