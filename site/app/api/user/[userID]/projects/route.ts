@@ -169,6 +169,23 @@ export async function GET(request: NextRequest) {
       }
       // case where no hackatime account exists
       return NextResponse.json([]);
+    } else if (query === "most_recent_submission"){
+        const mostRecentProject = await airtable("Projects")
+        .select({
+          filterByFormula: `AND({slack_id} = "${session?.slack_id}", NOT({status} = "pending"))`,
+          fields: [
+            "stage",
+          ],
+          sort: [
+            { field: "stage", 
+              direction: "desc"
+            }
+          ]
+        })
+        .all();  
+        console.log(mostRecentProject)
+        const i = JSON.parse(JSON.stringify(mostRecentProject))[0]
+        return NextResponse.json({message: !(i) || Number(i["fields"]["stage"]) < 4 ? 3 : Number(i["fields"]["stage"])})
     }
   } catch (error) {
     return NextResponse.json(

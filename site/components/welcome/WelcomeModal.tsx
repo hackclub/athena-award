@@ -64,7 +64,7 @@ export default function WelcomeModal({ props }: { props?: string }) {
                         transition={{ delay: 0.3 }}
                       >
                         <div className="w-[90vw] h-[90vh] md:w-[85vw] md:h-[85vh] transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-3 sm:p-6">
-                          <div className="bg-green w-full h-full rounded-2xl p-6 md:p-12">
+                          <div className="bg-greenish w-full h-full rounded-2xl p-6 md:p-12">
                             <div
                               id="inspiration"
                               className="text-white flex flex-col h-full"

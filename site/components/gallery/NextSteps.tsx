@@ -4,6 +4,11 @@ import { slidingUpVariant } from "./constants";
 import DefaultFrame from "./DefaultFrame";
 import { Tooltip } from "react-tooltip";
 import { STAGES } from "@/app/STAGES";
+import useSWR from "swr";
+import { useSession } from "next-auth/react";
+import { multiFetcher } from "@/services/fetcher";
+import { useState } from "react";
+import { useEffect } from "react";
 
 interface NextStepsProps {
   points: number;
@@ -46,10 +51,55 @@ export default function NextSteps({
   prevModule,
   nextModule,
   setModule,
-  setSelectedProject,
   setPrizeScroller,
   setProjectRetrievalComplete,
 }: NextStepsProps) {
+
+  const session = useSession()
+  const slackId = session.data?.slack_id
+  const [ selectedProject, setSelectedProject ] = useState("_select#")
+  const [ idOfNextSubmission, setIdOfNextSubmission ] = useState(4)
+  useEffect(() => {
+    fetch(`/api/user/${slackId}/projects?query=most_recent_submission`).then(
+      r => r.json()
+    ).then( res =>
+    setIdOfNextSubmission(res.message + 1)
+    )
+  }, [])
+
+  let urls = [
+    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${idOfNextSubmission}`,
+    `/api/user/${slackId}/points`,
+  ];
+
+  /** this is the current stage represented as a module object with the relevant visuals data */
+  const baseModuleData = STAGES.find((m) => m.moduleName === module)!;
+
+  const { data, error, isLoading, mutate } = useSWR(
+    urls,
+    multiFetcher,
+  );
+
+  if (error) {
+    console.log(error);
+  }
+
+  async function handleChange(e: any) {
+    const projectName = e.target.value;
+    const update = await fetch(`/api/user/${slackId}/projects`, {
+      method: "POST",
+      body: JSON.stringify({ stage: idOfNextSubmission, project: projectName }),
+    });
+    setSelectedProject(projectName);
+    return update;
+  }
+
+  let projects;
+  if (data) {
+    projects = data[0];
+    console.log(projects, "PROJECTS ARE")
+  }
+
   return (
     <DefaultFrame
       title="Next Steps"
@@ -94,6 +144,53 @@ export default function NextSteps({
             <p>
               You might have finished the required projects for the Athena Award, but keep on submitting projects for bonus artifacts to be spent in the shop.
             </p>
+
+          <div>
+            
+            <div>
+                <span className="flex flex-row items-center gap-2">
+                      <select
+                        required
+                        className="w-full sm:min-w-max flex flex-col gap-1 *:bg-darker text-black *:text-black bg-white/80 rounded-full px-5"
+                        name="project"
+                        id="project"
+                        defaultValue={selectedProject}
+                        onChange={handleChange}
+                      >
+                        <option disabled value="_select#">
+                          [Select a project]
+                        </option>
+                        {projects &&
+                          projects.map(
+                            (
+                              project: any,
+                              index: number /* i really cbf to fix the type rn */,
+                            ) => (
+                              <option
+                                key={index}
+                                value={project.name}
+                              >
+                                {project.project_name_override ||
+                                  project.name}
+                              </option>
+                            ),
+                          )}
+                        <option value="Other YSWS Project">
+                          [Other YSWS Project]
+                        </option>
+                      </select>
+                    </span>
+                  </div>
+
+                  <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center bg-cream/40`}>
+                  <a
+                    target="_blank"
+                    className="text-white no-underline"
+                    href={`https://forms.hackclub.com/athena-award-projects?stage=${idOfNextSubmission}`}>
+                    Ready to submit?
+                  </a>
+                  </button>
+            </div>
           </motion.div>
         </div>
         <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">or</span>

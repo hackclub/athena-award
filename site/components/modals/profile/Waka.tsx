@@ -24,6 +24,7 @@ export function Waka() {
           : pSum,
       0,
     );
+    console.log(projects, "wow")
   }
   if (error) {
     if (error.status !== 200) {
@@ -129,7 +130,7 @@ export function Waka() {
         {projects.map((project: any, index: number) => (
           <div
             key={index}
-            className={`p-1 border rounded-lg ${project.status === "approved" ? "bg-green-500/30" : project.status === "unreviewed" ? "bg-yellow-500/30" : "bg-white/30"}`}
+            className={`p-1 border rounded-lg ${project.status === "approved" ? "bg-lime-500/50" : project.status === "unreviewed" ? "bg-yellow-500/50" : "bg-white/50"}`}
           >
             {project.project_name_override || project.name}{" "}
             {(project.total_seconds / 3600).toFixed(2)} hours

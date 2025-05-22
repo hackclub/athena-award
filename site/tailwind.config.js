@@ -18,7 +18,7 @@ module.exports = {
   			'hc-primary-dull': '#8C2E37',
         	"gold": "#F4BF4F",
 			"cream": "#F9D49C",
-			"green": "#373E2F",
+			"greenish": "#373E2F",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

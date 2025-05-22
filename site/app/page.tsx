@@ -298,10 +298,13 @@ export default function Index() {
               <a target = "_blank" href = "https://ll.mit.edu/"><img className = "image-cover h-12 md:h-18" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"/></a>
               <a target = "_blank" href = "https://github.com/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png" /></a>
               <a target = "_blank" href = "https://girlswhocode.com/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png" /></a>
+              <a target = "_blank" href = "https://firstinspires.org"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c62d8ebaffc63403ab0d8a3d64954e3fcf2b4483_first_vertical_rgb.png"/></a>
+              <a target = "_blank" href = "https://congressionalappchallenge.us"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"/></a>
               <a target = "_blank" href = "https://www.girlscoutsnyc.org/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"/></a>
               <a target = "_blank" href = "https://www.theknowledgehouse.org/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"/></a>
               <a target = "_blank" href = "https://www.wearebgc.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
               <a target = "_blank" href = "https://code.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"/></a>
+              <a target = "_blank" href = "https://www.etregirls.com"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"/></a>
 
             </div>
           </div>

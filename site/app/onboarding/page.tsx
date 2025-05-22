@@ -94,7 +94,7 @@ export default function Page() {
             </button>
             <span className="relative grow mx-auto rounded-lg h-5 *:h-5 bg-white/40">
               <span
-                style={{ width: (stage * 100) / 4 + "%" }}
+                style={{ width: (stage * 100) / 5 + "%" }}
                 className={`border-2 border-hc-primary-dull absolute bg-hc-primary-dull rounded-l-lg ${(stage * 100) / 4 === 100 ? "rounded-r-lg" : null}`}
               />
             </span>
@@ -288,7 +288,25 @@ export default function Page() {
             </>
           )}
 
-          {stage === 4 && (
+
+          { stage == 4 && (
+            <>
+              <h1 className="text-3xl sm:text-5xl text-center">Project Requirements</h1>
+              <div className="text-left pt-8 mx-auto flex flex-col justify-center gap-4 w-full">
+                <p>Before you submit your projects, we need some kind of proof that you've been working on it for as long as you have.</p>
+                
+                <p>GitHub is a website that lets you store your code. Sign up to GitHub <a target = "_blank" href ="https://github.com/signup">here</a>, and return back to this site.</p>
+                <ul className = "list-inside list-disc py-5 flex flex-col gap-3">
+                  <li>A commit is effectively a snapshot of the changes you've made in your code since the last time you committed.</li>
+                  <li>Commits are helpful particularly if you want to track when you added a certain feature or introduced a certain bug (oops)!</li>
+                  <li>In general: commit often. For the Athena Award, we require that you commit your changes around <span className = "bg-gold px-1 text-hc-primary-dull">once per hour.</span></li>
+                  <li>For example, you can see the current commit of this website here:  </li>
+                </ul>
+              </div>
+            </>
+          )}
+
+          {stage === 5 && (
             <>
               <h1 className="text-3xl sm:text-5xl text-center">Support</h1>
               <div className="text-left pt-8 mx-auto items-center justify-center gap-4 w-full">
@@ -355,7 +373,7 @@ export default function Page() {
           )}
 
           <span className="self-end mt-auto uppercase text-md mx-auto text-white/40">
-            onboarding - {Math.floor((stage * 100) / 4)}% complete
+            onboarding - {Math.floor((stage * 100) / 5)}% complete
           </span>
         </div>
       </div>

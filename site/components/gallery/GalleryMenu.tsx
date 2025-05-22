@@ -116,7 +116,7 @@ export default function GalleryMenu({
     const projectName = e.target.value;
     const update = await fetch(`/api/user/${slackId}/projects`, {
       method: "POST",
-      body: JSON.stringify({ stage: currModuleIdx, project: projectName }),
+      body: JSON.stringify({ stage: currModuleIdx+1, project: projectName }),
     });
     setSelectedProject(projectName);
     return update;
@@ -442,7 +442,7 @@ export default function GalleryMenu({
                                 className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}
                                 onClick={async () =>
                                   await fetch(
-                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx}`,
+                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`,
                                     { method: "POST" },
                                   )
                                 }
@@ -450,7 +450,7 @@ export default function GalleryMenu({
                                 <a
                                   target="_blank"
                                   className="text-white no-underline"
-                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx}`}
+                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx+1}`}
                                 >
                                   Ready to submit?
                                 </a>
@@ -476,7 +476,7 @@ export default function GalleryMenu({
                                 className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}
                                 onClick={async () =>
                                   await fetch(
-                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx}`,
+                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`,
                                     { method: "POST" },
                                   )
                                 }
@@ -484,7 +484,7 @@ export default function GalleryMenu({
                                 <a
                                   target="_blank"
                                   className="text-white no-underline"
-                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx}`}
+                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx+1}`}
                                 >
                                   Your project was rejected - click here to
                                   resubmit!
