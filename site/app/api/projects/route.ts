@@ -61,7 +61,7 @@ export async function GET() {
         }
       }
       const project_name = fields["project_name"];
-      const project_name_override = (String(
+      const project_name_override = fields["project_name_override"] && (String(
         fields["project_name_override"],
       )?.split("–"))[0]; // they contain the author's full name, which optimally we are not broadcasting to the entire world
       const playable_url = fields["playable_url"];
