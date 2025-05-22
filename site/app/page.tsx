@@ -305,6 +305,7 @@ export default function Index() {
               <a target = "_blank" href = "https://www.wearebgc.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
               <a target = "_blank" href = "https://code.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"/></a>
               <a target = "_blank" href = "https://www.etregirls.com"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"/></a>
+              <a target = "_blank" href = "https://launchpadphilly.org/"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"/></a>
 
             </div>
           </div>
