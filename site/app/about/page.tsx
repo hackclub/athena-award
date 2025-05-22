@@ -38,7 +38,7 @@ export default function About(){
                 <h2 className = "!text-3xl">What's in it for me?</h2>
                 <div className = "*:text-lg *:md:text-xl">
                   <p>Build three projects (or more!) in 30 hours, and you'll be invited to a <span className = "font-bold !text-gold">three-day hackathon</span> running November 14th - November 16th in the <span className = "!text-gold">heart of New York City</span>.{' '}
-                  Travel stipends provided for the top 70 programmers.</p>
+                  Travel stipends available!</p>
                   
                   <p>Can't make it to New York City? No stress - for every hour you code during the Athena Award, you'll be rewarded with one <span className = "!text-gold">artifact</span>.</p>
                   <p>Artifacts can be redeemed in our shop for <span className = "!text-gold font-bold">laptops, hoodies, headphones</span> and more, to help you keep on hacking!</p>

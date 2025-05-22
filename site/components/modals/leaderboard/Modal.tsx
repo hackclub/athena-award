@@ -26,13 +26,8 @@ export default function LeaderboardModal() {
       <div className="flex flex-col gap-2 py-3">
         {leaderboard.map((user: any, index: number) => (
           <div key={index}>
-            {index == 70 ? (
-              <span className="uppercase opacity-45 text-center flex  justify-center py-3">
-                stipend cutoff
-              </span>
-            ) : null}
             <div
-              className={`${index >= 70 ? "bg-hc-primary/10" : "bg-hc-primary/40"} p-4 rounded-md flex flex-col sm:flex-row justify-between w-full border border-white`}
+              className="bg-hc-primary/10 p-4 rounded-md flex flex-col sm:flex-row justify-between w-full border border-white"
             >
               <span className="flex flex-row items-center align-middle gap-4">
                 {index + 1}.{" "}
