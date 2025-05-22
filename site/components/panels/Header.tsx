@@ -49,7 +49,7 @@ export function AuthStateButton({ className }: { className?: string }) {
         {session.status === "authenticated" ? (
           <button
             onClick={() => {
-              router.push("/gallery");
+              router.push("/onboarding");
             }}
             className="bg-cream text-2xl p-5 rounded-lg text-hc-primary-dull"
           >
