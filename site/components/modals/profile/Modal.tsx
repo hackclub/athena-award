@@ -53,7 +53,7 @@ export default function Profile() {
         setUXEvent={setUXEvent}
         className="md:grid md:grid-cols-3 max-md:flex max-md:flex-col-reverse"
       >
-        <div className="md:col-span-1 md:h-full md:sticky flex flex-col basis-2/5">
+        <div className="md:col-span-1 md:h-full md:sticky flex flex-col basis-2/5 gap-4">
           <div className="hidden rounded-md bg-white/10 sm:flex items-center gap-4 h-fit p-4 mb-4">
             <img
               className="rounded-full size-16 mx-auto md:m-0"
@@ -64,6 +64,7 @@ export default function Profile() {
               <div className="text-sm">{session.data?.user!.email}</div>
             </div>
           </div>
+          <div>
           <div className="text-white font-bold text-2xl uppercase">
             Hackathons
           </div>
@@ -112,12 +113,22 @@ export default function Profile() {
               </span>
             ) : null}
           </div>
+          </div>
 
+        <div>
+          <div className="text-white font-bold text-2xl uppercase">
+            Onboarding
+          </div>
+            Want a bit of a refresher? Complete <a href = "/onboarding">onboarding</a> again.
+        </div>
+
+        <div>
           <div className="text-white font-bold text-2xl uppercase">
             Referral Code
           </div>
             <span>Earn prizes for people who sign up using your referral link!</span>
-            <span className = "text-center">https://award.athena.hackclub.com?referred_by={session.data?.slack_id}</span>
+            <a href = {`https://award.athena.hackclub.com?referred_by=${session.data?.slack_id}`} className = "text-center block">https://award.athena.hackclub.com?referred_by={session.data?.slack_id}</a>
+      </div>
           <button
             className="text-white font-bold text-2xl uppercase mt-auto self-start"
             onClick={() => signOut({ redirectTo: "/" })}

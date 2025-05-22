@@ -29,20 +29,23 @@ export default function ShopModal() {
         uxEvent={uxEvent}
         setUXEvent={setUXEvent}
         className="overflow-auto"
+        customHeaderContent={<div className = "px-3 py-2 z-40 bg-cream rounded-md text-black w-max">{artifacts} <img className = "inline h-8" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"/></div>}
       >
         <div className="flex flex-col gap-3">
           <div>
             <p>
               Click on a placard to order a prize with your approved artifacts!
-              You can earn more artifacts by spending time on projects and
-              getting them approved.
+            </p>      
+            <p>
+              You can earn more artifacts by spending time on projects and getting them approved.
             </p>
-
-            <p>You have {artifacts} artifacts.</p>
+            <p>
+              Prize availability is always subject to change.
+            </p>
             <div>
-              <div className="my-6">
+              <div className="my-2">
                 <div
-                  className={`p-6 my-6 flex flex-row flex-wrap relative h-full justify-center items-center`}
+                  className={`p-6 my-2 flex flex-row flex-wrap relative h-full justify-center items-center`}
                 >
                   {shop.map((prize: any, idx: number) => (
                     <div
@@ -60,6 +63,15 @@ export default function ShopModal() {
                         descriptionBottom={`${prize.price} artifacts`}
                         link={`https://forms.hackclub.com/athena-award-orders?item=${prize.item_name}`}
                       />
+                      <span className = "py-4 flex flex-row items-center justify-center gap-2">{prize.availability}
+                      { prize.availability_link &&
+                      <a href = {prize.availability_link} className = "inline">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                      </svg>
+                      </a>
+                      }
+                      </span>
                     </div>
                   ))}
                 </div>

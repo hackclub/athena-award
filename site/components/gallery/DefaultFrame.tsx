@@ -14,6 +14,7 @@ interface DefaultFrameProps {
   setSelectedProject: (project: string) => void;
   setPrizeScroller: (value: number) => void;
   setProjectRetrievalComplete: (status: boolean) => void;
+  titleProps?: string;
 }
 
 export default function DefaultFrame({
@@ -27,6 +28,7 @@ export default function DefaultFrame({
   setSelectedProject,
   setPrizeScroller,
   setProjectRetrievalComplete,
+  titleProps,
 }: DefaultFrameProps) {
   return (
     <div className={`h-full w-full relative ${primaryTheme}`}>
@@ -38,7 +40,7 @@ export default function DefaultFrame({
             exit={{ opacity: 0 }}
             className={`flex gap-8 lg:gap-0 flex-col backdrop-blur-md w-full lg:h-screen p-12 sm:p-16 transition-all ${primaryTheme} overflow-auto-scroll`}
           >
-            <div className="self-start">
+            <div className={`self-start ${titleProps}`}>
               <div className="text-xl sm:text-2xl uppercase text-white font-bold mb-2">
                 Athena Award
               </div>

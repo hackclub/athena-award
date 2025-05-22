@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   const stage = request.nextUrl.searchParams.get("stage");
   const allPrizes = await airtable("Shop")
     .select({
-      fields: [ "item_name", "item_friendly_name", "description", "image", "stage", "price"],
+      fields: [ "item_name", "item_friendly_name", "description", "image", "stage", "price", "availability", "availability_link"],
       sort: [
         { field: "stage", direction: "asc" },
         { field: "price", direction: "asc" },

@@ -64,7 +64,7 @@ export default function About(){
             </div>
             <h2 className = "!text-3xl">Okay, I'm sold. How can I start working on my projects?</h2>
             <p>First, figure out what you want to make. If you're not sure, or if you're carrying over a project from a summer program like GirlsWhoCode's self-paced program, start with the <span className = "text-gold">Guided Track</span> - for projects that you are/were guided through completing.</p>
-            <p>The first one, <a target = "_blank" href = "https://tribute.hackclub.com">Tribute</a>, will teach you how to make a basic website themed after something you like. By the end of the Guided Track, you'll be prepared to continue making some awesome, functional webpages!</p>
+            <p>The first one, <a target = "_blank" href = "https://tribute.athena.hackclub.com">Tribute</a>, will teach you how to make a basic website themed after something you like. By the end of the Guided Track, you'll be prepared to continue making some awesome, functional webpages!</p>
             <p>Alternatively, if you already know a little bit of programming - feel free to jump in with the <span className = "text-gold">Custom Track</span> where you build your own custom projects.</p>
             <div className = "*:border-[#E89368] *:rounded-lg *:border-2 grid grid-cols-1 *:h-full md:grid-cols-2 gap-4 justify-center *:bg-[#E89368]/30 *:p-4 items-center">
                 <div>

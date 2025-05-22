@@ -3,7 +3,8 @@ import { useSession } from "next-auth/react";
 import { Loading, Unauthenticated } from "@/components/screens/Modal";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import PartnerDropdown from "@/components/ui/PartnerDropdown";
 
 const steps = [
   {
@@ -23,18 +24,28 @@ const steps = [
   },
 ];
 
-function checkIfHackatime({ slackId }: { slackId: string }) {}
-
 export default function Page() {
   const session = useSession();
   const router = useRouter();
   const [stage, setStage] = useState(1);
-
-  const [hackatimeInstallStep, setHackatimeInstallStep] = useState(0);
-
+  const [hackatimeInstalled, setHackatimeInstalled] = useState(false);
   const [track, setTrack] = useState("beginner");
-
   const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  async function checkIfHackatime() {
+    if (stage === 3){
+      let hackatime;
+      hackatime = await fetch(`/api/user/${session.data?.slack_id}/waka`).then(r => r.json())      
+      console.log(hackatime, "stats")
+      if (hackatime && hackatime.data && hackatime.data.status){
+        setButtonDisabled(false)
+        setHackatimeInstalled(true)
+        await fetch(`/api/user/${session.data?.slack_id}/waka`, {method: "POST"})
+      } else {
+        setButtonDisabled(true)
+      }
+    }
+  }
 
   function onButtonClick() {
     setButtonDisabled(true);
@@ -72,6 +83,25 @@ export default function Page() {
     };
   };
   const userOS = findUserOS();
+
+  // Define the ordered stages, skipping stage 3 for beginners
+  const stages = [1, 2, ...(track === "beginner" ? [] : [3]), 4, 5];
+  const currentStageIndex = stages.indexOf(stage);
+
+  function goToPrevStage() {
+    if (currentStageIndex > 0) {
+      setStage(stages[currentStageIndex - 1]);
+    }
+  }
+
+  function goToNextStage() {
+    if (currentStageIndex < stages.length - 1) {
+      setStage(stages[currentStageIndex + 1]);
+    } else {
+      router.push("/gallery");
+    }
+  }
+
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center">
       <div className="w-screen h-screen fixed top-0 left-0 z-[1] overflow-hidden bg-[url(/ponte-salario.jpg)] bg-cover blur-sm brightness-50 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light" />
@@ -79,38 +109,30 @@ export default function Page() {
         <div className="flex flex-col w-screen h-full md:h-screen p-16 sm:p-24 gap-6 text-hc-secondary">
           <div className="bottom-10 flex w-full flex-row justify-between gap-10 items-center">
             <button
-              disabled={buttonDisabled}
               onClick={() => {
-                stage > 1
-                  ? stage === 4 && track === "beginner"
-                    ? setStage(2)
-                    : setStage(stage - 1)
-                  : null;
+                goToPrevStage();
                 onButtonClick();
+                console.log(stage)
               }}
-              className={`${stage === 1 || buttonDisabled ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"}  no-underline text-right ml-auto`}
+              className={`${currentStageIndex === 0 ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"}  no-underline text-right ml-auto`}
             >
-              <h1 className="text-md md:text-lg inline">{"<"}- prev</h1>
+              <h1 className="text-md md:text-lg inline">{'<'}- prev</h1>
             </button>
             <span className="relative grow mx-auto rounded-lg h-5 *:h-5 bg-white/40">
               <span
-                style={{ width: (stage * 100) / 5 + "%" }}
-                className={`border-2 border-hc-primary-dull absolute bg-hc-primary-dull rounded-l-lg ${(stage * 100) / 4 === 100 ? "rounded-r-lg" : null}`}
+                style={{ width: ((currentStageIndex + 1) * 100) / stages.length + "%" }}
+                className={`border-2 border-hc-primary-dull absolute bg-hc-primary-dull rounded-l-lg ${((currentStageIndex + 1) * 100) / stages.length === 100 ? "rounded-r-lg" : null}`}
               />
             </span>
             <button
-              disabled={buttonDisabled}
+              disabled={buttonDisabled || (stage === 3 && !hackatimeInstalled)}
               onClick={() => {
-                stage < 4
-                  ? stage === 2 && track === "beginner"
-                    ? setStage(4)
-                    : setStage(stage + 1)
-                  : router.push("/gallery");
+                goToNextStage();
                 onButtonClick();
               }}
-              className={`${buttonDisabled ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"} text-hc-secondary no-underline text-right ml-auto`}
+              className={`${buttonDisabled || (stage === 3 && !hackatimeInstalled) ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"} text-hc-secondary no-underline text-right ml-auto`}
             >
-              <h1 className="text-md md:text-lg">next -{">"}</h1>
+              <h1 className="text-md md:text-lg">next -{'>'}</h1>
             </button>
           </div>
           {stage === 1 && (
@@ -146,7 +168,7 @@ export default function Page() {
               </h1>
               <div className="text-center mx-auto gap-4 w-full flex flex-col">
                 <div className="text-2xl">
-                   Do you want to build guided or custom projects?
+                  Do you want to build guided or custom projects?
                 </div>
                 <p>
                   Select the one that describes you best - this choice will only
@@ -166,12 +188,23 @@ export default function Page() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ ease: "easeOut", delay: 0.75 }}
-                    className={`hover:!scale-105 rounded transition ${track === "beginner" ? "border-2 border-hc-primary" : null}`}
+                    className={`hover:!scale-105 rounded transition ${
+                      track === "beginner"
+                        ? "border-2 border-hc-primary"
+                        : null
+                    }`}
                   >
                     <h1 className="text-2xl sm:text-4xl text-left">Guided</h1>
                     <ul className="text-left text-lg py-1 sm:text-xl list-inside list-disc">
-                      <li>I'm not sure what to make and would like some more resources.</li>
-                      <li>I completed a project from GirlsWhoCode, Black Girls Code or another summer program and want to submit it here!</li>
+                      <li>
+                        I'm not sure what to make and would like some more
+                        resources.
+                      </li>
+                      <li>
+                        I completed a project from GirlsWhoCode, Black Girls
+                        Code or another summer program and want to submit it
+                        here!
+                      </li>
                     </ul>
                   </motion.button>
                   <motion.button
@@ -185,12 +218,19 @@ export default function Page() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ ease: "easeOut", delay: 0.75 }}
-                    className={`hover:!scale-105 rounded transition ${track === "advanced" ? "border-2 border-hc-primary" : null}`}
+                    className={`hover:!scale-105 rounded transition ${
+                      track === "advanced"
+                        ? "border-2 border-hc-primary"
+                        : null
+                    }`}
                   >
                     <h1 className="text-2xl sm:text-4xl text-left">Custom</h1>
                     <ul className="text-left text-lg py-1 sm:text-xl list-disc list-inside">
                       <li>I have a lot of ideas about things I want to make.</li>
-                      <li>I'm a confident programmer and have created some projects before</li>
+                      <li>
+                        I'm a confident programmer and have created some
+                        projects before
+                      </li>
                     </ul>
                   </motion.button>
                 </div>
@@ -271,6 +311,11 @@ export default function Page() {
                         , then come back here!
                       </li>
                     </ul>
+                  
+                  <div className = "grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <button className = "bg-hc-primary-dull/50 w-full mx-auto p-2" onClick={checkIfHackatime}>click me once you've set hackatime up!</button>
+                    <p>Give me a moment, I'm checking to see if you've made your Hackatime account... <span className = "bg-hc-primary-dull px-1">{hackatimeInstalled ? "Nice, it looks like you have a Hackatime account - you can go to the next step!" : "I can't find a Hackatime account for you..." }</span></p>
+                  </div>
                     <p>
                       confused? ask for help in{" "}
                       <a
@@ -288,20 +333,58 @@ export default function Page() {
             </>
           )}
 
-
-          { stage == 4 && (
+          {stage == 4 && (
             <>
-              <h1 className="text-3xl sm:text-5xl text-center">Project Requirements</h1>
-              <div className="text-left pt-8 mx-auto flex flex-col justify-center gap-4 w-full">
-                <p>Before you submit your projects, we need some kind of proof that you've been working on it for as long as you have.</p>
-                
-                <p>GitHub is a website that lets you store your code. Sign up to GitHub <a target = "_blank" href ="https://github.com/signup">here</a>, and return back to this site.</p>
-                <ul className = "list-inside list-disc py-5 flex flex-col gap-3">
-                  <li>A commit is effectively a snapshot of the changes you've made in your code since the last time you committed.</li>
-                  <li>Commits are helpful particularly if you want to track when you added a certain feature or introduced a certain bug (oops)!</li>
-                  <li>In general: commit often. For the Athena Award, we require that you commit your changes around <span className = "bg-gold px-1 text-hc-primary-dull">once per hour.</span></li>
-                  <li>For example, you can see the current commit that this website is on by checking out the <a target = "_blank" href = "https://github.com/hackclub/athena-award">GitHub repository</a>.</li>
-                </ul>
+              <h1 className="text-3xl sm:text-5xl text-center">
+                Project Requirements
+              </h1>
+              <div className = "grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <div className="col-span-2 pt-8 flex flex-col justify-center gap-4">
+                  <p>
+                    Before you submit your projects, we need some kind of proof
+                    that you've been working on it for as long as you have.
+                  </p>
+
+                  <p>
+                    GitHub is a website that lets you store your code. Sign up to
+                    GitHub{" "}
+                    <a target="_blank" href="https://github.com/signup">
+                      here
+                    </a>
+                    , and return back to this site.
+                  </p>
+                  <ul className="list-inside list-disc py-5 flex flex-col gap-3">
+                    <li>
+                      A commit is effectively a snapshot of the changes you've
+                      made in your code since the last time you committed.
+                    </li>
+                    <li>
+                      Commits are helpful particularly if you want to track when
+                      you added a certain feature or introduced a certain bug
+                      (oops)!
+                    </li>
+                    <li>
+                      In general: commit often. For the Athena Award,{' '}                 
+                      <span className="bg-hc-primary-dull px-1">
+                      we require that you commit your changes around once per hour.
+                      </span>
+                    </li>
+                    <li>
+                      For example, you can see the current commit that this
+                      website is on by checking out the{" "}
+                      <a
+                        target="_blank"
+                        href="https://github.com/hackclub/athena-award"
+                      >
+                        GitHub repository
+                      </a>
+                      .
+                    </li>
+                  </ul>
+                </div>
+
+                <img className = "col-span-1 my-auto" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/9f8f3847231e46f5b2626e7e8afb179bff6ad261_image.png"/>
               </div>
             </>
           )}
@@ -373,7 +456,7 @@ export default function Page() {
           )}
 
           <span className="self-end mt-auto uppercase text-md mx-auto text-white/40">
-            onboarding - {Math.floor((stage * 100) / 5)}% complete
+            onboarding - {Math.floor(((currentStageIndex + 1) * 100) / stages.length)}% complete
           </span>
         </div>
       </div>

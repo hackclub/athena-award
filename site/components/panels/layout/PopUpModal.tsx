@@ -16,6 +16,8 @@ export default function Modal({
   setUXEvent,
   className,
   customClear,
+  customHeaderContent
+
 }: {
   uxEventName: string;
   customHeader?: customHeader;
@@ -24,6 +26,8 @@ export default function Modal({
   setUXEvent: (value: any) => void;
   className?: string;
   customClear?: any;
+  customHeaderContent?: React.ReactNode;
+
 }) {
   const clear = () => {
     customClear();
@@ -79,6 +83,9 @@ export default function Modal({
                       <div className="self-center align-middle text-xl sm:text-3xl playfair-display font-bold italic">
                         {customHeader.heading}
                       </div>
+                    <div className = "self-end ml-auto align-end">
+                      {customHeaderContent}  
+                    </div>
                     </div>
                     <button
                       className="shrink-0"

@@ -19,6 +19,7 @@ interface NextStepsProps {
   setSelectedProject: (project: string) => void;
   setPrizeScroller: (value: number) => void;
   setProjectRetrievalComplete: (status: boolean) => void;
+  titleProps?: string;
 }
 
 interface Resource {
@@ -53,6 +54,7 @@ export default function NextSteps({
   setModule,
   setPrizeScroller,
   setProjectRetrievalComplete,
+  titleProps,
 }: NextStepsProps) {
 
   const session = useSession()
@@ -97,7 +99,6 @@ export default function NextSteps({
   let projects;
   if (data) {
     projects = data[0];
-    console.log(projects, "PROJECTS ARE")
   }
 
   return (
@@ -112,6 +113,7 @@ export default function NextSteps({
       setSelectedProject={setSelectedProject}
       setPrizeScroller={setPrizeScroller}
       setProjectRetrievalComplete={setProjectRetrievalComplete}
+      titleProps="*:text-black/75"
     >
       <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded-lg *:bg-white/30 *:!text-black *:backdrop-blur *:px-4 *:py-2 *:my-2">
         <div className="md:basis-1/2 text-black flex-1 w-full">

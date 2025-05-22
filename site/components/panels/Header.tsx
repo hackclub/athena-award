@@ -7,6 +7,7 @@ import WelcomeModal from "../welcome/WelcomeModal";
 import { inviteSlackUser } from "@/services/inviteUserToSlack";
 import { FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
+import PartnerDropdown from "@/components/ui/PartnerDropdown";
 
 export const shineEffect = (props: string) =>
   `${props} border text-center mx-auto focus:outline-none focus:ring focus:ring-slate-500/50 focus-visible:outline-none focus-visible:ring focus-visible:ring-slate-500/50 relative before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white/.5)_50%,transparent_75%,transparent_100%)] dark:before:bg-[linear-gradient(45deg,transparent_25%,theme(colors.white)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:[transition:background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms]`;
@@ -18,6 +19,8 @@ export function AuthStateButton({ className }: { className?: string }) {
   const session = useSession();
   const router = useRouter();
   const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [ema, setEma] = useState("")
+  const [partners, setPartners] = useState([""])
   const [err, setErr] = useState("");
 
   const searchParams = useSearchParams();
@@ -27,8 +30,10 @@ export function AuthStateButton({ className }: { className?: string }) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = String(formData.get("email"));
+    setEma(email)
     const referredBy = searchParams.get("referred_by")!;
     const utm_source = searchParams.get("utm_source")!;
+    setPartners(await fetch("/api/partners").then(r => r.json()))
 
     setEmailSubmitted(true);
     const r = await inviteSlackUser(email, referredBy, utm_source);
@@ -40,7 +45,7 @@ export function AuthStateButton({ className }: { className?: string }) {
   }
   return (
     <>
-      <div className="flex mx-auto items-center">
+      <div className="flex mx-auto w-full items-center">
         {session.status === "authenticated" ? (
           <button
             onClick={() => {
@@ -91,13 +96,10 @@ export function AuthStateButton({ className }: { className?: string }) {
                 <p className="underline decoration-wavy text-xl">
                   Check your email!
                 </p>
-                <p>
-                  Keep an eye on your inbox for an invite to our community of
-                  high school hackers.
-                </p>
                 <p className="font-semibold">
                   Then, come back here and sign in!
                 </p>
+                <PartnerDropdown email = {ema} partners = {partners}/>
               </span>
             )}
           </div>

@@ -35,7 +35,7 @@ export default function Introduction({
   return (
     <DefaultFrame
       title="Introduction"
-      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/c0fecb8d1d545a2c132b00a0d723d55fcd61cd02_image__6_.png')] bg-cover"
+      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/c0fecb8d1d545a2c132b00a0d723d55fcd61cd02_image__6_.png')] bg-cover bg-center bg-cream/50 bg-blend-overlay"
       module={module}
       prevModule={prevModule}
       nextModule={nextModule}
@@ -43,6 +43,7 @@ export default function Introduction({
       setSelectedProject={setSelectedProject}
       setPrizeScroller={setPrizeScroller}
       setProjectRetrievalComplete={setProjectRetrievalComplete}
+      titleProps="*:text-black/75"
     >
       <div className="grow flex flex-col md:flex-row gap-4 col-span-full *:rounded-lg *:bg-white/30 *:!text-black *:backdrop-blur *:px-4 *:py-2 *:my-2">
         <div className="md:basis-1/2 text-black flex-1 w-full">
