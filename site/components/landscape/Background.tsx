@@ -1,34 +1,78 @@
-'use client';
+// defunct
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { Application } from '@splinetool/runtime';
+import { useEffect, useRef, useState } from "react";
+import { Application } from "@splinetool/runtime";
+import { AnimatePresence, motion } from "motion/react";
 
-const ThreeJSScene = ({ shouldAnimate = false }) => {
-  const mountRef = useRef<HTMLDivElement>(null!);
-  const [app, setApp] = useState<Application | null>(null);
-  
+const Background = ({
+  shouldAnimate = false,
+  sourceScene,
+  paused = false,
+}: {
+  shouldAnimate: boolean;
+  sourceScene: string;
+  paused?: boolean;
+}) => {
+  const appRef = useRef<Application | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(shouldAnimate);
+
   useEffect(() => {
-    const canvas = document.getElementById('#canvas3d') as HTMLCanvasElement
+    const canvas = document.getElementById("canvas3d") as HTMLCanvasElement;
+    if (!canvas || appRef.current) return;
 
-    if (canvas) {
-      const app = new Application(canvas);
-      app.load('https://prod.spline.design/A3EcLirhCciwn3lU/scene.splinecode').then(() => {
-        if (!shouldAnimate) {
-          app.stop();
+    const app = new Application(canvas);
+    appRef.current = app;
+    setIsTransitioning(true);
+
+    app
+      .load(sourceScene)
+      .then(() => {
+        if (!shouldAnimate || paused) {
+          setTimeout(() => app.stop(), 1000);
         }
+      })
+      .then(() => {
+        setIsTransitioning(false);
+      })
+      .catch((e) => {
+        console.error(e);
       });
 
-      setApp(app);
+    if (shouldAnimate && !paused) {
+      app.play();
     }
 
     return () => {
       app?.dispose();
-    }
-  }, [shouldAnimate]);
+      appRef.current = null;
+    };
+  }, [sourceScene, paused]);
 
-  return <div className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0">
-    <canvas id="#canvas3d" className="!w-[130vw] !h-[130vh]"/>;
-  </div>
+  useEffect(() => {
+    if (shouldAnimate && !paused) {
+      appRef.current?.play();
+    } else {
+      appRef.current?.stop();
+    }
+  }, [shouldAnimate, paused]);
+
+  return (
+    <div className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto">
+      <AnimatePresence>
+        {isTransitioning && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: "circInOut" }}
+            className="fixed top-0 left-0 w-screen h-screen bg-black z-10"
+          />
+        )}
+      </AnimatePresence>
+      <canvas id="canvas3d" className="!w-[112vw] !h-[112vh]" />;
+    </div>
+  );
 };
 
-export default ThreeJSScene;
+export default Background;

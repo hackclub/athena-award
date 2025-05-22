@@ -1,46 +1,60 @@
 {
   "private": true,
-  "description": "An example project for NextAuth.js with Next.js",
-  "repository": "https://github.com/nextauthjs/next-auth-example.git",
+  "description": "Website for the Athena Award",
+  "repository": "https://github.com/hackclub/athena-award",
   "bugs": {
-    "url": "https://github.com/nextauthjs/next-auth/issues"
+    "url": "https://github.com/hackclub/athena-award/issues"
   },
-  "homepage": "https://next-auth-example.vercel.app",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "poststart": "npm run services/messageUserSlack.ts",
+    "prettify": "npx prettier --write ."
   },
   "dependencies": {
-    "@hackclub/icons": "^0.0.14",
-    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.2.0",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@next/mdx": "^14.1.4",
+    "@radix-ui/react-accordion": "^1.2.10",
+    "@slack/bolt": "^4.2.1",
     "@splinetool/loader": "^1.9.62",
     "@splinetool/runtime": "^1.9.62",
     "@tailwindcss/forms": "^0.5.7",
     "airtable": "^0.12.2",
+    "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.508.0",
     "motion": "^12.4.1",
     "next": "latest",
     "next-auth": "^5.0.0-beta.25",
     "prism-react-renderer": "^2.3.1",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
+    "react": "^19.0.0",
     "react-confetti": "^6.1.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^19.0.0",
+    "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.4.0",
-    "react-tooltip": "^5.26.3"
+    "react-leaflet": "^5.0.0",
+    "react-tooltip": "^5.26.3",
+    "swr": "^2.3.2",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.12",
+    "@types/leaflet": "^1.9.17",
     "@types/mdx": "^2.0.13",
     "@types/node": "^18",
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.8",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.29",
+    "prettier": "3.5.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
   }

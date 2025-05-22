@@ -1,5 +1,5 @@
-# Days of Service Journey
-A Hack Club project gamifying the experience of learning to code through the [Days of Service Initiative](https://daysofservice.hackclub.com).
+# Athena Award
+A Hack Club project gamifying the experience of learning to code through the [Athena Initiative](https://athena.hackclub.com).
 
 
 ## Basic Development
@@ -7,7 +7,7 @@ A Hack Club project gamifying the experience of learning to code through the [Da
 1. Clone the repository
 
     ```
-    git clone https://github.com/hackclub/dos-journey && cd dos-journey/site
+    git clone https://github.com/hackclub/athena-award && cd athena-award/site
     ```
 
 2. Install dependencies

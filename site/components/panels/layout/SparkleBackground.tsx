@@ -1,7 +1,11 @@
-'use client';
+"use client";
 import { useRef, useEffect, MutableRefObject, ReactNode } from "react";
 
-export default function SidePanelBackground({children}:{children: ReactNode}) {
+export default function SidePanelBackground({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const spotlightRef = useRef<HTMLDivElement>();
   useEffect(() => {
     const handler = (event: MouseEvent) => {
@@ -25,14 +29,12 @@ export default function SidePanelBackground({children}:{children: ReactNode}) {
         className="font-phantom-sans opacity-25 w-full min-h-screen bg-[length:40px_40px] bg-repeat fixed top-0 left-0 z-[-1] bg-[url('https://icons.hackclub.com/api/icons/0xF2A5B2/glyph:rep.svg')]"
       >
         <div
-          ref={spotlightRef as MutableRefObject<HTMLDivElement> }
+          ref={spotlightRef as MutableRefObject<HTMLDivElement>}
           className="absolute top-0 left-0 right-0 bottom-0 bg-[#ffffff] z-2"
         />
       </div>
 
-      <div className="">
-        {children}
-      </div>
+      <div className="">{children}</div>
     </div>
-  )
+  );
 }

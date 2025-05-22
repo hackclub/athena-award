@@ -1,42 +1,25 @@
-# Contribute to Days of Service Journey
+# Contribute to Athena Award
 Contributions are welcome to this repository!
-Step one is to join the `#dos-journey` channel on Slack. This can help you stay posted on major changes and also have you contribute to the project in collaboration with other people!
+Step one is to join the `#athena-award` channel on Slack. This can help you stay posted on major changes and also have you contribute to the project in collaboration with other people!
 
 Here's a couple of general things about the project that can help you get up and running quickly:
 ## Site Contributions
-* The `DEVELOPMENT_SETTINGS.ts` file can help to optimize your work. When using Developer Tools in your browser, toggling some of these settings can ease lag.
-### Markdown (MDX) and Video Contributions
-* The site uses a similar system to Next.js's App Router to determine routes. Here's an example tree:
-```
-panel-content
-├── discovery
-│   ├── getting-started
-│   │   └── index.mdx (/adventure/discovery/getting-started)
-│   ├── join-the-slack
-│   │   └── index.mdx
-│   └── resources
-│       └── index.mdx
-├── code
-│   ├── write-your-first-line
-│   │   └── index.mdx (/adventure/code/write-your-first-line)
-│   └── first-pull-request
-│       └── index.mdx
-└── hack-club-community
-    ├── scrapbooking
-    │   └── index.mdx (/adventure/hack-club-community/scrapbooking)
-    └── start-a-club
-        └── index.mdx
-```
+* The `/site/DEVELOPMENT_SETTINGS.ts` file can help to optimize your work. When using Developer Tools in your browser, toggling some of these settings can ease lag.
 
-The folder name indicates the route (/adventure is added by default) and index.mdx marks the end of the route. Some example routes post-build are shown in the tree above.
+### Data and Other Contributions
+* Stages are added through the file [site/app/STAGE.ts](site/app/STAGE.ts)
 
-You can also create interactive components in the `components/panels/add-ons` directory. Import them on your MDX file the way you would any other React component and use however you'd like!
+You can also create interactive components in the `components` directory. Import them the way you would any other React component and use however you'd like!
 
 ## Slack Contributions
 
-In order to test Slack OAuth, you will need a public-facing `https` URL to enter as the redirect URL. You can use any of the following two methods to obtain one for development, or another that works for you. 
+Note that while the following isn't strictly necessary to get the site up and running locally, a significant proportion of the site is gated behind various forms of authentication and will **not** work should you set this up incorrectly.
+
+In order to test Slack OAuth, you will need a public-facing `https` URL to enter as the redirect URL (Slack requires this!). You can use any of the following two methods to obtain one for development, or another that works for you. 
 
 ### 1. ngrok
+
+ngrok allows you to access your locally running development environment from the web.
 
 1. Create an [ngrok account](https://download.ngrok.com/) and follow the instructions to install it on your device. 
 2. Complete the onboarding stage and deploy your app on a static domain. The command you run should look something like this:
@@ -45,7 +28,7 @@ In order to test Slack OAuth, you will need a public-facing `https` URL to enter
 
 ### 2. zrok
 
-Zrok has more lenient traffic restrictions than ngrok.
+Zrok is similar to ngrok, but has more lenient traffic restrictions than ngrok.
 
 1. Create a [zrok account](https://docs.zrok.io/docs/getting-started/) on the public zrok instance.
 2. Download and install [zrok](https://docs.zrok.io/docs/getting-started/#installing-the-zrok-command) for your device.
@@ -66,3 +49,14 @@ When testing Slack OAuth, make sure you have both the local dev environment and 
 ## Airtable Contributions
 
 Obtain the Airtable API key and base ID and enter them into your .env file as appropriate (If you're involved in this project, DM @phthallo on the Hack Club Slack for help with this)
+
+### Project Review
+When a user submits a project for a specific stage, it is added to the centralised Athena Award Airtable where it is then manually reviewed. Projects can be either rejected, approved, pending, or unreviewed. 
+
+`rejected` - project was submitted through the form and was deemed insufficient.
+`approved` - project was submitted through the form and was deemed sufficient.
+`pending` - project has been selected on the Athena Award website but not submitted through the form yet.
+`unreviewed` - project was submitted through the form and has not been manually reviewed yet.
+
+Users are prompted to resubmit projects if it is initially rejected. Projects are then tied to their record (slackId_projectNumber), to keep track of what has been submitted to what stage.
+
