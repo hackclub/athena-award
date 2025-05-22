@@ -16,7 +16,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body className={`phantom-sans`}>
-        <PlausibleProvider domain="https://award.athena.hackclub.com">
+        <PlausibleProvider domain="award.athena.hackclub.com">
           <SessionProvider>{children}</SessionProvider>
         </PlausibleProvider>
       </body>
