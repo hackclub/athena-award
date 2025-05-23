@@ -83,7 +83,7 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY })
 
 setInterval(async () => {
   try {
-    const records = await base('Email Slack Invites').select({filterByFormula: "NOT({welcome_message_sent})"}).all();
+    const records = await base('Email Slack Invites').select({filterByFormula: "AND(NOT({dm_error}), NOT({welcome_message_sent}))"}).all();
     for (const record of records) {
       const email = record.get('email');
       if (!email) continue;
