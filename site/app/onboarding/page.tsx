@@ -252,9 +252,20 @@ export default function Page() {
                 >
                   <div className="*:mx-auto w-full text-center">
                     <img src="https://cloud-g5g5sistf-hack-club-bot.vercel.app/1untitled_artwork_8_1.png" />
-                    <span className="text-center italic">
+                    <p className="text-center italic">
                       hi ^-^ i'm orpheus, and i'm here to guide you through
                       getting started with the athena award!
+                    </p> {' '}
+                      <span>
+                      confused? ask for help in{" "}
+                      <a
+                        target="_blank"
+                        className="bg-hc-primary-dull px-1 text-white"
+                        href="https://app.slack.com/client/T0266FRGM/C06T17NQB0B"
+                      >
+                        #athena-award
+                      </a>
+                      .
                     </span>
                   </div>
                   <motion.div
@@ -265,19 +276,13 @@ export default function Page() {
                   >
                     <p className="text-left text-lg py-1 sm:text-xl">
                       you're a little more advanced, so let's help you get
-                      started with hackatime! it's a nifty tool we hack clubbers
+                      started with Hackatime! it's a nifty tool we hack clubbers
                       use to track time spent coding!
                     </p>
-                    <p>
-                      you're using{" "}
-                      <span className="bg-hc-primary-dull px-1">
-                        {userOS.readable_name}
-                      </span>
-                      , so follow these instructions.
-                    </p>
-                    <ul className="text-lg list-outside list-decimal">
+                    <div className = "grid grid-cols-1 lg:grid-cols-2 grow">
+                    <ul className="text-lg list-outside list-decimal *:py-1">
                       <li>
-                        sign in{" "}
+                        Sign in{" "}
                         <a
                           target="_blank"
                           href="https://hackatime.hackclub.com/auth/slack?close_window=true"
@@ -287,7 +292,7 @@ export default function Page() {
                         to create your hackatime account
                       </li>
                       <li>
-                        install a code editor or IDE. i recommend{" "}
+                        Install a code editor or IDE. i recommend{" "}
                         <a
                           href="https://code.visualstudio.com/"
                           target="_blank"
@@ -301,7 +306,7 @@ export default function Page() {
                         will work.
                       </li>
                       <li>
-                        follow these handy{" "}
+                        Follow these handy{" "}
                         <a
                           target="_blank"
                           href="https://hackatime.hackclub.com/my/wakatime_setup"
@@ -310,23 +315,17 @@ export default function Page() {
                         </a>
                         , then come back here!
                       </li>
-                    </ul>
-                  
-                  <div className = "grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <span className = "text-gold">Confused? Check out the presentation!</span>
+                    </ul>  
+                      <object data = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf" type="application/pdf" className = "h-full w-full">
+                        <p><a href = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf"/></p>
+                      </object>
+                  </div>
+                
+                  <div className = "grid grid-cols-1 gap-8">
                     <button className = "bg-hc-primary-dull/50 w-full mx-auto p-2" onClick={checkIfHackatime}>click me once you've set hackatime up!</button>
                     <p>Give me a moment, I'm checking to see if you've made your Hackatime account... <span className = "bg-hc-primary-dull px-1">{hackatimeInstalled ? "Nice, it looks like you have a Hackatime account - you can go to the next step!" : "I can't find a Hackatime account for you..." }</span></p>
                   </div>
-                    <p>
-                      confused? ask for help in{" "}
-                      <a
-                        target="_blank"
-                        className="bg-hc-primary-dull px-1 text-white"
-                        href="https://app.slack.com/client/T0266FRGM/C06T17NQB0B"
-                      >
-                        #athena-award
-                      </a>
-                      .
-                    </p>
                   </motion.div>
                 </motion.div>
               </div>
