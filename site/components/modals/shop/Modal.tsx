@@ -29,7 +29,7 @@ export default function ShopModal() {
         uxEvent={uxEvent}
         setUXEvent={setUXEvent}
         className="overflow-auto"
-        customHeaderContent={<div className = "px-3 py-2 z-40 bg-cream rounded-md text-black w-max">{artifacts} <img className = "inline h-8" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"/></div>}
+        customHeaderContent={<div className = "px-3 py-2 z-40 bg-cream/40 rounded-md text-white w-max">{artifacts} <img className = "inline h-8" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"/></div>}
       >
         <div className="flex flex-col gap-3">
           <div>
@@ -60,7 +60,7 @@ export default function ShopModal() {
                         key={idx}
                         image={prize.image}
                         description={prize.item_friendly_name}
-                        descriptionBottom={`${prize.price} artifacts`}
+                        descriptionBottom={` ${ (prize.item_name != "nyc_hackathon" && prize.item_name != "certification") ? `${prize.price} artifacts` : "3 projects + 30 hours" }`}
                         link={`https://forms.hackclub.com/athena-award-orders?item=${prize.item_name}`}
                       />
                       <span className = "py-4 flex flex-row items-center justify-center gap-2">{prize.availability}
