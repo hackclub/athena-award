@@ -146,26 +146,7 @@ Here's where you are right now:
         app.logger.error(`Failed to message ${email}:`, err);
       }
 
-      app.action('upgrade', async ({ ack }) => {
-        await ack();
-        upgradeUser(email)
-        const channelId = await openConversationWithEmail(email);
-        await app.client.chat.postMessage({
-          token: process.env.SLACK_BOT_TOKEN,
-          channel: channelId,
-          blocks:  [
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Award> and sign in from the button in the top right corner.`}
-              }
-            ],
-          username: 'Athena Award',
-          text: 'Continue on Athena Award'
-        });
-          
-      })
+      
     }
     
   } catch (err) {
@@ -233,6 +214,38 @@ Here's where you are right now:
   //  app.logger.info("Airtable fetch error:", err);
   //}
 }, 10000);
+
+app.action('upgrade', async ({ ack, body }) => {
+  await ack();
+  let email;
+  try {
+    const userInfo = await app.client.users.info({
+      token: process.env.SLACK_BOT_TOKEN,
+      user: body.user.id,
+    });
+    email = userInfo.user.profile.email;
+  } catch (e) {
+    app.logger.error('Could not fetch user email for upgrade:', e);
+    return;
+  }
+  await upgradeUser(email);
+  const channelId = await openConversationWithEmail(email);
+  await app.client.chat.postMessage({
+    token: process.env.SLACK_BOT_TOKEN,
+    channel: channelId,
+    blocks:  [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Award> and sign in from the button in the top right corner.`
+        }
+      }
+    ],
+    username: 'Athena Award',
+    text: 'Continue on Athena Award'
+  });
+});
 
 
 (async () => {
