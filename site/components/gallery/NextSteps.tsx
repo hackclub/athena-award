@@ -178,7 +178,7 @@ export default function NextSteps({
                             ),
                           )}
                         <option value="Other YSWS Project">
-                          [Other YSWS Project]
+                          [Other YSWS Project/Summer Program Project]
                         </option>
                       </select>
                     </span>
