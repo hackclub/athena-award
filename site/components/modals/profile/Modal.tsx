@@ -126,8 +126,10 @@ export default function Profile() {
           <div className="text-white font-bold text-2xl uppercase">
             Referral Code
           </div>
-            <span>Earn prizes for people who sign up using your referral link!</span>
-            <a href = {`https://award.athena.hackclub.com?referred_by=${session.data?.slack_id}`} className = "text-center block">https://award.athena.hackclub.com?referred_by={session.data?.slack_id}</a>
+          <ul className = "text-base list-inside list-disc">
+            <li>Earn prizes for people who sign up using your <a target = "_blank" href = {`https://award.athena.hackclub.com?referred_by=${session.data?.slack_id}`}>referral link</a>!</li>
+            <li>Click here to get a <a target = "_blank" href = "/poster">poster</a> with your referral code.</li>
+          </ul>
       </div>
           <button
             className="text-white font-bold text-2xl uppercase mt-auto self-start"

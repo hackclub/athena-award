@@ -57,7 +57,7 @@ export function AuthStateButton({ className }: { className?: string }) {
           </button>
         ) : (
           <div
-            className={`flex flex-col p-5 bg-hc-primary-dull/80 rounded-xl ${className}`}
+            className={`max-md:w-full flex flex-col p-5 bg-hc-primary-dull/80 rounded-xl ${className}`}
           >
             {!emailSubmitted ? (
               <form

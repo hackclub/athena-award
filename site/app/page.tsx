@@ -120,7 +120,7 @@ export default function Index() {
           {/* i cbf finding a better solution */}
           <img className="max-lg:mx-auto lg:mr-auto max-h-64" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg" />
           {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
-          <div className="pointer-events-auto lg:absolute flex flex-col lg:flex-row gap-4 self-center *:mx-auto lg:self-end">
+          <div className=" pointer-events-auto lg:absolute flex flex-col lg:flex-row gap-4 self-center *:mx-auto lg:self-end">
             <AuthStateButton className="h-full" />
             <div className="*:h-full">
               <WelcomeModal props={`${shineEffect(shineEffectProps)}`} />
