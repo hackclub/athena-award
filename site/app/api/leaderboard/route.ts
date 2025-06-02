@@ -5,7 +5,6 @@ const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
 }).base(process.env.AIRTABLE_BASE_ID!);
 
-// update this to get all values from the unified ysws database
 
 export async function GET() {
   const users = await airtable("Registered Users")
@@ -18,6 +17,7 @@ export async function GET() {
         "profile_picture",
         "points",
       ],
+      maxRecords: 50,
       sort: [{ field: "total_time_approved_projects", direction: "desc" }],
     })
     .all();
