@@ -5,31 +5,20 @@ const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
 }).base(process.env.AIRTABLE_BASE_ID!);
 
-function fuzzLatLng(lat: number, lng: number, radiusKm: number) {
-  const radiusInDegrees = radiusKm / 111;
-  const angle = Math.random() * 2 * Math.PI;
-  const distance = Math.random() * radiusInDegrees;
-  const dLat = distance * Math.cos(angle);
-  const dLng = (distance * Math.sin(angle)) / Math.cos((lat * Math.PI) / 180);
-  return {
-    lat: lat + dLat,
-    lng: lng + dLng,
-  };
-}
-
 async function geocodeAddress(
   address: string,
 ): Promise<{ lat: number; lng: number } | null> {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+  const url = `https://geocoder.hackclub.com/v1/geocode?address=${encodeURIComponent(address)}&key=${process.env.GEOCODER_API_KEY}`;
   const res = await fetch(url, {
     headers: { "User-Agent": "athena-award/1.0" },
-  });
+  });   
+
   if (!res.ok) return null;
   const data = await res.json();
-  if (Array.isArray(data) && data.length > 0) {
+  if (data){
     return {
-      lat: parseFloat(data[0].lat),
-      lng: parseFloat(data[0].lon),
+      lat: (data.lat).toPrecision(2),
+      lng: (data.lng).toPrecision(2),
     };
   }
   return null;
@@ -56,9 +45,6 @@ export async function GET() {
         const addressParts =
           address[0].split("\n")[address[0].split("\n").length - 1];
         country = addressParts;
-        if (latLng) {
-          latLng = fuzzLatLng(latLng.lat, latLng.lng, 300);
-        }
       }
       const project_name = fields["project_name"];
       const project_name_override = fields["project_name_override"] && (String(
