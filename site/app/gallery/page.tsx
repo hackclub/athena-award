@@ -9,7 +9,7 @@ import { STAGES } from "@/app/STAGES";
 import { UXEvent, UXEventContext } from "@/components/context/UXStages";
 import ShopModal from "@/components/modals/shop/Modal";
 import LeaderboardModal from "@/components/modals/leaderboard/Modal";
-import { Unauthenticated } from "@/components/screens/Modal";
+import { Loading, Unauthenticated } from "@/components/screens/Modal";
 import { useSession } from "next-auth/react";
 
 export default function Gallery() {
@@ -18,6 +18,11 @@ export default function Gallery() {
       "Intro",
   );
   const session = useSession();
+  
+  if (session.status == "loading"){
+    return <Loading/>
+  }
+
   if (session.status != "authenticated"){
     return <Unauthenticated/>
   }
