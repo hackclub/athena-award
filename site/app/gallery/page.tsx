@@ -19,13 +19,14 @@ export default function Gallery() {
   );
   const session = useSession();
   
+  if (session.status === "unauthenticated"){
+    return <Unauthenticated/>
+  }
+
   if (session.status == "loading"){
     return <Loading/>
   }
 
-  if (session.status != "authenticated"){
-    return <Unauthenticated/>
-  }
   const [_uxEvent, setUXEvent] = useState<UXEvent>("map");
   return (
     <div className="w-screen h-screen">
