@@ -1,15 +1,12 @@
 "use client";
-import Background from "@/components/landscape/Background";
 import GalleryMenu from "@/components/gallery/GalleryMenu";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import ProfileModal from "@/components/modals/profile/Modal";
 import InfoModal from "@/components/modals/info/Modal";
-import { SessionProvider } from "next-auth/react";
 import { STAGES } from "@/app/STAGES";
 import { UXEvent, UXEventContext } from "@/components/context/UXStages";
 import ShopModal from "@/components/modals/shop/Modal";
 import LeaderboardModal from "@/components/modals/leaderboard/Modal";
-import { Loading, Unauthenticated } from "@/components/screens/Modal";
 import { useSession } from "next-auth/react";
 
 export default function Gallery() {
@@ -19,14 +16,6 @@ export default function Gallery() {
   );
   const session = useSession();
   
-  if (session.status === "unauthenticated"){
-    return <Unauthenticated/>
-  }
-
-  if (session.status == "loading"){
-    return <Loading/>
-  }
-
   const [_uxEvent, setUXEvent] = useState<UXEvent>("map");
   return (
     <div className="w-screen h-screen">
