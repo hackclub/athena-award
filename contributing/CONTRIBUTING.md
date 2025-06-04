@@ -1,6 +1,8 @@
 # Contribute to Athena Award
 This is a monorepo containing the source code of the Athena Award project.
+
 Contributions and bug reports are welcome - in fact, are encouraged! -  to this repository!
+
 Step one is to join the `#athena-award` channel on Slack. This can help you stay posted on major changes and also have you contribute to the project in collaboration with other people!
 
 Here's a couple of general things about the project that can help you get up and running quickly:
@@ -53,8 +55,11 @@ Obtain the Airtable API key and base ID and enter them into your .env file as ap
 When a user submits a project for a specific stage, it is added to the centralised Athena Award Airtable where it is then manually reviewed. Projects can be either rejected, approved, pending, or unreviewed. 
 
 `rejected` - project was submitted through the form and was deemed insufficient.
+
 `approved` - project was submitted through the form and was deemed sufficient.
+
 `pending` - project has been selected on the Athena Award website but not submitted through the form yet.
+
 `unreviewed` - project was submitted through the form and has not been manually reviewed yet.
 
 Users are prompted to resubmit projects if it is initially rejected. Projects are then tied to their record (slackId_projectNumber), to keep track of what has been submitted to what stage.
@@ -64,6 +69,7 @@ Users are prompted to resubmit projects if it is initially rejected. Projects ar
 The [bot](/bot) is currently used for welcoming new users and messaging users on Slack when their projects receive a status update. As it contains a flow for upgrading multichannel guests to full users, it needs a Slack admin token to run.
 
 | Variable | Description | 
+| -------- | ----------- |
 | `SLACK_BROWSER_TOKEN` | [xoxc token](https://gist.github.com/maxwofford/5779ea072a5485ae3b324f03bc5738e1) of a Slack workspace admin. |
 | `SLACK_COOKIE` | xoxd token of a Slack workspace admin, sourced from browser cookies under the key 'd'. |  
 | `SLACK_APP_TOKEN` | xapp token of the Slack bot. |
