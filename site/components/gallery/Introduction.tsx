@@ -10,7 +10,9 @@ interface IntroductionProps {
   module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!";
   prevModule: string;
   nextModule: string;
-  setModule: (module: ((typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!")) => void;
+  setModule: (
+    module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!",
+  ) => void;
   setSelectedProject: (project: string) => void;
   setPrizeScroller: (value: number) => void;
   setProjectRetrievalComplete: (status: boolean) => void;
@@ -22,7 +24,7 @@ interface Resource {
   link: string;
 }
 
-export default function Introduction({ 
+export default function Introduction({
   points,
   module,
   prevModule,
@@ -73,9 +75,7 @@ export default function Introduction({
             animate="visible"
             className="h-full overflow-auto flex flex-col gap-3"
           >
-            <p>
-              Not sure what to make?
-            </p>
+            <p>Not sure what to make?</p>
             {introResources.map((resource: Resource, index: number) => (
               <ResourceCue
                 key={index}
@@ -86,7 +86,9 @@ export default function Introduction({
             ))}
           </motion.div>
         </div>
-        <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">or</span>
+        <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">
+          or
+        </span>
         <div className="md:basis-1/2 flex-1 text-hc-primary-dull">
           <Tooltip id="original" className="max-w-64" />
           <motion.h2
@@ -112,8 +114,7 @@ export default function Introduction({
             className="md:w-11/12 flex flex-col gap-10"
           >
             <p>
-              You can submit any three technical projects for the Athena
-              Award.
+              You can submit any three technical projects for the Athena Award.
             </p>
             <p>
               For every hour you code on an{" "}
@@ -171,4 +172,4 @@ export default function Introduction({
       </div>
     </DefaultFrame>
   );
-} 
+}

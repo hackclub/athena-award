@@ -24,7 +24,7 @@ export function Waka() {
           : pSum,
       0,
     );
-    console.log(projects, "wow")
+    console.log(projects, "wow");
   }
   if (error) {
     if (error.status !== 200) {

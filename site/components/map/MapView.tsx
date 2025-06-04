@@ -150,7 +150,7 @@ export default function MapView() {
 
   return (
     <>
-      <Header skipWelcomeModal={true}/>
+      <Header skipWelcomeModal={true} />
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
         aria-hidden="true"

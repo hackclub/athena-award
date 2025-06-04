@@ -7,4 +7,4 @@ export const introResources: {
 }[];
 
 export const slidingUpVariant: Variants;
-export const slidingParentVariant: Variants; 
+export const slidingParentVariant: Variants;

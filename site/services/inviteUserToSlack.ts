@@ -86,7 +86,9 @@ export async function inviteSlackUser(
       {
         fields: {
           email: email,
-          referred_by: searchExistingUserByReferral.length ? [searchExistingUserByReferral[0]["id"]] : [],
+          referred_by: searchExistingUserByReferral.length
+            ? [searchExistingUserByReferral[0]["id"]]
+            : [],
           utm_source: utmSource,
         },
       },

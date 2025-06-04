@@ -5,7 +5,10 @@ interface PartnerDropdownProps {
   partners: string[];
 }
 
-export default function PartnerDropdown({ email, partners }: PartnerDropdownProps) {
+export default function PartnerDropdown({
+  email,
+  partners,
+}: PartnerDropdownProps) {
   const [selected, setSelected] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -15,7 +18,7 @@ export default function PartnerDropdown({ email, partners }: PartnerDropdownProp
     setSelected((prev) =>
       prev.includes(partner)
         ? prev.filter((p) => p !== partner)
-        : [...prev, partner]
+        : [...prev, partner],
     );
   }
 
@@ -25,11 +28,14 @@ export default function PartnerDropdown({ email, partners }: PartnerDropdownProp
     setError("");
     setSuccess(false);
     try {
-      console.log(selected, "selected partners")
+      console.log(selected, "selected partners");
       const res = await fetch("/api/partners", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, self_reported_partners: selected }),
+        body: JSON.stringify({
+          email: email,
+          self_reported_partners: selected,
+        }),
       });
       if (!res.ok) throw new Error("Failed to submit");
       setSuccess(true);

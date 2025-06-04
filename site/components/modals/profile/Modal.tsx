@@ -65,72 +65,88 @@ export default function Profile() {
             </div>
           </div>
           <div>
-          <div className="text-white font-bold text-2xl uppercase">
-            Hackathons
-          </div>
-          <div>
-            Part of a{" "}
-            <Tooltip id="hackathon" place="top-start" className="z-10" />
-            <span
-              data-tooltip-id="hackathon"
-              data-tooltip-content="Ask your Days of Service hackathon leads for the unique Athena Award code!"
-              className="font-bold"
-            >
-              hackathon?{" "}
-            </span>
-            Submit the unique code here:{" "}
-          </div>
-          <form
-            className="flex flex-row my-4 w-full"
-            onSubmit={async (event) => {
-              let hackathon = await submitCode(event);
-              setError(hackathon.error);
-            }}
-          >
-            <input
-              type="text"
-              name="code"
-              className="!outline-none !border-none !ring-0 rounded-l w-full text-black"
-            />
-            <button
-              type="submit"
-              className="rounded-r text-white p-2 bg-hc-primary"
-            >
-              <img
-                src="https://icons.hackclub.com/api/icons/white/send"
-                className="size-[32px]"
-                alt="Submit"
-              />
-            </button>
-          </form>
-          <div className="text-sm">
-            {error ? (
-              <Warning title="Error">{error}</Warning>
-            ) : hackathonName ? (
-              <span>
-                Congratulations! You're registered as an attendee of{" "}
-                <b>{hackathonName}</b>
+            <div className="text-white font-bold text-2xl uppercase">
+              Hackathons
+            </div>
+            <div>
+              Part of a{" "}
+              <Tooltip id="hackathon" place="top-start" className="z-10" />
+              <span
+                data-tooltip-id="hackathon"
+                data-tooltip-content="Ask your Days of Service hackathon leads for the unique Athena Award code!"
+                className="font-bold"
+              >
+                hackathon?{" "}
               </span>
-            ) : null}
-          </div>
+              Submit the unique code here:{" "}
+            </div>
+            <form
+              className="flex flex-row my-4 w-full"
+              onSubmit={async (event) => {
+                let hackathon = await submitCode(event);
+                setError(hackathon.error);
+              }}
+            >
+              <input
+                type="text"
+                name="code"
+                className="!outline-none !border-none !ring-0 rounded-l w-full text-black"
+              />
+              <button
+                type="submit"
+                className="rounded-r text-white p-2 bg-hc-primary"
+              >
+                <img
+                  src="https://icons.hackclub.com/api/icons/white/send"
+                  className="size-[32px]"
+                  alt="Submit"
+                />
+              </button>
+            </form>
+            <div className="text-sm">
+              {error ? (
+                <Warning title="Error">{error}</Warning>
+              ) : hackathonName ? (
+                <span>
+                  Congratulations! You're registered as an attendee of{" "}
+                  <b>{hackathonName}</b>
+                </span>
+              ) : null}
+            </div>
           </div>
 
-        <div>
-          <div className="text-white font-bold text-2xl uppercase">
-            Onboarding
+          <div>
+            <div className="text-white font-bold text-2xl uppercase">
+              Onboarding
+            </div>
+            Want a bit of a refresher? Complete{" "}
+            <a href="/onboarding">onboarding</a> again.
           </div>
-            Want a bit of a refresher? Complete <a href = "/onboarding">onboarding</a> again.
-        </div>
 
-        <div>
-          <div className="text-white font-bold text-2xl uppercase">
-            Referral Code
+          <div>
+            <div className="text-white font-bold text-2xl uppercase">
+              Referral Code
+            </div>
+            <ul className="text-base list-inside list-disc">
+              <li>
+                Earn prizes for people who sign up using your{" "}
+                <a
+                  target="_blank"
+                  href={`https://award.athena.hackclub.com?referred_by=${session.data?.slack_id}`}
+                >
+                  referral link
+                </a>
+                !
+              </li>
+              <li>
+                Click here to get a{" "}
+                <a target="_blank" href="/poster">
+                  poster
+                </a>{" "}
+                with your referral code.
+              </li>
+            </ul>
           </div>
-          <ul className = "text-base list-inside list-disc">
-            <li>Earn prizes for people who sign up using your <a target = "_blank" href = {`https://award.athena.hackclub.com?referred_by=${session.data?.slack_id}`}>referral link</a>!</li>
-            <li>Click here to get a <a target = "_blank" href = "/poster">poster</a> with your referral code.</li>
-          </ul>
-      </div>
           <button
             className="text-white font-bold text-2xl uppercase mt-auto self-start"
             onClick={() => signOut({ redirectTo: "/" })}

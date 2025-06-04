@@ -19,8 +19,11 @@ export async function GET(request: NextRequest) {
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
-  if (!query){
-    return NextResponse.json({ message: "Query not specified" }, { status: 200 })
+  if (!query) {
+    return NextResponse.json(
+      { message: "Query not specified" },
+      { status: 200 },
+    );
   }
   try {
     if (query === "all") {
@@ -169,23 +172,22 @@ export async function GET(request: NextRequest) {
       }
       // case where no hackatime account exists
       return NextResponse.json([]);
-    } else if (query === "most_recent_submission"){
-        const mostRecentProject = await airtable("Projects")
+    } else if (query === "most_recent_submission") {
+      const mostRecentProject = await airtable("Projects")
         .select({
           filterByFormula: `AND({slack_id} = "${session?.slack_id}", NOT({status} = "pending"))`,
-          fields: [
-            "stage",
-          ],
-          sort: [
-            { field: "stage", 
-              direction: "desc"
-            }
-          ]
+          fields: ["stage"],
+          sort: [{ field: "stage", direction: "desc" }],
         })
-        .all();  
-        console.log(mostRecentProject)
-        const i = JSON.parse(JSON.stringify(mostRecentProject))[0]
-        return NextResponse.json({message: !(i) || Number(i["fields"]["stage"]) < 4 ? 3 : Number(i["fields"]["stage"])})
+        .all();
+      console.log(mostRecentProject);
+      const i = JSON.parse(JSON.stringify(mostRecentProject))[0];
+      return NextResponse.json({
+        message:
+          !i || Number(i["fields"]["stage"]) < 4
+            ? 3
+            : Number(i["fields"]["stage"]),
+      });
     }
   } catch (error) {
     return NextResponse.json(

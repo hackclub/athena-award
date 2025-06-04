@@ -5,15 +5,13 @@ import { NextResponse, NextRequest } from "next/server";
 import { getWakaTimeData } from "@/services/fetchWakaData";
 import { auth } from "@/auth";
 import { verifyAuth } from "@/services/verifyAuth";
-import Airtable from "airtable"
+import Airtable from "airtable";
 import { encryptSession } from "@/services/hash";
 import { verifySession } from "@/services/hash";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
 }).base(process.env.AIRTABLE_BASE_ID!);
-;
-
 export async function GET(request: NextRequest) {
   const session = await auth();
 
@@ -43,8 +41,7 @@ export async function GET(request: NextRequest) {
 
 // POST api/user/[userID]/waka
 // update that a user has set up hackatime
-export async function POST(request: NextRequest){
-
+export async function POST(request: NextRequest) {
   const session = await auth();
   const emailAddress = session?.user.email;
   try {
@@ -69,7 +66,7 @@ export async function POST(request: NextRequest){
     ) {
       throw "Unauthorized";
     }
-    if (!(prettyRecordID[0]["fields"]["hackatime_set_up_at"])){
+    if (!prettyRecordID[0]["fields"]["hackatime_set_up_at"]) {
       const r = await airtable("Registered Users").update([
         {
           id: prettyRecordID[0]["fields"]["record_id"],
@@ -78,15 +75,15 @@ export async function POST(request: NextRequest){
           },
         },
       ]);
-      console.log(r)
-    return NextResponse.json({
-      message: "Set Hackatime setup date."
-    })
+      console.log(r);
+      return NextResponse.json({
+        message: "Set Hackatime setup date.",
+      });
     }
     return NextResponse.json({
-      message: "Hackatime was already set."
-    })
-    } catch (error) {
+      message: "Hackatime was already set.",
+    });
+  } catch (error) {
     return NextResponse.json(
       { message: `Something went wrong: ${error}` },
       { status: 400 },

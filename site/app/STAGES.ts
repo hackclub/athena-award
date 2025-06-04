@@ -224,5 +224,5 @@ export const STAGES = [
       description:
         "This is a really cool reward! Go out there and change the world.",
     },
-  }
+  },
 ] as const;

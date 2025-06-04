@@ -46,7 +46,7 @@ const nextStepsResources = [
   },
 ];
 
-export default function NextSteps({ 
+export default function NextSteps({
   points,
   module,
   prevModule,
@@ -56,18 +56,15 @@ export default function NextSteps({
   setProjectRetrievalComplete,
   titleProps,
 }: NextStepsProps) {
-
-  const session = useSession()
-  const slackId = session.data?.slack_id
-  const [ selectedProject, setSelectedProject ] = useState("_select#")
-  const [ idOfNextSubmission, setIdOfNextSubmission ] = useState(4)
+  const session = useSession();
+  const slackId = session.data?.slack_id;
+  const [selectedProject, setSelectedProject] = useState("_select#");
+  const [idOfNextSubmission, setIdOfNextSubmission] = useState(4);
   useEffect(() => {
-    fetch(`/api/user/${slackId}/projects?query=most_recent_submission`).then(
-      r => r.json()
-    ).then( res =>
-    setIdOfNextSubmission(res.message + 1)
-    )
-  }, [])
+    fetch(`/api/user/${slackId}/projects?query=most_recent_submission`)
+      .then((r) => r.json())
+      .then((res) => setIdOfNextSubmission(res.message + 1));
+  }, []);
 
   let urls = [
     `/api/user/${slackId}/projects?query=valid_for_selection&stage=${idOfNextSubmission}`,
@@ -77,10 +74,7 @@ export default function NextSteps({
   /** this is the current stage represented as a module object with the relevant visuals data */
   const baseModuleData = STAGES.find((m) => m.moduleName === module)!;
 
-  const { data, error, isLoading, mutate } = useSWR(
-    urls,
-    multiFetcher,
-  );
+  const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher);
 
   if (error) {
     console.log(error);
@@ -144,59 +138,61 @@ export default function NextSteps({
             className="h-full overflow-auto flex flex-col gap-3"
           >
             <p>
-              You might have finished the required projects for the Athena Award, but keep on submitting projects for bonus artifacts to be spent in the shop.
+              You might have finished the required projects for the Athena
+              Award, but keep on submitting projects for bonus artifacts to be
+              spent in the shop.
             </p>
 
-          <div>
-            
             <div>
+              <div>
                 <span className="flex flex-row items-center gap-2">
-                      <select
-                        required
-                        className="w-full sm:min-w-max flex flex-col gap-1 *:bg-darker text-black *:text-black bg-white/80 rounded-full px-5"
-                        name="project"
-                        id="project"
-                        defaultValue={selectedProject}
-                        onChange={handleChange}
-                      >
-                        <option disabled value="_select#">
-                          [Select a project]
-                        </option>
-                        {projects &&
-                          projects.map(
-                            (
-                              project: any,
-                              index: number /* i really cbf to fix the type rn */,
-                            ) => (
-                              <option
-                                key={index}
-                                value={project.name}
-                              >
-                                {project.project_name_override ||
-                                  project.name}
-                              </option>
-                            ),
-                          )}
-                        <option value="Other YSWS Project">
-                          [Other YSWS Project/Summer Program Project]
-                        </option>
-                      </select>
-                    </span>
-                  </div>
+                  <select
+                    required
+                    className="w-full sm:min-w-max flex flex-col gap-1 *:bg-darker text-black *:text-black bg-white/80 rounded-full px-5"
+                    name="project"
+                    id="project"
+                    defaultValue={selectedProject}
+                    onChange={handleChange}
+                  >
+                    <option disabled value="_select#">
+                      [Select a project]
+                    </option>
+                    {projects &&
+                      projects.map(
+                        (
+                          project: any,
+                          index: number /* i really cbf to fix the type rn */,
+                        ) => (
+                          <option key={index} value={project.name}>
+                            {project.project_name_override || project.name}
+                          </option>
+                        ),
+                      )}
+                    <option value="Other YSWS Project">
+                      [Other YSWS Project/Summer Program Project]
+                    </option>
+                  </select>
+                </span>
+              </div>
 
-                  <button className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center bg-cream/40`}>
-                  <a
-                    target="_blank"
-                    className="text-white no-underline"
-                    href={`https://forms.hackclub.com/athena-award-projects?stage=${idOfNextSubmission}`}>
-                    Ready to submit?
-                  </a>
-                  </button>
+              <button
+                className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center bg-cream/40`}
+              >
+                <a
+                  target="_blank"
+                  className="text-white no-underline"
+                  href={`https://forms.hackclub.com/athena-award-projects?stage=${idOfNextSubmission}`}
+                >
+                  Ready to submit?
+                </a>
+              </button>
             </div>
           </motion.div>
         </div>
-        <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">or</span>
-               <div className="md:basis-1/2 text-black flex-1 w-full">
+        <span className="mx-auto md:my-auto !bg-transparent rounded-none text-2xl lowercase playfair-display italic">
+          or
+        </span>
+        <div className="md:basis-1/2 text-black flex-1 w-full">
           <motion.h2
             variants={slidingUpVariant}
             transition={{ delay: 0.3 }}
@@ -223,9 +219,7 @@ export default function NextSteps({
             animate="visible"
             className="h-full overflow-auto flex flex-col gap-3"
           >
-            <p>
-              Ready to take your skills to the next level?
-            </p>
+            <p>Ready to take your skills to the next level?</p>
             {nextStepsResources.map((resource: Resource, index: number) => (
               <ResourceCue
                 key={index}
@@ -250,4 +244,4 @@ export default function NextSteps({
       </div>
     </DefaultFrame>
   );
-} 
+}

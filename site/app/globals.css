@@ -62,7 +62,8 @@ h2 {
   font-family: "Phantom Sans";
 }
 
-p, ul {
+p,
+ul {
   @apply text-lg sm:text-xl;
 }
 
@@ -100,8 +101,6 @@ a {
 #content > * {
   @apply pointer-events-auto;
 }
-
-
 
 @layer base {
   :root {
@@ -158,8 +157,6 @@ a {
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {

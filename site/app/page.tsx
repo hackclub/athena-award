@@ -89,7 +89,9 @@ function Polaroid({
   props?: string;
 }) {
   return (
-    <div className={`hover:scale-105 transition transition-duration-300 bg-white w-full h-max p-3 z-40 ${props}`}>
+    <div
+      className={`hover:scale-105 transition transition-duration-300 bg-white w-full h-max p-3 z-40 ${props}`}
+    >
       <img className="object-cover" src={image} />
       <p className="text-center">{caption}</p>
     </div>
@@ -104,22 +106,27 @@ export default function Index() {
   }
 
   if (error) {
-    console.log(error)
+    console.log(error);
     return <Error error={JSON.stringify(error)} />;
   }
 
   return (
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull ">
       <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
-      <img className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/427997bef21567cf6bb86d73c1349bbc65694498_image.png"/>
-
+        <img
+          className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto"
+          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/427997bef21567cf6bb86d73c1349bbc65694498_image.png"
+        />
       </div>
       <div className="relative pointer-events-auto sm:pointer-events-none">
         <Header skipWelcomeModal={true} />
         <div className="pointer-events-none flex flex-col w-screen h-max justify-center items-center mt-14 p-8 gap-6 text-hc-secondary italic">
           <div className="grow flex flex-row" />{" "}
           {/* i cbf finding a better solution */}
-          <img className="max-lg:mx-auto lg:mr-auto max-h-64" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg" />
+          <img
+            className="max-lg:mx-auto lg:mr-auto max-h-64"
+            src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg"
+          />
           {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
           <div className=" pointer-events-auto lg:absolute flex flex-col lg:flex-row gap-4 self-center *:mx-auto lg:self-end">
             <AuthStateButton className="h-full" />
@@ -131,10 +138,13 @@ export default function Index() {
 
         <div className="w-screen h-max bg-hc-primary-dull bg-[url(/bg.svg)] p-12 sm:p-16 flex flex-col gap-10 lg:flex-row">
           {/* to do: a blurb about days of service, think something like the counter from the gwynne shotwell site: https://gwynne.hackclub.dev */}
-          <div className = "relative">
+          <div className="relative">
             <h1 className="text-hc-secondary text-5xl">How this works:</h1>
             <div className="flex flex-col md:flex-row gap-4">
-              <img className = "hidden md:inline w-40" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"/>
+              <img
+                className="hidden md:inline w-40"
+                src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"
+              />
               <div className="grid grid-cols-8 w-full lg:w-9/12 text-hc-secondary py-8">
                 {steps.map((step, index) => (
                   <Fragment key={index}>
@@ -169,18 +179,19 @@ export default function Index() {
           </div>
         </div>
         <div className="pointer-events-auto w-screen h-full sm:h-screen p-12 sm:p-16 flex flex-col items-center justify-center">
-         
-            <h1 className="text-hc-secondary text-5xl md:text-7xl text-center">
-              Last time we did this:
-            </h1>
-         
+          <h1 className="text-hc-secondary text-5xl md:text-7xl text-center">
+            Last time we did this:
+          </h1>
+
           <div className="flex flex-row flex-wrap items-center justify-center gap-12 my-10">
             {stats.map((stat, index) => (
-                <div key = {index}
-                  className="col-span-1 text-hc-secondary text-center">
-                  <h1 className="text-4xl">{stat.number}</h1>
-                  <p className="text-lg">{stat.description}</p>
-                </div>
+              <div
+                key={index}
+                className="col-span-1 text-hc-secondary text-center"
+              >
+                <h1 className="text-4xl">{stat.number}</h1>
+                <p className="text-lg">{stat.description}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -224,7 +235,11 @@ export default function Index() {
               />
             </svg>
           </div>
-          <Marquee className="grow pointer-events-auto" autoFill pauseOnHover={true}>
+          <Marquee
+            className="grow pointer-events-auto"
+            autoFill
+            pauseOnHover={true}
+          >
             {prizes.map((prize: any, index: any) => (
               <Painting
                 key={index}
@@ -279,10 +294,13 @@ export default function Index() {
 
         <div className="pointer-events-auto *:flex *:flex-col *:gap-4 flex flex-col h-full gap-6 w-screen p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
           <div>
-            <h1 id = "collaborators" className="text-hc-secondary text-3xl text-left">
+            <h1
+              id="collaborators"
+              className="text-hc-secondary text-3xl text-left"
+            >
               <i>brought to you by</i>
             </h1>
-            <a href = "https://hackclub.com/">
+            <a href="https://hackclub.com/">
               <img
                 className="py-4 w-48"
                 src="https://assets.hackclub.com/flag-standalone-wtransparent.svg"
@@ -294,20 +312,84 @@ export default function Index() {
               in collaboration with
             </h1>
             <div className="flex flex-row flex-wrap gap-6 w-full justify-center items-center">
-              <a target = "_blank" href = "https://engineering.mit.edu/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png" /></a>
-              <a target = "_blank" href = "https://bwsi.mit.edu/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png" /></a>
-              <a target = "_blank" href = "https://ll.mit.edu/"><img className = "image-cover h-12 md:h-18" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"/></a>
-              <a target = "_blank" href = "https://github.com/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png" /></a>
-              <a target = "_blank" href = "https://girlswhocode.com/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png" /></a>
-              <a target = "_blank" href = "https://firstinspires.org"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c62d8ebaffc63403ab0d8a3d64954e3fcf2b4483_first_vertical_rgb.png"/></a>
-              <a target = "_blank" href = "https://congressionalappchallenge.us"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"/></a>
-              <a target = "_blank" href = "https://www.girlscoutsnyc.org/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"/></a>
-              <a target = "_blank" href = "https://www.theknowledgehouse.org/"><img className = "image-cover h-16 md:h-32" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"/></a>
-              <a target = "_blank" href = "https://www.wearebgc.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"/></a>
-              <a target = "_blank" href = "https://code.org/"><img className = "image-cover h-16 md:h-32"  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"/></a>
-              <a target = "_blank" href = "https://www.etregirls.com"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"/></a>
-              <a target = "_blank" href = "https://launchpadphilly.org/"><img className = "image-cover h-16 md:h-32" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"/></a>
-
+              <a target="_blank" href="https://engineering.mit.edu/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
+                />
+              </a>
+              <a target="_blank" href="https://bwsi.mit.edu/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png"
+                />
+              </a>
+              <a target="_blank" href="https://ll.mit.edu/">
+                <img
+                  className="image-cover h-12 md:h-18"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
+                />
+              </a>
+              <a target="_blank" href="https://github.com/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
+                />
+              </a>
+              <a target="_blank" href="https://girlswhocode.com/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
+                />
+              </a>
+              <a target="_blank" href="https://firstinspires.org">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/c62d8ebaffc63403ab0d8a3d64954e3fcf2b4483_first_vertical_rgb.png"
+                />
+              </a>
+              <a target="_blank" href="https://congressionalappchallenge.us">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
+                />
+              </a>
+              <a target="_blank" href="https://www.girlscoutsnyc.org/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"
+                />
+              </a>
+              <a target="_blank" href="https://www.theknowledgehouse.org/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"
+                />
+              </a>
+              <a target="_blank" href="https://www.wearebgc.org/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"
+                />
+              </a>
+              <a target="_blank" href="https://code.org/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"
+                />
+              </a>
+              <a target="_blank" href="https://www.etregirls.com">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"
+                />
+              </a>
+              <a target="_blank" href="https://launchpadphilly.org/">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
+                />
+              </a>
             </div>
           </div>
         </div>
@@ -326,7 +408,10 @@ export default function Index() {
       </div>
 
       <div className="relative *:text-hc-secondary flex flex-wrap justify-end gap-4 *:lg:basis-1/3 flex-row z-10 w-screen h-max p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
-        <img className = "h-full opacity-75 hidden lg:inline absolute mt-0 bottom-0 -left-10" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/315b4d8271ec9804a39feb90d0c8c0da22be2411_image.png"/>
+        <img
+          className="h-full opacity-75 hidden lg:inline absolute mt-0 bottom-0 -left-10"
+          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/315b4d8271ec9804a39feb90d0c8c0da22be2411_image.png"
+        />
 
         <div className="lg:self-end flex flex-col gap-2">
           <h1 className="text-2xl text-left mb-3">
@@ -374,7 +459,7 @@ export default function Index() {
           </p>
         </div>
 
-        <div className = "w-full">
+        <div className="w-full">
           <div className="flex flex-row gap-8">
             <div className="flex flex-col gap-1">
               <h1 className="text-xl">Hack Club</h1>

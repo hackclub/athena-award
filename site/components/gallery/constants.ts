@@ -38,4 +38,4 @@ export const slidingParentVariant: Variants = {
       staggerChildren: 0.2, //apply stagger on the parent tag
     },
   },
-}; 
+};

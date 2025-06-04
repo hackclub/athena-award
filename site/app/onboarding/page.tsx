@@ -33,16 +33,20 @@ export default function Page() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   async function checkIfHackatime() {
-    if (stage === 3){
+    if (stage === 3) {
       let hackatime;
-      hackatime = await fetch(`/api/user/${session.data?.slack_id}/waka`).then(r => r.json())      
-      console.log(hackatime, "stats")
-      if (hackatime && hackatime.data && hackatime.data.status){
-        setButtonDisabled(false)
-        setHackatimeInstalled(true)
-        await fetch(`/api/user/${session.data?.slack_id}/waka`, {method: "POST"})
+      hackatime = await fetch(`/api/user/${session.data?.slack_id}/waka`).then(
+        (r) => r.json(),
+      );
+      console.log(hackatime, "stats");
+      if (hackatime && hackatime.data && hackatime.data.status) {
+        setButtonDisabled(false);
+        setHackatimeInstalled(true);
+        await fetch(`/api/user/${session.data?.slack_id}/waka`, {
+          method: "POST",
+        });
       } else {
-        setButtonDisabled(true)
+        setButtonDisabled(true);
       }
     }
   }
@@ -112,15 +116,17 @@ export default function Page() {
               onClick={() => {
                 goToPrevStage();
                 onButtonClick();
-                console.log(stage)
+                console.log(stage);
               }}
               className={`${currentStageIndex === 0 ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"}  no-underline text-right ml-auto`}
             >
-              <h1 className="text-md md:text-lg inline">{'<'}- prev</h1>
+              <h1 className="text-md md:text-lg inline">{"<"}- prev</h1>
             </button>
             <span className="relative grow mx-auto rounded-lg h-5 *:h-5 bg-white/40">
               <span
-                style={{ width: ((currentStageIndex + 1) * 100) / stages.length + "%" }}
+                style={{
+                  width: ((currentStageIndex + 1) * 100) / stages.length + "%",
+                }}
                 className={`border-2 border-hc-primary-dull absolute bg-hc-primary-dull rounded-l-lg ${((currentStageIndex + 1) * 100) / stages.length === 100 ? "rounded-r-lg" : null}`}
               />
             </span>
@@ -132,7 +138,7 @@ export default function Page() {
               }}
               className={`${buttonDisabled || (stage === 3 && !hackatimeInstalled) ? "text-hc-secondary/40 cursor-not-allowed" : "text-hc-secondary"} text-hc-secondary no-underline text-right ml-auto`}
             >
-              <h1 className="text-md md:text-lg">next -{'>'}</h1>
+              <h1 className="text-md md:text-lg">next -{">"}</h1>
             </button>
           </div>
           {stage === 1 && (
@@ -189,9 +195,7 @@ export default function Page() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ ease: "easeOut", delay: 0.75 }}
                     className={`hover:!scale-105 rounded transition ${
-                      track === "beginner"
-                        ? "border-2 border-hc-primary"
-                        : null
+                      track === "beginner" ? "border-2 border-hc-primary" : null
                     }`}
                   >
                     <h1 className="text-2xl sm:text-4xl text-left">Guided</h1>
@@ -219,14 +223,14 @@ export default function Page() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ ease: "easeOut", delay: 0.75 }}
                     className={`hover:!scale-105 rounded transition ${
-                      track === "advanced"
-                        ? "border-2 border-hc-primary"
-                        : null
+                      track === "advanced" ? "border-2 border-hc-primary" : null
                     }`}
                   >
                     <h1 className="text-2xl sm:text-4xl text-left">Custom</h1>
                     <ul className="text-left text-lg py-1 sm:text-xl list-disc list-inside">
-                      <li>I have a lot of ideas about things I want to make.</li>
+                      <li>
+                        I have a lot of ideas about things I want to make.
+                      </li>
                       <li>
                         I'm a confident programmer and have created some
                         projects before
@@ -255,8 +259,8 @@ export default function Page() {
                     <p className="text-center italic">
                       hi ^-^ i'm orpheus, and i'm here to guide you through
                       getting started with the athena award!
-                    </p> {' '}
-                      <span>
+                    </p>{" "}
+                    <span>
                       confused? ask for help in{" "}
                       <a
                         target="_blank"
@@ -279,53 +283,77 @@ export default function Page() {
                       started with Hackatime! it's a nifty tool we hack clubbers
                       use to track time spent coding!
                     </p>
-                    <div className = "grid grid-cols-1 lg:grid-cols-2 grow">
-                    <ul className="text-lg list-outside list-decimal *:py-1">
-                      <li>
-                        Sign in{" "}
-                        <a
-                          target="_blank"
-                          href="https://hackatime.hackclub.com/auth/slack?close_window=true"
-                        >
-                          here
-                        </a>{" "}
-                        to create your hackatime account
-                      </li>
-                      <li>
-                        Install a code editor or IDE. i recommend{" "}
-                        <a
-                          href="https://code.visualstudio.com/"
-                          target="_blank"
-                        >
-                          VS Code
-                        </a>
-                        . however, any code editor on{" "}
-                        <a href="https://wakatime.com/plugins" target="_blank">
-                          this list
-                        </a>{" "}
-                        will work.
-                      </li>
-                      <li>
-                        Follow these handy{" "}
-                        <a
-                          target="_blank"
-                          href="https://hackatime.hackclub.com/my/wakatime_setup"
-                        >
-                          setup instructions
-                        </a>
-                        , then come back here!
-                      </li>
-                      <span className = "text-gold">Confused? Check out the presentation!</span>
-                    </ul>  
-                      <object data = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf" type="application/pdf" className = "h-full w-full">
-                        <p><a href = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf"/></p>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 grow">
+                      <ul className="text-lg list-outside list-decimal *:py-1">
+                        <li>
+                          Sign in{" "}
+                          <a
+                            target="_blank"
+                            href="https://hackatime.hackclub.com/auth/slack?close_window=true"
+                          >
+                            here
+                          </a>{" "}
+                          to create your hackatime account
+                        </li>
+                        <li>
+                          Install a code editor or IDE. i recommend{" "}
+                          <a
+                            href="https://code.visualstudio.com/"
+                            target="_blank"
+                          >
+                            VS Code
+                          </a>
+                          . however, any code editor on{" "}
+                          <a
+                            href="https://wakatime.com/plugins"
+                            target="_blank"
+                          >
+                            this list
+                          </a>{" "}
+                          will work.
+                        </li>
+                        <li>
+                          Follow these handy{" "}
+                          <a
+                            target="_blank"
+                            href="https://hackatime.hackclub.com/my/wakatime_setup"
+                          >
+                            setup instructions
+                          </a>
+                          , then come back here!
+                        </li>
+                        <span className="text-gold">
+                          Confused? Check out the presentation!
+                        </span>
+                      </ul>
+                      <object
+                        data="https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf"
+                        type="application/pdf"
+                        className="h-full w-full"
+                      >
+                        <p>
+                          <a href="https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf" />
+                        </p>
                       </object>
-                  </div>
-                
-                  <div className = "grid grid-cols-1 gap-8">
-                    <button className = "bg-hc-primary-dull/50 w-full mx-auto p-2" onClick={checkIfHackatime}>click me once you've set hackatime up!</button>
-                    <p>Give me a moment, I'm checking to see if you've made your Hackatime account... <span className = "bg-hc-primary-dull px-1">{hackatimeInstalled ? "Nice, it looks like you have a Hackatime account - you can go to the next step!" : "I can't find a Hackatime account for you..." }</span></p>
-                  </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-8">
+                      <button
+                        className="bg-hc-primary-dull/50 w-full mx-auto p-2"
+                        onClick={checkIfHackatime}
+                      >
+                        click me once you've set hackatime up!
+                      </button>
+                      <p>
+                        Give me a moment, I'm checking to see if you've made
+                        your Hackatime account...{" "}
+                        <span className="bg-hc-primary-dull px-1">
+                          {hackatimeInstalled
+                            ? "Nice, it looks like you have a Hackatime account - you can go to the next step!"
+                            : "I can't find a Hackatime account for you..."}
+                        </span>
+                      </p>
+                    </div>
                   </motion.div>
                 </motion.div>
               </div>
@@ -337,8 +365,7 @@ export default function Page() {
               <h1 className="text-3xl sm:text-5xl text-center">
                 Project Requirements
               </h1>
-              <div className = "grid grid-cols-1 md:grid-cols-3 gap-4">
-
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="col-span-2 pt-8 flex flex-col justify-center gap-4">
                   <p>
                     Before you submit your projects, we need some kind of proof
@@ -346,8 +373,8 @@ export default function Page() {
                   </p>
 
                   <p>
-                    GitHub is a website that lets you store your code. Sign up to
-                    GitHub{" "}
+                    GitHub is a website that lets you store your code. Sign up
+                    to GitHub{" "}
                     <a target="_blank" href="https://github.com/signup">
                       here
                     </a>
@@ -364,9 +391,10 @@ export default function Page() {
                       (oops)!
                     </li>
                     <li>
-                      In general: commit often. For the Athena Award,{' '}                 
+                      In general: commit often. For the Athena Award,{" "}
                       <span className="bg-hc-primary-dull px-1">
-                      we require that you commit your changes around once per hour.
+                        we require that you commit your changes around once per
+                        hour.
                       </span>
                     </li>
                     <li>
@@ -383,7 +411,10 @@ export default function Page() {
                   </ul>
                 </div>
 
-                <img className = "col-span-1 my-auto" src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/9f8f3847231e46f5b2626e7e8afb179bff6ad261_image.png"/>
+                <img
+                  className="col-span-1 my-auto"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/9f8f3847231e46f5b2626e7e8afb179bff6ad261_image.png"
+                />
               </div>
             </>
           )}
@@ -455,7 +486,9 @@ export default function Page() {
           )}
 
           <span className="self-end mt-auto uppercase text-md mx-auto text-white/40">
-            onboarding - {Math.floor(((currentStageIndex + 1) * 100) / stages.length)}% complete
+            onboarding -{" "}
+            {Math.floor(((currentStageIndex + 1) * 100) / stages.length)}%
+            complete
           </span>
         </div>
       </div>

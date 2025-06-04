@@ -30,17 +30,17 @@ export default function ActionableScene({
     checkOrientation();
 
     // Add event listener for resize
-    window.addEventListener('resize', checkOrientation);
+    window.addEventListener("resize", checkOrientation);
 
     // Cleanup
-    return () => window.removeEventListener('resize', checkOrientation);
+    return () => window.removeEventListener("resize", checkOrientation);
   }, []);
 
   return (
     <div className="fixed w-screen h-screen z-0">
-      <Background 
-        shouldAnimate={shouldAnimate} 
-        sourceScene={sourceScene} 
+      <Background
+        shouldAnimate={shouldAnimate}
+        sourceScene={sourceScene}
         paused={!isLandscape}
       />
       <AnimatePresence>
@@ -52,7 +52,9 @@ export default function ActionableScene({
             className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm"
           >
             <div className="text-white text-center p-8">
-              <h2 className="text-2xl font-bold mb-4">Please rotate your device</h2>
+              <h2 className="text-2xl font-bold mb-4">
+                Please rotate your device
+              </h2>
               <p>This experience works best in landscape mode</p>
             </div>
           </motion.div>

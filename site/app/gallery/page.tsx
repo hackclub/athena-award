@@ -11,11 +11,11 @@ import { useSession } from "next-auth/react";
 
 export default function Gallery() {
   // api calls for progress go here
-  const [module, setModule] = useState<(typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!">(
-      "Intro",
-  );
+  const [module, setModule] = useState<
+    (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!"
+  >("Intro");
   const session = useSession();
-  
+
   const [_uxEvent, setUXEvent] = useState<UXEvent>("map");
   return (
     <div className="w-screen h-screen">
@@ -24,7 +24,14 @@ export default function Gallery() {
         <ProfileModal />
         <InfoModal />
         <LeaderboardModal />
-        <GalleryMenu module={module} setModule={setModule as (m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void}></GalleryMenu>
+        <GalleryMenu
+          module={module}
+          setModule={
+            setModule as (
+              m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!",
+            ) => void
+          }
+        ></GalleryMenu>
       </UXEventContext.Provider>
     </div>
   );

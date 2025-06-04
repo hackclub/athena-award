@@ -69,7 +69,9 @@ export default function GalleryMenu({
 }: {
   module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!";
   progress?: typeof STAGES;
-  setModule: (module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void;
+  setModule: (
+    module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!",
+  ) => void;
 }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [selectedProject, setSelectedProject] = useState("_select#");
@@ -80,22 +82,28 @@ export default function GalleryMenu({
   const slackId = session.data?.slack_id;
 
   let currModuleIdx = progress.findIndex((p) => p.moduleName === module);
-  const nextModule = 
-    module === "Intro" ? progress[0].moduleName :
-    module === "Onward!" ? "Intro" :
-    currModuleIdx === progress.length - 1 ? "Onward!" :
-    progress[currModuleIdx + 1].moduleName;
+  const nextModule =
+    module === "Intro"
+      ? progress[0].moduleName
+      : module === "Onward!"
+        ? "Intro"
+        : currModuleIdx === progress.length - 1
+          ? "Onward!"
+          : progress[currModuleIdx + 1].moduleName;
 
-  const prevModule = 
-    module === "Intro" ? "Onward!" :
-    module === "Onward!" ? progress[progress.length - 1].moduleName :
-    currModuleIdx === 0 ? "Intro" :
-    progress[currModuleIdx - 1].moduleName;
+  const prevModule =
+    module === "Intro"
+      ? "Onward!"
+      : module === "Onward!"
+        ? progress[progress.length - 1].moduleName
+        : currModuleIdx === 0
+          ? "Intro"
+          : progress[currModuleIdx - 1].moduleName;
 
-        let urls = [
-    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx+1}`,
-    `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx+1}`,
-    `/api/shop?stage=${currModuleIdx+1}`,
+  let urls = [
+    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx + 1}`,
+    `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx + 1}`,
+    `/api/shop?stage=${currModuleIdx + 1}`,
     `/api/user/${slackId}/points`,
   ];
 
@@ -115,7 +123,7 @@ export default function GalleryMenu({
     const projectName = e.target.value;
     const update = await fetch(`/api/user/${slackId}/projects`, {
       method: "POST",
-      body: JSON.stringify({ stage: currModuleIdx+1, project: projectName }),
+      body: JSON.stringify({ stage: currModuleIdx + 1, project: projectName }),
     });
     setSelectedProject(projectName);
     return update;
@@ -158,18 +166,32 @@ export default function GalleryMenu({
 
   const memoizedIntroPage = useMemo(
     () => (
-      <Introduction 
+      <Introduction
         points={points}
         module={module as "Intro"}
         prevModule={prevModule}
         nextModule={nextModule}
-        setModule={setModule as (m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void}
+        setModule={
+          setModule as (
+            m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!",
+          ) => void
+        }
         setSelectedProject={setSelectedProject}
         setPrizeScroller={setPrizeScroller}
         setProjectRetrievalComplete={setProjectRetrievalComplete}
       />
     ),
-    [points, module, progress, prevModule, nextModule, setModule, setSelectedProject, setPrizeScroller, setProjectRetrievalComplete]
+    [
+      points,
+      module,
+      progress,
+      prevModule,
+      nextModule,
+      setModule,
+      setSelectedProject,
+      setPrizeScroller,
+      setProjectRetrievalComplete,
+    ],
   );
 
   const memoizedNextStepsPage = useMemo(
@@ -185,7 +207,17 @@ export default function GalleryMenu({
         setProjectRetrievalComplete={setProjectRetrievalComplete}
       />
     ),
-    [points, module, progress, prevModule, nextModule, setModule, setSelectedProject, setPrizeScroller, setProjectRetrievalComplete]
+    [
+      points,
+      module,
+      progress,
+      prevModule,
+      nextModule,
+      setModule,
+      setSelectedProject,
+      setPrizeScroller,
+      setProjectRetrievalComplete,
+    ],
   );
 
   if (!baseModuleData) {
@@ -438,7 +470,7 @@ export default function GalleryMenu({
                                 className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}
                                 onClick={async () =>
                                   await fetch(
-                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`,
+                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx + 1}`,
                                     { method: "POST" },
                                   )
                                 }
@@ -446,7 +478,7 @@ export default function GalleryMenu({
                                 <a
                                   target="_blank"
                                   className="text-white no-underline"
-                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx+1}`}
+                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx + 1}`}
                                 >
                                   Ready to submit?
                                 </a>
@@ -472,7 +504,7 @@ export default function GalleryMenu({
                                 className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}
                                 onClick={async () =>
                                   await fetch(
-                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx+1}`,
+                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx + 1}`,
                                     { method: "POST" },
                                   )
                                 }
@@ -480,7 +512,7 @@ export default function GalleryMenu({
                                 <a
                                   target="_blank"
                                   className="text-white no-underline"
-                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx+1}`}
+                                  href={`https://forms.hackclub.com/athena-award-projects?stage=${currModuleIdx + 1}`}
                                 >
                                   Your project was rejected - click here to
                                   resubmit!

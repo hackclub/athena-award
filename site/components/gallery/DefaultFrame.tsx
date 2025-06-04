@@ -10,7 +10,9 @@ interface DefaultFrameProps {
   module: string;
   prevModule: string;
   nextModule: string;
-  setModule: (module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void;
+  setModule: (
+    module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!",
+  ) => void;
   setSelectedProject: (project: string) => void;
   setPrizeScroller: (value: number) => void;
   setProjectRetrievalComplete: (status: boolean) => void;
@@ -57,7 +59,11 @@ export default function DefaultFrame({
             <div className="flex flex-row w-full gap-20">
               <Navigation
                 {...{
-                  module: module as "Start hacking" | "Your second project" | "Your final project" | "Onward!",
+                  module: module as
+                    | "Start hacking"
+                    | "Your second project"
+                    | "Your final project"
+                    | "Onward!",
                   prevModule,
                   nextModule,
                   setModule,
@@ -72,4 +78,4 @@ export default function DefaultFrame({
       </AnimatePresence>
     </div>
   );
-} 
+}

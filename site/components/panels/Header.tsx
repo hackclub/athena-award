@@ -19,8 +19,8 @@ export function AuthStateButton({ className }: { className?: string }) {
   const session = useSession();
   const router = useRouter();
   const [emailSubmitted, setEmailSubmitted] = useState(false);
-  const [ema, setEma] = useState("")
-  const [partners, setPartners] = useState([""])
+  const [ema, setEma] = useState("");
+  const [partners, setPartners] = useState([""]);
   const [err, setErr] = useState("");
 
   const searchParams = useSearchParams();
@@ -30,10 +30,10 @@ export function AuthStateButton({ className }: { className?: string }) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = String(formData.get("email"));
-    setEma(email)
+    setEma(email);
     const referredBy = searchParams.get("referred_by")!;
     const utm_source = searchParams.get("utm_source")!;
-    setPartners(await fetch("/api/partners").then(r => r.json()))
+    setPartners(await fetch("/api/partners").then((r) => r.json()));
 
     setEmailSubmitted(true);
     const r = await inviteSlackUser(email, referredBy, utm_source);
@@ -85,18 +85,24 @@ export function AuthStateButton({ className }: { className?: string }) {
                 <p className="underline decoration-wavy text-xl">
                   Something went wrong!
                 </p>
-                <p>{err.includes("already_in_team") ? <span>You're already in the Hack Club Slack - sign in{' '}
-                  <a target = "_blank" href = "https://hackclub.slack.com">here</a></span> : 
-                  
-                  <span>
-                    <p>{err}</p>
-                  <p className="text-sm">
-                  Please send an email to athena@hackclub.com with this error
-                  message if you're seeing this.
+                <p>
+                  {err.includes("already_in_team") ? (
+                    <span>
+                      You're already in the Hack Club Slack - sign in{" "}
+                      <a target="_blank" href="https://hackclub.slack.com">
+                        here
+                      </a>
+                    </span>
+                  ) : (
+                    <span>
+                      <p>{err}</p>
+                      <p className="text-sm">
+                        Please send an email to athena@hackclub.com with this
+                        error message if you're seeing this.
+                      </p>
+                    </span>
+                  )}
                 </p>
-                  </span>
-                  }</p>
-
               </span>
             ) : (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
@@ -106,7 +112,7 @@ export function AuthStateButton({ className }: { className?: string }) {
                 <p className="font-semibold">
                   Then, come back here and sign in!
                 </p>
-                <PartnerDropdown email = {ema} partners = {partners}/>
+                <PartnerDropdown email={ema} partners={partners} />
               </span>
             )}
           </div>
@@ -126,28 +132,38 @@ export function Header({
   return (
     <div className="fixed pointer-events-auto w-full z-50 bg-hc-primary-dull/90 border-b-2 border-gold/20">
       <div className="flex flex-row justify-around md:justify-between px-3 md:px-6 w-full">
-        <div className = "flex flex-row gap-6 items-center">
-        <a className = "inline self-center m-2" href = "/">
-        <img 
-          className = "w-96"
-          src = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/6338dbbd7a0200f2b9f2f5b7b59834511c45cc58_athena_award_1000x1000-cropped.svg"/>
-        </a>
+        <div className="flex flex-row gap-6 items-center">
+          <a className="inline self-center m-2" href="/">
+            <img
+              className="w-96"
+              src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/6338dbbd7a0200f2b9f2f5b7b59834511c45cc58_athena_award_1000x1000-cropped.svg"
+            />
+          </a>
         </div>
 
-        <div className = "flex flex-row uppercase font-semibold items-center text-xl *:md:text-2xl justify-between gap-5 *:text-cream">
-          <a href = "/about" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">ABOUT</a>
-          <a href = "/map" className = "no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary">MAP</a>
-          <span className = "hidden md:inline border border-cream/10 h-full"/>
+        <div className="flex flex-row uppercase font-semibold items-center text-xl *:md:text-2xl justify-between gap-5 *:text-cream">
+          <a
+            href="/about"
+            className="no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary"
+          >
+            ABOUT
+          </a>
+          <a
+            href="/map"
+            className="no-underline hover:underline hover:decoration-wavy hover:text-hc-secondary"
+          >
+            MAP
+          </a>
+          <span className="hidden md:inline border border-cream/10 h-full" />
           <a className="hidden md:inline" href="https://hackclub.com">
-          <img
-            className = "w-16 md:w-24"
-            src="https://assets.hackclub.com/flag-standalone-wtransparent.svg"
-          />
-        </a>
-
+            <img
+              className="w-16 md:w-24"
+              src="https://assets.hackclub.com/flag-standalone-wtransparent.svg"
+            />
+          </a>
         </div>
 
-      { skipWelcomeModal ? null : (
+        {skipWelcomeModal ? null : (
           <div className="pointer-events-auto max-sm:mx-auto *:sm:ml-auto">
             <WelcomeModal props={`${shineEffect(shineEffectProps)}`} />
           </div>

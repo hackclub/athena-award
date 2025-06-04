@@ -11,14 +11,14 @@ async function geocodeAddress(
   const url = `https://geocoder.hackclub.com/v1/geocode?address=${encodeURIComponent(address)}&key=${process.env.GEOCODER_API_KEY}`;
   const res = await fetch(url, {
     headers: { "User-Agent": "athena-award/1.0" },
-  });   
+  });
 
   if (!res.ok) return null;
   const data = await res.json();
-  if (data){
+  if (data) {
     return {
-      lat: (data.lat).toPrecision(2),
-      lng: (data.lng).toPrecision(2),
+      lat: data.lat.toPrecision(2),
+      lng: data.lng.toPrecision(2),
     };
   }
   return null;
@@ -47,9 +47,9 @@ export async function GET() {
         country = addressParts;
       }
       const project_name = fields["project_name"];
-      const project_name_override = fields["project_name_override"] && (String(
-        fields["project_name_override"],
-      )?.split("–"))[0]; // they contain the author's full name, which optimally we are not broadcasting to the entire world
+      const project_name_override =
+        fields["project_name_override"] &&
+        (String(fields["project_name_override"])?.split("–"))[0]; // they contain the author's full name, which optimally we are not broadcasting to the entire world
       const playable_url = fields["playable_url"];
       const code_url = fields["code_url"];
       if (latLng) {
@@ -70,7 +70,6 @@ export async function GET() {
       }
     }
     return NextResponse.json(projects);
-
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch projects", details: String(error) },

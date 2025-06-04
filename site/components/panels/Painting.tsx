@@ -21,9 +21,11 @@ export default function Painting({
   showCaptionOnSmall?: boolean;
 }) {
   return (
-    <div className = "relative">
+    <div className="relative">
       <Tooltip id={index} place="top" className="max-w-64 z-[100]" />
-      <div className={`h-36 sm:h-80 z-50 flex flex-col items-center justify-center ${className}`}>
+      <div
+        className={`h-36 sm:h-80 z-50 flex flex-col items-center justify-center ${className}`}
+      >
         {" "}
         {/* maybe add small random rotations? */}
         <a target="_blank" className="text-black no-underline">

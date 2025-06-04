@@ -4,7 +4,9 @@ interface NavigationProps {
   module: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!";
   prevModule: string;
   nextModule: string;
-  setModule: (m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!") => void;
+  setModule: (
+    m: (typeof STAGES)[number]["moduleName"] | "Intro" | "Onward!",
+  ) => void;
   setSelectedProject: (project: string) => void;
   setProjectRetrievalComplete: (status: boolean) => void;
   setPrizeScroller: (value: number) => void;
@@ -28,8 +30,10 @@ export default function Navigation({
             module === "Intro"
               ? setModule("Onward!")
               : currModuleIdx === 0
-              ? setModule("Intro")
-              : setModule(prevModule as (typeof STAGES)[number]["moduleName"]);
+                ? setModule("Intro")
+                : setModule(
+                    prevModule as (typeof STAGES)[number]["moduleName"],
+                  );
             setSelectedProject("_select#");
             setProjectRetrievalComplete(false);
             setPrizeScroller(0);
@@ -71,7 +75,9 @@ export default function Navigation({
           onClick={() => {
             currModuleIdx
               ? setModule(nextModule as (typeof STAGES)[number]["moduleName"])
-              : setModule(STAGES[1].moduleName as (typeof STAGES)[number]["moduleName"]);
+              : setModule(
+                  STAGES[1].moduleName as (typeof STAGES)[number]["moduleName"],
+                );
             setSelectedProject("_select#");
             setProjectRetrievalComplete(false);
             setPrizeScroller(0);
