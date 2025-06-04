@@ -1,0 +1,29 @@
+display_information:
+  name: Athena Award
+  description: The Athena Award (https://award.athena.hackclub.com)
+  background_color: "#bd4f37"
+features:
+  bot_user:
+    display_name: Athena Award
+    always_online: false
+oauth_config:
+  redirect_urls:
+    - https://award.athena.hackclub.com
+  scopes:
+    user:
+      - identify
+      - users.profile:read
+      - users:read
+      - users:read.email
+    bot:
+      - im:write
+      - mpim:write
+      - users:read
+      - users:read.email
+      - chat:write
+settings:
+  interactivity:
+    is_enabled: true
+  org_deploy_enabled: false
+  socket_mode_enabled: true
+  token_rotation_enabled: false

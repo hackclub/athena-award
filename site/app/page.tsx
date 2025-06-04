@@ -104,7 +104,8 @@ export default function Index() {
   }
 
   if (error) {
-    return <Error error={error} />;
+    console.log(error)
+    return <Error error={JSON.stringify(error)} />;
   }
 
   return (

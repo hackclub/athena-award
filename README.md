@@ -1,6 +1,11 @@
 # Athena Award
-A Hack Club project gamifying the experience of learning to code through the [Athena Initiative](https://athena.hackclub.com).
+The Athena Award is a 6 month long program where if you build three technical projects and log 30 hours coding, you'll receive an invite to Parthenon, a 3-day all girls hackathon in the heart of New York City. 
 
+Can't make it to NYC? You can still earn prizes such as iPads and Framework laptops, simply by participating and submitting projects. 
+
+Beginners and advanced programmers welcome! Part of the [Athena Initiative](https://athena.hackclub.com). For girls and nonbinary high school students worldwide.
+
+Maintained by @phthallo, @phaedra, and a team of other girls and gender diverse students from across the world.
 
 ## Basic Development
 

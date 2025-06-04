@@ -1,19 +1,18 @@
 # Contribute to Athena Award
-Contributions are welcome to this repository!
+This is a monorepo containing the source code of the Athena Award project.
+Contributions and bug reports are welcome - in fact, are encouraged! -  to this repository!
 Step one is to join the `#athena-award` channel on Slack. This can help you stay posted on major changes and also have you contribute to the project in collaboration with other people!
 
 Here's a couple of general things about the project that can help you get up and running quickly:
-## Site Contributions
-* The `/site/DEVELOPMENT_SETTINGS.ts` file can help to optimize your work. When using Developer Tools in your browser, toggling some of these settings can ease lag.
 
 ### Data and Other Contributions
-* Stages are added through the file [site/app/STAGE.ts](site/app/STAGE.ts)
+Stages are added through the file [site/app/STAGES.ts](/site/app/STAGES.ts)
 
 You can also create interactive components in the `components` directory. Import them the way you would any other React component and use however you'd like!
 
-## Slack Contributions
+## Site & Slack Contributions
 
-Note that while the following isn't strictly necessary to get the site up and running locally, a significant proportion of the site is gated behind various forms of authentication and will **not** work should you set this up incorrectly.
+Note that while the following isn't strictly necessary to get the site up and running locally, literally all of the site is gated behind various forms of authentication and will **not** work should you set this up incorrectly.
 
 In order to test Slack OAuth, you will need a public-facing `https` URL to enter as the redirect URL (Slack requires this!). You can use any of the following two methods to obtain one for development, or another that works for you. 
 
@@ -39,9 +38,9 @@ Zrok is similar to ngrok, but has more lenient traffic restrictions than ngrok.
 4. Add your zrok URL into your .env file as appropriate. You can now access your app from that domain, as well as `localhost`.
 
 ### Creating the Slack app
-1. Create a [new Slack app](https://api.slack.com/apps).
+1. Create a [new Slack app](https://api.slack.com/apps) using the provided [manifest.yml](/manifest.yml) file. This app is used for both Slack OAuth on the Athena Award website and for bot functionality in the Slack.
 2. Copy the provided Client ID and Client Secret, then enter them into your .env file as appropriate.
-3. Navigate to `OAuth & Permissions`. Add your ngrok/zrok/other URL as the Redirect URL, then add the `identify` user token scope, as well the as `users:read` and `users:read.email` scopes.
+3. Navigate to `OAuth & Permissions`. Add your ngrok/zrok/other URL as the Redirect URL.
 4. Finally, install the app to the Slack.
 
 When testing Slack OAuth, make sure you have both the local dev environment and the ngrok/zrok/other instance running.
@@ -60,3 +59,17 @@ When a user submits a project for a specific stage, it is added to the centralis
 
 Users are prompted to resubmit projects if it is initially rejected. Projects are then tied to their record (slackId_projectNumber), to keep track of what has been submitted to what stage.
 
+## Bot Contributions
+
+The [bot](/bot) is currently used for welcoming new users and messaging users on Slack when their projects receive a status update. As it contains a flow for upgrading multichannel guests to full users, it needs a Slack admin token to run.
+
+| Variable | Description | 
+| `SLACK_BROWSER_TOKEN` | [xoxc token](https://gist.github.com/maxwofford/5779ea072a5485ae3b324f03bc5738e1) of a Slack workspace admin. |
+| `SLACK_COOKIE` | xoxd token of a Slack workspace admin, sourced from browser cookies under the key 'd'. |  
+| `SLACK_APP_TOKEN` | xapp token of the Slack bot. |
+| `SLACK_BOT_TOKEN` | xoxb token of the Slack bot user. |
+| `SLACK_SIGNING_SECRET` | Signing secret of the Slack app. |
+| `AIRTABLE_API_KEY` | Airtable PAT with access to the Athena Award base. |
+| `AIRTABLE_BASE_ID` | ID of the Athena Award base. |
+
+Build and run it using the provided `Dockerfile.bot`.
