@@ -1,4 +1,4 @@
-// POST /api/user/[userID]/track
+// POST /api/user/my/track
 // Updates what track the user is on
 
 import { verifySession, encryptSession } from "@/services/hash";
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET /api/user/[userID]/track
+// GET /api/user/my/track
 // Retrieve the track that the user is on
 
 export async function GET(request: Request) {

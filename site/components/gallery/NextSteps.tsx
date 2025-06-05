@@ -61,14 +61,14 @@ export default function NextSteps({
   const [selectedProject, setSelectedProject] = useState("_select#");
   const [idOfNextSubmission, setIdOfNextSubmission] = useState(4);
   useEffect(() => {
-    fetch(`/api/user/${slackId}/projects?query=most_recent_submission`)
+    fetch(`/api/user/my/projects?query=most_recent_submission`)
       .then((r) => r.json())
       .then((res) => setIdOfNextSubmission(res.message + 1));
   }, []);
 
   let urls = [
-    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${idOfNextSubmission}`,
-    `/api/user/${slackId}/points`,
+    `/api/user/my/projects?query=valid_for_selection&stage=${idOfNextSubmission}`,
+    `/api/user/my/points`,
   ];
 
   /** this is the current stage represented as a module object with the relevant visuals data */
@@ -82,7 +82,7 @@ export default function NextSteps({
 
   async function handleChange(e: any) {
     const projectName = e.target.value;
-    const update = await fetch(`/api/user/${slackId}/projects`, {
+    const update = await fetch(`/api/user/my/projects`, {
       method: "POST",
       body: JSON.stringify({ stage: idOfNextSubmission, project: projectName }),
     });

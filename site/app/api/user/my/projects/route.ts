@@ -1,4 +1,4 @@
-// POST /api/user/[userID]/projects
+// POST /api/user/my/projects
 // Set the name of the project for the respective stage
 
 import { NextResponse, NextRequest } from "next/server";

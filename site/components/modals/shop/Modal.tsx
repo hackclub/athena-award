@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 export default function ShopModal() {
   const session = useSession();
   const { data, error, isLoading } = useSWR(
-    ["/api/shop", `/api/user/${session.data?.slack_id}/artifacts`],
+    ["/api/shop", `/api/user/my/artifacts`],
     multiFetcher,
   );
   const [uxEvent, setUXEvent] = useContext(UXEventContext);
