@@ -35,9 +35,7 @@ export default function Page() {
   async function checkIfHackatime() {
     if (stage === 3) {
       let hackatime;
-      hackatime = await fetch(`/api/user/my/waka`).then(
-        (r) => r.json(),
-      );
+      hackatime = await fetch(`/api/user/my/waka`).then((r) => r.json());
       console.log(hackatime, "stats");
       if (hackatime && hackatime.data && hackatime.data.status) {
         setButtonDisabled(false);

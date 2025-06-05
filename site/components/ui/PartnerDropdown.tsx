@@ -46,7 +46,7 @@ export default function PartnerDropdown({
       setError(err.message || "Unknown error");
     } finally {
       setSubmitting(false);
-      setRegistrationStep(3)
+      setRegistrationStep(3);
     }
   }
 
