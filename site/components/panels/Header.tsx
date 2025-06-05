@@ -18,7 +18,7 @@ export function AuthStateButton({ className }: { className?: string }) {
   /// @ PAST SELF WHY IS THIS EVEN IN HERE
   const session = useSession();
   const router = useRouter();
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [registrationStep, setRegistrationStep] = useState(1);
   const [ema, setEma] = useState("");
   const [partners, setPartners] = useState([""]);
   const [err, setErr] = useState("");
@@ -35,7 +35,7 @@ export function AuthStateButton({ className }: { className?: string }) {
     const utm_source = searchParams.get("utm_source")!;
     setPartners(await fetch("/api/partners").then((r) => r.json()));
 
-    setEmailSubmitted(true);
+    setRegistrationStep(2);
     const r = await inviteSlackUser(email, referredBy, utm_source);
     if (r.ok) {
       console.log("ok");
@@ -59,7 +59,7 @@ export function AuthStateButton({ className }: { className?: string }) {
           <div
             className={`max-md:w-full flex flex-col p-5 bg-hc-primary-dull/80 rounded-xl ${className}`}
           >
-            {!emailSubmitted ? (
+            {registrationStep === 1 ? (
               <form
                 className="flex flex-col gap-3 *:text-white items-center"
                 onSubmit={(e) => handleEmailSubmit(e)}
@@ -104,6 +104,10 @@ export function AuthStateButton({ className }: { className?: string }) {
                   )}
                 </p>
               </span>
+            ) : registrationStep === 2 ? (
+              <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
+                <PartnerDropdown email={ema} partners={partners} setRegistrationStep={setRegistrationStep}/>
+              </span>
             ) : (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
                 <p className="underline decoration-wavy text-xl text-gold">
@@ -112,8 +116,7 @@ export function AuthStateButton({ className }: { className?: string }) {
                 <p className="font-semibold">
                   Then, come back here and sign in!
                 </p>
-                <PartnerDropdown email={ema} partners={partners} />
-              </span>
+                </span>
             )}
           </div>
         )}

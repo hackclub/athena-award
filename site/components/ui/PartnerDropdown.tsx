@@ -3,11 +3,13 @@ import { useState } from "react";
 interface PartnerDropdownProps {
   email?: string;
   partners: string[];
+  setRegistrationStep: (value: any) => void;
 }
 
 export default function PartnerDropdown({
   email,
   partners,
+  setRegistrationStep,
 }: PartnerDropdownProps) {
   const [selected, setSelected] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -44,13 +46,14 @@ export default function PartnerDropdown({
       setError(err.message || "Unknown error");
     } finally {
       setSubmitting(false);
+      setRegistrationStep(3)
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 h-48">
       <label className="font-bold">Which partners are you a part of?</label>
-      <div className="flex flex-col gap-4 overflow-y-auto">
+      <div className="flex flex-col gap-4 overflow-scroll">
         {partners.map((partner) => (
           <label key={partner} className="flex items-center gap-2 text-sm">
             <input
@@ -67,9 +70,9 @@ export default function PartnerDropdown({
       <button
         type="submit"
         disabled={submitting || selected.length === 0}
-        className="bg-hc-primary-dull text-white rounded px-4 py-2 mt-2 disabled:opacity-50"
+        className="bg-hc-primary-dull text-white rounded px-4  mt-2 disabled:opacity-50"
       >
-        {submitting ? "Submitting..." : "Submit"}
+        {submitting ? "Submitting..." : "Next"}
       </button>
       {success && <span className="text-gold">Submitted successfully!</span>}
       {error && <span className="text-red-500">{error}</span>}
