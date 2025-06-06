@@ -1,6 +1,6 @@
-require('dotenv').config();
-const { App, LogLevel } = require('@slack/bolt');
-const Airtable = require('airtable');
+require("dotenv").config();
+const { App, LogLevel } = require("@slack/bolt");
+const Airtable = require("airtable");
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -19,13 +19,13 @@ async function getSlackIdByEmail(email) {
 }
 
 async function openConversationWithEmail(email) {
-  const userId = await getSlackIdByEmail(email)
+  const userId = await getSlackIdByEmail(email);
 
   const convo = await app.client.conversations.open({
     token: process.env.SLACK_BOT_TOKEN,
     users: userId,
   });
-  return convo.channel.id; 
+  return convo.channel.id;
 }
 
 async function upgradeUser(email) {
@@ -34,65 +34,68 @@ async function upgradeUser(email) {
     token: process.env.SLACK_BOT_TOKEN,
     email: email,
   });
-  const team_id = userProfile.user.team_id
+  const team_id = userProfile.user.team_id;
   const userId = userProfile.user.id;
 
   if (
     !userProfile.user.is_restricted &&
     !userProfile.user.is_ultra_restricted
   ) {
-    console.log(`User ${userId} is already a full user - skipping`)
-    return null
+    console.log(`User ${userId} is already a full user - skipping`);
+    return null;
   }
-  console.log(`Attempting to upgrade user ${userId}`)
+  console.log(`Attempting to upgrade user ${userId}`);
 
-  const cookieValue = `d=${process.env.SLACK_COOKIE}`
+  const cookieValue = `d=${process.env.SLACK_COOKIE}`;
 
-  const headers = new Headers()
+  const headers = new Headers();
 
-  headers.append('Cookie', cookieValue)
-  headers.append('Content-Type', 'application/json')
-  headers.append('Authorization', `Bearer ${process.env.SLACK_BROWSER_TOKEN}`)
+  headers.append("Cookie", cookieValue);
+  headers.append("Content-Type", "application/json");
+  headers.append("Authorization", `Bearer ${process.env.SLACK_BROWSER_TOKEN}`);
 
   const form = JSON.stringify({
     userId,
     team_id,
-  })
+  });
   await fetch(
     `https://slack.com/api/users.admin.setRegular?slack_route=${team_id}&user=${userId}`,
     {
       headers,
-      method: 'POST',
+      method: "POST",
       body: form,
-    }
+    },
   )
     .then((r) => {
-      r.json()
+      r.json();
     })
     .catch((e) => {
-      app.logger.error(`Upgrading <@${userId}> from a multi channel user to a regular user has failed.`,
-      )
-    })
-
+      app.logger.error(
+        `Upgrading <@${userId}> from a multi channel user to a regular user has failed.`,
+      );
+    });
 }
 
-
-
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY })
-  .base(process.env.AIRTABLE_BASE_ID);
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
+  process.env.AIRTABLE_BASE_ID,
+);
 
 setInterval(async () => {
   try {
-    const records = await base('Email Slack Invites').select({filterByFormula: "AND(NOT({dm_error}), NOT({welcome_message_sent}))"}).all();
+    const records = await base("Email Slack Invites")
+      .select({
+        filterByFormula: "AND(NOT({dm_error}), NOT({welcome_message_sent}))",
+      })
+      .all();
     for (const record of records) {
-      const email = record.get('email');
+      const email = record.get("email");
       if (!email) continue;
       try {
         const channelId = await openConversationWithEmail(email);
         await app.client.chat.postMessage({
           token: process.env.SLACK_BOT_TOKEN,
           channel: channelId,
-          blocks:  [
+          blocks: [
             {
               type: "section",
               text: {
@@ -109,27 +112,29 @@ Here's where you are right now:
 
 1. Join the Hack Club Slack  :tw_white_check_mark: 
 2. Hack on projects ← _You are here_
-3. Earn cool prizes and your invite for the NYC hackathon. :tw_statue_of_liberty:`
-              }
-            }, 
+3. Earn cool prizes and your invite for the NYC hackathon. :tw_statue_of_liberty:`,
+              },
+            },
             {
-              "type": "actions",
-              "elements": [
+              type: "actions",
+              elements: [
                 {
-                  "type": "button",
-                  "text": {
-                    "type": "plain_text",
-                    "emoji": true,
-                    "text": "Continue"
+                  type: "button",
+                  text: {
+                    type: "plain_text",
+                    emoji: true,
+                    text: "Continue",
                   },
-                  "style": "primary",
-                  "action_id": "upgrade"
-                }]}
+                  style: "primary",
+                  action_id: "upgrade",
+                },
+              ],
+            },
           ],
-          username: 'Athena Award',
-          text: 'Welcome to the Athena Award!'
+          username: "Athena Award",
+          text: "Welcome to the Athena Award!",
         });
-        await base('Email Slack Invites').update([
+        await base("Email Slack Invites").update([
           {
             id: record.id,
             fields: { welcome_message_sent: true },
@@ -137,7 +142,7 @@ Here's where you are right now:
         ]);
         app.logger.info(`Sent welcome message to ${email} and marked as sent.`);
       } catch (err) {
-        await base('Email Slack Invites').update([
+        await base("Email Slack Invites").update([
           {
             id: record.id,
             fields: { dm_error: String(err) },
@@ -145,55 +150,57 @@ Here's where you are right now:
         ]);
         app.logger.error(`Failed to message ${email}:`, err);
       }
-
-      
     }
-    
   } catch (err) {
-    app.logger.info('Airtable fetch error:', err);
+    app.logger.info("Airtable fetch error:", err);
   }
 
   try {
-    const records = await base('YSWS Project Submission').select({filterByFormula: `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "approved", {status} = "rejected"))`}).all();
+    const records = await base("YSWS Project Submission")
+      .select({
+        filterByFormula: `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "approved", {status} = "rejected"))`,
+      })
+      .all();
     for (const record of records) {
-      const email = record.get('Email');
-      const project = record.get('Project Name')
-      const project_name_override = record.get('project_name_override')
-      const status = record.get('status')
-      const reason = record.get('status_change_reason')
-      app.logger.info(email, project, status, reason)
+      const email = record.get("Email");
+      const project = record.get("Project Name");
+      const project_name_override = record.get("project_name_override");
+      const status = record.get("status");
+      const reason = record.get("status_change_reason");
+      app.logger.info(email, project, status, reason);
       if (!email) continue;
       try {
         const channelId = await openConversationWithEmail(email);
         await app.client.chat.postMessage({
           token: process.env.SLACK_BOT_TOKEN,
           channel: channelId,
-          blocks:  [
+          blocks: [
             {
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour project '${project_name_override || project}' has had a status update! It's now *${status}*.\nThe reason given was:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `
-              }
-            }, 
+                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour project '${project_name_override || project}' has had a status update! It's now *${status}*.\nThe reason given was:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `,
+              },
+            },
           ],
-          username: 'Athena Award',
+          username: "Athena Award",
         });
-        await base('YSWS Project Submission').update([
+        await base("YSWS Project Submission").update([
           {
             id: record.id,
             fields: { status_change_dm_sent: true },
           },
         ]);
-        app.logger.info(`Sent status change update to ${email} and marked as sent.`);
-      } catch (error) { 
-        app.logger.info(`Failed to message ${email}`)
+        app.logger.info(
+          `Sent status change update to ${email} and marked as sent.`,
+        );
+      } catch (error) {
+        app.logger.info(`Failed to message ${email}`);
       }
     }
   } catch (err) {
     app.logger.info("Airtable fetch error:", err);
   }
-
 
   //try {
   //  const records = await base('Email Slack Invites').select({filterByFormula: "NOT({registered_user})"}).all();
@@ -215,7 +222,7 @@ Here's where you are right now:
   //}
 }, 10000);
 
-app.action('upgrade', async ({ ack, body }) => {
+app.action("upgrade", async ({ ack, body }) => {
   await ack();
   let email;
   try {
@@ -225,7 +232,7 @@ app.action('upgrade', async ({ ack, body }) => {
     });
     email = userInfo.user.profile.email;
   } catch (e) {
-    app.logger.error('Could not fetch user email for upgrade:', e);
+    app.logger.error("Could not fetch user email for upgrade:", e);
     return;
   }
   await upgradeUser(email);
@@ -233,22 +240,21 @@ app.action('upgrade', async ({ ack, body }) => {
   await app.client.chat.postMessage({
     token: process.env.SLACK_BOT_TOKEN,
     channel: channelId,
-    blocks:  [
+    blocks: [
       {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Award> and sign in from the button in the top right corner.`
-        }
-      }
+          text: `To keep on hacking, return to <https://athena.hackclub.com/awards|the Athena Award> and sign in from the button in the top right corner.`,
+        },
+      },
     ],
-    username: 'Athena Award',
-    text: 'Continue on Athena Award'
+    username: "Athena Award",
+    text: "Continue on Athena Award",
   });
 });
 
-
 (async () => {
   await app.start();
-  console.log('Slack Bolt app is running!');
+  console.log("Slack Bolt app is running!");
 })();

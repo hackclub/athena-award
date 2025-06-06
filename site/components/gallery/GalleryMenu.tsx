@@ -101,17 +101,17 @@ export default function GalleryMenu({
           : progress[currModuleIdx - 1].moduleName;
 
   let urls = [
-    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${currModuleIdx + 1}`,
-    `/api/user/${slackId}/projects?query=selected&stage=${currModuleIdx + 1}`,
+    `/api/user/my/projects?query=valid_for_selection&stage=${currModuleIdx + 1}`,
+    `/api/user/my/projects?query=selected&stage=${currModuleIdx + 1}`,
     `/api/shop?stage=${currModuleIdx + 1}`,
-    `/api/user/${slackId}/points`,
+    `/api/user/my/points`,
   ];
 
   /** this is the current stage represented as a module object with the relevant visuals data */
   const baseModuleData = STAGES.find((m) => m.moduleName === module)!;
 
   const { data, error, isLoading, mutate } = useSWR(
-    baseModuleData ? urls : [`/api/user/${slackId}/points`],
+    baseModuleData ? urls : [`/api/user/my/points`],
     multiFetcher,
   );
 
@@ -121,7 +121,7 @@ export default function GalleryMenu({
 
   async function handleChange(e: any) {
     const projectName = e.target.value;
-    const update = await fetch(`/api/user/${slackId}/projects`, {
+    const update = await fetch(`/api/user/my/projects`, {
       method: "POST",
       body: JSON.stringify({ stage: currModuleIdx + 1, project: projectName }),
     });
@@ -470,7 +470,7 @@ export default function GalleryMenu({
                                 className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}
                                 onClick={async () =>
                                   await fetch(
-                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx + 1}`,
+                                    `/api/user/my/projects/refresh?stage=${currModuleIdx + 1}`,
                                     { method: "POST" },
                                   )
                                 }
@@ -504,7 +504,7 @@ export default function GalleryMenu({
                                 className={`flex gap-2 mt-3 px-2 py-3 sm:p-3 transition-all duration-700 items-center justify-center ${baseModuleData!.visuals.accents.secondary}`}
                                 onClick={async () =>
                                   await fetch(
-                                    `/api/user/${session.data?.slack_id}/projects/refresh?stage=${currModuleIdx + 1}`,
+                                    `/api/user/my/projects/refresh?stage=${currModuleIdx + 1}`,
                                     { method: "POST" },
                                   )
                                 }

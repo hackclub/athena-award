@@ -9,7 +9,7 @@ import { Warning } from "@/components/panels/add-ons/Callout";
 export function Achievements() {
   const session = useSession();
   const { data, error, isLoading } = useSWR(
-    `/api/user/${session.data!.slack_id}/achievements`,
+    `/api/user/my/achievements`,
     fetcher,
   );
   if (error) {

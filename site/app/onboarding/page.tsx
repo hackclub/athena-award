@@ -35,14 +35,12 @@ export default function Page() {
   async function checkIfHackatime() {
     if (stage === 3) {
       let hackatime;
-      hackatime = await fetch(`/api/user/${session.data?.slack_id}/waka`).then(
-        (r) => r.json(),
-      );
+      hackatime = await fetch(`/api/user/my/waka`).then((r) => r.json());
       console.log(hackatime, "stats");
       if (hackatime && hackatime.data && hackatime.data.status) {
         setButtonDisabled(false);
         setHackatimeInstalled(true);
-        await fetch(`/api/user/${session.data?.slack_id}/waka`, {
+        await fetch(`/api/user/my/waka`, {
           method: "POST",
         });
       } else {
@@ -186,7 +184,7 @@ export default function Page() {
                   <motion.button
                     onClick={async () => {
                       setTrack("beginner");
-                      await fetch(`/api/user/${session.data?.slack_id}/track`, {
+                      await fetch(`/api/user/my/track`, {
                         method: "POST",
                         body: JSON.stringify({ track: "beginner" }),
                       });
@@ -214,7 +212,7 @@ export default function Page() {
                   <motion.button
                     onClick={async () => {
                       setTrack("advanced");
-                      await fetch(`/api/user/${session.data?.slack_id}/track`, {
+                      await fetch(`/api/user/my/track`, {
                         method: "POST",
                         body: JSON.stringify({ track: "advanced" }),
                       });

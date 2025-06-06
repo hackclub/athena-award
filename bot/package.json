@@ -1,18 +1,18 @@
 {
-    "private": true,
-    "description": "Bot functionality for the Athena Award",
-    "repository": "https://github.com/hackclub/athena-award",
-    "bugs": {
-        "url": "https://github.com/hackclub/athena-award/issues"
-    },
-    "scripts": {
-        "dev": "next",
-        "build": "next build",
-        "start": "next start"
-    },
-    "dependencies": {
-        "@slack/bolt": "^4.2.1",
-        "airtable": "^0.12.2",
-        "dotenv": "^16.5.0"
-    }
+  "private": true,
+  "description": "Bot functionality for the Athena Award",
+  "repository": "https://github.com/hackclub/athena-award",
+  "bugs": {
+    "url": "https://github.com/hackclub/athena-award/issues"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@slack/bolt": "^4.2.1",
+    "airtable": "^0.12.2",
+    "dotenv": "^16.5.0"
+  }
 }

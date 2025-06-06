@@ -7,7 +7,7 @@ import { Tooltip } from "react-tooltip";
 export function Waka() {
   const session = useSession();
   const { data, error, isLoading } = useSWR(
-    `/api/user/${session.data!.slack_id}/projects?query=total_time`,
+    `/api/user/my/projects?query=total_time`,
     fetcher,
   );
   let projects, totalTimeSpent, totalApprovedTimeSpent;

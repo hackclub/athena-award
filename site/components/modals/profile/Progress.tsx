@@ -8,10 +8,7 @@ export function Progress() {
   const session = useSession();
   let artifacts, shippedProjects, totalApprovedTimeSpent;
   const { data, error, isLoading } = useSWR(
-    [
-      `/api/user/${session.data!.slack_id}/points`,
-      `/api/user/${session.data!.slack_id}/projects?query=total_time`,
-    ],
+    [`/api/user/my/points`, `/api/user/my/projects?query=total_time`],
     multiFetcher,
   );
   if (error) {

@@ -37,7 +37,7 @@ export default function Profile() {
     };
   };
 
-  const urls = [`/api/user/${session.data?.slack_id}/hackathons`];
+  const urls = [`/api/user/my/hackathons`];
   const { data } = useSWR(urls, multiFetcher);
   let hackathonName;
   if (data) {

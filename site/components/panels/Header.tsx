@@ -106,7 +106,11 @@ export function AuthStateButton({ className }: { className?: string }) {
               </span>
             ) : registrationStep === 2 ? (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
-                <PartnerDropdown email={ema} partners={partners} setRegistrationStep={setRegistrationStep}/>
+                <PartnerDropdown
+                  email={ema}
+                  partners={partners}
+                  setRegistrationStep={setRegistrationStep}
+                />
               </span>
             ) : (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
@@ -116,7 +120,7 @@ export function AuthStateButton({ className }: { className?: string }) {
                 <p className="font-semibold">
                   Then, come back here and sign in!
                 </p>
-                </span>
+              </span>
             )}
           </div>
         )}

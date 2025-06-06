@@ -1,4 +1,4 @@
-// GET api/user/[userID]
+// GET api/user/my
 // Returns information about a user
 // tbh what even is going on here
 

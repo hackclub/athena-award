@@ -79,6 +79,61 @@ const FAQ = [
   },
 ];
 
+const partners = [
+  {
+    link: "https://engineering.mit.edu/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
+  },
+  {
+    link: "https://bwsi.mit.edu/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png"
+  },
+  {
+    link: "https://ll.mit.edu/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
+  },
+  {
+    link: "https://github.com/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
+  },
+  {
+    link: "https://girlswhocode.com/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
+  },
+  {
+    link: "https://congressionalappchallenge.us",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
+  },
+  {
+    link: "https://www.girlscoutsnyc.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"
+  },
+  {
+    link: "https://www.theknowledgehouse.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"
+  },
+  {
+    link: "https://www.wearebgc.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"
+  },
+  {
+    link: "https://code.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"
+  },
+  {
+    link: "https://www.etregirls.com",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"
+  },
+  {
+    link: "https://launchpadphilly.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
+  },
+  {
+    link: "https://www.getcybersmart.org",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
+  }
+]
+
 function Polaroid({
   image,
   caption,
@@ -115,7 +170,7 @@ export default function Index() {
       <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <img
           className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto"
-          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/427997bef21567cf6bb86d73c1349bbc65694498_image.png"
+          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b54d797f084645f88f30665a507ecdd1045a004_427997bef21567cf6bb86d73c1349bbc65694498_image-min.png"
         />
       </div>
       <div className="relative pointer-events-auto sm:pointer-events-none">
@@ -143,7 +198,7 @@ export default function Index() {
             <div className="flex flex-col md:flex-row gap-4">
               <img
                 className="hidden md:inline w-40"
-                src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"
+                src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/4fa0aedbd5b4375d704ba6236bc0c4de7c4c90d8_15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"
               />
               <div className="grid grid-cols-8 w-full lg:w-9/12 text-hc-secondary py-8">
                 {steps.map((step, index) => (
@@ -167,12 +222,12 @@ export default function Index() {
           </div>
           <div className="relative pointer-events-auto z-40 sm:pr-12 md:pr-24 pt-12">
             <Polaroid
-              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426.jpg"
+              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/8d3d00586946421b43ee9d2aa5b9ab67ac1987a1_9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426-min.jpg"
               caption="code on websites..."
               props="z-40 rotate-[345deg] md:w-96 hover:rotate-[360deg]"
             />
             <Polaroid
-              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/38b3527b24755420728d2b7634fb803ada27f189_dsc04571.jpg"
+              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/493b1d3800b9c8c7abaa65f64f841c69d9815c07_38b3527b24755420728d2b7634fb803ada27f189_dsc04571-min.jpg"
               caption="...earn rewards"
               props="z-40 absolute lg:relative rotate-[12deg] hover:-rotate-1 top-0 sm:right-10 md:w-96"
             />
@@ -312,84 +367,15 @@ export default function Index() {
               in collaboration with
             </h1>
             <div className="flex flex-row flex-wrap gap-6 w-full justify-center items-center">
-              <a target="_blank" href="https://engineering.mit.edu/">
+              { partners.map((partner: { link: string, image: string }) =>
+              <a target="_blank" href={partner.link}>
                 <img
                   className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
+                  src={partner.image}
                 />
               </a>
-              <a target="_blank" href="https://bwsi.mit.edu/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png"
-                />
-              </a>
-              <a target="_blank" href="https://ll.mit.edu/">
-                <img
-                  className="image-cover h-12 md:h-18"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
-                />
-              </a>
-              <a target="_blank" href="https://github.com/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
-                />
-              </a>
-              <a target="_blank" href="https://girlswhocode.com/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
-                />
-              </a>
-              <a target="_blank" href="https://congressionalappchallenge.us">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.girlscoutsnyc.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.theknowledgehouse.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.wearebgc.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"
-                />
-              </a>
-              <a target="_blank" href="https://code.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.etregirls.com">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"
-                />
-              </a>
-              <a target="_blank" href="https://launchpadphilly.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.getcybersmart.org">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
-                />
-              </a>
+              )}
+
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-// GET api/user/[userID]/waka
+// GET api/user/my/waka
 // Returns Wakatime (Hackatime) data.
 
 import { NextResponse, NextRequest } from "next/server";
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST api/user/[userID]/waka
+// POST api/user/my/waka
 // update that a user has set up hackatime
 export async function POST(request: NextRequest) {
   const session = await auth();

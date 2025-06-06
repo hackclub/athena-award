@@ -61,14 +61,14 @@ export default function NextSteps({
   const [selectedProject, setSelectedProject] = useState("_select#");
   const [idOfNextSubmission, setIdOfNextSubmission] = useState(4);
   useEffect(() => {
-    fetch(`/api/user/${slackId}/projects?query=most_recent_submission`)
+    fetch(`/api/user/my/projects?query=most_recent_submission`)
       .then((r) => r.json())
       .then((res) => setIdOfNextSubmission(res.message + 1));
   }, []);
 
   let urls = [
-    `/api/user/${slackId}/projects?query=valid_for_selection&stage=${idOfNextSubmission}`,
-    `/api/user/${slackId}/points`,
+    `/api/user/my/projects?query=valid_for_selection&stage=${idOfNextSubmission}`,
+    `/api/user/my/points`,
   ];
 
   /** this is the current stage represented as a module object with the relevant visuals data */
@@ -82,7 +82,7 @@ export default function NextSteps({
 
   async function handleChange(e: any) {
     const projectName = e.target.value;
-    const update = await fetch(`/api/user/${slackId}/projects`, {
+    const update = await fetch(`/api/user/my/projects`, {
       method: "POST",
       body: JSON.stringify({ stage: idOfNextSubmission, project: projectName }),
     });
@@ -98,7 +98,7 @@ export default function NextSteps({
   return (
     <DefaultFrame
       title="Next Steps"
-      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/dffc64ba2746d5d7ac55c3b99ceef7c5162c5e2b_image.png')] bg-cover"
+      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b54d797f084645f88f30665a507ecdd1045a004_427997bef21567cf6bb86d73c1349bbc65694498_image-min.png')] bg-cover"
       module={module}
       prevModule={prevModule}
       nextModule={nextModule}
