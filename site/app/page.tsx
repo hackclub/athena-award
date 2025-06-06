@@ -115,7 +115,7 @@ export default function Index() {
       <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <img
           className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto"
-          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/427997bef21567cf6bb86d73c1349bbc65694498_image.png"
+          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b54d797f084645f88f30665a507ecdd1045a004_427997bef21567cf6bb86d73c1349bbc65694498_image-min.png"
         />
       </div>
       <div className="relative pointer-events-auto sm:pointer-events-none">
@@ -143,7 +143,7 @@ export default function Index() {
             <div className="flex flex-col md:flex-row gap-4">
               <img
                 className="hidden md:inline w-40"
-                src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"
+                src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/4fa0aedbd5b4375d704ba6236bc0c4de7c4c90d8_15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"
               />
               <div className="grid grid-cols-8 w-full lg:w-9/12 text-hc-secondary py-8">
                 {steps.map((step, index) => (
@@ -167,12 +167,12 @@ export default function Index() {
           </div>
           <div className="relative pointer-events-auto z-40 sm:pr-12 md:pr-24 pt-12">
             <Polaroid
-              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426.jpg"
+              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/8d3d00586946421b43ee9d2aa5b9ab67ac1987a1_9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426-min.jpg"
               caption="code on websites..."
               props="z-40 rotate-[345deg] md:w-96 hover:rotate-[360deg]"
             />
             <Polaroid
-              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/38b3527b24755420728d2b7634fb803ada27f189_dsc04571.jpg"
+              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/493b1d3800b9c8c7abaa65f64f841c69d9815c07_38b3527b24755420728d2b7634fb803ada27f189_dsc04571-min.jpg"
               caption="...earn rewards"
               props="z-40 absolute lg:relative rotate-[12deg] hover:-rotate-1 top-0 sm:right-10 md:w-96"
             />
