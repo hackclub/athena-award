@@ -79,6 +79,61 @@ const FAQ = [
   },
 ];
 
+const partners = [
+  {
+    link: "https://engineering.mit.edu/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
+  },
+  {
+    link: "https://bwsi.mit.edu/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png"
+  },
+  {
+    link: "https://ll.mit.edu/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
+  },
+  {
+    link: "https://github.com/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
+  },
+  {
+    link: "https://girlswhocode.com/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
+  },
+  {
+    link: "https://congressionalappchallenge.us",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
+  },
+  {
+    link: "https://www.girlscoutsnyc.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"
+  },
+  {
+    link: "https://www.theknowledgehouse.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"
+  },
+  {
+    link: "https://www.wearebgc.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"
+  },
+  {
+    link: "https://code.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"
+  },
+  {
+    link: "https://www.etregirls.com",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"
+  },
+  {
+    link: "https://launchpadphilly.org/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
+  },
+  {
+    link: "https://www.getcybersmart.org",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
+  }
+]
+
 function Polaroid({
   image,
   caption,
@@ -312,84 +367,15 @@ export default function Index() {
               in collaboration with
             </h1>
             <div className="flex flex-row flex-wrap gap-6 w-full justify-center items-center">
-              <a target="_blank" href="https://engineering.mit.edu/">
+              { partners.map((partner: { link: string, image: string }) =>
+              <a target="_blank" href={partner.link}>
                 <img
                   className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
+                  src={partner.image}
                 />
               </a>
-              <a target="_blank" href="https://bwsi.mit.edu/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png"
-                />
-              </a>
-              <a target="_blank" href="https://ll.mit.edu/">
-                <img
-                  className="image-cover h-12 md:h-18"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
-                />
-              </a>
-              <a target="_blank" href="https://github.com/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
-                />
-              </a>
-              <a target="_blank" href="https://girlswhocode.com/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
-                />
-              </a>
-              <a target="_blank" href="https://congressionalappchallenge.us">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.girlscoutsnyc.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.theknowledgehouse.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.wearebgc.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"
-                />
-              </a>
-              <a target="_blank" href="https://code.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.etregirls.com">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"
-                />
-              </a>
-              <a target="_blank" href="https://launchpadphilly.org/">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
-                />
-              </a>
-              <a target="_blank" href="https://www.getcybersmart.org">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
-                />
-              </a>
+              )}
+
             </div>
           </div>
         </div>

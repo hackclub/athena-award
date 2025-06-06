@@ -98,7 +98,7 @@ export default function NextSteps({
   return (
     <DefaultFrame
       title="Next Steps"
-      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/dffc64ba2746d5d7ac55c3b99ceef7c5162c5e2b_image.png')] bg-cover"
+      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b54d797f084645f88f30665a507ecdd1045a004_427997bef21567cf6bb86d73c1349bbc65694498_image-min.png')] bg-cover"
       module={module}
       prevModule={prevModule}
       nextModule={nextModule}
