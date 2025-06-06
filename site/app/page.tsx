@@ -342,12 +342,6 @@ export default function Index() {
                   src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
                 />
               </a>
-              <a target="_blank" href="https://firstinspires.org">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/c62d8ebaffc63403ab0d8a3d64954e3fcf2b4483_first_vertical_rgb.png"
-                />
-              </a>
               <a target="_blank" href="https://congressionalappchallenge.us">
                 <img
                   className="image-cover h-16 md:h-32"
