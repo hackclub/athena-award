@@ -384,6 +384,12 @@ export default function Index() {
                   src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
                 />
               </a>
+              <a target="_blank" href="https://www.getcybersmart.org">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
+                />
+              </a>
             </div>
           </div>
         </div>
