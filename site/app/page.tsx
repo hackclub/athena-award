@@ -342,12 +342,6 @@ export default function Index() {
                   src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
                 />
               </a>
-              <a target="_blank" href="https://firstinspires.org">
-                <img
-                  className="image-cover h-16 md:h-32"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/c62d8ebaffc63403ab0d8a3d64954e3fcf2b4483_first_vertical_rgb.png"
-                />
-              </a>
               <a target="_blank" href="https://congressionalappchallenge.us">
                 <img
                   className="image-cover h-16 md:h-32"
@@ -388,6 +382,12 @@ export default function Index() {
                 <img
                   className="image-cover h-16 md:h-32"
                   src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
+                />
+              </a>
+              <a target="_blank" href="https://www.getcybersmart.org">
+                <img
+                  className="image-cover h-16 md:h-32"
+                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
                 />
               </a>
             </div>
