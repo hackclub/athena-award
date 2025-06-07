@@ -8,11 +8,12 @@ import { auth } from "@/auth";
 import { getValue } from "@/services/fetchData";
 import { verifyAuth } from "@/services/verifyAuth";
 
-const validData = ["current_stage", "slack_id", "total_time_approved_projects"]; // this is really stupid
+const validData = ["current_stage", "slack_id", "total_time_approved_projects", "referred_users_count"]; // this is really stupid
 interface validData {
   current_stage: string;
   slack_id: string;
   total_time_approved_projects: number;
+  referred_users_count: number;
 }
 
 export async function GET(request: NextRequest) {

@@ -37,11 +37,12 @@ export default function Profile() {
     };
   };
 
-  const urls = [`/api/user/my/hackathons`];
+  const urls = [`/api/user/my/hackathons`, `/api/user/my?query=referred_users_count`];
   const { data } = useSWR(urls, multiFetcher);
-  let hackathonName;
+  let hackathonName, referredUsersCount;
   if (data) {
     hackathonName = data[0]["message"];
+    referredUsersCount = data[1]["message"]
   }
 
   return (
@@ -144,6 +145,9 @@ export default function Profile() {
                   poster
                 </a>{" "}
                 with your referral code.
+              </li>
+              <li>
+                You've referred <b>{referredUsersCount}</b> {referredUsersCount == 1 ? "person" : "people"} so far.
               </li>
             </ul>
           </div>
