@@ -33,10 +33,12 @@ export function AuthStateButton({ className }: { className?: string }) {
     setEma(email);
     const referredBy = searchParams.get("referred_by")!;
     const utm_source = searchParams.get("utm_source")!;
+    const ref = searchParams.get("ref")!;
+
     setPartners(await fetch("/api/partners").then((r) => r.json()));
 
     setRegistrationStep(2);
-    const r = await inviteSlackUser(email, referredBy, utm_source);
+    const r = await inviteSlackUser(email, referredBy, utm_source, ref);
     if (r.ok) {
       console.log("ok");
     } else {

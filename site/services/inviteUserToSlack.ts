@@ -67,6 +67,7 @@ export async function inviteSlackUser(
   email: string,
   referredBy?: string,
   utmSource?: string,
+  ref?: string,
 ) {
   try {
     console.log(`Inviting ${email} to Slack...`);
@@ -90,6 +91,7 @@ export async function inviteSlackUser(
             ? [searchExistingUserByReferral[0]["id"]]
             : [],
           utm_source: utmSource,
+          ref: ref,
         },
       },
     ]);
