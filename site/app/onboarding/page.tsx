@@ -320,6 +320,7 @@ export default function Page() {
                           </a>
                           , then come back here!
                         </li>
+                        <li>Go to <a href = "https://hackatime.hackclub.com/my/settings#user_privacy">settings</a> and enable "Allow others to look up my public coding stats via the API".</li>
                         <span className="text-gold">
                           Confused? Check out the presentation!
                         </span>
@@ -348,7 +349,7 @@ export default function Page() {
                         <span className="bg-hc-primary-dull px-1">
                           {hackatimeInstalled
                             ? "Nice, it looks like you have a Hackatime account - you can go to the next step!"
-                            : "I can't find a Hackatime account for you..."}
+                            : "I can't find a Hackatime account for you... Did you enable your coding stats to be publicly accessible?"}
                         </span>
                       </p>
                     </div>
