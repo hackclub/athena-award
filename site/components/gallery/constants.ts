@@ -12,11 +12,6 @@ export const introResources = [
     link: "https://express.athena.hackclub.com",
   },
   {
-    name: "Make a video game with Sprig 🪴",
-    id: "sprig",
-    link: "https://sprig.hackclub.com",
-  },
-  {
     name: "Make sine wave art and music with Oscillart 🎶",
     id: "oscillart",
     link: "https://oscillart.athena.hackclub.com",
