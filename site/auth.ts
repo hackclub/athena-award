@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import SlackProvider from "next-auth/providers/slack";
-import { linkUser } from "@/services/addUserToDB";
+import { linkUser, getUserRole } from "@/services/addUserToDB";
 import type { NextAuthConfig } from "next-auth";
 
 export const config: NextAuthConfig = {
@@ -30,6 +30,7 @@ export const config: NextAuthConfig = {
       if (account) {
         token = Object.assign({}, token, {
           access_token: account.access_token,
+          role: await getUserRole(token.email!),
           slack_id: profile!.sub,
         });
       }
@@ -40,7 +41,7 @@ export const config: NextAuthConfig = {
         session = Object.assign(
           {},
           { ...session },
-          { access_token: token.access_token, slack_id: token.slack_id },
+          { access_token: token.access_token, slack_id: token.slack_id, role: token.role },
         );
       }
       return { ...session };

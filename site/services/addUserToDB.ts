@@ -88,3 +88,16 @@ export async function linkUser(emailAddress: string, accessToken: string) {
     throw error;
   }
 }
+
+export async function getUserRole(email: string){
+    const r = await airtable("Registered Users")
+      .select({ 
+        filterByFormula: `{email} = "${email.replace('+', '%2b')}"`,
+        fields: ["role"],
+        maxRecords: 1 })
+      .all();
+    const prettyRecordId = JSON.parse(JSON.stringify(r))
+    console.log(prettyRecordId)
+    return prettyRecordId[0]["fields"]["role"]
+
+}

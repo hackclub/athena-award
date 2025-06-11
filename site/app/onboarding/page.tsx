@@ -320,7 +320,7 @@ export default function Page() {
                           </a>
                           , then come back here!
                         </li>
-                        <li>Go to <a href = "https://hackatime.hackclub.com/my/settings#user_privacy">settings</a> and enable "Allow others to look up my public coding stats via the API".</li>
+                        <li>Go to <a target="_blank" href = "https://hackatime.hackclub.com/my/settings#user_privacy">settings</a> and enable "Allow others to look up my public coding stats via the API".</li>
                         <span className="text-gold">
                           Confused? Check out the presentation!
                         </span>

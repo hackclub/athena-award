@@ -367,8 +367,8 @@ export default function Index() {
               in collaboration with
             </h1>
             <div className="flex flex-row flex-wrap gap-6 w-full justify-center items-center">
-              { partners.map((partner: { link: string, image: string }) =>
-              <a target="_blank" href={partner.link}>
+              { partners.map((partner: { link: string, image: string }, index: number) =>
+              <a key = {index} target="_blank" href={partner.link}>
                 <img
                   className="image-cover h-16 md:h-32"
                   src={partner.image}

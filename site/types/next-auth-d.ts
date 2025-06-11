@@ -5,5 +5,6 @@ declare module "next-auth" {
     user: {} & DefaultSession["user"];
     access_token?: string;
     slack_id?: string;
+    role?: string
   }
 }
