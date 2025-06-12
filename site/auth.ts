@@ -41,7 +41,7 @@ export const config: NextAuthConfig = {
         session = Object.assign(
           {},
           { ...session },
-          { access_token: token.access_token, slack_id: token.slack_id, role: token.role },
+          { access_token: token.access_token, slack_id: token.slack_id },
         );
       }
       return { ...session };
