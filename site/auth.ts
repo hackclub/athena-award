@@ -30,7 +30,7 @@ export const config: NextAuthConfig = {
       if (account) {
         token = Object.assign({}, token, {
           access_token: account.access_token,
-          role: await getUserRole(token.email!),
+          //role: await getUserRole(token.email!),
           slack_id: profile!.sub,
         });
       }
