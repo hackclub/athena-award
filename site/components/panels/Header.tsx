@@ -7,6 +7,8 @@ import WelcomeModal from "../welcome/WelcomeModal";
 import { inviteSlackUser } from "@/services/inviteUserToSlack";
 import { FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
+import { multiFetcher } from "@/services/fetcher";
 import PartnerDropdown from "@/components/ui/PartnerDropdown";
 
 export const shineEffect = (props: string) =>
@@ -17,6 +19,8 @@ export const shineEffectProps =
 export function AuthStateButton({ className }: { className?: string }) {
   /// @ PAST SELF WHY IS THIS EVEN IN HERE
   const session = useSession();
+  const { data, error, isLoading } = useSWR(() => session.status === "authenticated" ? [`/api/user/my?query=track`] : null, multiFetcher)
+  console.log(data)
   const router = useRouter();
   const [registrationStep, setRegistrationStep] = useState(1);
   const [ema, setEma] = useState("");
@@ -51,7 +55,7 @@ export function AuthStateButton({ className }: { className?: string }) {
         {session.status === "authenticated" ? (
           <button
             onClick={() => {
-              router.push("/onboarding");
+              router.push(data && data[0]["message"] ? "/gallery" : "/onboarding");
             }}
             className="bg-cream text-2xl p-5 rounded-lg text-hc-primary-dull"
           >
