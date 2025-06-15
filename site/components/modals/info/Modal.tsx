@@ -50,7 +50,7 @@ const PROJECTFAQ = [
         Two main things:
         <br>1) Your project needs to work! People should be able to easily use it through a link or download and run it without issues.
         <br>2) It also needs to be open source. Your code should be public on GitHub (or a similar site).
-        <br><br>Bonus points: include a good README to explain what your project is and how to use it! 
+        <br><br>Include a good README to explain what your project is and how to use it! 
         <br><br>If anything's unclear or missing, we'll reach out and help you fix it!`,
   },
 ];
