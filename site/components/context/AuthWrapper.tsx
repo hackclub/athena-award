@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Unauthenticated, Loading } from "@/components/screens/Modal";
 
 export default function AuthWrapper({ children }: React.PropsWithChildren) {
-  const unauthedPages = ["/map", "/poster", "/about", "/", ""];
+  const unauthedPages = ["/map", "/poster", "/about", "/", "", "/hcb/callback"];
   const pathname = usePathname();
   const isUnauthedPage = unauthedPages.includes(pathname);
   const session = useSession();
