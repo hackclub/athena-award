@@ -131,6 +131,9 @@ const partners = [
   {
     link: "https://www.getcybersmart.org",
     image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
+  },
+  { link: "https://girlswhohack.com/",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/7c7cd694ba0da09feb79b18fd5f0e404ff2208e0_image.png"
   }
 ]
 
