@@ -29,6 +29,16 @@ export async function GET() {
     const records = await airtable("Projects")
       .select({
         filterByFormula: 'AND({status} = "approved", {user_consent})',
+        fields: [
+          "project_name",
+          "project_name_override",
+          "playable_url",
+          "code_url",
+          "slack_id",
+          "address_joined_no_name (from form_submitted_project)",
+          "lat",
+          "lng",
+        ],
       })
       .all();
       console.log(JSON.parse(JSON.stringify(records)).length)
@@ -38,11 +48,25 @@ export async function GET() {
       const address = fields[
         "address_joined_no_name (from form_submitted_project)"
       ] as string | undefined;
+      let lat = fields["lat"];
+      let lng = fields["lng"];
       let latLng = null;
       let country = undefined;
       const slack_id = fields["slack_id"];
-      if (address) {
+      if ((!lat || !lng) && address) {
         latLng = await geocodeAddress(address[0].replace("\n", ""));
+        if (latLng) {
+          lat = latLng.lat;
+          lng = latLng.lng;
+          await airtable("Projects").update(record.id, {
+            lat: lat,
+            lng: lng,
+          });
+        }
+      } else if (lat && lng) {
+        latLng = { lat, lng };
+      }
+      if (address) {
         const addressParts =
           address[0].split("\n")[address[0].split("\n").length - 1];
         country = addressParts;
