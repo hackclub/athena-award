@@ -31,6 +31,7 @@ export async function GET() {
         filterByFormula: 'AND({status} = "approved", {user_consent})',
       })
       .all();
+      console.log(JSON.parse(JSON.stringify(records)).length)
     const projects = [];
     for (const record of records) {
       const fields = record.fields;
