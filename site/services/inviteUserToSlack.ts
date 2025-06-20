@@ -15,6 +15,7 @@ const channels = [
   "C01504DCLVD", // #scrapbook
   "C0266FRGV", // #lounge
   "C05B6DBN802", // #happenings
+  "C093112DW00", // #athena-award-bulletin
 ].join(",");
 export async function inviteGuestToSlackToriel(email: string) {
   const cookieValue = `d=${process.env.SLACK_COOKIE}`;
