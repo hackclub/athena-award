@@ -80,6 +80,61 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
   process.env.AIRTABLE_BASE_ID,
 );
 
+async function processStatusUpdate(base, formula, singularTerm){
+    const records = await base(base)
+      .select({
+        filterByFormula: formula,
+      })
+      .all();
+    for (const record of records) {
+      let name, status, email;
+      if (singularTerm === "project") {
+        name = record.get("project_name_override") || record.get("Project Name");
+        status = record.get("status");
+        email = record.get("Email");
+      } else if (singularTerm == "order") {
+        name = record.get("item_friendly_name")
+        status = record.get("status");
+        email = record.get("Email");
+      } else if (singularTerm == "team") {
+        status = record.get("team");
+        reason = `*You hear drumbeats in the distance...*\n ${status} is calling your name...\nWelcome to the Panathenaic Games.\nFrom June 24th to July 8th, ship projects to earn points for your deity and outcompete rival deities. All members of the winning team who contribute will earn an exclusive Athena Award t-shirt! Your deity is ${status} - view your team's progress at https://award.athena.hackclub.com/gallery`
+        email = record.get("email")
+      }
+      const reason = record.get("status_change_reason");
+      if (!email) continue;
+      try {
+        const channelId = await openConversationWithEmail(email);
+        await app.client.chat.postMessage({
+          token: process.env.SLACK_BOT_TOKEN,
+          channel: channelId,
+          blocks: [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour ${singularTerm} ${name && name} has had a status update! It's now *${status}*.\nThe notes given were:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `,
+              },
+            },
+          ],
+          username: "Athena Award",
+        });
+        await base(base).update([
+          {
+            id: record.id,
+            fields: { status_change_dm_sent: true },
+          },
+        ]);
+        app.logger.info(
+          `Sent status change update to ${email} and marked as sent.`,
+        );
+      } catch (error) {
+        app.logger.info(`Failed to message ${email}`);
+      }
+    }
+
+}
+
 setInterval(async () => {
   try {
     const records = await base("Email Slack Invites")
@@ -156,48 +211,10 @@ Here's where you are right now:
   }
 
   try {
-    const records = await base("YSWS Project Submission")
-      .select({
-        filterByFormula: `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "approved", {status} = "rejected"))`,
-      })
-      .all();
-    for (const record of records) {
-      const email = record.get("Email");
-      const project = record.get("Project Name");
-      const project_name_override = record.get("project_name_override");
-      const status = record.get("status");
-      const reason = record.get("status_change_reason");
-      app.logger.info(email, project, status, reason);
-      if (!email) continue;
-      try {
-        const channelId = await openConversationWithEmail(email);
-        await app.client.chat.postMessage({
-          token: process.env.SLACK_BOT_TOKEN,
-          channel: channelId,
-          blocks: [
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour project '${project_name_override || project}' has had a status update! It's now *${status}*.\nThe reason given was:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `,
-              },
-            },
-          ],
-          username: "Athena Award",
-        });
-        await base("YSWS Project Submission").update([
-          {
-            id: record.id,
-            fields: { status_change_dm_sent: true },
-          },
-        ]);
-        app.logger.info(
-          `Sent status change update to ${email} and marked as sent.`,
-        );
-      } catch (error) {
-        app.logger.info(`Failed to message ${email}`);
-      }
-    }
+    processStatusUpdate("YSWS Project Submission", `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "approved", {status} = "rejected"))`, "project")
+    processStatusUpdate("Orders", `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "fulfilled", {status} = "rejected"))`, "project")
+    processStatusUpdate("Registered Users", `NOT({status_update_sent})`, "team")
+
   } catch (err) {
     app.logger.info("Airtable fetch error:", err);
   }
