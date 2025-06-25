@@ -80,28 +80,24 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
   process.env.AIRTABLE_BASE_ID,
 );
 
-async function processStatusUpdate(base, formula, singularTerm){
-    const records = await base(base)
+async function processStatusUpdate(baseAirtable, formula, singularTerm){
+    const records = await base(baseAirtable)
       .select({
         filterByFormula: formula,
       })
       .all();
     for (const record of records) {
-      let name, status, email;
+      let name, status, email, reason;
       if (singularTerm === "project") {
         name = record.get("project_name_override") || record.get("Project Name");
         status = record.get("status");
         email = record.get("Email");
-      } else if (singularTerm == "order") {
-        name = record.get("item_friendly_name")
-        status = record.get("status");
-        email = record.get("Email");
+        reason = record.get("status_change_reason");
       } else if (singularTerm == "team") {
         status = record.get("team");
-        reason = `*You hear drumbeats in the distance...*\n ${status} is calling your name...\nWelcome to the Panathenaic Games.\nFrom June 24th to July 8th, ship projects to earn points for your deity and outcompete rival deities. All members of the winning team who contribute will earn an exclusive Athena Award t-shirt! Your deity is ${status} - view your team's progress at https://award.athena.hackclub.com/gallery`
+        reason = `*You hear drumbeats in the distance...*\nSomewhere, ${status} is calling your name. \n_*Welcome to the <https://en.wikipedia.org/wiki/Panathenaic_Games|Panathenaic Games>.*_\n\nFrom June 25th to July 9th, ship projects to earn points for your deity and outcompete rival deities.\nAll members of the winning team who contribute will earn an *exclusive Athena Award t-shirt!*\nYour deity is <https://https://en.wikipedia.org/wiki/${status}|${status}> - view your team's progress in the <https://award.athena.hackclub.com/gallery|Gallery>.`
         email = record.get("email")
       }
-      const reason = record.get("status_change_reason");
       if (!email) continue;
       try {
         const channelId = await openConversationWithEmail(email);
@@ -113,13 +109,13 @@ async function processStatusUpdate(base, formula, singularTerm){
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour ${singularTerm} ${name && name} has had a status update! It's now *${status}*.\nThe notes given were:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `,
+                text: `\n*Hey <@${await getSlackIdByEmail(email)}>!*\n\nYour ${singularTerm} ${name ? name : ""} has had a status update! It's now *${status}*.\nThe notes given were:\n\n>${reason}\n\nIf you have questions, send a message in #athena-award.\n                `,
               },
             },
           ],
           username: "Athena Award",
         });
-        await base(base).update([
+        await base(baseAirtable).update([
           {
             id: record.id,
             fields: { status_change_dm_sent: true },
@@ -129,7 +125,7 @@ async function processStatusUpdate(base, formula, singularTerm){
           `Sent status change update to ${email} and marked as sent.`,
         );
       } catch (error) {
-        app.logger.info(`Failed to message ${email}`);
+        app.logger.info(`Failed to message ${email} - ${error}`);
       }
     }
 
@@ -212,8 +208,8 @@ Here's where you are right now:
 
   try {
     processStatusUpdate("YSWS Project Submission", `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "approved", {status} = "rejected"))`, "project")
-    processStatusUpdate("Orders", `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "fulfilled", {status} = "rejected"))`, "project")
-    processStatusUpdate("Registered Users", `NOT({status_update_sent})`, "team")
+    //processStatusUpdate("Orders", `AND(NOT({status_change_dm_sent}), {status_change_reason}, OR({status} = "fulfilled", {status} = "rejected"))`, "project")
+    processStatusUpdate("Registered Users", `NOT({status_change_dm_sent})`, "team")
 
   } catch (err) {
     app.logger.info("Airtable fetch error:", err);
