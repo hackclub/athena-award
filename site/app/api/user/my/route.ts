@@ -21,19 +21,14 @@ export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("query");
   const session = await auth();
   const emailAddress = session!.user.email!;
-
-  if (query === "verification"){
-    const response = await fetch(`https://identity.hackclub.com/api/external/check?email=${session?.user.email}`).then(r => r.json())
-    return NextResponse.json(response)
-  }
-  
   const invalidSession = await verifyAuth();
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
-
-
-
+  if (query === "verification"){
+    const response = await fetch(`https://identity.hackclub.com/api/external/check?email=${session?.user.email}`).then(r => r.json())
+    return NextResponse.json(response)
+  }
   if (!query || !validData.includes(query)) {
     // this is stupid
     return NextResponse.json({ error: "Invalid query" }, { status: 400 });
