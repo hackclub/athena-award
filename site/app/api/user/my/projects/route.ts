@@ -92,9 +92,9 @@ export async function GET(request: NextRequest) {
           stage: project["fields"]["stage"],
           status: project["fields"]["status"],
           total_seconds: project["fields"][
-            "existing_ysws_project_hour_override"
+            "approved_duration"
           ]
-            ? project["fields"]["existing_ysws_project_hour_override"] * 3600
+            ? project["fields"]["approved_duration"] * 3600
             : null,
         }))
         .filter((project: any) => project.name != "_select#"); // this is so bad
