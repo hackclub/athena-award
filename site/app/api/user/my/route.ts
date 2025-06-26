@@ -19,17 +19,26 @@ interface validData {
 
 export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("query");
-  if (!query || !validData.includes(query)) {
-    // this is stupid
-    return NextResponse.json({ error: "Invalid query" }, { status: 400 });
+  const session = await auth();
+  const emailAddress = session!.user.email!;
+
+  if (query === "verification"){
+    const response = await fetch(`https://identity.hackclub.com/api/external/check?email=${session?.user.email}`).then(r => r.json())
+    return NextResponse.json(response)
   }
+  
   const invalidSession = await verifyAuth();
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
 
-  const session = await auth();
-  const emailAddress = session!.user.email!;
+
+
+  if (!query || !validData.includes(query)) {
+    // this is stupid
+    return NextResponse.json({ error: "Invalid query" }, { status: 400 });
+  }
+
   try {
     const response = (await getValue(emailAddress))[query as keyof validData];
     return NextResponse.json({ message: response }, { status: 200 });

@@ -6,19 +6,21 @@ import { useContext } from "react";
 import { UXEventContext } from "@/components/context/UXStages";
 import { FaXmark } from "react-icons/fa6";
 import { useSession } from "next-auth/react";
+import { Tip } from "@/components/panels/add-ons/Callout";
 
 export default function ShopModal() {
   const session = useSession();
   const { data, error, isLoading } = useSWR(
-    ["/api/shop", `/api/user/my/artifacts`],
+    ["/api/shop", `/api/user/my/artifacts`, "/api/user/my?query=verification"],
     multiFetcher,
   );
   const [uxEvent, setUXEvent] = useContext(UXEventContext);
 
-  let shop, artifacts;
+  let shop, artifacts, verificationStatus;
   if (data) {
     shop = data[0];
     artifacts = Math.floor(data[1]["message"]);
+    verificationStatus = data[2]["result"]
   }
 
   return (
@@ -41,6 +43,13 @@ export default function ShopModal() {
       >
         <div className="flex flex-col gap-3">
           <div>
+
+            { verificationStatus != "verified_eligible" && 
+              <Tip title = "Verification needed!">
+                To get your prizes, we need to verify that you're someone who's {'<='} 18. Your ID will be kept secure.
+                <br/>Once your ID is verified at <a target = "_blank" href = "https://identity.hackclub.com">identity.hackclub.com</a>, return here. Your order will be rejected if your ID is ineligible.
+              </Tip> }
+
             <p>
               Click on a placard to order a prize with your approved artifacts!
             </p>
