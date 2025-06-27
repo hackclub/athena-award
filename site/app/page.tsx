@@ -134,6 +134,10 @@ const partners = [
   },
   { link: "https://girlswhohack.com/",
     image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/7c7cd694ba0da09feb79b18fd5f0e404ff2208e0_image.png"
+  },
+  {
+    link: "https://www.instagram.com/girlupkenyaofficial/?hl=en",
+    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3599d0a01a560942ece54a635e21683557265649_guk_logos-1.png"
   }
 ]
 
