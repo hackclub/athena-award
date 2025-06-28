@@ -82,6 +82,7 @@ export async function GET(request: NextRequest) {
             "stage",
             "status",
             "existing_ysws_project_hour_override",
+            "approved_duration"
           ],
         })
         .all();
@@ -114,7 +115,6 @@ export async function GET(request: NextRequest) {
             const matchingProject = userProject.find(
               (project: any) => project.name === projPair.name,
             );
-            console.log(projPair.total_seconds, matchingProject?.total_seconds)
             return {
               ...(matchingProject || {}),
               name: projPair.name,
