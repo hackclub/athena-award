@@ -6,5 +6,6 @@ export async function getWakaTimeData(slackId: string) {
   const response = await fetch(
     `https://hackatime.hackclub.com/api/v1/users/${slackId}/stats?features=projects&start_date=${start_date}&end_date=${end_date}`,
   );
+  console.log(response)
   return response;
 }
