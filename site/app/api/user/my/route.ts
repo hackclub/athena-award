@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
   if (query === "verification"){
-    const response = await fetch(`https://identity.hackclub.com/api/external/check?email=${session?.user.email}`).then(r => r.json())
+    const response = await fetch(`https://identity.hackclub.com/api/external/check?email=${session?.slack_id}`).then(r => r.json())
     return NextResponse.json(response)
   }
   if (!query || !validData.includes(query)) {
