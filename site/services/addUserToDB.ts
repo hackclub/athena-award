@@ -24,7 +24,7 @@ export async function linkUser(emailAddress: string, accessToken: string) {
     ).then((res) => res.json());
     const id = response["user"]["id"];
     const r = await airtable("Registered Users")
-      .select({ filterByFormula: `{email} = "${urlEncodedEmail}"` })
+      .select({ filterByFormula: `{email} = "${emailAddress}"` })
       .all();
     if (r.length) {
       // user exists in DB
