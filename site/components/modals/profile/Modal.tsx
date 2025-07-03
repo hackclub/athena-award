@@ -63,6 +63,7 @@ export default function Profile() {
             <div className="*:truncate truncate">
               <div className="text-xl">Hi {session.data?.user!.name}!</div>
               <div className="text-sm">{session.data?.user!.email}</div>
+              <span className = "text-xs">commit: {process.env.NEXT_PUBLIC_SOURCE_COMMIT}</span>
             </div>
           </div>
           <div>
