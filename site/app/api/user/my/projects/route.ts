@@ -71,9 +71,7 @@ export async function GET(request: NextRequest) {
       }
     } else if (query === "total_time") {
       // TO DO: DON'T FAIL IF HACKATIMEPROJECTS !OK, BUT INSTEAD JUST RETRIEVE PROJECTS FROM AIRTABLE
-      const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
-      let projects;
-      const allProjects = await airtable("Projects")
+            const allProjects = await airtable("Projects")
         .select({
           filterByFormula: `{slack_id} = "${session?.slack_id}"`,
           fields: [
@@ -99,7 +97,10 @@ export async function GET(request: NextRequest) {
             : null,
         }))
         .filter((project: any) => project.name != "_select#"); // this is so bad
-      if (hackatimeProjects.ok) {
+
+      let projects;
+      try {
+        const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
         // user has hackatime
         projects = (await hackatimeProjects.json())["data"]["projects"] as any;
 
@@ -129,7 +130,7 @@ export async function GET(request: NextRequest) {
           console.log(error);
           return NextResponse.json({ error: error }, { status: 400 });
         }
-      } else {
+      } catch (error) {
         // user does NOT have hackatime
         return NextResponse.json({ message: userProjectStatus }); // believe it or not i am capable of writing worse code than this
       }
