@@ -7,6 +7,7 @@ import { STAGES } from "@/app/STAGES";
 import { UXEvent, UXEventContext } from "@/components/context/UXStages";
 import ShopModal from "@/components/modals/shop/Modal";
 import LeaderboardModal from "@/components/modals/leaderboard/Modal";
+import PodiumModal from "@/components/modals/podium/Modal";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
@@ -42,6 +43,7 @@ export default function Gallery() {
         <ProfileModal />
         <InfoModal />
         <LeaderboardModal />
+        <PodiumModal/>
         <GalleryMenu
           module={module}
           setModule={

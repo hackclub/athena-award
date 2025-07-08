@@ -8,7 +8,8 @@ export type UXEvent =
   | "resources"
   | "info"
   | "shop"
-  | "leaderboard";
+  | "leaderboard"
+  | "podium";
 
 export type UXEventState = [UXEvent, (event: UXEvent) => void];
 
