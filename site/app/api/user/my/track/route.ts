@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { verifyAuth } from "@/services/verifyAuth";
 import { getValue } from "@/services/fetchData";
+import { identifySlackId } from "@/services/adminOverride";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -21,11 +22,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid track provided." });
   }
   const session = await auth();
-  const emailAddress = session?.user.email;
+
+  const slackId = (await identifySlackId(request, session!))!
+
   try {
     const recordID = await airtable("Registered Users")
       .select({
-        filterByFormula: `{email} = "${emailAddress}"`,
+        filterByFormula: `{slack_id} = "${slackId}"`,
         maxRecords: 1,
         fields: ["record_id", "hashed_token"],
       })
@@ -69,9 +72,10 @@ export async function POST(request: NextRequest) {
 // GET /api/user/my/track
 // Retrieve the track that the user is on
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const session = await auth();
-  const invalidSession = await verifyAuth();
+  const slackId = (await identifySlackId(request, session!))!
+  const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }

@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 import { encryptSession, verifySession } from "@/services/hash";
 import { getWakaTimeData } from "@/services/fetchWakaData";
 import { verifyAuth } from "@/services/verifyAuth";
+import { identifySlackId } from "@/services/adminOverride";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -15,7 +16,10 @@ const airtable = new Airtable({
 export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("query");
   const session = await auth();
-  const invalidSession = await verifyAuth();
+
+  const slackId = (await identifySlackId(request, session!))!
+
+  const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
@@ -27,7 +31,7 @@ export async function GET(request: NextRequest) {
   }
   try {
     if (query === "all") {
-      const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
+      const hackatimeProjects = await getWakaTimeData(slackId);
       let projects;
       if (hackatimeProjects.ok && hackatimeProjects) {
         projects = (await hackatimeProjects.json()) as any;
@@ -71,9 +75,9 @@ export async function GET(request: NextRequest) {
       }
     } else if (query === "total_time") {
       // TO DO: DON'T FAIL IF HACKATIMEPROJECTS !OK, BUT INSTEAD JUST RETRIEVE PROJECTS FROM AIRTABLE
-            const allProjects = await airtable("Projects")
+        const allProjects = await airtable("Projects")
         .select({
-          filterByFormula: `{slack_id} = "${session?.slack_id}"`,
+          filterByFormula: `{slack_id} = "${slackId}"`,
           fields: [
             "project_name",
             "project_name_override",
@@ -96,11 +100,12 @@ export async function GET(request: NextRequest) {
             ? project["fields"]["approved_duration"] * 3600
             : null,
         }))
-        .filter((project: any) => project.name != "_select#"); // this is so bad
+        .filter((project: any) => project.name != "_select#" || project.project_name_override); // this is so bad
 
       let projects;
       try {
-        const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
+        const hackatimeProjects = await getWakaTimeData(slackId);
+
         // user has hackatime
         projects = (await hackatimeProjects.json())["data"]["projects"] as any;
 
@@ -125,6 +130,7 @@ export async function GET(request: NextRequest) {
                 projPair.total_seconds ?? matchingProject?.total_seconds ?? 0,
             };
           }); // HELP ME
+
           return NextResponse.json({ message: newThing }, { status: 200 });
         } catch (error) {
           console.log(error);
@@ -143,7 +149,7 @@ export async function GET(request: NextRequest) {
           { status: 400 },
         );
       }
-      const hackatimeProjects = await getWakaTimeData(session?.slack_id!);
+      const hackatimeProjects = await getWakaTimeData(slackId);
       let projects;
       if (hackatimeProjects.ok) {
         projects = (
@@ -153,7 +159,7 @@ export async function GET(request: NextRequest) {
           JSON.stringify(
             await airtable("Projects")
               .select({
-                filterByFormula: `{slack_id} = "${session?.slack_id}"`,
+                filterByFormula: `{slack_id} = "${slackId}"`,
                 fields: ["stage", "project_name"],
               })
               .all(),
@@ -177,7 +183,7 @@ export async function GET(request: NextRequest) {
     } else if (query === "most_recent_submission") {
       const mostRecentProject = await airtable("Projects")
         .select({
-          filterByFormula: `AND({slack_id} = "${session?.slack_id}", NOT({status} = "pending"))`,
+          filterByFormula: `AND({slack_id} = "${slackId}", NOT({status} = "pending"))`,
           fields: ["stage"],
           sort: [{ field: "stage", direction: "desc" }],
         })
@@ -204,11 +210,11 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   const uniqueProjectName = session?.slack_id + "_" + body["stage"];
   const projectName = body["project"];
-  const emailAddress = session?.user.email;
+  const slackId = (await identifySlackId(request, session!)!)
   try {
     const recordID = await airtable("Registered Users")
       .select({
-        filterByFormula: `{email} = "${emailAddress}"`,
+        filterByFormula: `{slack_id} = "${slackId}"`,
         maxRecords: 1,
         fields: [
           "record_id",

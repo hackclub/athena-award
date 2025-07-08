@@ -7,12 +7,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getValue } from "@/services/fetchData";
 import { verifyAuth } from "@/services/verifyAuth";
+import { identifySlackId } from "@/services/adminOverride";
 
-const validData = ["track", "current_stage", "slack_id", "total_time_approved_projects", "referred_users_count"]; // this is really stupid
+const validData = ["track", "current_stage", "total_time_approved_projects", "referred_users_count"]; // this is really stupid
 interface validData {
   track: string,
   current_stage: string;
-  slack_id: string;
   total_time_approved_projects: number;
   referred_users_count: number;
 }
@@ -20,8 +20,8 @@ interface validData {
 export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("query");
   const session = await auth();
-  const emailAddress = session!.user.email!;
-  const invalidSession = await verifyAuth();
+  const slackId = (await identifySlackId(request, session!))!
+  const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = (await getValue(emailAddress))[query as keyof validData];
+    const response = (await getValue(slackId))[query as keyof validData];
     return NextResponse.json({ message: response }, { status: 200 });
   } catch {
     return NextResponse.json(

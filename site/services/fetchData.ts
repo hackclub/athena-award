@@ -7,7 +7,7 @@ const airtable = new Airtable({
 }).base(process.env.AIRTABLE_BASE_ID!);
 
 export interface safeData {
-  slack_id: string;
+  email_address: string;
   points: number;
   artifacts: number;
   current_stage: string;
@@ -31,11 +31,11 @@ async function verifyReq() {
 }
 
 // Get a specific value
-export async function getValue(emailAddress: string): Promise<safeData> {
+export async function getValue(slack_id: string): Promise<safeData> {
   const accessTokenEncrypted = await verifyReq();
   const recordID = await airtable("Registered Users")
     .select({
-      filterByFormula: `{email} = "${emailAddress}"`,
+      filterByFormula: `{slack_id} = "${slack_id}"`,
       maxRecords: 1,
     })
     .all();
@@ -44,7 +44,7 @@ export async function getValue(emailAddress: string): Promise<safeData> {
   if (!verifySession(prettyRecordID["hashed_token"], accessTokenEncrypted)) {
     throw "Unauthorized";
   }
-  const slack_id = prettyRecordID["slack_id"];
+  const email_address = prettyRecordID["email"];
   const points = prettyRecordID["points"];
   const current_stage = prettyRecordID["current_stage"];
   const hackathons = prettyRecordID["hackathons"];
@@ -58,7 +58,7 @@ export async function getValue(emailAddress: string): Promise<safeData> {
   const referred_users_count = prettyRecordID["referred_users_count"]
 
   return {
-    slack_id,
+    email_address,
     points,
     current_stage,
     hackathons,
