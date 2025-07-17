@@ -1,7 +1,7 @@
 // POST api/hackathons/[hackathonID]/user/[userID]
 // Registers [userID] as an attendee of [hackathonID]
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Airtable from "airtable";
 import { auth } from "@/auth";
 import { encryptSession, verifySession } from "@/services/hash";
@@ -87,7 +87,7 @@ async function linkUserToHackathon(
 }
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ hackathonID: string }> },
 ) {
   const session = await auth();
@@ -96,7 +96,7 @@ export async function POST(
     session!.access_token!,
     process.env.AUTH_SECRET!,
   );
-  const invalidSession = await verifyAuth();
+  const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }

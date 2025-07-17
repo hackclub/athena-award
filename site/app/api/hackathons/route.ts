@@ -1,7 +1,7 @@
 // GET api/hackathons
 // Returns list of hackathons the user has attended
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Airtable from "airtable";
 import { auth } from "@/auth";
 import { encryptSession, verifySession } from "@/services/hash";
@@ -35,9 +35,9 @@ async function getHackathonStatus(
   }
   return prettyRecordID[0]["fields"]["hackathons"];
 }
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const session = await auth();
-  const invalidSession = await verifyAuth();
+  const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }

@@ -1,7 +1,7 @@
 // GET api/hackathons/[hackathonID]
 // Returns whether the hackathonID is valid
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Airtable from "airtable";
 import { auth } from "@/auth";
 import { verifyAuth } from "@/services/verifyAuth";
@@ -27,13 +27,13 @@ async function validateHackathon(hackathonCode: string) {
 }
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const session = await auth();
   const slug = (await params).slug;
   const code = await slug;
-  const invalidSession = await verifyAuth();
+  const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
