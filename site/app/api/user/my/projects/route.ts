@@ -155,24 +155,29 @@ export async function GET(request: NextRequest) {
         projects = (
           (await hackatimeProjects.json())["data"]["projects"] as any
         ).filter((project: any) => project.name);
-        const selectedProject = JSON.parse(
-          JSON.stringify(
-            await airtable("Projects")
+        console.log(projects)
+        const airtableFetch = await airtable("Projects")
               .select({
                 filterByFormula: `{slack_id} = "${slackId}"`,
                 fields: ["stage", "project_name"],
               })
-              .all(),
+              .all()
+        console.log(airtableFetch)
+        const selectedProject = JSON.parse(
+          JSON.stringify(
+            airtableFetch
           ),
         )
           .map((project: any) => project.fields)
           .filter(
             (proj: any) => proj.stage !== stage && proj.name != "_select#",
           );
+        console.log(selectedProject)
 
         const selectedProjectNames = new Set(
           selectedProject.map((proj: any) => proj.project_name),
         );
+        console.log(selectedProjectNames)
         const filteredProjects = projects.filter(
           (project: any) => !selectedProjectNames.has(project.name),
         );
