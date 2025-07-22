@@ -10,5 +10,7 @@ export async function getWakaTimeData(slackId: string) {
       }
     }
   );
+  console.log(response)
+  console.log(response.json())
   return response;
 }
