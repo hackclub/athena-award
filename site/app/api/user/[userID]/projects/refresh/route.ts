@@ -65,6 +65,10 @@ export async function POST(
         { message: Number((filtered.total_seconds / 3600).toFixed(2)) },
         { status: 200 },
       );
+    } else {
+      return NextResponse.json(
+      { message: `Hackatime projects was not okay` },
+      { status: 502 },)
     }
   } catch (error) {
     return NextResponse.json(
