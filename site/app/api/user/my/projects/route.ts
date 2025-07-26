@@ -170,7 +170,7 @@ export async function GET(request: NextRequest) {
         )
           .map((project: any) => project.fields)
           .filter(
-            (proj: any) => proj.stage !== stage && proj.name != "_select#",
+            (proj: any) => proj.stage !== stage && proj.project_name != "_select#",
           );
         console.log(selectedProject)
 
