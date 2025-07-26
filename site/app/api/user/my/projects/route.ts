@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
             ? project["fields"]["approved_duration"] * 3600
             : null,
         }))
-        .filter((project: any) => project.name != "_select#" || project.project_name_override); // this is so bad
+        .filter((project: any) => project.name != "_select#" || !!project.project_name_override); // this is so bad
 
       let projects;
       try {
