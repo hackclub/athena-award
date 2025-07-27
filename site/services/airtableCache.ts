@@ -27,8 +27,11 @@ export async function cachedAirtableSelect(
 export function generateAirtableCacheKey(
   tableName: string,
   selectOptions: any,
-  slackId: string
+  slackId: string | null
 ): string {
+  if (!slackId){
+    console.error("Error: No Slack Id provided for generating cache key.")
+  }
   const optionsStr = JSON.stringify(selectOptions, Object.keys(selectOptions).sort());
   const hash = Buffer.from(optionsStr).toString('base64').slice(0, 16);
   return `airtable:${tableName}:${hash}:${slackId}`;
