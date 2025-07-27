@@ -13,7 +13,8 @@ export function Waka() {
   let projects, totalTimeSpent, totalApprovedTimeSpent;
   if (data) {
     projects = (data as any)["message"];
-    totalTimeSpent = projects.reduce(
+    console.log(projects)
+    totalTimeSpent = projects.filter((project: any) => !!project.total_seconds).reduce(
       (pSum: any, project: any) => pSum + project.total_seconds,
       0,
     );
@@ -24,7 +25,6 @@ export function Waka() {
           : pSum,
       0,
     );
-    console.log(projects, "wow");
   }
   if (error) {
     if (error.status !== 200) {

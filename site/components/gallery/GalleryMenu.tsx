@@ -131,15 +131,10 @@ export default function GalleryMenu({
 
   let projects;
   let points: number = 0;
-  let prizes = [
-    { item_friendly_name: "Loading..." },
-    { description: "Loading..." },
-    { image: null },
-  ];
   if (data) {
     projects = data[0];
-    prizes = data[2];
-    if (!baseModuleData) {
+    console.log(projects);
+     if (!baseModuleData) {
       points = Number(data[0]["message"]);
     }
   }

@@ -76,8 +76,7 @@ export async function GET(request: NextRequest) {
       }
     } else if (query === "total_time") {
       // TO DO: DON'T FAIL IF HACKATIMEPROJECTS !OK, BUT INSTEAD JUST RETRIEVE PROJECTS FROM AIRTABLE
-        const allProjects = await airtable("Projects")
-        .select({
+        const selectOptions = {
           filterByFormula: `{slack_id} = "${slackId}"`,
           fields: [
             "project_name",
@@ -87,9 +86,10 @@ export async function GET(request: NextRequest) {
             "existing_ysws_project_hour_override",
             "approved_duration"
           ],
-        })
-        .all();
-      const userProjectStatus = JSON.parse(JSON.stringify(allProjects))
+        }
+        const cacheKey = generateAirtableCacheKey("Projects", selectOptions)
+        const allProjects = await cachedAirtableSelect(airtable("Projects"), selectOptions, cacheKey)
+        const userProjectStatus = JSON.parse(JSON.stringify(allProjects))
         .map((project: any) => ({
           name: project["fields"]["project_name"],
           project_name_override: project["fields"]["project_name_override"],
@@ -102,7 +102,6 @@ export async function GET(request: NextRequest) {
             : 0,
         }))
         .filter((project: any) => project.name != "_select#"); // this is so bad
-
       let projects;
       try {
         const hackatimeProjects = await getWakaTimeData(slackId);
@@ -128,7 +127,7 @@ export async function GET(request: NextRequest) {
               project_name_override: projPair.project_name_override,
               status: projPair.status,
               total_seconds:
-                projPair.total_seconds ?? matchingProject?.total_seconds ?? 0,
+                projPair.total_seconds != 0 ? projPair.total_seconds : matchingProject?.total_seconds,
             };
           }); // HELP ME
 
@@ -156,7 +155,6 @@ export async function GET(request: NextRequest) {
         projects = (
           (await hackatimeProjects.json())["data"]["projects"] as any
         ).filter((project: any) => project.name);
-        console.log(projects)
         const selectOptions = {
           filterByFormula: `{slack_id} = "${slackId}"`,
           fields: ["stage", "project_name"],
@@ -199,6 +197,7 @@ export async function GET(request: NextRequest) {
       });
     }
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { error: `Something went wrong - ${error}` },
       { status: 400 },

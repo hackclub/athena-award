@@ -1,4 +1,5 @@
 import { cacheGet, cacheSet } from './redis';
+import { NextResponse } from 'next/server';
 
 // beta trial
 const start_date = process.env.NEXT_PUBLIC_START_DATE;
@@ -12,10 +13,7 @@ export async function getWakaTimeData(slackId: string) {
   const cached = await cacheGet(cacheKey);
   if (cached) {
     console.log(`Cache hit for user ${slackId}`);
-    return {
-      ok: true,
-      json: async () => cached
-    };
+    return NextResponse.json(cached)
   }
 
   console.log(`Cache miss for user ${slackId}, fetching from API`);
@@ -30,11 +28,7 @@ export async function getWakaTimeData(slackId: string) {
   if (response.ok) {
     const data = await response.json();
     await cacheSet(cacheKey, data, cache_ttl);
-    
-    return {
-      ok: true,
-      json: async () => data
-    };
+    return NextResponse.json(data)
   }
 
   return response;
