@@ -11,7 +11,7 @@ export async function getWakaTimeData(slackId: string) {
   
   const cached = await cacheGet(cacheKey);
   if (cached) {
-    console.log(`Cache hit for user ${slackId}`);
+    console.log(`Hackatime cache hit for user ${slackId}`);
     return NextResponse.json(cached)
   }
 
@@ -26,9 +26,10 @@ export async function getWakaTimeData(slackId: string) {
 
   if (response.ok) {
     const data = await response.json();
+    console.log(`Data from cache miss for user => ${slackId}`, data)
     await cacheSet(cacheKey, data, cache_ttl);
     return NextResponse.json(data)
   }
-
+  console.log("response not ok", response)
   return response;
 }
