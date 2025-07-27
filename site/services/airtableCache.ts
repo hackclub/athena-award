@@ -26,9 +26,10 @@ export async function cachedAirtableSelect(
 
 export function generateAirtableCacheKey(
   tableName: string,
-  selectOptions: any
+  selectOptions: any,
+  slackId: string
 ): string {
   const optionsStr = JSON.stringify(selectOptions, Object.keys(selectOptions).sort());
   const hash = Buffer.from(optionsStr).toString('base64').slice(0, 16);
-  return `airtable:${tableName}:${hash}`;
+  return `airtable:${tableName}:${hash}:${slackId}`;
 }

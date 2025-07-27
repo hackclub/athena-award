@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
             "approved_duration"
           ],
         }
-        const cacheKey = generateAirtableCacheKey("Projects", selectOptions)
+        const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
         const allProjects = await cachedAirtableSelect(airtable("Projects"), selectOptions, cacheKey)
         const userProjectStatus = JSON.parse(JSON.stringify(allProjects))
         .map((project: any) => ({
@@ -160,7 +160,7 @@ export async function GET(request: NextRequest) {
           filterByFormula: `{slack_id} = "${slackId}"`,
           fields: ["stage", "project_name"],
         };
-        const cacheKey = generateAirtableCacheKey("Projects", selectOptions);
+        const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId);
         const airtableFetch = await cachedAirtableSelect(airtable("Projects"), selectOptions, cacheKey);
         const selectedProject = JSON.parse(
           JSON.stringify(
@@ -265,7 +265,7 @@ export async function POST(request: NextRequest) {
           "approved_duration"
         ],
       }
-      const cacheKey = generateAirtableCacheKey("Projects", selectOptions)
+      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
       console.log(`Project ${uniqueProjectName} updated, forcing revalidation of ${cacheKey}`)
       cacheDelete(cacheKey); // force revalidation of project data on selected project change
       

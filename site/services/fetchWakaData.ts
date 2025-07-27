@@ -15,7 +15,7 @@ export async function getWakaTimeData(slackId: string) {
     return NextResponse.json(cached)
   }
 
-  console.log(`Cache miss for user ${slackId}, fetching from API`);
+  console.log(`Hackatime cache miss for user ${slackId}, fetching from API`);
   const response = await fetch(
     `https://hackatime.hackclub.com/api/v1/users/${slackId}/stats?features=projects&start_date=${start_date}&end_date=${end_date}`,
       { 
@@ -26,7 +26,7 @@ export async function getWakaTimeData(slackId: string) {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(`Data from cache miss for user => ${slackId}`, data)
+    console.log(`Hackatime data from cache miss for user => ${slackId}`, data)
     await cacheSet(cacheKey, data, cache_ttl);
     return NextResponse.json(data)
   }
