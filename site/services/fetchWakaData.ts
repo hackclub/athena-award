@@ -7,8 +7,7 @@ const end_date = process.env.NEXT_PUBLIC_END_DATE;
 const cache_ttl = 15 * 60; 
 
 export async function getWakaTimeData(slackId: string) {
-  let currentTime = new Date();
-  const cacheKey = `waka:${slackId}:${currentTime.toString()}`;
+  const cacheKey = `waka:${slackId}`;
   
   const cached = await cacheGet(cacheKey);
   if (cached) {
