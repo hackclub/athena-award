@@ -3,8 +3,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import Airtable from "airtable";
-import { encryptSession, verifySession } from "@/services/hash";
 import { getWakaTimeData } from "@/services/fetchWakaData";
+import { cacheDelete } from "@/services/redis";
+import { generateAirtableCacheKey } from "@/services/airtableCache";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -61,6 +62,20 @@ export async function POST(
           },
         },
       ]);
+      const selectOptions = {
+        filterByFormula: `{slack_id} = "${slackId}"`,
+        fields: [
+          "project_name",
+          "project_name_override",
+          "stage",
+          "status",
+          "existing_ysws_project_hour_override",
+          "approved_duration"
+        ],
+      }
+      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
+      cacheDelete(cacheKey) // this endpoint only gets called when projects are updated so it makes sense to clear the cache when it's called
+
       return NextResponse.json(
         { message: Number((filtered.total_seconds / 3600).toFixed(2)) },
         { status: 200 },
