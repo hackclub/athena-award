@@ -8,6 +8,7 @@ import { encryptSession, verifySession } from "@/services/hash";
 import { getWakaTimeData } from "@/services/fetchWakaData";
 import { verifyAuth } from "@/services/verifyAuth";
 import { identifySlackId } from "@/services/adminOverride";
+import { cachedAirtableSelect, generateAirtableCacheKey } from "@/services/airtableCache";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -156,13 +157,12 @@ export async function GET(request: NextRequest) {
           (await hackatimeProjects.json())["data"]["projects"] as any
         ).filter((project: any) => project.name);
         console.log(projects)
-        const airtableFetch = await airtable("Projects")
-              .select({
-                filterByFormula: `{slack_id} = "${slackId}"`,
-                fields: ["stage", "project_name"],
-              })
-              .all()
-        console.log(airtableFetch)
+        const selectOptions = {
+          filterByFormula: `{slack_id} = "${slackId}"`,
+          fields: ["stage", "project_name"],
+        };
+        const cacheKey = generateAirtableCacheKey("Projects", selectOptions);
+        const airtableFetch = await cachedAirtableSelect(airtable("Projects"), selectOptions, cacheKey);
         const selectedProject = JSON.parse(
           JSON.stringify(
             airtableFetch
@@ -172,12 +172,9 @@ export async function GET(request: NextRequest) {
           .filter(
             (proj: any) => proj.stage !== stage && proj.project_name != "_select#",
           );
-        console.log(selectedProject)
-
         const selectedProjectNames = new Set(
           selectedProject.map((proj: any) => proj.project_name),
         );
-        console.log(selectedProjectNames)
         const filteredProjects = projects.filter(
           (project: any) => !selectedProjectNames.has(project.name),
         );
@@ -193,7 +190,6 @@ export async function GET(request: NextRequest) {
           sort: [{ field: "stage", direction: "desc" }],
         })
         .all();
-      console.log(mostRecentProject);
       const i = JSON.parse(JSON.stringify(mostRecentProject))[0];
       return NextResponse.json({
         message:

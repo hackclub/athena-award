@@ -362,6 +362,7 @@ export default function GalleryMenu({
                                 >
                                   What project are you working on?
                                 </label>
+
                               </span>
 
                               <span className="flex flex-row items-center gap-2">
@@ -461,7 +462,7 @@ export default function GalleryMenu({
                               </Action>
                             </span>
                           )}
-                          <div className="self-center sm:self-end">
+                          <div className="self-center sm:self-start max-sm:flex flex-col items-center justify-center">
                             {data &&
                             selectedProject !== "_select#" &&
                             data[1] &&
@@ -529,6 +530,8 @@ export default function GalleryMenu({
                             ) : (
                               <div>Loading...</div>
                             )}
+                            <p className = "block font-normal text-sm">Projects may take up to 10 minutes to change status.</p>
+
                           </div>
                         </div>
                       </div>
