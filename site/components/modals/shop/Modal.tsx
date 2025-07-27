@@ -13,6 +13,7 @@ export default function ShopModal() {
   const { data, error, isLoading } = useSWR(
     ["/api/shop", `/api/user/my/artifacts`, "/api/user/my?query=verification"],
     multiFetcher,
+    { revalidateOnFocus: false }
   );
   const [uxEvent, setUXEvent] = useContext(UXEventContext);
 

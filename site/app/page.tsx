@@ -161,7 +161,7 @@ function Polaroid({
 }
 
 export default function Index() {
-  const { data, error, isLoading } = useSWR(["/api/shop"], multiFetcher);
+  const { data, error, isLoading } = useSWR(["/api/shop"], multiFetcher, {revalidateOnFocus: false});
   let prizes = [];
   if (data) {
     prizes = data[0];

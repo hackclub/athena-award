@@ -38,7 +38,7 @@ export default function Profile() {
   };
 
   const urls = [`/api/user/my/hackathons`, `/api/user/my?query=referred_users_count`];
-  const { data } = useSWR(urls, multiFetcher);
+  const { data } = useSWR(urls, multiFetcher, { revalidateOnFocus: false});
   let hackathonName, referredUsersCount;
   if (data) {
     hackathonName = data[0]["message"];

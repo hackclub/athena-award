@@ -53,7 +53,7 @@ function MapFocusHandler({ lat, lng }: { lat: number; lng: number }) {
 }
 
 export default function MapView() {
-  const { data, error, isLoading } = useSWR("/api/projects", fetcher);
+  const { data, error, isLoading } = useSWR("/api/projects", fetcher, { revalidateOnFocus: false });
 
   if (error) return <Error error="Failed to load projects" />;
 

@@ -10,6 +10,7 @@ export function Progress() {
   const { data, error, isLoading } = useSWR(
     [`/api/user/my/points`, `/api/user/my/projects?query=total_time`],
     multiFetcher,
+    { revalidateOnFocus: false }
   );
   if (error) {
     return (

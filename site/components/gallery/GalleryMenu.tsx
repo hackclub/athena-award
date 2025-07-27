@@ -113,6 +113,7 @@ export default function GalleryMenu({
   const { data, error, isLoading, mutate } = useSWR(
     baseModuleData ? urls : [`/api/user/my/points`],
     multiFetcher,
+    { revalidateOnFocus: false }
   );
 
   if (error) {

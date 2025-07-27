@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 export default function LeaderboardModal() {
   const session = useSession();
   const [uxEvent, setUXEvent] = useContext(UXEventContext);
-  const { data, error, isLoading } = useSWR(["/api/leaderboard"], multiFetcher);
+  const { data, error, isLoading } = useSWR(["/api/leaderboard"], multiFetcher, { revalidateOnFocus: false });
 
   let leaderboard = [];
   if (data) {

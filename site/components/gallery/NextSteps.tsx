@@ -74,7 +74,7 @@ export default function NextSteps({
   /** this is the current stage represented as a module object with the relevant visuals data */
   const baseModuleData = STAGES.find((m) => m.moduleName === module)!;
 
-  const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher);
+  const { data, error, isLoading, mutate } = useSWR(urls, multiFetcher, { revalidateOnFocus: false });
 
   if (error) {
     console.log(error);
