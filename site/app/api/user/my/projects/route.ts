@@ -266,7 +266,9 @@ export async function POST(request: NextRequest) {
         ],
       }
       const cacheKey = generateAirtableCacheKey("Projects", selectOptions)
+      console.log(`Project ${uniqueProjectName} updated, forcing revalidation of ${cacheKey}`)
       cacheDelete(cacheKey); // force revalidation of project data on selected project change
+      
       return NextResponse.json(
         { message: "Project updated successfully" },
         { status: 200 },
