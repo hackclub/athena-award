@@ -9,6 +9,7 @@ import { getWakaTimeData } from "@/services/fetchWakaData";
 import { verifyAuth } from "@/services/verifyAuth";
 import { identifySlackId } from "@/services/adminOverride";
 import { cachedAirtableSelect, generateAirtableCacheKey } from "@/services/airtableCache";
+import { cacheDelete } from "@/services/redis";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -253,6 +254,19 @@ export async function POST(request: NextRequest) {
         },
       };
       await airtable("Projects").update([data]);
+      const selectOptions = {
+        filterByFormula: `{slack_id} = "${slackId}"`,
+        fields: [
+          "project_name",
+          "project_name_override",
+          "stage",
+          "status",
+          "existing_ysws_project_hour_override",
+          "approved_duration"
+        ],
+      }
+      const cacheKey = generateAirtableCacheKey("Projects", selectOptions)
+      cacheDelete(cacheKey); // force revalidation of project data on selected project change
       return NextResponse.json(
         { message: "Project updated successfully" },
         { status: 200 },
