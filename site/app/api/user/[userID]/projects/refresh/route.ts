@@ -34,7 +34,19 @@ export async function POST(
         fields: ["record_id"],
       })
       .all();
-
+      const selectOptions = {
+        filterByFormula: `{slack_id} = "${slackId}"`,
+        fields: [
+          "project_name",
+          "project_name_override",
+          "stage",
+          "status",
+          "existing_ysws_project_hour_override",
+          "approved_duration"
+        ],
+      }
+      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
+      cacheDelete(cacheKey) // this endpoint only gets called when projects are updated so it makes sense to clear the cache when it's called
     const hackatimeProjects = await getWakaTimeData(slackId);
     let projects;
     if (hackatimeProjects.ok) {
@@ -62,20 +74,6 @@ export async function POST(
           },
         },
       ]);
-      const selectOptions = {
-        filterByFormula: `{slack_id} = "${slackId}"`,
-        fields: [
-          "project_name",
-          "project_name_override",
-          "stage",
-          "status",
-          "existing_ysws_project_hour_override",
-          "approved_duration"
-        ],
-      }
-      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
-      cacheDelete(cacheKey) // this endpoint only gets called when projects are updated so it makes sense to clear the cache when it's called
-
       return NextResponse.json(
         { message: Number((filtered.total_seconds / 3600).toFixed(2)) },
         { status: 200 },
