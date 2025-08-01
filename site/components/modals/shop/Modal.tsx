@@ -11,17 +11,18 @@ import { Tip } from "@/components/panels/add-ons/Callout";
 export default function ShopModal() {
   const session = useSession();
   const { data, error, isLoading } = useSWR(
-    ["/api/shop", `/api/user/my/artifacts`, "/api/user/my?query=verification"],
+    ["/api/shop", `/api/user/my/artifacts`, "/api/user/my?query=verification", "/api/user/my?query=ordered_travel_stipend_money"],
     multiFetcher,
     { revalidateOnFocus: false }
   );
   const [uxEvent, setUXEvent] = useContext(UXEventContext);
 
-  let shop, artifacts, verificationStatus;
+  let shop, artifacts, verificationStatus, travelStipendMoney;
   if (data) {
     shop = data[0];
     artifacts = Math.floor(data[1]["message"]);
     verificationStatus = data[2]["result"]
+    travelStipendMoney = data[3]["message"]
   }
 
   return (
@@ -51,6 +52,10 @@ export default function ShopModal() {
                 <br/>Once your ID is verified at <a target = "_blank" href = "https://identity.hackclub.com">identity.hackclub.com</a>, return here. Your order will be rejected if your ID is ineligible.
               </Tip> }
 
+              <Tip title = "Travel stipends">
+                  You've ordered ${travelStipendMoney} USD of travel stipends so far. See you at Parthenon!
+              </Tip>
+
             <p>
               Click on a placard to order a prize with your approved artifacts!
             </p>
@@ -58,7 +63,9 @@ export default function ShopModal() {
               You can earn more artifacts by spending time on projects and
               getting them approved.
             </p>
+
             <p>Prize availability is always subject to change.</p>
+
             <div>
               <div className="my-2">
                 <div

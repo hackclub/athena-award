@@ -18,6 +18,7 @@ export interface safeData {
   total_time_approved_projects: number;
   referred_users_count: number;
   track: "beginner" | "advanced";
+  ordered_travel_stipend_money: number;
 }
 
 // verify req
@@ -56,6 +57,7 @@ export async function getValue(slack_id: string): Promise<safeData> {
     prettyRecordID["total_time_approved_projects"];
   const track = prettyRecordID["track"];
   const referred_users_count = prettyRecordID["referred_users_count"]
+  const ordered_travel_stipend_money = prettyRecordID["ordered_travel_stipend_money"]
 
   return {
     email_address,
@@ -68,6 +70,7 @@ export async function getValue(slack_id: string): Promise<safeData> {
     project_unique_names,
     total_time_approved_projects,
     track,
-    referred_users_count
+    referred_users_count,
+    ordered_travel_stipend_money
   };
 }

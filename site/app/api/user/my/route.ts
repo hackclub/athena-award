@@ -9,12 +9,13 @@ import { getValue } from "@/services/fetchData";
 import { verifyAuth } from "@/services/verifyAuth";
 import { identifySlackId } from "@/services/adminOverride";
 
-const validData = ["track", "current_stage", "total_time_approved_projects", "referred_users_count"]; // this is really stupid
+const validData = ["track", "current_stage", "total_time_approved_projects", "referred_users_count", "ordered_travel_stipend_money"]; // this is really stupid
 interface validData {
   track: string,
   current_stage: string;
   total_time_approved_projects: number;
   referred_users_count: number;
+  ordered_travel_stipend_money: number;
 }
 
 export async function GET(request: NextRequest) {
