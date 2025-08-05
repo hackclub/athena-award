@@ -387,7 +387,7 @@ export default function Page() {
                     <li>
                       Commits are helpful particularly if you want to track when
                       you added a certain feature or introduced a certain bug
-                      (oops)!
+                      (oops)! If you're new to this, check out this <a href = "https://hack.club/athena-award/git" target="_blank">presentation.</a>
                     </li>
                     <li>
                       In general: commit often. For the Athena Award,{" "}
