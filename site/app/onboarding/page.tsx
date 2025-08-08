@@ -390,30 +390,20 @@ export default function Page() {
                       (oops)! If you're new to this, check out this <a href = "https://hack.club/athena-award/git" target="_blank">presentation.</a>
                     </li>
                     <li>
-                      In general: commit often. For the Athena Award,{" "}
+                      In general: commit often. If you're new to this,{" "}
                       <span className="bg-hc-primary-dull px-1">
                         we require that you commit your changes around once per
                         hour.
                       </span>
                     </li>
-                    <li>
-                      For example, you can see the current commit that this
-                      website is on by checking out the{" "}
-                      <a
-                        target="_blank"
-                        href="https://github.com/hackclub/athena-award"
-                      >
-                        GitHub repository
-                      </a>
-                      .
-                    </li>
                   </ul>
                 </div>
 
-                <img
-                  className="col-span-1 my-auto"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/9f8f3847231e46f5b2626e7e8afb179bff6ad261_image.png"
-                />
+                    <object
+                        data="https://hc-cdn.hel1.your-objectstorage.com/s/v3/646a1ebe023a70c68e990a93380ca3840e26aa35_athena_award_-_git_workshop.pdf"
+                        type="application/pdf"
+                        className="h-full w-full col-span-1"
+                    ></object>
               </div>
             </>
           )}
