@@ -13,10 +13,12 @@
     "prettify": "npx prettier --write ."
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.10.0",
     "@heroicons/react": "^2.2.0",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@next/mdx": "^14.1.4",
+    "@prisma/client": "^6.16.2",
     "@radix-ui/react-accordion": "^1.2.10",
     "@slack/bolt": "^4.2.1",
     "@splinetool/loader": "^1.9.62",
@@ -61,6 +63,7 @@
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.29",
     "prettier": "3.5.3",
+    "prisma": "^6.16.2",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
   }

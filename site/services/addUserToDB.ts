@@ -1,3 +1,4 @@
+"use server"
 import Airtable from "airtable";
 import { encryptSession, verifySession } from "@/services/hash";
 
