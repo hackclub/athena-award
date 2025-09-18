@@ -66,7 +66,6 @@ export const config: NextAuthConfig = {
           maxRecords: 1
         })
         .firstPage();
-      console.log("AAAAAA" + records)
             if (records.length > 0 && records[0].get("isUsed") === true) {
         return { email: email as string };
       } 

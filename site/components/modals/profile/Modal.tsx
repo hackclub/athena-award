@@ -58,10 +58,10 @@ export default function Profile() {
           <div className="hidden rounded-md bg-white/10 sm:flex items-center gap-4 h-fit p-4 mb-4">
             <img
               className="rounded-full size-16 mx-auto md:m-0"
-              src={session.data?.user!.image!}
+              src={session.data?.user.profile_picture!}
             />
             <div className="*:truncate truncate">
-              <div className="text-xl">Hi {session.data?.user!.name}!</div>
+              <div className="text-xl">Hi {session.data?.user!.display_name}!</div>
               <div className="text-sm">{session.data?.user!.email}</div>
               {process.env.NEXT_PUBLIC_SOURCE_COMMIT && <span className = "text-xs">commit: <a href = {`https://github.com/hackclub/athena-award/commit/${process.env.NEXT_PUBLIC_SOURCE_COMMIT}`}>{process.env.NEXT_PUBLIC_SOURCE_COMMIT.substring(0,7)}</a></span>}
             </div>

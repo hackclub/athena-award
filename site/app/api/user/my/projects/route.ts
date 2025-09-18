@@ -41,10 +41,10 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(projects);
     } else if (query === "selected") {
       const stage = request.nextUrl.searchParams.get("stage");
-      const uniqueProjectForStage = session?.slack_id + "_" + stage;
+      const uniqueProjectForStage = session!.user.email + "_" + stage;
       const projectInformation = await airtable("Projects")
         .select({
-          filterByFormula: `AND({slack_id} = "${session?.slack_id}", {unique_name} = "${uniqueProjectForStage}")`,
+          filterByFormula: `AND({email} = "${email}", {unique_name_email} = "${uniqueProjectForStage}")`,
           fields: [
             "project_name",
             "project_name_override",
@@ -142,6 +142,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ message: userProjectStatus }); // believe it or not i am capable of writing worse code than this
       }
     } else if (query === "valid_for_selection") {
+      console.log("valid for selection called")
       // projects which haven't already been selected for another stage
       const stage = request.nextUrl.searchParams.get("stage");
       if (!stage) {
@@ -153,9 +154,11 @@ export async function GET(request: NextRequest) {
       const hackatimeProjects = await getWakaTimeData(email);
       let projects;
       if (hackatimeProjects.ok) {
+        const proj = await hackatimeProjects.json()
         projects = (
-          (await hackatimeProjects.json())["data"]["projects"] as any
+          proj["data"]["projects"] as any
         ).filter((project: any) => project.name);
+        console.log(projects)
         const selectOptions = {
           filterByFormula: `{email} = "${email}"`,
           fields: ["stage", "project_name"],
@@ -209,7 +212,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const session = await auth();
-  const uniqueProjectName = session?.slack_id + "_" + body["stage"];
+  const uniqueProjectName = session?.user.email + "_" + body["stage"];
   const projectName = body["project"];
   const email = (await identifyEmail(request, session!)!)
   try {

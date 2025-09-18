@@ -8,7 +8,7 @@ const end_date = process.env.NEXT_PUBLIC_END_DATE;
 const cache_ttl = 15 * 60; 
 
 export async function getWakaTimeData(email: string) {
-  const cacheKey = `waka:${ExclamationCircleIcon}`;
+  const cacheKey = `waka:${email}`;
   
   const cached = await cacheGet(cacheKey);
   if (cached) {
@@ -25,9 +25,10 @@ export async function getWakaTimeData(email: string) {
         },
 
     }).then(response => response.json())
-  const hackatimeIdbutFr = hackatimeId["id"]
+  const hackatimeIdbutFr = hackatimeId["user_id"]
+  console.log(hackatimeIdbutFr)
   const response = await fetch(
-    `https://hackatime.hackclub.com/api/v1/users/${hackatimeId}/stats?features=projects&start_date=${start_date}&end_date=${end_date}`,
+    `https://hackatime.hackclub.com/api/v1/users/${hackatimeIdbutFr}/stats?features=projects&start_date=${start_date}&end_date=${end_date}`,
       { 
         headers: { "Rack-Attack-Bypass": process.env.HACKATIME_RATE_LIMIT_BYPASS!
       }

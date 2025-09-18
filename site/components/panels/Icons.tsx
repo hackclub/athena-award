@@ -18,7 +18,7 @@ export default function Icons() {
           <span
             className="ml-auto size-8 md:size-10 rounded-full bg-cover bg-no-repeat bg-center block"
             style={{
-              backgroundImage: `url('${session.data && session.data!.user.image ? session.data!.user.image : "https://th.bing.com/th/id/OIP.eC3EaX3LZiyZlEnZmQjhngHaEK?w=318&h=180&c=7&r=0&o=5&dpr=2&pid=1"}')`,
+              backgroundImage: `url('${session.data && session.data.user!.profile_picture ? session.data.user!.profile_picture : "https://placehold.co/40"}')`,
             }}
           ></span>
         </button>

@@ -5,6 +5,7 @@ import { FaXmark } from "react-icons/fa6";
 import useSWR from "swr";
 import { multiFetcher } from "@/services/fetcher";
 import { useSession } from "next-auth/react";
+
 export default function LeaderboardModal() {
   const session = useSession();
   const [uxEvent, setUXEvent] = useContext(UXEventContext);
@@ -34,7 +35,7 @@ export default function LeaderboardModal() {
                   className="inline size-5 rounded-full"
                 />{" "}
                 {user.display_name}{" "}
-                {user.slack_id === session.data?.slack_id ? (
+                {user.email === session!.data!.user.email ? (
                   <span className="font-bold">(You)</span>
                 ) : null}{" "}
               </span>
