@@ -32,19 +32,15 @@ async function verifyReq() {
 }
 
 // Get a specific value
-export async function getValue(slack_id: string): Promise<safeData> {
-  const accessTokenEncrypted = await verifyReq();
+export async function getValue(email: string): Promise<safeData> {
   const recordID = await airtable("Registered Users")
     .select({
-      filterByFormula: `{slack_id} = "${slack_id}"`,
+      filterByFormula: `{email} = "${email}"`,
       maxRecords: 1,
     })
     .all();
 
   const prettyRecordID = JSON.parse(JSON.stringify(recordID))[0]["fields"]; // jank
-  if (!verifySession(prettyRecordID["hashed_token"], accessTokenEncrypted)) {
-    throw "Unauthorized";
-  }
   const email_address = prettyRecordID["email"];
   const points = prettyRecordID["points"];
   const current_stage = prettyRecordID["current_stage"];
@@ -58,7 +54,7 @@ export async function getValue(slack_id: string): Promise<safeData> {
   const track = prettyRecordID["track"];
   const referred_users_count = prettyRecordID["referred_users_count"]
   const ordered_travel_stipend_money = prettyRecordID["ordered_travel_stipend_money"]
-
+  
   return {
     email_address,
     points,

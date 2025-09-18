@@ -13,7 +13,7 @@ const airtable = new Airtable({
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ userID: string }> },
+  { params }: { params: Promise<{ email: string }> },
 ) {
   const stageNumber = request.nextUrl.searchParams.get("stage");
   const authorization = request.headers.get("Authorization");
@@ -25,17 +25,17 @@ export async function POST(
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const slackId = (await params).userID;
+  const email = (await params).email;
   try {
     const recordID = await airtable("Registered Users")
       .select({
-        filterByFormula: `{slack_id} = "${slackId}"`,
+        filterByFormula: `{email} = "${email}"`,
         maxRecords: 1,
         fields: ["record_id"],
       })
       .all();
       const selectOptions = {
-        filterByFormula: `{slack_id} = "${slackId}"`,
+        filterByFormula: `{email} = "${email}"`,
         fields: [
           "project_name",
           "project_name_override",
@@ -45,15 +45,15 @@ export async function POST(
           "approved_duration"
         ],
       }
-      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
+      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, email)
       cacheDelete(cacheKey) // this endpoint only gets called when projects are updated so it makes sense to clear the cache when it's called
-    const hackatimeProjects = await getWakaTimeData(slackId);
+    const hackatimeProjects = await getWakaTimeData(email);
     let projects;
     if (hackatimeProjects.ok) {
       projects = (await hackatimeProjects.json())["data"]["projects"] as any;
       const selectedProjectToSearchFor = await airtable("Projects")
         .select({
-          filterByFormula: `AND({slack_id} = "${slackId}", {stage} = "${stageNumber}")`,
+          filterByFormula: `AND({email} = "${email}", {stage} = "${stageNumber}")`,
           fields: ["project_name", "record_id"],
         })
         .all();

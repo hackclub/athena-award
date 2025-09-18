@@ -8,14 +8,14 @@ import { verifyAuth } from "@/services/verifyAuth";
 import Airtable from "airtable";
 import { encryptSession } from "@/services/hash";
 import { verifySession } from "@/services/hash";
-import { identifySlackId } from "@/services/adminOverride";
+import { identifyEmail } from "@/services/adminOverride";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
 }).base(process.env.AIRTABLE_BASE_ID!);
 export async function GET(request: NextRequest) {
   const session = await auth();
-  const slackId = (await identifySlackId(request, session!))!
+  const email = (await identifyEmail(request, session!))!
   const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
 
   let response;
   try {
-    response = await getWakaTimeData(slackId);
+    response = await getWakaTimeData(email);
     if (response!.status === 200) {
       return NextResponse.json(await response!.json()); //argh
     } else {
@@ -44,11 +44,11 @@ export async function GET(request: NextRequest) {
 // update that a user has set up hackatime
 export async function POST(request: NextRequest) {
   const session = await auth();
-  const slackId = (await identifySlackId(request, session!))!
+  const email = (await identifyEmail(request, session!))!
   try {
     const recordID = await airtable("Registered Users")
       .select({
-        filterByFormula: `{slack_id} = "${slackId}"`,
+        filterByFormula: `{email} = "${email}"`,
         maxRecords: 1,
         fields: ["record_id", "hashed_token", "hackatime_set_up_at"],
       })

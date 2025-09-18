@@ -7,7 +7,7 @@ import { auth } from "@/auth";
 import { encryptSession, verifySession } from "@/services/hash";
 import { getWakaTimeData } from "@/services/fetchWakaData";
 import { verifyAuth } from "@/services/verifyAuth";
-import { identifySlackId } from "@/services/adminOverride";
+import { identifyEmail } from "@/services/adminOverride";
 import { cachedAirtableSelect, generateAirtableCacheKey } from "@/services/airtableCache";
 import { cacheDelete } from "@/services/redis";
 
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get("query");
   const session = await auth();
 
-  const slackId = (await identifySlackId(request, session!))!
+  const email = (await identifyEmail(request, session!))!
 
   const invalidSession = await verifyAuth(request);
   if (invalidSession) {
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
   }
   try {
     if (query === "all") {
-      const hackatimeProjects = await getWakaTimeData(slackId);
+      const hackatimeProjects = await getWakaTimeData(email);
       let projects;
       if (hackatimeProjects.ok && hackatimeProjects) {
         projects = (await hackatimeProjects.json()) as any;
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
     } else if (query === "total_time") {
       // TO DO: DON'T FAIL IF HACKATIMEPROJECTS !OK, BUT INSTEAD JUST RETRIEVE PROJECTS FROM AIRTABLE
         const selectOptions = {
-          filterByFormula: `{slack_id} = "${slackId}"`,
+          filterByFormula: `{email} = "${email}"`,
           fields: [
             "project_name",
             "project_name_override",
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
             "approved_duration"
           ],
         }
-        const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
+        const cacheKey = generateAirtableCacheKey("Projects", selectOptions, email)
         const allProjects = await cachedAirtableSelect(airtable("Projects"), selectOptions, cacheKey)
         const userProjectStatus = JSON.parse(JSON.stringify(allProjects))
         .map((project: any) => ({
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
         .filter((project: any) => project.name != "_select#"); // this is so bad
       let projects;
       try {
-        const hackatimeProjects = await getWakaTimeData(slackId);
+        const hackatimeProjects = await getWakaTimeData(email);
 
         // user has hackatime
         projects = (await hackatimeProjects.json())["data"]["projects"] as any;
@@ -150,17 +150,17 @@ export async function GET(request: NextRequest) {
           { status: 400 },
         );
       }
-      const hackatimeProjects = await getWakaTimeData(slackId);
+      const hackatimeProjects = await getWakaTimeData(email);
       let projects;
       if (hackatimeProjects.ok) {
         projects = (
           (await hackatimeProjects.json())["data"]["projects"] as any
         ).filter((project: any) => project.name);
         const selectOptions = {
-          filterByFormula: `{slack_id} = "${slackId}"`,
+          filterByFormula: `{email} = "${email}"`,
           fields: ["stage", "project_name"],
         };
-        const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId);
+        const cacheKey = generateAirtableCacheKey("Projects", selectOptions, email);
         const airtableFetch = await cachedAirtableSelect(airtable("Projects"), selectOptions, cacheKey);
         const selectedProject = JSON.parse(
           JSON.stringify(
@@ -184,7 +184,7 @@ export async function GET(request: NextRequest) {
     } else if (query === "most_recent_submission") {
       const mostRecentProject = await airtable("Projects")
         .select({
-          filterByFormula: `AND({slack_id} = "${slackId}", NOT({status} = "pending"))`,
+          filterByFormula: `AND({email} = "${email}", NOT({status} = "pending"))`,
           fields: ["stage"],
           sort: [{ field: "stage", direction: "desc" }],
         })
@@ -211,11 +211,11 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   const uniqueProjectName = session?.slack_id + "_" + body["stage"];
   const projectName = body["project"];
-  const slackId = (await identifySlackId(request, session!)!)
+  const email = (await identifyEmail(request, session!)!)
   try {
     const recordID = await airtable("Registered Users")
       .select({
-        filterByFormula: `{slack_id} = "${slackId}"`,
+        filterByFormula: `{email} = "${email}"`,
         maxRecords: 1,
         fields: [
           "record_id",
@@ -255,7 +255,7 @@ export async function POST(request: NextRequest) {
       };
       await airtable("Projects").update([data]);
       const selectOptions = {
-        filterByFormula: `{slack_id} = "${slackId}"`,
+        filterByFormula: `{email} = "${email}"`,
         fields: [
           "project_name",
           "project_name_override",
@@ -265,7 +265,7 @@ export async function POST(request: NextRequest) {
           "approved_duration"
         ],
       }
-      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, slackId)
+      const cacheKey = generateAirtableCacheKey("Projects", selectOptions, email)
       console.log(`Project ${uniqueProjectName} updated, forcing revalidation of ${cacheKey}`)
       cacheDelete(cacheKey); // force revalidation of project data on selected project change
       

@@ -1,12 +1,15 @@
- import { useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
  import { AnimatePresence, motion } from "motion/react";
+ import { signIn } from "next-auth/react";
 
-export default function SignIn() {
+ export default function SignIn(){
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [otp, setOtp] = useState("");
+  const router = useRouter();
 
     const handleVerify = async () => {
     setError("");
@@ -21,7 +24,21 @@ export default function SignIn() {
       if (res.ok) {
         setSuccess("OTP verified successfully!");
         setShowOtpModal(false);
-        // Optionally, continue to next step here
+        // After successful sign-in, check track and redirect
+        await signIn("credentials", { email, otp });
+
+        try {
+          const trackRes = await fetch("/api/user/my?query=track");
+          const trackData = await trackRes.json();
+          if (!trackData.message || trackData.message === "") {
+            router.push("/onboarding");
+          } else {
+            router.push("/gallery");
+          }
+        } catch (err) {
+          // fallback: redirect to onboarding
+          router.push("/onboarding");
+        }
       } else {
         setError(data.message || "Invalid OTP.");
       }

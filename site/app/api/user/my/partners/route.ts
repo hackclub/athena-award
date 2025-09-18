@@ -2,7 +2,7 @@ import Airtable from "airtable";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { NextRequest } from "next/server";
-import { identifySlackId } from "@/services/adminOverride";
+import { identifyEmail } from "@/services/adminOverride";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -10,10 +10,10 @@ const airtable = new Airtable({
 
 export async function GET(request: NextRequest) {
   const session = await auth();
-  const slackId = (await identifySlackId(request, session!))!
+  const email = (await identifyEmail(request, session!))!
   const allFields = await airtable("Registered Users")
     .select({
-      filterByFormula: `{slack_id} = ${slackId}`,
+      filterByFormula: `{email} = ${email}`,
       fields: ["self_reported_partners"],
     })
     .all();

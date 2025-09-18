@@ -13,7 +13,12 @@ export async function POST(request: NextRequest) {
   try {
     // Find the record for the email
     const records = await airtable('Verification Codes')
-      .select({ filterByFormula: `{email} = '${email}'`, fields: ["OTP", "isUsed"] })
+      .select({
+        filterByFormula: `{email} = '${email}'`,
+        fields: ["OTP", "isUsed"],
+        sort: [{ field: "createdAt", direction: "desc" }],
+        maxRecords: 1
+      })
       .firstPage();
     if (records.length === 0) {
       return NextResponse.json({ message: "No verification record found for this email" }, { status: 404 });

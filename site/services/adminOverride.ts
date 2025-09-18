@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
 import { Session } from "next-auth";
-export async function identifySlackId(request: NextRequest, session: Session){
+export async function identifyEmail(request: NextRequest, session: Session){
       const authorization = request.headers.get("Authorization")!;
-      const slack_id = request.nextUrl.searchParams.get("slack_id")
+      const custom_email = request.nextUrl.searchParams.get("email")
       if (authorization && authorization.split(" ")[1] == process.env.REFRESH_API_KEY) {
-        return slack_id
+        return custom_email
       } else {
-        return session.slack_id!
+        return session.user.email!
       }
 }

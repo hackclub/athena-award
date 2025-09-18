@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { verifyAuth } from "@/services/verifyAuth";
 import { getValue } from "@/services/fetchData";
-import { identifySlackId } from "@/services/adminOverride";
+import { identifyEmail } from "@/services/adminOverride";
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -23,12 +23,12 @@ export async function POST(request: NextRequest) {
   }
   const session = await auth();
 
-  const slackId = (await identifySlackId(request, session!))!
+  const email = (await identifyEmail(request, session!))!
 
   try {
     const recordID = await airtable("Registered Users")
       .select({
-        filterByFormula: `{slack_id} = "${slackId}"`,
+        filterByFormula: `{email} = "${email}"`,
         maxRecords: 1,
         fields: ["record_id", "hashed_token"],
       })
@@ -74,14 +74,14 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   const session = await auth();
-  const slackId = (await identifySlackId(request, session!))!
+  const email = (await identifyEmail(request, session!))!
   const invalidSession = await verifyAuth(request);
   if (invalidSession) {
     return NextResponse.json(invalidSession, { status: 401 });
   }
 
   try {
-    const response = (await getValue(session!.user.email!))["track"];
+    const response = (await getValue(email))["track"];
     return NextResponse.json({ message: response }, { status: 200 });
   } catch {
     return NextResponse.json(
