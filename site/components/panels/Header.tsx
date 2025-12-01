@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Tooltip } from "react-tooltip";
 import { useRouter } from "next/navigation";
 import WelcomeModal from "../welcome/WelcomeModal";
-import { inviteSlackUser } from "@/services/inviteUserToSlack";
+// import { inviteSlackUser } from "@/services/inviteUserToSlack";
 import { FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
@@ -42,12 +42,12 @@ export function AuthStateButton({ className }: { className?: string }) {
     setPartners(await fetch("/api/partners").then((r) => r.json()));
 
     setRegistrationStep(2);
-    const r = await inviteSlackUser(email, referredBy, utm_source, ref);
-    if (r.ok) {
-      console.log("ok");
-    } else {
-      setErr(r.error);
-    }
+    // const r = await inviteSlackUser(email, referredBy, utm_source, ref);
+    //if (r.ok) {
+    //  console.log("ok");
+    //} else {
+    //  setErr(r.error);
+    //}
   }
   return (
     <>
@@ -71,20 +71,22 @@ export function AuthStateButton({ className }: { className?: string }) {
                 onSubmit={(e) => handleEmailSubmit(e)}
               >
                 <label className="not-italic text-xl text-center ">
-                  New to Hack Club? ✨
+                  The Athena Award is over!
                 </label>
-                <span className="flex flex-col md:flex-row gap-2 w-full">
+                {/* <span className="flex flex-col md:flex-row gap-2 w-full">
                   <input
                     type="email"
                     placeholder="orpheus@mail.com"
                     defaultValue={email ? email : ""}
                     className="text-black w-full"
                     required
+                    disabled={true}
                     name="email"
                     id="email"
                   />
                   <button type="submit">Submit</button>
-                </span>
+                </span> */}
+                <span>Check out Hack Club's other programs <a target="_blank" href = "https://hackclub.com/">here</a> ✨</span>
               </form>
             ) : err ? (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
