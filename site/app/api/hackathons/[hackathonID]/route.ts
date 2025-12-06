@@ -28,10 +28,10 @@ async function validateHackathon(hackathonCode: string) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> },
+  { params }: { params: Promise<{ hackathonID: string }> },
 ) {
   const session = await auth();
-  const slug = (await params).slug;
+  const slug = (await params).hackathonID;
   const code = await slug;
   const invalidSession = await verifyAuth(request);
   if (invalidSession) {
