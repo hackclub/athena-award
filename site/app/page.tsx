@@ -82,62 +82,62 @@ const FAQ = [
 const partners = [
   {
     link: "https://engineering.mit.edu/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
   },
   {
     link: "https://bwsi.mit.edu/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/1adfd1610eac725bbf9d2867a85a18bec0ddf6aa_beaverworks_logo_no_mit_-_black.png"
   },
   {
     link: "https://ll.mit.edu/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
   },
   {
     link: "https://github.com/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
   },
   {
     link: "https://girlswhocode.com/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
   },
   {
     link: "https://congressionalappchallenge.us",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
   },
   {
     link: "https://www.girlscoutsnyc.org/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/cc00ddd41af16e89cb908cd35d4933b5d8770242_girlscoutsnyc-green.png"
   },
   {
     link: "https://www.theknowledgehouse.org/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/b873c50405c464861cd44f8677fa1fc5a2fa4421_tkh_horizontal_purple_logo.png"
   },
   {
     link: "https://www.wearebgc.org/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/3856089f0606f05c0606b9918322fc5b736098e6_bgc_orange_logo.png"
   },
   {
     link: "https://code.org/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/3167e98697dc80a930ae15e6079993b883110882_cs4all_fin_cs_codelogo_black_whiteletters.png"
   },
   {
     link: "https://www.etregirls.com",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/1c899c2d35b31a161552c8526b8bb00154b0aefa_etre_new_gradient_logo__1___1_.jpg"
   },
   {
     link: "https://launchpadphilly.org/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/42a735d8d938c5d1ed5369e51d78a6f288b910e8_03-more-transp-launchpad-logo-less-padding-copy-4.png"
   },
   {
     link: "https://www.getcybersmart.org",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/53e5211702ae31ef850735dfbe0374e801f186c1_cs_white_site_2x.png"
   },
   { link: "https://girlswhohack.com/",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/7c7cd694ba0da09feb79b18fd5f0e404ff2208e0_image.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/7c7cd694ba0da09feb79b18fd5f0e404ff2208e0_image.png"
   },
   {
     link: "https://www.instagram.com/girlupkenyaofficial/?hl=en",
-    image: "https://hc-cdn.hel1.your-objectstorage.com/s/v3/3599d0a01a560942ece54a635e21683557265649_guk_logos-1.png"
+    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/3599d0a01a560942ece54a635e21683557265649_guk_logos-1.png"
   }
 ]
 
@@ -177,7 +177,7 @@ export default function Index() {
       <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <img
           className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto"
-          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b54d797f084645f88f30665a507ecdd1045a004_427997bef21567cf6bb86d73c1349bbc65694498_image-min.png"
+          src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b54d797f084645f88f30665a507ecdd1045a004_427997bef21567cf6bb86d73c1349bbc65694498_image-min.png"
         />
       </div>
       <div className="relative pointer-events-auto sm:pointer-events-none">
@@ -187,7 +187,7 @@ export default function Index() {
           {/* i cbf finding a better solution */}
           <img
             className="max-lg:mx-auto lg:mr-auto max-h-64"
-            src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg"
+            src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg"
           />
           {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
           <div className=" pointer-events-auto lg:absolute flex flex-col lg:flex-row gap-4 self-center *:mx-auto lg:self-end">
@@ -205,7 +205,7 @@ export default function Index() {
             <div className="flex flex-col md:flex-row gap-4">
               <img
                 className="hidden md:inline w-40"
-                src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/4fa0aedbd5b4375d704ba6236bc0c4de7c4c90d8_15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"
+                src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/4fa0aedbd5b4375d704ba6236bc0c4de7c4c90d8_15b6701e3bbffe7dc1340c6923fde30422414e00_image.png"
               />
               <div className="grid grid-cols-8 w-full lg:w-9/12 text-hc-secondary py-8">
                 {steps.map((step, index) => (
@@ -229,12 +229,12 @@ export default function Index() {
           </div>
           <div className="relative pointer-events-auto z-40 sm:pr-12 md:pr-24 pt-12">
             <Polaroid
-              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/8d3d00586946421b43ee9d2aa5b9ab67ac1987a1_9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426-min.jpg"
+              image="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/8d3d00586946421b43ee9d2aa5b9ab67ac1987a1_9b4528bcad2c41041227e1d15dcc2dbaa9b69aeb_dsc04426-min.jpg"
               caption="code on websites..."
               props="z-40 rotate-[345deg] md:w-96 hover:rotate-[360deg]"
             />
             <Polaroid
-              image="https://hc-cdn.hel1.your-objectstorage.com/s/v3/493b1d3800b9c8c7abaa65f64f841c69d9815c07_38b3527b24755420728d2b7634fb803ada27f189_dsc04571-min.jpg"
+              image="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/493b1d3800b9c8c7abaa65f64f841c69d9815c07_38b3527b24755420728d2b7634fb803ada27f189_dsc04571-min.jpg"
               caption="...earn rewards"
               props="z-40 absolute lg:relative rotate-[12deg] hover:-rotate-1 top-0 sm:right-10 md:w-96"
             />
@@ -403,7 +403,7 @@ export default function Index() {
       <div className="relative *:text-hc-secondary flex flex-wrap justify-end gap-4 *:lg:basis-1/3 flex-row z-10 w-screen h-max p-12 sm:p-24 bg-hc-primary-dull bg-[url(/bg.svg)]">
         <img
           className="h-full opacity-75 hidden lg:inline absolute mt-0 bottom-0 -left-10"
-          src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/315b4d8271ec9804a39feb90d0c8c0da22be2411_image.png"
+          src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/315b4d8271ec9804a39feb90d0c8c0da22be2411_image.png"
         />
 
         <div className="lg:self-end flex flex-col gap-2">

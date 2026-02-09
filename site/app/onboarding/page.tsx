@@ -326,12 +326,12 @@ export default function Page() {
                         </span>
                       </ul>
                       <object
-                        data="https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf"
+                        data="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf"
                         type="application/pdf"
                         className="h-full w-full"
                       >
                         <p>
-                          <a href="https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf" />
+                          <a href="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/82354da750615a142140fcf632862705c7323508_athena_hackatime_setup.pdf" />
                         </p>
                       </object>
                     </div>
@@ -400,7 +400,7 @@ export default function Page() {
                 </div>
 
                     <object
-                        data="https://hc-cdn.hel1.your-objectstorage.com/s/v3/646a1ebe023a70c68e990a93380ca3840e26aa35_athena_award_-_git_workshop.pdf"
+                        data="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/646a1ebe023a70c68e990a93380ca3840e26aa35_athena_award_-_git_workshop.pdf"
                         type="application/pdf"
                         className="h-full w-full col-span-1"
                     ></object>

@@ -37,7 +37,7 @@ export default function Introduction({
   return (
     <DefaultFrame
       title="Introduction"
-      primaryTheme="bg-[url('https://hc-cdn.hel1.your-objectstorage.com/s/v3/ae493cd1ff65ba6de7674f0a1f88623c548b79d8_a86775ba70e6f71f9aa8e9619a4c7f89d17a6f6d_image.png')] bg-cover bg-center bg-hc-primary/50 bg-blend-overlay"
+      primaryTheme="bg-[url('https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/ae493cd1ff65ba6de7674f0a1f88623c548b79d8_a86775ba70e6f71f9aa8e9619a4c7f89d17a6f6d_image.png')] bg-cover bg-center bg-hc-primary/50 bg-blend-overlay"
       module={module}
       prevModule={prevModule}
       nextModule={nextModule}

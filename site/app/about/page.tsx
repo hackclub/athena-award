@@ -6,7 +6,7 @@ export default function About() {
       <Header skipWelcomeModal={true} />
       <img
         className="object-cover w-screen h-[50vh]"
-        src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/390b6fa1417d3af121ebf065b59e7ad25052c811_image.png"
+        src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/390b6fa1417d3af121ebf065b59e7ad25052c811_image.png"
       />
       <div className="flex flex-col w-screen p-16 min-h-screen bg-hc-primary-dull bg-[url(/bg.svg)]">
         <div className="self-start">
@@ -23,7 +23,7 @@ export default function About() {
             <div className="flex flex-row gap-4">
               <img
                 className="hidden md:inline w-48"
-                src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b4d1a4b891fce753d13942487d0258bdd9ae77c_image.png"
+                src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b4d1a4b891fce753d13942487d0258bdd9ae77c_image.png"
               />
               <div className="*:text-white flex flex-col gap-4">
                 <h2 className="!text-3xl">
@@ -227,7 +227,7 @@ export default function About() {
                 artifacts{" "}
                 <img
                   className="h-8 inline"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"
+                  src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"
                 />
               </span>
               .
@@ -239,7 +239,7 @@ export default function About() {
                 artifacts{" "}
                 <img
                   className="h-8 inline"
-                  src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"
+                  src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"
                 />
               </span>{" "}
               on prizes in the Shop. Click on the icon in the top right corner

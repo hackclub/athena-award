@@ -38,7 +38,7 @@ export default function ShopModal() {
             {artifacts}{" "}
             <img
               className="inline h-8"
-              src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"
+              src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/44e7d5c7ff189dc439c2bea7483ade38630a1ca5_image.png"
             />
           </div>
         }

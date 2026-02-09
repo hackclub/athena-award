@@ -128,7 +128,7 @@ export default function InfoModal() {
             </div>
             <img
               className="col-span-1 aspect-video cover rounded"
-              src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/3057e5a387b8e8ce117e4cb86965525aa5e03d5b_image.png"
+              src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/3057e5a387b8e8ce117e4cb86965525aa5e03d5b_image.png"
             />
           </div>
           <h2 className="text-lg sm:text-2xl bg-white/10 text-white p-2 rounded">
