@@ -82,7 +82,7 @@ const FAQ = [
 const partners = [
   {
     link: "https://engineering.mit.edu/",
-    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/fcb35244b5ecccc9dd17efc2fab64994788efa55_mit_soe.png"
+    image: "https://cdn.hackclub.com/019deacb-2d36-7b9f-a554-2a3352bbfe3b/SoE_sub-brand_lockup_one-line_rgb_white.png"
   },
   {
     link: "https://bwsi.mit.edu/",
@@ -90,19 +90,19 @@ const partners = [
   },
   {
     link: "https://ll.mit.edu/",
-    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/c22b68d0ab6c3a53fed6f687cd0ac3ceca9d3e94_ll_logo_black.png"
+    image: "https://user-cdn.hackclub-assets.com/019deacb-407b-7c4d-91db-223ba0c6b4d4/New_Full_Logo-BLACK-2500w.png"
   },
   {
     link: "https://github.com/",
-    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/dae512a38880f626ef470a28755548217f136b2e_github_logo_white.png"
+    image: "https://user-cdn.hackclub-assets.com/019deae7-ad7d-7aa3-80e6-45164a01f9e0/GitHub_Lockup_White_Clearspace.png"
   },
   {
     link: "https://girlswhocode.com/",
-    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/ec501a6f238ca63928f34ba2232b7f8863386597_gwc_final-logo_white.png"
+    image: "https://cdn.hackclub.com/019deae6-49cc-78dd-b99e-39e251795549/GWC_Final-Logo_Teal.png"
   },
   {
     link: "https://congressionalappchallenge.us",
-    image: "https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/0e51a14a2e4e9bbb74952d7765983c47e5873c3e_image.png"
+    image: "https://user-cdn.hackclub-assets.com/019deae4-727e-7d22-aad1-c3cfda8da822/app-challenge-logo-transparent-1056x250.png"
   },
   {
     link: "https://www.girlscoutsnyc.org/",
@@ -182,18 +182,26 @@ export default function Index() {
       </div>
       <div className="relative pointer-events-auto sm:pointer-events-none">
         <Header skipWelcomeModal={true} />
-        <div className="pointer-events-none flex flex-col w-screen h-max justify-center items-center mt-14 p-8 gap-6 text-hc-secondary italic">
-          <div className="grow flex flex-row" />{" "}
-          {/* i cbf finding a better solution */}
-          <img
-            className="max-lg:mx-auto lg:mr-auto max-h-64"
-            src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg"
-          />
-          {/* hero section, check auth for ongoing session and this will say continue hacking instead of start, otherwise you'll have to scroll to the bottom to start hacking (or something like that) */}
-          <div className=" pointer-events-auto lg:absolute flex flex-col lg:flex-row gap-4 self-center *:mx-auto lg:self-end">
-            <AuthStateButton className="h-full" />
-            <div className="*:h-full">
-              <WelcomeModal props={`${shineEffect(shineEffectProps)}`} />
+        <div className="pointer-events-none flex w-screen min-h-screen items-center justify-center pt-14 px-8 py-8 text-hc-secondary italic">
+          <div className="max-md:pt-20 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full max-w-6xl">
+            <div className="flex flex-col items-center mx-auto gap-5 basis-1/2">
+              <img
+                className="max-h-64"
+                src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/6ea8e84acae378a03d5b5e788a780a853aae4d21_outlined_logo__alt_-cropped.svg"
+              />
+              <p className = "font-bold text-center">Code 30 hours. Fly to New York City for the largest, most ambitious all-girls high school hackathon. </p>
+
+            </div>
+            <div className="pointer-events-auto w-full lg:w-1/2 basis-1/2 flex flex-col gap-4">
+              <div className="pointer-events-auto flex flex-col lg:flex-row gap-4 *:mx-auto">
+                <AuthStateButton className="w-full" />
+              </div>
+              <iframe
+                src="https://www.youtube.com/embed/WlJ5gsY9xSc" 
+                className="w-full h-full aspect-video rounded-xl overflow-hidden shadow-lg"
+                allowFullScreen
+                title="Athena Award"
+              />
             </div>
           </div>
         </div>
@@ -342,7 +350,7 @@ export default function Index() {
             {FAQ.map((q, index) => (
               <div
                 key={index}
-                className="transition transition-duration-300 borderhover:scale-105 hover:rotate-1 col-span-1 text-hc-secondary border-cream/30 text-left m-3 p-5 bg-hc-primary-dull/50 "
+                className="transition transition-duration-300 border hover:scale-105 hover:rotate-1 col-span-1 text-hc-secondary border-cream/30 text-left m-3 p-5 bg-hc-primary-dull/50 "
               >
                 <h1 className="text-2xl">{q.question}</h1>
                 <p
@@ -377,7 +385,7 @@ export default function Index() {
               { partners.map((partner: { link: string, image: string }, index: number) =>
               <a key = {index} target="_blank" href={partner.link}>
                 <img
-                  className="image-cover h-16 md:h-32"
+                  className="image-cover max-h-8 md:max-h-32"
                   src={partner.image}
                 />
               </a>

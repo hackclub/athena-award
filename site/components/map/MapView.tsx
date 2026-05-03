@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import useSWR from "swr";
 import { fetcher } from "@/services/fetcher";
 import { Error } from "@/components/screens/Modal";
@@ -52,6 +52,39 @@ function MapFocusHandler({ lat, lng }: { lat: number; lng: number }) {
   return null;
 }
 
+interface PlainBounds {
+  north: number;
+  south: number;
+  east: number;
+  west: number;
+}
+
+function leafletBoundsToPlain(b: L.LatLngBounds): PlainBounds {
+  return { north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() };
+}
+
+function BoundsTracker({
+  onBoundsChange,
+}: {
+  onBoundsChange: (bounds: PlainBounds) => void;
+}) {
+  const map = useMap();
+  const cbRef = useCallback(onBoundsChange, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const handle = () => cbRef(leafletBoundsToPlain(map.getBounds()));
+    map.on("moveend", handle);
+    map.on("zoomend", handle);
+    handle(); // set initial bounds
+    return () => {
+      map.off("moveend", handle);
+      map.off("zoomend", handle);
+    };
+  }, [map]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return null;
+}
+
 export default function MapView() {
   const { data, error, isLoading } = useSWR("/api/projects", fetcher, { revalidateOnFocus: false });
 
@@ -95,6 +128,29 @@ export default function MapView() {
     }
   };
 
+  const [mapBounds, setMapBounds] = useState<PlainBounds | null>(null);
+  const visibleCoordinates = useMemo((): { coord: any; globalIdx: number }[] => {
+    if (!mapBounds) return [];
+    const pad = (mapBounds.north - mapBounds.south) * 0.1;
+    const padLng = (mapBounds.east - mapBounds.west) * 0.1;
+    return coordinates.reduce(
+      (acc: { coord: any; globalIdx: number }[], coord: any, idx: number) => {
+        if (
+          coord.lat <= mapBounds.north + pad &&
+          coord.lat >= mapBounds.south - pad &&
+          coord.long <= mapBounds.east + padLng &&
+          coord.long >= mapBounds.west - padLng
+        ) {
+          acc.push({ coord, globalIdx: idx });
+        }
+        return acc;
+      },
+      [],
+    );
+  }, [coordinates, mapBounds]);
+
+  const ITEMS_PER_PAGE = 12;
+  const [page, setPage] = useState(0);
   const [selectedProjectIdx, setSelectedProjectIdx] = useState<number | null>(
     null,
   );
@@ -116,6 +172,20 @@ export default function MapView() {
     }
   }, [selectedProject]);
 
+  const selectedCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (selectedProjectIdx !== null) {
+      setPage(Math.floor(selectedProjectIdx / ITEMS_PER_PAGE));
+    }
+  }, [selectedProjectIdx]);
+
+  // Scroll the selected card into view after the page update has been applied.
+  // Depends on `page` so it fires on the render where the correct page is shown.
+  useEffect(() => {
+    selectedCardRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [page, selectedProjectIdx]);
+
   const mosaicGrid = useMemo(() => {
     if (!mosaicEmoji) return [];
     const grid: { x: number; y: number; delay: number; emoji: string }[] = [];
@@ -129,6 +199,12 @@ export default function MapView() {
     }
     return grid;
   }, [mosaicEmoji]);
+
+  const totalPages = Math.ceil(coordinates.length / ITEMS_PER_PAGE);
+  const pageItems = useMemo(
+    () => coordinates.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE),
+    [coordinates, page],
+  );
 
   const mosaicEmojiStyle = useCallback(
     (x: number, y: number, delay: number): React.CSSProperties => ({
@@ -205,15 +281,17 @@ export default function MapView() {
                     lng={selectedProject.long}
                   />
                 )}
+                <BoundsTracker onBoundsChange={setMapBounds} />
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {coordinates.map((coord: any, idx: number) => (
+                {visibleCoordinates.map(({ coord, globalIdx }) => (
                   <Marker
-                    key={idx}
+                    key={globalIdx}
                     position={[coord.lat, coord.long]}
                     icon={hcPrimaryIcon}
+                    eventHandlers={{ click: () => setSelectedProjectIdx(globalIdx) }}
                   >
                     <Popup>
                       <div className="bg-hc-primary p-4 rounded-xl border border-white/20 shadow-xl flex flex-col gap-2">
@@ -269,67 +347,92 @@ export default function MapView() {
             ) : coordinates.length === 0 ? (
               <div className="text-white/70 italic">No projects found.</div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-scroll">
-                {coordinates.map((coord: any, idx: number) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 * idx }}
-                    className="bg-white/20 backdrop-blur-md rounded-2xl p-5 shadow-lg border border-white/20 flex flex-col gap-2 hover:scale-[1.03] hover:shadow-2xl transition-all duration-200 cursor-pointer h-full"
-                    onClick={() => setSelectedProjectIdx(idx)}
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {pageItems.map((coord: any, localIdx: number) => {
+                    const globalIdx = page * ITEMS_PER_PAGE + localIdx;
+                    return (
+                      <motion.div
+                        ref={globalIdx === selectedProjectIdx ? selectedCardRef : undefined}
+                        key={globalIdx}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.05 * localIdx }}
+                        className={`backdrop-blur-md rounded-2xl p-5 shadow-lg border flex flex-col gap-2 hover:scale-[1.03] hover:shadow-2xl transition-all duration-200 cursor-pointer h-full ${globalIdx === selectedProjectIdx ? "bg-white/40 border-white/60 ring-2 ring-white/60" : "bg-white/20 border-white/20"}`}
+                        onClick={() => setSelectedProjectIdx(globalIdx)}
+                      >
+                        <div className="font-bold text-xl text-white playfair-display italic truncate">
+                          {coord.label?.[0]?.project_name_override ||
+                            coord.label?.[0]?.project_name ||
+                            "Untitled Project"}
+                        </div>
+                        {coord.label?.[0]?.country && (
+                          <div className="text-white/80 text-sm italic mb-1">
+                            {coord.label[0].country}
+                          </div>
+                        )}
+                        <div className="flex flex-col gap-1 flex-1">
+                          {coord.label?.[0]?.playable_url && (
+                            <a
+                              href={coord.label[0].playable_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="!text-white !hover:text-hc-blue underline font-semibold flex items-center gap-2"
+                            >
+                              <ArrowTopRightOnSquareIcon className="w-5 h-5 inline-block" />
+                              Try it out
+                            </a>
+                          )}
+                          {coord.label?.[0]?.code_url && (
+                            <a
+                              href={coord.label[0].code_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="!text-white !hover:text-hc-blue underline font-semibold flex items-center gap-2"
+                            >
+                              <CodeBracketIcon className="w-5 h-5 inline-block" />
+                              Source Code
+                            </a>
+                          )}
+                        </div>
+                        {coord.label?.[0]?.slack_id && (
+                          <div className="mt-auto pt-2 flex clamp-2">
+                            <a
+                              href={`https://hackclub.slack.com/team/${coord.label[0].slack_id}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs md:text-base w-full px-3 py-2 rounded-lg bg-hc-primary-dull text-white font-bold shadow border-2 no-underline border-hc-primary/80 transition-all duration-200 text-center flex items-center justify-center gap-2"
+                              style={{ letterSpacing: "0.01em" }}
+                            >
+                              <ChatBubbleLeftRightIcon className="hidden w-5 h-5 md:inline-block" />
+                              Message author
+                            </a>
+                          </div>
+                        )}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+                <div className="flex items-center justify-between mt-2 sticky bottom-0 bg-hc-primary-dull/90 py-2 rounded-lg px-1">
+                  <button
+                    onClick={() => setPage((p) => Math.max(0, p - 1))}
+                    disabled={page === 0}
+                    className="px-3 py-1 rounded-lg bg-white/20 text-white disabled:opacity-30 hover:bg-white/30 transition"
                   >
-                    <div className="font-bold text-xl text-white playfair-display italic truncate">
-                      {coord.label?.[0]?.project_name_override ||
-                        coord.label?.[0]?.project_name ||
-                        "Untitled Project"}
-                    </div>
-                    {coord.label?.[0]?.country && (
-                      <div className="text-white/80 text-sm italic mb-1">
-                        {coord.label[0].country}
-                      </div>
-                    )}
-                    <div className="flex flex-col gap-1 flex-1">
-                      {coord.label?.[0]?.playable_url && (
-                        <a
-                          href={coord.label[0].playable_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="!text-white !hover:text-hc-blue underline font-semibold flex items-center gap-2"
-                        >
-                          <ArrowTopRightOnSquareIcon className="w-5 h-5 inline-block" />
-                          Try it out
-                        </a>
-                      )}
-                      {coord.label?.[0]?.code_url && (
-                        <a
-                          href={coord.label[0].code_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="!text-white !hover:text-hc-blue underline font-semibold flex items-center gap-2"
-                        >
-                          <CodeBracketIcon className="w-5 h-5 inline-block" />
-                          Source Code
-                        </a>
-                      )}
-                    </div>
-                    {coord.label?.[0]?.slack_id && (
-                      <div className="mt-auto pt-2 flex clamp-2">
-                        <a
-                          href={`https://hackclub.slack.com/team/${coord.label[0].slack_id}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs md:text-base w-full px-3 py-2 rounded-lg bg-hc-primary-dull text-white font-bold shadow border-2 no-underline border-hc-primary/80 transition-all duration-200 text-center flex items-center justify-center gap-2"
-                          style={{ letterSpacing: "0.01em" }}
-                        >
-                          <ChatBubbleLeftRightIcon className="hidden w-5 h-5 md:inline-block" />
-                          Message author
-                        </a>
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
+                    ← Prev
+                  </button>
+                  <span className="text-white text-sm">
+                    {page + 1} / {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                    disabled={page >= totalPages - 1}
+                    className="px-3 py-1 rounded-lg bg-white/20 text-white disabled:opacity-30 hover:bg-white/30 transition"
+                  >
+                    Next →
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>

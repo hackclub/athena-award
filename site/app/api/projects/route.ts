@@ -1,5 +1,9 @@
 import Airtable from "airtable";
 import { NextResponse } from "next/server";
+import { cacheGet, cacheSet } from "@/services/redis";
+
+const CACHE_KEY = "projects:map:all";
+const CACHE_TTL = 5 * 60; // 5 minutes
 
 const airtable = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -24,8 +28,17 @@ async function geocodeAddress(
   return null;
 }
 
+const cacheHeaders = {
+  "Cache-Control": "public, max-age=300, stale-while-revalidate=60",
+};
+
 export async function GET() {
   try {
+    const cached = await cacheGet(CACHE_KEY);
+    if (cached) {
+      return NextResponse.json(cached, { headers: cacheHeaders });
+    }
+
     const records = await airtable("Projects")
       .select({
         filterByFormula: 'AND({status} = "approved", {user_consent})',
@@ -41,7 +54,7 @@ export async function GET() {
         ],
       })
       .all();
-      console.log(JSON.parse(JSON.stringify(records)).length)
+
     const projects = [];
     for (const record of records) {
       const fields = record.fields;
@@ -74,7 +87,7 @@ export async function GET() {
       const project_name = fields["project_name"];
       const project_name_override =
         fields["project_name_override"] &&
-        (String(fields["project_name_override"])?.split("–"))[0]; // they contain the author's full name, which optimally we are not broadcasting to the entire world
+        (String(fields["project_name_override"])?.split("–"))[0];
       const playable_url = fields["playable_url"];
       const code_url = fields["code_url"];
       if (latLng) {
@@ -94,7 +107,9 @@ export async function GET() {
         });
       }
     }
-    return NextResponse.json(projects);
+
+    await cacheSet(CACHE_KEY, projects, CACHE_TTL);
+    return NextResponse.json(projects, { headers: cacheHeaders });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch projects", details: String(error) },

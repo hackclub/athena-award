@@ -86,7 +86,7 @@ export function AuthStateButton({ className }: { className?: string }) {
                   />
                   <button type="submit">Submit</button>
                 </span> */}
-                <span>Check out Hack Club's other programs <a target="_blank" href = "https://hackclub.com/">here</a> ✨</span>
+                <span>Check out the <a target="_blank" href = "https://parthenon.hackclub.com/">recap website</a>, or see Hack Club's other programs <a target="_blank" href = "https://hackclub.com/">here</a> ✨</span>
               </form>
             ) : err ? (
               <span className="not-italic text-lg md:text-xl text-center text-white max-w-1/2">
