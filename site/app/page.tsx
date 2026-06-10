@@ -176,7 +176,7 @@ export default function Index() {
     <main className="w-screen h-full relative flex flex-col justify-center items-center bg-hc-primary-dull ">
       <div className="pointer-events-none w-screen h-full fixed top-0 left-0 z-[0] overflow-hidden blur-sm brightness-75 after:absolute after:inset-0 after:bg-hc-primary/80 after:mix-blend-soft-light after:pointer-events-none">
         <img
-          className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-auto"
+          className="w-screen h-screen overflow-hidden flex justify-center items-center fixed top-0 left-0 z-0 pointer-events-none"
           src="https://cdn.hackclub.com/rescue?url=https://hc-cdn.hel1.your-objectstorage.com/s/v3/7b54d797f084645f88f30665a507ecdd1045a004_427997bef21567cf6bb86d73c1349bbc65694498_image-min.png"
         />
       </div>
